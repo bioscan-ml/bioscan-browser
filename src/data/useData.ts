@@ -1,5 +1,5 @@
+import { getFetchUrl } from '@/lib/getFetchUrl'
 import { useQuery } from '@tanstack/react-query'
-import { getFetchUrl } from '../utils/getFetchUrl'
 
 interface ResponseData {
   response: {
