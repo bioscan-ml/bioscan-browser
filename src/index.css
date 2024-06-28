@@ -2,6 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Source Sans';
+  src: url('/assets/fonts/Source_Sans_3/static/SourceSans3-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Source Sans';
+  src: url('/assets/fonts/Source_Sans_3/static/SourceSans3-Medium.ttf');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Source Sans';
+  src: url('/assets/fonts/Source_Sans_3/static/SourceSans3-Bold.ttf');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/assets/fonts/Montserrat/static/Montserrat-Bold.ttf');
+  font-weight: 700;
+  font-style: normal;
+}
+
+html {
+  font-family: 'Source Sans', system-ui, sans-serif;
+  font-weight: 400;
+}
+
+h1 {
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 700;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -13,7 +51,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
 
-    --primary: 0 0% 9%;
+    --primary: 204 56% 30%;
     --primary-foreground: 0 0% 98%;
 
     --secondary: 0 0% 96.1%;

@@ -25,7 +25,7 @@ export const PaginationBar = <T extends { id: string }>({
   return (
     <div className="fixed bottom-0 left-0 w-full bg-muted/95 border-t">
       <PageContent>
-        <div className="h-12 px-4 flex items-center justify-between">
+        <div className="h-12 flex items-center justify-between">
           {isPending || !data ? (
             <p>Loading...</p>
           ) : (
