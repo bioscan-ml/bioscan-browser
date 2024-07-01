@@ -30,14 +30,11 @@
   font-style: normal;
 }
 
-html {
-  font-family: 'Source Sans', system-ui, sans-serif;
-  font-weight: 400;
-}
-
-h1 {
-  font-family: 'Montserrat', system-ui, sans-serif;
-  font-weight: 700;
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/assets/fonts/Montserrat/static/Montserrat-Medium.ttf');
+  font-weight: 500;
+  font-style: normal;
 }
 
 @layer base {
@@ -109,6 +106,22 @@ h1 {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground text-base leading-normal font-normal;
+    font-family: 'Source Sans', system-ui, sans-serif;
+  }
+
+  h1 {
+    @apply text-2xl leading-tight font-bold;
+    font-family: 'Montserrat', system-ui, sans-serif;
+  }
+
+  h2 {
+    @apply text-xl leading-tight font-medium;
+    font-family: 'Montserrat', system-ui, sans-serif;
+  }
+
+  h3 {
+    @apply text-lg leading-tight font-bold;
+    font-family: 'Montserrat', system-ui, sans-serif;
   }
 }
