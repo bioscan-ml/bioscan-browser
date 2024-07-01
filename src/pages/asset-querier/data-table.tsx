@@ -1,0 +1,86 @@
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
+import { getImageSrc } from '@/lib/getImageSrc'
+import { cn } from '@/lib/utils'
+import { Doc } from '@/types/response-data'
+import { Sort } from '@/types/settings'
+import { ArrowDownIcon, ArrowUpIcon } from 'lucide-react'
+import { FIELDS } from './fields'
+
+interface DataTableProps {
+  docs?: Doc[]
+  sort: Sort
+  setSort: (sort: Sort) => void
+}
+
+export const DataTable = ({ docs = [], sort, setSort }: DataTableProps) => (
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead />
+        {FIELDS.map((field) => {
+          const isSorted = sort.key === field.key
+          const ariaSort = isSorted
+            ? sort.order === 'asc'
+              ? 'ascending'
+              : 'descending'
+            : undefined
+
+          return (
+            <TableHead key={field.key} aria-sort={ariaSort}>
+              <button
+                className="w-full h-full flex items-center gap-2 whitespace-nowrap"
+                onClick={() => {
+                  setSort({
+                    key: field.key,
+                    order: isSorted
+                      ? sort.order === 'asc'
+                        ? 'desc'
+                        : 'asc'
+                      : sort.order,
+                  })
+                }}
+              >
+                {field.label}
+                {isSorted &&
+                  (sort.order === 'asc' ? (
+                    <ArrowDownIcon className="w-4 h-4" />
+                  ) : (
+                    <ArrowUpIcon className="w-4 h-4" />
+                  ))}
+              </button>
+            </TableHead>
+          )
+        })}
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      {docs.map((doc) => (
+        <TableRow key={doc.id}>
+          <TableCell>
+            <img
+              alt={doc.id}
+              className="w-16 min-w-16 aspect-[341/256] rounded-sm"
+              loading="lazy"
+              src={getImageSrc(doc)}
+            />
+          </TableCell>
+          {FIELDS.map((field) => (
+            <TableCell
+              key={field.key}
+              className={cn('whitespace-nowrap', field.cellClass)}
+            >
+              {doc[field.key]}
+            </TableCell>
+          ))}
+        </TableRow>
+      ))}
+    </TableBody>
+  </Table>
+)
