@@ -3,6 +3,7 @@ import { getTaxonomy } from '@/lib/getTaxonomy'
 import { FIELDS } from '@/pages/asset-querier/fields'
 import { Doc } from '@/types/response-data'
 import { ChevronRight } from 'lucide-react'
+import { CodeBlock } from './code-block'
 import { ImagePicker } from './image-picker'
 import {
   Dialog,
@@ -90,7 +91,9 @@ const DocDetailsContent = ({ doc }: { doc: Doc }) => {
           />
         </TabsContent>
         <TabsContent value="map"></TabsContent>
-        <TabsContent value="raw"></TabsContent>
+        <TabsContent value="raw">
+          <CodeBlock code={JSON.stringify(doc, null, 4)} />
+        </TabsContent>
       </Tabs>
     </DialogContent>
   )
