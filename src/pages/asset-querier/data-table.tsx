@@ -16,10 +16,16 @@ import { FIELDS } from './fields'
 interface DataTableProps {
   docs?: Doc[]
   sort: Sort
+  onRowClick: (doc: Doc) => void
   setSort: (sort: Sort) => void
 }
 
-export const DataTable = ({ docs = [], sort, setSort }: DataTableProps) => (
+export const DataTable = ({
+  docs = [],
+  sort,
+  onRowClick,
+  setSort,
+}: DataTableProps) => (
   <Table>
     <TableHeader>
       <TableRow>
@@ -62,7 +68,11 @@ export const DataTable = ({ docs = [], sort, setSort }: DataTableProps) => (
     </TableHeader>
     <TableBody>
       {docs.map((doc) => (
-        <TableRow key={doc.id}>
+        <TableRow
+          key={doc.id}
+          onClick={() => onRowClick(doc)}
+          className="cursor-pointer"
+        >
           <TableCell>
             <img
               alt={doc.id}

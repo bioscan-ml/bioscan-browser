@@ -4,6 +4,7 @@ export const FIELDS: { label: string; key: keyof Doc; cellClass?: string }[] = [
   { label: 'ID', key: 'id', cellClass: 'font-medium' },
   { label: 'Sample ID', key: 'sampleid' },
   { label: 'Country', key: 'country' },
+  { label: 'Province state', key: 'province_state' },
   { label: 'Phylum', key: 'phylum' },
   { label: 'Class', key: 'class' },
   { label: 'Order', key: 'order' },
