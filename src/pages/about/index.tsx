@@ -31,7 +31,7 @@ export const About = () => (
       {CONTENT.sections.map((section, si) => (
         <div key={si}>
           <h3 className="text-primary mb-2">{section.title}</h3>
-          <div className="space-y-4">
+          <div className="space-y-4 text-muted-foreground">
             {section.paragraphs.map((paragraph, pi) => (
               <p key={pi}>{paragraph}</p>
             ))}
