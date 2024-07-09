@@ -5,6 +5,7 @@ import { Doc } from '@/types/response-data'
 import { ChevronRight } from 'lucide-react'
 import { CodeBlock } from './code-block'
 import { ImagePicker } from './image-picker'
+import { Map } from './map'
 import {
   Dialog,
   DialogContent,
@@ -28,9 +29,12 @@ export const DocDetails = ({ doc, open, onOpenChange }: DocDetailsProps) => (
 
 const DocDetailsContent = ({ doc }: { doc: Doc }) => {
   const { determinationLabel, ranks } = getTaxonomy(doc)
+  const [latitude, longitude] = doc.latlon
+    .split(',')
+    .map((value) => Number(value))
 
   return (
-    <DialogContent className="max-h-full box-border flex flex-col gap-8 overflow-auto">
+    <DialogContent className="h-full max-w-screen-sm flex flex-col gap-8 overflow-auto sm:h-[calc(100%-4rem)]">
       <DialogHeader>
         <DialogTitle>{determinationLabel}</DialogTitle>
         <DialogDescription>
@@ -90,7 +94,12 @@ const DocDetailsContent = ({ doc }: { doc: Doc }) => {
             ]}
           />
         </TabsContent>
-        <TabsContent value="map"></TabsContent>
+        <TabsContent value="map">
+          <Map
+            marker={{ latitude, longitude }}
+            popupContent={`${doc.province_state}, ${doc.country}<br />(${latitude}, ${longitude})`}
+          />
+        </TabsContent>
         <TabsContent value="raw">
           <CodeBlock code={JSON.stringify(doc, null, 4)} />
         </TabsContent>
