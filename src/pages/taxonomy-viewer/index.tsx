@@ -13,7 +13,7 @@ import { useTaxonomyQuery } from './useTaxonomyQuery'
 
 export const TaxonomyViewer = () => {
   // Taxonomy tree
-  const { taxonomyTree } = useTaxonomyTree()
+  const { taxonomyTree, isPending: taxonomyTreePending } = useTaxonomyTree()
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(
     ROOT_NODE_ID,
   )
@@ -38,7 +38,7 @@ export const TaxonomyViewer = () => {
               />
             )}
           </aside>
-          {isPending ? (
+          {taxonomyTreePending || isPending ? (
             <div className="w-full flex items-center justify-center">
               <Loader2Icon className="w-16 h-16 animate-spin opacity-50" />
             </div>
