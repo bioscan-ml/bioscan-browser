@@ -1,0 +1,23 @@
+.MuiTreeItem-root .MuiTreeItem-content {
+  @apply py-2 px-2 mb-[2px] rounded-md;
+}
+
+.MuiTreeItem-root .MuiTreeItem-content .MuiTreeItem-label {
+  @apply text-sm font-normal;
+  font-family: 'Source Sans', system-ui, sans-serif;
+}
+
+.MuiTreeItem-root .MuiTreeItem-content:hover,
+.MuiTreeItem-root .MuiTreeItem-content.Mui-focused:hover {
+  @apply bg-muted;
+}
+
+.MuiTreeItem-root .MuiTreeItem-content.Mui-selected,
+.MuiTreeItem-root .MuiTreeItem-content.Mui-selected:hover,
+.MuiTreeItem-root .MuiTreeItem-content.Mui-selected.Mui-focused {
+  @apply bg-primary text-primary-foreground;
+}
+
+.MuiTreeItem-root .MuiTreeItem-content.Mui-focused {
+  @apply bg-transparent ring-2 ring-ring;
+}
