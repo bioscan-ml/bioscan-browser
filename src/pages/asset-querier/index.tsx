@@ -1,12 +1,14 @@
+import { DocDetails } from '@/components/doc-details'
 import { PageContent } from '@/components/page-content'
 import { PaginationBar } from '@/components/pagination-bar'
 import { useData } from '@/hooks/useData'
+import { Doc } from '@/types/response-data'
 import { Sort, ViewMode } from '@/types/settings'
+import { Loader2Icon } from 'lucide-react'
 import { useState } from 'react'
 import { DataGallery } from './data-gallery'
 import { DataTable } from './data-table'
 import { Settings } from './settings'
-import { Loader2Icon } from 'lucide-react'
 
 const PAGE_SIZE = 100
 
@@ -17,6 +19,7 @@ export const AssetQuerier = () => {
     order: 'asc',
   })
   const [page, setPage] = useState(0)
+  const [activeDoc, setActiveDoc] = useState<Doc | undefined>()
   const { data, isPending } = useData({ page, pageSize: PAGE_SIZE, sort })
 
   return (
@@ -36,9 +39,19 @@ export const AssetQuerier = () => {
           ) : (
             <>
               {viewMode === 'table' && (
-                <DataTable docs={data?.docs} sort={sort} setSort={setSort} />
+                <DataTable
+                  docs={data?.docs}
+                  sort={sort}
+                  onRowClick={(doc) => setActiveDoc(doc)}
+                  setSort={setSort}
+                />
               )}
-              {viewMode === 'gallery' && <DataGallery docs={data?.docs} />}
+              {viewMode === 'gallery' && (
+                <DataGallery
+                  docs={data?.docs}
+                  onItemClick={(doc) => setActiveDoc(doc)}
+                />
+              )}
             </>
           )}
         </div>
@@ -51,6 +64,15 @@ export const AssetQuerier = () => {
           setPage={setPage}
         />
       )}
+      <DocDetails
+        doc={activeDoc}
+        open={!!activeDoc}
+        onOpenChange={(open) => {
+          if (!open) {
+            setActiveDoc(undefined)
+          }
+        }}
+      />
     </>
   )
 }
