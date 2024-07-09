@@ -15,10 +15,15 @@ export interface Doc {
   subfamily: string
 }
 
-export interface ResponseData {
-  response: {
-    docs: Doc[]
-    numFound: number
-    start: number
+export interface TaxonomyTreeNode {
+  children: TaxonomyTreeNode[]
+  li_attr: {
+    id: string
+    title: string
   }
+  metadata: {
+    label: string
+    taxon: string
+  }
+  text: string
 }

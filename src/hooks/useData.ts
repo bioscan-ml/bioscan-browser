@@ -1,14 +1,21 @@
 import { getFetchUrl } from '@/lib/getFetchUrl'
-import { ResponseData } from '@/types/response-data'
+import { Doc } from '@/types/response-data'
 import { Sort } from '@/types/settings'
 import { useQuery } from '@tanstack/react-query'
 
 export const useData = (params: {
   page: number
   pageSize: number
-  sort: Sort
+  sort?: Sort
+  q?: string
 }) => {
-  const { isPending, error, data } = useQuery<ResponseData>({
+  const { isPending, error, data } = useQuery<{
+    response: {
+      docs: Doc[]
+      numFound: number
+      start: number
+    }
+  }>({
     queryKey: ['data', params],
     queryFn: () => fetch(getFetchUrl(params)).then((res) => res.json()),
   })
