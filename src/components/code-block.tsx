@@ -1,5 +1,5 @@
+import { useToast } from '@/components/ui/toast/use-toast'
 import { CopyIcon } from 'lucide-react'
-import { useState } from 'react'
 import { Button } from './ui/button'
 
 interface CodeBlockProps {
@@ -7,7 +7,7 @@ interface CodeBlockProps {
 }
 
 export const CodeBlock = ({ code }: CodeBlockProps) => {
-  const [copied, setCopied] = useState(false)
+  const { toast } = useToast()
 
   return (
     <div className="relative">
@@ -16,15 +16,14 @@ export const CodeBlock = ({ code }: CodeBlockProps) => {
       </div>
       <Button
         variant="outline"
-        size={copied ? 'default' : 'icon'}
+        size="icon"
         className="absolute bottom-2 right-2"
         onClick={() => {
           navigator.clipboard.writeText(code)
-          setCopied(true)
-          setTimeout(() => setCopied(false), 2000)
+          toast({ description: 'Copied to clipboard!' })
         }}
       >
-        {copied ? 'Copied!' : <CopyIcon className="w-4 h-4 " />}
+        <CopyIcon className="w-4 h-4 " />
       </Button>
     </div>
   )

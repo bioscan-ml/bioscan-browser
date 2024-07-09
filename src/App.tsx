@@ -1,3 +1,4 @@
+import { Toaster } from '@/components/ui/toast/toaster'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { TopBar } from './components/top-bar'
@@ -27,6 +28,7 @@ function App() {
             ))}
           </Routes>
         </main>
+        <Toaster />
       </BrowserRouter>
     </QueryClientProvider>
   )
