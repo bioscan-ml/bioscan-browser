@@ -1,8 +1,10 @@
+import { DocDetails } from '@/components/doc-details'
 import { PageContent } from '@/components/page-content'
 import { PaginationBar } from '@/components/pagination-bar'
 import { TaxonomyTree } from '@/components/taxonomy-tree'
-import { useData } from '@/hooks/useData'
-import { useTaxonomy } from '@/hooks/useTaxonomy'
+import { useRecords } from '@/hooks/useRecords'
+import { useTaxonomyTree } from '@/hooks/useTaxonomyTree'
+import { Doc } from '@/types/response-data'
 import { Loader2Icon } from 'lucide-react'
 import { useState } from 'react'
 import { DataGallery } from '../asset-querier/data-gallery'
@@ -10,27 +12,28 @@ import { PAGE_SIZE, ROOT_NODE_ID } from './constants'
 import { useTaxonomyQuery } from './useTaxonomyQuery'
 
 export const TaxonomyViewer = () => {
-  // Taxonomy
-  const { taxonomy } = useTaxonomy()
+  // Taxonomy tree
+  const { taxonomyTree } = useTaxonomyTree()
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(
     ROOT_NODE_ID,
   )
 
   // Records
   const [page, setPage] = useState(0)
-  const q = useTaxonomyQuery(taxonomy, selectedNodeId)
-  const { data, isPending } = useData({ page, pageSize: PAGE_SIZE, q })
+  const q = useTaxonomyQuery(taxonomyTree, selectedNodeId)
+  const { data, isPending } = useRecords({ page, pageSize: PAGE_SIZE, q })
+  const [activeDoc, setActiveDoc] = useState<Doc>()
 
   return (
     <>
       <PageContent>
         <div className="flex items-start gap-12 mb-16 py-12">
           <aside className="sticky top-20 w-[240px] shrink-0 space-y-8">
-            {taxonomy && (
+            {taxonomyTree && (
               <TaxonomyTree
                 defaultExpandedNodes={[ROOT_NODE_ID]}
-                taxonomy={taxonomy}
                 selectedNodeId={selectedNodeId}
+                taxonomyTree={taxonomyTree}
                 onSelectedNodeIdChange={setSelectedNodeId}
               />
             )}
@@ -40,7 +43,10 @@ export const TaxonomyViewer = () => {
               <Loader2Icon className="w-16 h-16 animate-spin opacity-50" />
             </div>
           ) : (
-            <DataGallery docs={data?.docs} onItemClick={() => {}} />
+            <DataGallery
+              docs={data?.docs}
+              onItemClick={(doc) => setActiveDoc(doc)}
+            />
           )}
         </div>
       </PageContent>
@@ -52,6 +58,15 @@ export const TaxonomyViewer = () => {
           setPage={setPage}
         />
       )}
+      <DocDetails
+        doc={activeDoc}
+        open={!!activeDoc}
+        onOpenChange={(open) => {
+          if (!open) {
+            setActiveDoc(undefined)
+          }
+        }}
+      />
     </>
   )
 }

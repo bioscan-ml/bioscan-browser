@@ -6,14 +6,14 @@ import './styles.css'
 
 interface TaxonomyTreeProps {
   defaultExpandedNodes?: string[]
-  taxonomy: TaxonomyTreeNode
   selectedNodeId: string | null
+  taxonomyTree: TaxonomyTreeNode
   onSelectedNodeIdChange: (selectedNodeId: string | null) => void
 }
 
 export const TaxonomyTree = ({
   defaultExpandedNodes,
-  taxonomy,
+  taxonomyTree,
   selectedNodeId,
   onSelectedNodeIdChange,
 }: TaxonomyTreeProps) => (
@@ -26,7 +26,7 @@ export const TaxonomyTree = ({
     selectedItems={selectedNodeId}
     onSelectedItemsChange={(_, itemId) => onSelectedNodeIdChange(itemId)}
   >
-    {taxonomy.children?.map((child) => (
+    {taxonomyTree.children?.map((child) => (
       <TaxonomyTreeItem key={child.li_attr.id} node={child} />
     ))}
   </SimpleTreeView>

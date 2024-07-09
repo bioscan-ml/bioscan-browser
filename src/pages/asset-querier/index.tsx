@@ -1,7 +1,7 @@
 import { DocDetails } from '@/components/doc-details'
 import { PageContent } from '@/components/page-content'
 import { PaginationBar } from '@/components/pagination-bar'
-import { useData } from '@/hooks/useData'
+import { useRecords } from '@/hooks/useRecords'
 import { Doc } from '@/types/response-data'
 import { Sort, ViewMode } from '@/types/settings'
 import { Loader2Icon } from 'lucide-react'
@@ -20,7 +20,7 @@ export const AssetQuerier = () => {
   })
   const [page, setPage] = useState(0)
   const [activeDoc, setActiveDoc] = useState<Doc | undefined>()
-  const { data, isPending } = useData({ page, pageSize: PAGE_SIZE, sort })
+  const { data, isPending } = useRecords({ page, pageSize: PAGE_SIZE, sort })
 
   return (
     <>

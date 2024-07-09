@@ -19,14 +19,14 @@ const flatten = (
 }
 
 export const useTaxonomyQuery = (
-  taxonomy: TaxonomyTreeNode | undefined,
+  taxonomyTree: TaxonomyTreeNode | undefined,
   selectedNodeId: string | null,
 ) => {
   const metadata = useMemo(() => {
-    if (taxonomy && selectedNodeId && selectedNodeId !== ROOT_NODE_ID) {
-      return flatten(taxonomy)[selectedNodeId]
+    if (taxonomyTree && selectedNodeId && selectedNodeId !== ROOT_NODE_ID) {
+      return flatten(taxonomyTree)[selectedNodeId]
     }
-  }, [taxonomy, selectedNodeId])
+  }, [taxonomyTree, selectedNodeId])
 
   if (metadata) {
     return `${metadata.taxon}: ${metadata.label}`
