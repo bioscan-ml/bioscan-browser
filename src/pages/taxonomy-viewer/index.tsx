@@ -39,7 +39,7 @@ export const TaxonomyViewer = () => {
             )}
           </aside>
           {taxonomyTreePending || isPending ? (
-            <div className="w-full flex items-center justify-center">
+            <div className="w-full min-h-96 flex items-center justify-center">
               <Loader2Icon className="w-16 h-16 animate-spin opacity-50" />
             </div>
           ) : (

@@ -25,7 +25,7 @@ export const AssetQuerier = () => {
   return (
     <>
       <PageContent>
-        <div className="flex items-stretch gap-12 mb-16 py-12">
+        <div className="flex items-start gap-12 mb-16 py-12">
           <Settings
             viewMode={viewMode}
             setViewMode={setViewMode}
@@ -33,7 +33,7 @@ export const AssetQuerier = () => {
             setSort={setSort}
           />
           {isPending ? (
-            <div className="w-full flex items-center justify-center">
+            <div className="w-full min-h-96 flex items-center justify-center">
               <Loader2Icon className="w-16 h-16 animate-spin opacity-50" />
             </div>
           ) : (
