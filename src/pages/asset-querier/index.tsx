@@ -1,6 +1,7 @@
 import { DocDetails } from '@/components/doc-details'
 import { PageContent } from '@/components/page-content'
 import { PaginationBar } from '@/components/pagination-bar'
+import { Sidebar } from '@/components/sidebar'
 import { useRecords } from '@/hooks/useRecords'
 import { Doc } from '@/types/response-data'
 import { Sort, ViewMode } from '@/types/settings'
@@ -25,35 +26,39 @@ export const AssetQuerier = () => {
   return (
     <>
       <PageContent>
-        <div className="flex items-start gap-12 mb-16 py-12">
-          <Settings
-            viewMode={viewMode}
-            setViewMode={setViewMode}
-            sort={sort}
-            setSort={setSort}
-          />
-          {isPending ? (
-            <div className="w-full min-h-96 flex items-center justify-center">
-              <Loader2Icon className="w-16 h-16 animate-spin opacity-50" />
-            </div>
-          ) : (
-            <>
-              {viewMode === 'table' && (
-                <DataTable
-                  docs={data?.docs}
-                  sort={sort}
-                  onRowClick={(doc) => setActiveDoc(doc)}
-                  setSort={setSort}
-                />
-              )}
-              {viewMode === 'gallery' && (
-                <DataGallery
-                  docs={data?.docs}
-                  onItemClick={(doc) => setActiveDoc(doc)}
-                />
-              )}
-            </>
-          )}
+        <div className="flex items-start gap-8 py-8">
+          <Sidebar>
+            <Settings
+              viewMode={viewMode}
+              setViewMode={setViewMode}
+              sort={sort}
+              setSort={setSort}
+            />
+          </Sidebar>
+          <div className="mb-16 grow overflow-hidden">
+            {isPending ? (
+              <div className="h-64 flex items-center justify-center">
+                <Loader2Icon className="w-16 h-16 animate-spin opacity-50" />
+              </div>
+            ) : (
+              <>
+                {viewMode === 'table' && (
+                  <DataTable
+                    docs={data?.docs}
+                    sort={sort}
+                    onRowClick={(doc) => setActiveDoc(doc)}
+                    setSort={setSort}
+                  />
+                )}
+                {viewMode === 'gallery' && (
+                  <DataGallery
+                    docs={data?.docs}
+                    onItemClick={(doc) => setActiveDoc(doc)}
+                  />
+                )}
+              </>
+            )}
+          </div>
         </div>
       </PageContent>
       {data && (

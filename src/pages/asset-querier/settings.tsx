@@ -22,7 +22,7 @@ export const Settings = ({
   sort,
   setSort,
 }: SettingsProps) => (
-  <aside className="sticky top-20 w-[240px] shrink-0 space-y-8">
+  <div className="space-y-8">
     {/* View mode */}
     <div className="space-y-2">
       <label className="text-sm font-medium">View mode</label>
@@ -64,5 +64,5 @@ export const Settings = ({
         </Select>
       </div>
     </div>
-  </aside>
+  </div>
 )

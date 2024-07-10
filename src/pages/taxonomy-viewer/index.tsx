@@ -1,6 +1,7 @@
 import { DocDetails } from '@/components/doc-details'
 import { PageContent } from '@/components/page-content'
 import { PaginationBar } from '@/components/pagination-bar'
+import { Sidebar } from '@/components/sidebar'
 import { TaxonomyTree } from '@/components/taxonomy-tree'
 import { useRecords } from '@/hooks/useRecords'
 import { useTaxonomyTree } from '@/hooks/useTaxonomyTree'
@@ -27,8 +28,8 @@ export const TaxonomyViewer = () => {
   return (
     <>
       <PageContent>
-        <div className="flex items-start gap-12 mb-16 py-12">
-          <aside className="sticky top-20 w-[240px] shrink-0 space-y-8">
+        <div className="flex items-start gap-8 py-8">
+          <Sidebar>
             {taxonomyTree && (
               <TaxonomyTree
                 defaultExpandedNodes={[ROOT_NODE_ID]}
@@ -37,17 +38,19 @@ export const TaxonomyViewer = () => {
                 onSelectedNodeIdChange={setSelectedNodeId}
               />
             )}
-          </aside>
-          {taxonomyTreePending || isPending ? (
-            <div className="w-full min-h-96 flex items-center justify-center">
-              <Loader2Icon className="w-16 h-16 animate-spin opacity-50" />
-            </div>
-          ) : (
-            <DataGallery
-              docs={data?.docs}
-              onItemClick={(doc) => setActiveDoc(doc)}
-            />
-          )}
+          </Sidebar>
+          <div className="mb-16 grow overflow-hidden">
+            {taxonomyTreePending || isPending ? (
+              <div className="h-64 flex items-center justify-center">
+                <Loader2Icon className="w-16 h-16 animate-spin opacity-50" />
+              </div>
+            ) : (
+              <DataGallery
+                docs={data?.docs}
+                onItemClick={(doc) => setActiveDoc(doc)}
+              />
+            )}
+          </div>
         </div>
       </PageContent>
       {data && (
