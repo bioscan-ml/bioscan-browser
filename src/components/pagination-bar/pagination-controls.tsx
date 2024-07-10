@@ -38,30 +38,32 @@ export const PaginationControls = ({
       >
         <ChevronLeftIcon className="w-4 h-4" />
       </Button>
-      {!pageWindow.includes(firstPage) && (
-        <PageButton
-          page={firstPage}
-          active={firstPage === currentPage}
-          onClick={() => setPage(firstPage)}
-        />
-      )}
-      {showStartDivider && <MoreHorizontalIcon className="w-4 h-4" />}
-      {pageWindow.map((page) => (
-        <PageButton
-          key={page}
-          page={page}
-          active={page === currentPage}
-          onClick={() => setPage(page)}
-        />
-      ))}
-      {showEndDivider && <MoreHorizontalIcon className="w-4 h-4" />}
-      {!pageWindow.includes(lastPage) && (
-        <PageButton
-          page={lastPage}
-          active={lastPage === currentPage}
-          onClick={() => setPage(lastPage)}
-        />
-      )}
+      <div className="hidden gap-2 sm:flex sm:items-center sm:gap-2">
+        {!pageWindow.includes(firstPage) && (
+          <PageButton
+            page={firstPage}
+            active={firstPage === currentPage}
+            onClick={() => setPage(firstPage)}
+          />
+        )}
+        {showStartDivider && <MoreHorizontalIcon className="w-4 h-4" />}
+        {pageWindow.map((page) => (
+          <PageButton
+            key={page}
+            page={page}
+            active={page === currentPage}
+            onClick={() => setPage(page)}
+          />
+        ))}
+        {showEndDivider && <MoreHorizontalIcon className="w-4 h-4" />}
+        {!pageWindow.includes(lastPage) && (
+          <PageButton
+            page={lastPage}
+            active={lastPage === currentPage}
+            onClick={() => setPage(lastPage)}
+          />
+        )}
+      </div>
       <Button
         aria-label="Next"
         variant="ghost"

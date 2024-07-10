@@ -28,7 +28,7 @@ export const TaxonomyViewer = () => {
   return (
     <>
       <PageContent>
-        <div className="flex items-start gap-8 py-8">
+        <div className="grid items-start gap-4 py-4 sm:flex sm:gap-8 sm:py-8">
           <Sidebar>
             {taxonomyTree && (
               <TaxonomyTree

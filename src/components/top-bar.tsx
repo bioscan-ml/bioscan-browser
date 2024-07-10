@@ -5,7 +5,7 @@ import { PageContent } from './page-content'
 export const TopBar = () => (
   <header className="sticky top-0 bg-background/95 border-b z-10 overflow-hidden">
     <PageContent>
-      <div className="h-16 flex items-center gap-8">
+      <div className="h-16 flex items-center justify-between gap-4 sm:justify-start sm:gap-8">
         <Link to="/" className="flex items-center gap-2 shrink-0">
           <img
             src="/assets/cbg.png"
