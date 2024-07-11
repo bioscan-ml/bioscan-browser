@@ -1,6 +1,6 @@
+import { ROOT_NODE_ID } from '@/lib/constants'
 import { TaxonomyTreeNode } from '@/types/response-data'
 import { useMemo } from 'react'
-import { ROOT_NODE_ID } from './constants'
 
 const flatten = (
   node: TaxonomyTreeNode,

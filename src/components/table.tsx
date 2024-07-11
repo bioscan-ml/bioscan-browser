@@ -1,32 +1,27 @@
 import {
-  Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
+  Table as TablePrimitive,
   TableRow,
 } from '@/components/ui/table'
+import { FIELDS } from '@/lib/constants'
 import { getImageSrc } from '@/lib/getImageSrc'
 import { cn } from '@/lib/utils'
 import { Doc } from '@/types/response-data'
 import { Sort } from '@/types/settings'
 import { ArrowDownIcon, ArrowUpIcon } from 'lucide-react'
-import { FIELDS } from './fields'
 
-interface DataTableProps {
+interface TableProps {
   docs?: Doc[]
   sort: Sort
   onRowClick: (doc: Doc) => void
   setSort: (sort: Sort) => void
 }
 
-export const DataTable = ({
-  docs = [],
-  sort,
-  onRowClick,
-  setSort,
-}: DataTableProps) => (
-  <Table>
+export const Table = ({ docs = [], sort, onRowClick, setSort }: TableProps) => (
+  <TablePrimitive>
     <TableHeader>
       <TableRow>
         <TableHead />
@@ -92,5 +87,5 @@ export const DataTable = ({
         </TableRow>
       ))}
     </TableBody>
-  </Table>
+  </TablePrimitive>
 )

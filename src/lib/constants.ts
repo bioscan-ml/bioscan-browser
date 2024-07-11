@@ -4,7 +4,7 @@ export const FIELDS: { label: string; key: keyof Doc; cellClass?: string }[] = [
   { label: 'ID', key: 'id', cellClass: 'font-medium' },
   { label: 'Sample ID', key: 'sampleid' },
   { label: 'Country', key: 'country' },
-  { label: 'Province state', key: 'province_state' },
+  { label: 'Province/State', key: 'province_state' },
   { label: 'Phylum', key: 'phylum' },
   { label: 'Class', key: 'class' },
   { label: 'Order', key: 'order' },
@@ -13,3 +13,7 @@ export const FIELDS: { label: string; key: keyof Doc; cellClass?: string }[] = [
   { label: 'Genus', key: 'genus' },
   { label: 'Species', key: 'species' },
 ]
+
+export const PAGE_SIZE = 100
+
+export const ROOT_NODE_ID = 'phylum-Arthropoda'
