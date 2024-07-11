@@ -1,6 +1,13 @@
 import { Toaster } from '@/components/ui/toast/toaster'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { useEffect } from 'react'
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+} from 'react-router-dom'
 import { TopBar } from './components/top-bar'
 import { About } from './pages/about'
 import { AssetQuerier } from './pages/asset-querier'
@@ -29,9 +36,21 @@ function App() {
           </Routes>
         </main>
         <Toaster />
+        <ScrollToTop />
       </BrowserRouter>
     </QueryClientProvider>
   )
+}
+
+// Scroll to top on route change
+const ScrollToTop = () => {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+
+  return null
 }
 
 export default App
