@@ -1,5 +1,6 @@
 import { DocDetails } from '@/components/doc-details'
 import { Gallery } from '@/components/gallery'
+import { Loader } from '@/components/loader'
 import { OrderByControl } from '@/components/order-by-control'
 import { PageContent } from '@/components/page-content'
 import { PaginationBar } from '@/components/pagination-bar'
@@ -10,13 +11,12 @@ import { useTaxonomyTree } from '@/hooks/useTaxonomyTree'
 import { FIELDS, PAGE_SIZE, ROOT_NODE_ID } from '@/lib/constants'
 import { Doc } from '@/types/response-data'
 import { Sort } from '@/types/settings'
-import { Loader2Icon } from 'lucide-react'
 import { useState } from 'react'
 import { useTaxonomyQuery } from './useTaxonomyQuery'
 
 export const TaxonomyViewer = () => {
   // Taxonomy tree
-  const { taxonomyTree, isPending: taxonomyTreePending } = useTaxonomyTree()
+  const { taxonomyTree, isPending: isTaxonomyTreePending } = useTaxonomyTree()
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(
     ROOT_NODE_ID,
   )
@@ -41,24 +41,24 @@ export const TaxonomyViewer = () => {
                 <label className="text-sm font-medium">Order by</label>
                 <OrderByControl fields={FIELDS} sort={sort} setSort={setSort} />
               </div>
-              {taxonomyTree && (
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Taxonomy</label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Taxonomy</label>
+                {isTaxonomyTreePending ? (
+                  <Loader size="sm" />
+                ) : (
                   <TaxonomyTree
                     defaultExpandedNodes={[ROOT_NODE_ID]}
                     selectedNodeId={selectedNodeId}
                     taxonomyTree={taxonomyTree}
                     onSelectedNodeIdChange={setSelectedNodeId}
                   />
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </Sidebar>
           <div className="mb-16 grow overflow-hidden">
-            {taxonomyTreePending || isPending ? (
-              <div className="h-64 flex items-center justify-center">
-                <Loader2Icon className="w-16 h-16 animate-spin opacity-50" />
-              </div>
+            {isPending ? (
+              <Loader />
             ) : (
               <Gallery
                 docs={data?.docs}

@@ -1,5 +1,6 @@
 import { DocDetails } from '@/components/doc-details'
 import { Gallery } from '@/components/gallery'
+import { Loader } from '@/components/loader'
 import { OrderByControl } from '@/components/order-by-control'
 import { PageContent } from '@/components/page-content'
 import { PaginationBar } from '@/components/pagination-bar'
@@ -10,7 +11,6 @@ import { useRecords } from '@/hooks/useRecords'
 import { FIELDS, PAGE_SIZE } from '@/lib/constants'
 import { Doc } from '@/types/response-data'
 import { Sort, ViewMode } from '@/types/settings'
-import { Loader2Icon } from 'lucide-react'
 import { useState } from 'react'
 
 export const AssetQuerier = () => {
@@ -44,9 +44,7 @@ export const AssetQuerier = () => {
           </Sidebar>
           <div className="mb-16 grow overflow-hidden">
             {isPending ? (
-              <div className="h-64 flex items-center justify-center">
-                <Loader2Icon className="w-16 h-16 animate-spin opacity-50" />
-              </div>
+              <Loader />
             ) : (
               <>
                 {viewMode === 'table' && (
