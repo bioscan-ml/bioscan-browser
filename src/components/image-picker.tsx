@@ -65,7 +65,7 @@ export const ImagePicker = ({ images }: ImagePickerProps) => {
         >
           <ExternalLinkIcon className="w-4 h-4" />
         </a>
-        <div className="opacity-0 group-hover:opacity-100">
+        <div className="hidden sm:group-hover:block">
           <Button
             className="absolute top-1/2 left-2 -translate-y-1/2 rounded-full"
             variant="outline"
