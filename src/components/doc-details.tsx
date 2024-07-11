@@ -1,6 +1,6 @@
+import { FIELDS } from '@/lib/constants'
 import { getImageSrc } from '@/lib/getImageSrc'
 import { getTaxonomy } from '@/lib/getTaxonomy'
-import { FIELDS } from '@/pages/asset-querier/fields'
 import { Doc } from '@/types/response-data'
 import { ChevronRight } from 'lucide-react'
 import { CodeBlock } from './code-block'

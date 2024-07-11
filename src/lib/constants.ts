@@ -13,3 +13,7 @@ export const FIELDS: { label: string; key: keyof Doc; cellClass?: string }[] = [
   { label: 'Genus', key: 'genus' },
   { label: 'Species', key: 'species' },
 ]
+
+export const PAGE_SIZE = 100
+
+export const ROOT_NODE_ID = 'phylum-Arthropoda'
