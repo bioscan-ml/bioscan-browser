@@ -23,9 +23,9 @@ export const PaginationBar = <T extends { id: string }>({
   const totalLabel = data.numFound.toLocaleString()
 
   return (
-    <div className="fixed bottom-0 left-0 w-full bg-background/95 border-t">
+    <div className="fixed bottom-0 left-0 w-full h-16 bg-background/95 border-t">
       <PageContent>
-        <div className="h-16 flex items-center justify-between gap-2">
+        <div className="h-full flex items-center justify-between gap-2">
           <p className="text-sm whitespace-nowrap shrink-0">
             Showing {fromLabel}-{toLabel} of {totalLabel} results
           </p>
