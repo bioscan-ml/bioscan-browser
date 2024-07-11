@@ -44,7 +44,7 @@ export const TaxonomyViewer = () => {
               <div className="space-y-2">
                 <label className="text-sm font-medium">Taxonomy</label>
                 {isTaxonomyTreePending ? (
-                  <Loader size="sm" />
+                  <Loader />
                 ) : (
                   <TaxonomyTree
                     defaultExpandedNodes={[ROOT_NODE_ID]}

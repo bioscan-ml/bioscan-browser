@@ -1,26 +1,19 @@
-import { Loader2Icon } from 'lucide-react'
+import { LoaderCircleIcon } from 'lucide-react'
 
 interface LoaderProps {
   size?: 'default' | 'sm'
 }
 
 export const Loader = ({ size = 'default' }: LoaderProps) => {
-  const containerSize = {
-    default: 32,
-    sm: 24,
-  }[size]
-
   const iconSize = {
     default: 16,
     sm: 12,
   }[size]
 
   return (
-    <div
-      className={`w-full h-${containerSize} flex items-center justify-center`}
-    >
-      <Loader2Icon
-        className={`w-${iconSize} h-${iconSize} animate-spin opacity-50`}
+    <div className={`w-full h-32 flex items-center justify-center`}>
+      <LoaderCircleIcon
+        className={`w-${iconSize} h-${iconSize} animate-spin text-[#99cc33]`}
       />
     </div>
   )
