@@ -1,7 +1,7 @@
 import { Doc } from '@/types/response-data'
 import { useSearchParamsState } from './useSearchParamsState'
 
-const SEARCH_PARAM_KEY = 'doc'
+const SEARCH_PARAM_KEY = 'record'
 
 export const useActiveDoc = (docs?: Doc[]) => {
   const [activeDocId, setActiveDocId] = useSearchParamsState(
