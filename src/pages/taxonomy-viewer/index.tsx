@@ -6,30 +6,32 @@ import { PageContent } from '@/components/page-content'
 import { PaginationBar } from '@/components/pagination-bar'
 import { Sidebar } from '@/components/sidebar'
 import { TaxonomyTree } from '@/components/taxonomy-tree'
+import { useActiveDoc } from '@/hooks/search-params/useActiveDoc'
+import { usePage } from '@/hooks/search-params/usePage'
+import { useSort } from '@/hooks/search-params/useSort'
+import { useTaxon } from '@/hooks/search-params/useTaxon'
 import { useRecords } from '@/hooks/useRecords'
 import { useTaxonomyTree } from '@/hooks/useTaxonomyTree'
-import { FIELDS, PAGE_SIZE, ROOT_NODE_ID } from '@/lib/constants'
-import { Doc } from '@/types/response-data'
-import { Sort } from '@/types/settings'
-import { useState } from 'react'
+import {
+  DEFAULT_PAGE,
+  DEFAULT_SORT,
+  FIELDS,
+  PAGE_SIZE,
+  ROOT_NODE_ID,
+} from '@/lib/constants'
 import { useTaxonomyQuery } from './useTaxonomyQuery'
 
 export const TaxonomyViewer = () => {
   // Taxonomy tree
   const { taxonomyTree, isPending: isTaxonomyTreePending } = useTaxonomyTree()
-  const [selectedNodeId, setSelectedNodeId] = useState<string | null>(
-    ROOT_NODE_ID,
-  )
+  const { selectedNodeId, setSelectedNodeId } = useTaxon(ROOT_NODE_ID)
 
   // Records
-  const [sort, setSort] = useState<Sort>({
-    key: 'id',
-    order: 'asc',
-  })
-  const [page, setPage] = useState(0)
+  const { page, setPage } = usePage(DEFAULT_PAGE)
+  const { sort, setSort } = useSort(DEFAULT_SORT)
   const q = useTaxonomyQuery(taxonomyTree, selectedNodeId)
   const { data, isPending } = useRecords({ page, pageSize: PAGE_SIZE, sort, q })
-  const [activeDoc, setActiveDoc] = useState<Doc>()
+  const { activeDoc, setActiveDoc } = useActiveDoc(data?.docs)
 
   return (
     <>
