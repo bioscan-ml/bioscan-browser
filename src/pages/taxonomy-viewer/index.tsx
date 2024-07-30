@@ -19,12 +19,22 @@ import {
   PAGE_SIZE,
   ROOT_NODE_ID,
 } from '@/lib/constants'
+import { findPathById } from '@/lib/findPathById'
+import { useMemo } from 'react'
 import { useTaxonomyQuery } from './useTaxonomyQuery'
 
 export const TaxonomyViewer = () => {
   // Taxonomy tree
   const { taxonomyTree, isPending: isTaxonomyTreePending } = useTaxonomyTree()
   const { selectedNodeId, setSelectedNodeId } = useTaxon(ROOT_NODE_ID)
+  const defaultExpandedNodes = useMemo(() => {
+    if (!taxonomyTree || !selectedNodeId) {
+      return [ROOT_NODE_ID]
+    }
+
+    return findPathById(taxonomyTree.children, selectedNodeId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [taxonomyTree])
 
   // Records
   const { page, setPage } = usePage(DEFAULT_PAGE)
@@ -49,7 +59,7 @@ export const TaxonomyViewer = () => {
                   <Loader />
                 ) : (
                   <TaxonomyTree
-                    defaultExpandedNodes={[ROOT_NODE_ID]}
+                    defaultExpandedNodes={defaultExpandedNodes}
                     selectedNodeId={selectedNodeId}
                     taxonomyTree={taxonomyTree}
                     onSelectedNodeIdChange={setSelectedNodeId}
