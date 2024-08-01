@@ -1,4 +1,5 @@
 import { Doc } from '@/types/response-data'
+import { Sort } from '@/types/settings'
 
 export const FIELDS: { label: string; key: keyof Doc; cellClass?: string }[] = [
   { label: 'ID', key: 'id', cellClass: 'font-medium' },
@@ -14,6 +15,13 @@ export const FIELDS: { label: string; key: keyof Doc; cellClass?: string }[] = [
   { label: 'Species', key: 'species' },
 ]
 
+export const DEFAULT_PAGE = 0
+
 export const PAGE_SIZE = 100
+
+export const DEFAULT_SORT: Sort = {
+  key: 'id',
+  order: 'asc',
+}
 
 export const ROOT_NODE_ID = 'phylum-Arthropoda'

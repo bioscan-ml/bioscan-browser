@@ -7,21 +7,20 @@ import { PaginationBar } from '@/components/pagination-bar'
 import { Sidebar } from '@/components/sidebar'
 import { Table } from '@/components/table'
 import { ViewModeControl } from '@/components/view-mode-control'
+import { useActiveDoc } from '@/hooks/search-params/useActiveDoc'
+import { usePage } from '@/hooks/search-params/usePage'
+import { useSort } from '@/hooks/search-params/useSort'
 import { useRecords } from '@/hooks/useRecords'
-import { FIELDS, PAGE_SIZE } from '@/lib/constants'
-import { Doc } from '@/types/response-data'
-import { Sort, ViewMode } from '@/types/settings'
+import { DEFAULT_PAGE, DEFAULT_SORT, FIELDS, PAGE_SIZE } from '@/lib/constants'
+import { ViewMode } from '@/types/settings'
 import { useState } from 'react'
 
 export const AssetQuerier = () => {
   const [viewMode, setViewMode] = useState<ViewMode>('table')
-  const [sort, setSort] = useState<Sort>({
-    key: 'id',
-    order: 'asc',
-  })
-  const [page, setPage] = useState(0)
-  const [activeDoc, setActiveDoc] = useState<Doc | undefined>()
+  const { page, setPage } = usePage(DEFAULT_PAGE)
+  const { sort, setSort } = useSort(DEFAULT_SORT)
   const { data, isPending } = useRecords({ page, pageSize: PAGE_SIZE, sort })
+  const { activeDoc, setActiveDoc } = useActiveDoc(data?.docs)
 
   return (
     <>
