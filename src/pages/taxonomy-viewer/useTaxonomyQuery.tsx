@@ -29,7 +29,7 @@ export const useTaxonomyQuery = (
   }, [taxonomyTree, selectedNodeId])
 
   if (metadata) {
-    return `${metadata.taxon}: ${metadata.label}`
+    return `${metadata.taxon}:"${metadata.label}"`
   }
 
   return undefined
