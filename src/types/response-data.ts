@@ -24,6 +24,8 @@ export interface TaxonomyTreeNode {
   metadata: {
     label: string
     taxon: string
+    numChildren: number
+    numInstances: number
   }
   text: string
 }
