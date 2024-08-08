@@ -1,9 +1,9 @@
-import { useSearchParamsState } from './useSearchParamsState'
+import { useSingleSearchParamsState } from './useSearchParamsState'
 
 const SEARCH_PARAM_KEY = 'page'
 
 export const usePage = (defaultPage: number) => {
-  const [pageParam, setPageParam] = useSearchParamsState(
+  const [pageParam, setPageParam] = useSingleSearchParamsState(
     SEARCH_PARAM_KEY,
     `${defaultPage + 1}`,
   )
