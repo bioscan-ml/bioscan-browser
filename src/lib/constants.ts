@@ -15,6 +15,15 @@ export const FIELDS: { label: string; key: keyof Doc; cellClass?: string }[] = [
   { label: 'Species', key: 'species' },
 ]
 
+export const FILTER_TYPES = [
+  { label: 'ID', key: 'id' },
+  { label: 'Process ID', key: 'processid' },
+  { label: 'Sample ID', key: 'sampleid' },
+  { label: 'DNA Barcode', key: 'dna_barcode' },
+  { label: 'DNA BIN', key: 'dna_bin' },
+  { label: 'Country', key: 'country' },
+]
+
 export const DEFAULT_PAGE = 0
 
 export const PAGE_SIZE = 100

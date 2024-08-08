@@ -6,3 +6,8 @@ export interface Sort {
   key: string
   order: SortOrder
 }
+
+export interface Filter {
+  type: string
+  value: string
+}
