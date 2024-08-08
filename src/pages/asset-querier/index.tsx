@@ -35,7 +35,7 @@ export const AssetQuerier = () => {
                   setViewMode={setViewMode}
                 />
               </div>
-              <div className="space-y-2 grow">
+              <div className="space-y-2">
                 <label className="text-sm font-medium">Order by</label>
                 <OrderByControl fields={FIELDS} sort={sort} setSort={setSort} />
               </div>
