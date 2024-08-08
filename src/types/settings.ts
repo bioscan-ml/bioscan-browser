@@ -9,5 +9,5 @@ export interface Sort {
 
 export interface Filter {
   type: string
-  value: string
+  value: string[]
 }

@@ -21,8 +21,14 @@ export const AssetQuerier = () => {
   const [viewMode, setViewMode] = useState<ViewMode>('table')
   const { page, setPage } = usePage(DEFAULT_PAGE)
   const { sort, setSort } = useSort(DEFAULT_SORT)
-  const { filters, addFilter, removeFilter, clearFilters } = useFilters()
-  const { data, isPending } = useRecords({ page, pageSize: PAGE_SIZE, sort })
+  const { filters, filterQuery, addFilter, removeFilter, clearFilters } =
+    useFilters()
+  const { data, isPending } = useRecords({
+    page,
+    pageSize: PAGE_SIZE,
+    sort,
+    q: filterQuery,
+  })
   const { activeDoc, setActiveDoc } = useActiveDoc(data?.docs)
 
   return (

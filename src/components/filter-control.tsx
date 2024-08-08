@@ -88,7 +88,7 @@ const ActiveFilters = ({
           FILTER_TYPES.find((filterType) => filterType.key === filter.type)
             ?.label
         }
-        : {filter.value}
+        : {filter.value.join(', ')}
         <X className="w-3 h-3 ml-2" />
       </Badge>
     ))}
@@ -141,7 +141,7 @@ const AddFilterForm = ({
         </Button>
         <Button
           variant="default"
-          onClick={() => onAdd({ type, value })}
+          onClick={() => onAdd({ type, value: [value] })}
           disabled={value.length === 0}
         >
           Apply
