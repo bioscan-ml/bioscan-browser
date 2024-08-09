@@ -37,6 +37,7 @@ export const AddFilterForm = ({ onAdd, onCancel }: AddFilterFormProps) => {
       </div>
       <div className="flex items-center justify-end gap-2">
         <Button
+          type="button"
           variant="outline"
           onClick={(e) => {
             e.preventDefault()
@@ -47,8 +48,8 @@ export const AddFilterForm = ({ onAdd, onCancel }: AddFilterFormProps) => {
         </Button>
         <Button
           disabled={!type || !value.length}
-          variant="default"
           type="submit"
+          variant="default"
         >
           Apply
         </Button>
