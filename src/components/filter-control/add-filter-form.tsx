@@ -1,6 +1,6 @@
 import { Input } from '@/components/ui/input'
 import { Filter } from '@/types/settings'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { Button } from '../ui/button'
 import { TypePicker } from './type-picker'
 
@@ -36,7 +36,13 @@ export const AddFilterForm = ({ onAdd, onCancel }: AddFilterFormProps) => {
         />
       </div>
       <div className="flex items-center justify-end gap-2">
-        <Button variant="outline" onClick={() => onCancel()}>
+        <Button
+          variant="outline"
+          onClick={(e) => {
+            e.preventDefault()
+            onCancel()
+          }}
+        >
           Cancel
         </Button>
         <Button
