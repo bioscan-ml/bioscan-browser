@@ -18,7 +18,7 @@ export const PaginationBar = <T extends { id: string }>({
   pageSize,
   setPage,
 }: PaginationBarProps<T>) => {
-  const fromLabel = (data.start + 1).toLocaleString()
+  const fromLabel = Math.min(data.start + 1, data.docs.length).toLocaleString()
   const toLabel = (data.start + data.docs.length).toLocaleString()
   const totalLabel = data.numFound.toLocaleString()
 
