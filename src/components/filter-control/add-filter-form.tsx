@@ -1,6 +1,6 @@
 import { Input } from '@/components/ui/input'
 import { Filter } from '@/types/settings'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Button } from '../ui/button'
 import { TypePicker } from './type-picker'
 
@@ -14,7 +14,16 @@ export const AddFilterForm = ({ onAdd, onCancel }: AddFilterFormProps) => {
   const [value, setValue] = useState('')
 
   return (
-    <>
+    <form
+      className="space-y-6"
+      onSubmit={(e) => {
+        e.preventDefault()
+
+        if (type && value.length) {
+          onAdd({ type, value: [value] })
+        }
+      }}
+    >
       <div className="space-y-2">
         <label className="text-sm font-medium">Type</label>
         <TypePicker type={type} setType={setType} />
@@ -33,15 +42,11 @@ export const AddFilterForm = ({ onAdd, onCancel }: AddFilterFormProps) => {
         <Button
           disabled={!type || !value.length}
           variant="default"
-          onClick={() => {
-            if (type && value.length) {
-              onAdd({ type, value: [value] })
-            }
-          }}
+          type="submit"
         >
           Apply
         </Button>
       </div>
-    </>
+    </form>
   )
 }

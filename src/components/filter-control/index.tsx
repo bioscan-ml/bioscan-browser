@@ -38,7 +38,7 @@ export const FilterControl = ({
               <PlusIcon className="w-4 h-4 ml-2" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent side="right" align="start" className="space-y-6">
+          <PopoverContent side="right" align="start">
             <AddFilterForm
               onAdd={(filter) => {
                 onAdd(filter)
