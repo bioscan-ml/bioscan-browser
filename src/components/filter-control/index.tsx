@@ -50,7 +50,7 @@ export const FilterControl = ({
         </Popover>
         {filters.length ? (
           <Button variant="ghost" onClick={() => onClear()}>
-            Clear all
+            Clear
           </Button>
         ) : null}
       </div>

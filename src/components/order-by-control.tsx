@@ -25,7 +25,7 @@ export const OrderByControl = ({
       onValueChange={(value) => setSort({ ...sort, key: value })}
     >
       <SelectTrigger>
-        <SelectValue placeholder="Select a value" />
+        <SelectValue />
       </SelectTrigger>
       <SelectContent>
         {fields.map((field) => (

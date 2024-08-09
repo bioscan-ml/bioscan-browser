@@ -16,12 +16,18 @@ export const FIELDS: { label: string; key: keyof Doc; cellClass?: string }[] = [
 ]
 
 export const FILTER_TYPES = [
-  { label: 'ID', key: 'id' },
-  { label: 'Process ID', key: 'processid' },
-  { label: 'Sample ID', key: 'sampleid' },
-  { label: 'DNA Barcode', key: 'dna_barcode' },
-  { label: 'DNA BIN', key: 'dna_bin' },
   { label: 'Country', key: 'country' },
+  { label: 'Province/State', key: 'province_state' },
+  { label: 'Phylum', key: 'phylum' },
+  { label: 'Class', key: 'class' },
+  { label: 'Order', key: 'order' },
+  { label: 'Family', key: 'family' },
+  { label: 'Subfamily', key: 'subfamily' },
+  { label: 'Genus', key: 'genus' },
+  { label: 'Species', key: 'species' },
+  { label: 'DNA BIN', key: 'dna_bin' },
+  { label: 'Split', key: 'split' },
+  { label: 'Chunk', key: 'chunk' },
 ]
 
 export const DEFAULT_PAGE = 0
