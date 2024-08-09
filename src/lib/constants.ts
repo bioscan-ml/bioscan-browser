@@ -15,6 +15,20 @@ export const FIELDS: { label: string; key: keyof Doc; cellClass?: string }[] = [
   { label: 'Species', key: 'species' },
 ]
 
+export const FILTER_TYPES = [
+  { label: 'Country', key: 'country' },
+  { label: 'Province/State', key: 'province_state' },
+  { label: 'Class', key: 'class' },
+  { label: 'Order', key: 'order' },
+  { label: 'Family', key: 'family' },
+  { label: 'Subfamily', key: 'subfamily' },
+  { label: 'Genus', key: 'genus' },
+  { label: 'Species', key: 'species' },
+  { label: 'DNA BIN', key: 'dna_bin' },
+  { label: 'Split', key: 'split' },
+  { label: 'Chunk', key: 'chunk' },
+]
+
 export const DEFAULT_PAGE = 0
 
 export const PAGE_SIZE = 100

@@ -1,12 +1,12 @@
 import { Sort } from '@/types/settings'
 import { useMemo } from 'react'
-import { useSearchParamsState } from './useSearchParamsState'
+import { useSingleSearchParamsState } from './useSearchParamsState'
 
 const SEARCH_PARAM_KEY = 'sort'
 const SEARCH_PARAM_KEY_DELIMITER = ' '
 
 export const useSort = (defaultSort: Sort) => {
-  const [sortParams, setSortParams] = useSearchParamsState(
+  const [sortParams, setSortParams] = useSingleSearchParamsState(
     SEARCH_PARAM_KEY,
     `${defaultSort.key}${SEARCH_PARAM_KEY_DELIMITER}${defaultSort.order}`,
   )

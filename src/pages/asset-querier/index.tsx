@@ -1,6 +1,8 @@
 import { DocDetails } from '@/components/doc-details'
+import { FilterControl } from '@/components/filter-control'
 import { Gallery } from '@/components/gallery'
 import { Loader } from '@/components/loader'
+import { NoRecordsFound } from '@/components/no-records-found'
 import { OrderByControl } from '@/components/order-by-control'
 import { PageContent } from '@/components/page-content'
 import { PaginationBar } from '@/components/pagination-bar'
@@ -10,6 +12,7 @@ import { ViewModeControl } from '@/components/view-mode-control'
 import { useActiveDoc } from '@/hooks/search-params/useActiveDoc'
 import { usePage } from '@/hooks/search-params/usePage'
 import { useSort } from '@/hooks/search-params/useSort'
+import { useFilters } from '@/hooks/useFilters'
 import { useRecords } from '@/hooks/useRecords'
 import { DEFAULT_PAGE, DEFAULT_SORT, FIELDS, PAGE_SIZE } from '@/lib/constants'
 import { ViewMode } from '@/types/settings'
@@ -19,7 +22,14 @@ export const AssetQuerier = () => {
   const [viewMode, setViewMode] = useState<ViewMode>('table')
   const { page, setPage } = usePage(DEFAULT_PAGE)
   const { sort, setSort } = useSort(DEFAULT_SORT)
-  const { data, isPending } = useRecords({ page, pageSize: PAGE_SIZE, sort })
+  const { filters, filterQuery, addFilter, removeFilter, clearFilters } =
+    useFilters()
+  const { data, isPending } = useRecords({
+    page,
+    pageSize: PAGE_SIZE,
+    sort,
+    q: filterQuery,
+  })
   const { activeDoc, setActiveDoc } = useActiveDoc(data?.docs)
 
   return (
@@ -35,9 +45,18 @@ export const AssetQuerier = () => {
                   setViewMode={setViewMode}
                 />
               </div>
-              <div className="space-y-2 grow">
+              <div className="space-y-2">
                 <label className="text-sm font-medium">Order by</label>
                 <OrderByControl fields={FIELDS} sort={sort} setSort={setSort} />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Filters</label>
+                <FilterControl
+                  filters={filters}
+                  onAdd={addFilter}
+                  onClear={clearFilters}
+                  onRemove={removeFilter}
+                />
               </div>
             </div>
           </Sidebar>
@@ -59,6 +78,9 @@ export const AssetQuerier = () => {
                     docs={data?.docs}
                     onItemClick={(doc) => setActiveDoc(doc)}
                   />
+                )}
+                {data?.docs.length === 0 && (
+                  <NoRecordsFound onClearFilters={clearFilters} />
                 )}
               </>
             )}

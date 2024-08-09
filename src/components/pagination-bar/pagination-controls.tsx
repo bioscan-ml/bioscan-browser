@@ -6,6 +6,7 @@ import {
 import { getPageWindow } from '../../lib/getPageWindow'
 import { Button } from '../ui/button'
 import { PageButton } from './page-button'
+import { useEffect } from 'react'
 
 interface PaginationControlsProps {
   currentPage: number
@@ -20,12 +21,18 @@ export const PaginationControls = ({
   pageSize,
   setPage,
 }: PaginationControlsProps) => {
-  const numPages = Math.ceil(numFound / pageSize)
+  const numPages = Math.max(Math.ceil(numFound / pageSize), 1)
   const firstPage = 0
   const lastPage = numPages - 1
   const pageWindow = getPageWindow(currentPage, numPages)
   const showStartDivider = pageWindow[0] - firstPage > 1
   const showEndDivider = lastPage - pageWindow[pageWindow.length - 1] > 1
+
+  useEffect(() => {
+    if (currentPage >= numPages) {
+      setPage(firstPage)
+    }
+  }, [currentPage, numPages, setPage])
 
   return (
     <div className="flex items-center gap-2">
