@@ -18,7 +18,6 @@ export const FIELDS: { label: string; key: keyof Doc; cellClass?: string }[] = [
 export const FILTER_TYPES = [
   { label: 'Country', key: 'country' },
   { label: 'Province/State', key: 'province_state' },
-  { label: 'Phylum', key: 'phylum' },
   { label: 'Class', key: 'class' },
   { label: 'Order', key: 'order' },
   { label: 'Family', key: 'family' },

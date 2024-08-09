@@ -8,7 +8,8 @@ export const useFilters = () => {
 
   const filters: Filter[] =
     _filters?.map((filter) => {
-      const [type, _value] = filter.split(':')
+      const [type, ...rest] = filter.split(':')
+      const _value = rest.join(':')
       const value = _value.split(',')
 
       return { type, value }
