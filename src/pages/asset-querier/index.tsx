@@ -2,6 +2,7 @@ import { DocDetails } from '@/components/doc-details'
 import { FilterControl } from '@/components/filter-control'
 import { Gallery } from '@/components/gallery'
 import { Loader } from '@/components/loader'
+import { NoRecordsFound } from '@/components/no-records-found'
 import { OrderByControl } from '@/components/order-by-control'
 import { PageContent } from '@/components/page-content'
 import { PaginationBar } from '@/components/pagination-bar'
@@ -77,6 +78,9 @@ export const AssetQuerier = () => {
                     docs={data?.docs}
                     onItemClick={(doc) => setActiveDoc(doc)}
                   />
+                )}
+                {data?.docs.length === 0 && (
+                  <NoRecordsFound onClearFilters={clearFilters} />
                 )}
               </>
             )}
