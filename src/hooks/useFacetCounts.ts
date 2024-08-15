@@ -9,6 +9,7 @@ const FACET = {
   FIELDS: [
     'country',
     'province_state',
+    'phylum',
     'class',
     'order',
     'family',

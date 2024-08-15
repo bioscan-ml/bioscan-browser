@@ -18,6 +18,7 @@ export const TaxonomyTree = ({
   onSelectedNodeIdChange,
 }: TaxonomyTreeProps) => (
   <SimpleTreeView
+    key={defaultExpandedNodes?.toString()}
     defaultExpandedItems={defaultExpandedNodes}
     slots={{
       expandIcon: () => <ChevronRightIcon className="w-4 h-4" />,

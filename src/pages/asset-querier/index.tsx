@@ -15,7 +15,13 @@ import { useSort } from '@/hooks/search-params/useSort'
 import { useFacetCounts } from '@/hooks/useFacetCounts'
 import { useFilters } from '@/hooks/useFilters'
 import { useRecords } from '@/hooks/useRecords'
-import { DEFAULT_PAGE, DEFAULT_SORT, FIELDS, PAGE_SIZE } from '@/lib/constants'
+import {
+  DEFAULT_PAGE,
+  DEFAULT_SORT,
+  FIELDS,
+  FILTER_TYPES,
+  PAGE_SIZE,
+} from '@/lib/constants'
 import { ViewMode } from '@/types/settings'
 import { useState } from 'react'
 
@@ -101,6 +107,13 @@ export const AssetQuerier = () => {
       <DocDetails
         doc={activeDoc}
         open={!!activeDoc}
+        getFieldLink={(key, value) => {
+          if (FILTER_TYPES.some((filterType) => filterType.key === key))
+            return {
+              pathname: '/asset-querier',
+              search: `filter=${key}:${value}`,
+            }
+        }}
         onOpenChange={(open) => {
           if (!open) {
             setActiveDoc(undefined)
