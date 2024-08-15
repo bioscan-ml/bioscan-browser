@@ -3,9 +3,11 @@ import { getImageSrc } from '@/lib/getImageSrc'
 import { getTaxonomy } from '@/lib/getTaxonomy'
 import { Doc } from '@/types/response-data'
 import { ChevronRight } from 'lucide-react'
+import { Link, To } from 'react-router-dom'
 import { CodeBlock } from './code-block'
 import { ImagePicker } from './image-picker'
 import { Map } from './map'
+import { buttonVariants } from './ui/button'
 import {
   Dialog,
   DialogContent,
@@ -18,16 +20,25 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs'
 interface DocDetailsProps {
   doc?: Doc
   open: boolean
+  getFieldLink?: (key: string, value: string) => To | undefined
   onOpenChange: (open: boolean) => void
 }
 
-export const DocDetails = ({ doc, open, onOpenChange }: DocDetailsProps) => (
+export const DocDetails = ({
+  doc,
+  open,
+  getFieldLink,
+  onOpenChange,
+}: DocDetailsProps) => (
   <Dialog open={open} onOpenChange={onOpenChange}>
-    {doc && <DocDetailsContent doc={doc} />}
+    {doc && <DocDetailsContent doc={doc} getFieldLink={getFieldLink} />}
   </Dialog>
 )
 
-const DocDetailsContent = ({ doc }: { doc: Doc }) => {
+const DocDetailsContent = ({
+  doc,
+  getFieldLink,
+}: { doc: Doc } & Pick<DocDetailsProps, 'getFieldLink'>) => {
   const { determinationLabel, ranks } = getTaxonomy(doc)
   const [latitude, longitude] = doc.latlon
     .split(',')
@@ -50,14 +61,33 @@ const DocDetailsContent = ({ doc }: { doc: Doc }) => {
       </DialogHeader>
 
       <div className="grid gap-4 grid-cols-2">
-        {FIELDS.filter((field) => !!doc[field.key]).map((field) => (
-          <div key={field.key} className="text-sm">
-            <span className="font-medium text-muted-foreground block">
-              {field.label}
-            </span>
-            <span className="block">{doc[field.key] ?? 'n/a'}</span>
-          </div>
-        ))}
+        {FIELDS.map((field) => {
+          const fieldValue = doc[field.key]
+
+          if (!fieldValue) {
+            return null
+          }
+
+          const fieldLink = getFieldLink?.(field.key, fieldValue)
+
+          return (
+            <div key={field.key} className="flex flex-col items-start text-sm">
+              <span className="font-medium text-muted-foreground">
+                {field.label}
+              </span>
+              {fieldLink ? (
+                <Link
+                  to={fieldLink}
+                  className={buttonVariants({ variant: 'link', size: 'auto' })}
+                >
+                  {fieldValue}
+                </Link>
+              ) : (
+                <span>{fieldValue}</span>
+              )}
+            </div>
+          )
+        })}
       </div>
 
       <Tabs defaultValue="images">

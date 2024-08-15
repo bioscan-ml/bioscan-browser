@@ -16,8 +16,10 @@ import {
   DEFAULT_PAGE,
   DEFAULT_SORT,
   FIELDS,
+  FILTER_TYPES,
   PAGE_SIZE,
   ROOT_NODE_ID,
+  TAXON_FILTER_TYPES,
 } from '@/lib/constants'
 import { findPathById } from '@/lib/findPathById'
 import { useMemo } from 'react'
@@ -33,8 +35,7 @@ export const TaxonomyViewer = () => {
     }
 
     return findPathById(taxonomyTree.children, selectedNodeId)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [taxonomyTree])
+  }, [selectedNodeId, taxonomyTree])
 
   // Records
   const { page, setPage } = usePage(DEFAULT_PAGE)
@@ -91,6 +92,20 @@ export const TaxonomyViewer = () => {
       <DocDetails
         doc={activeDoc}
         open={!!activeDoc}
+        getFieldLink={(key, value) => {
+          if (TAXON_FILTER_TYPES.some((filterType) => filterType.key === key)) {
+            return {
+              pathname: '/taxonomy-viewer',
+              search: `taxon=${key}-${value}`,
+            }
+          }
+
+          if (FILTER_TYPES.some((filterType) => filterType.key === key))
+            return {
+              pathname: '/asset-querier',
+              search: `filter=${key}:${value}`,
+            }
+        }}
         onOpenChange={(open) => {
           if (!open) {
             setActiveDoc(undefined)

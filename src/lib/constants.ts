@@ -15,15 +15,20 @@ export const FIELDS: { label: string; key: keyof Doc; cellClass?: string }[] = [
   { label: 'Species', key: 'species' },
 ]
 
-export const FILTER_TYPES = [
-  { label: 'Country', key: 'country' },
-  { label: 'Province/State', key: 'province_state' },
+export const TAXON_FILTER_TYPES = [
+  { label: 'Phylum', key: 'phylum' },
   { label: 'Class', key: 'class' },
   { label: 'Order', key: 'order' },
   { label: 'Family', key: 'family' },
   { label: 'Subfamily', key: 'subfamily' },
   { label: 'Genus', key: 'genus' },
   { label: 'Species', key: 'species' },
+]
+
+export const FILTER_TYPES = [
+  { label: 'Country', key: 'country' },
+  { label: 'Province/State', key: 'province_state' },
+  ...TAXON_FILTER_TYPES,
   { label: 'DNA BIN', key: 'dna_bin' },
   { label: 'Split', key: 'split' },
   { label: 'Chunk', key: 'chunk' },
