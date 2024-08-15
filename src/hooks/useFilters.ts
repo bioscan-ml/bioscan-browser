@@ -33,7 +33,10 @@ export const useFilters = () => {
           ...filters.filter((f) => f.type !== filter.type),
           {
             type: filter.type,
-            value: [...currentFilter.value, ...filter.value],
+            value: [
+              ...currentFilter.value,
+              ...filter.value.filter((f) => !currentFilter.value.includes(f)),
+            ],
           },
         ])
       } else {
