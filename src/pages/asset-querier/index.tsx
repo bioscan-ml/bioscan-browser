@@ -12,6 +12,7 @@ import { ViewModeControl } from '@/components/view-mode-control'
 import { useActiveDoc } from '@/hooks/search-params/useActiveDoc'
 import { usePage } from '@/hooks/search-params/usePage'
 import { useSort } from '@/hooks/search-params/useSort'
+import { useFacetCounts } from '@/hooks/useFacetCounts'
 import { useFilters } from '@/hooks/useFilters'
 import { useRecords } from '@/hooks/useRecords'
 import { DEFAULT_PAGE, DEFAULT_SORT, FIELDS, PAGE_SIZE } from '@/lib/constants'
@@ -29,8 +30,8 @@ export const AssetQuerier = () => {
     pageSize: PAGE_SIZE,
     sort,
     q: filterQuery,
-    facet: true,
   })
+  const { facetCounts } = useFacetCounts()
   const { activeDoc, setActiveDoc } = useActiveDoc(data?.docs)
 
   return (
@@ -53,7 +54,7 @@ export const AssetQuerier = () => {
               <div className="space-y-2">
                 <label className="text-sm font-medium">Filters</label>
                 <FilterControl
-                  facetCounts={data?.facetCounts}
+                  facetCounts={facetCounts}
                   filters={filters}
                   onAdd={addFilter}
                   onClear={clearFilters}
