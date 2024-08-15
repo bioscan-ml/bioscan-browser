@@ -9,8 +9,10 @@ import { useState } from 'react'
 import { Button } from '../ui/button'
 import { ActiveFilters } from './active-filters'
 import { AddFilterForm } from './add-filter-form'
+import { FacetCounts } from '@/types/response-data'
 
 interface FilterControlProps {
+  facetCounts?: FacetCounts
   filters: Filter[]
   onAdd: (filter: Filter) => void
   onClear: () => void
@@ -18,6 +20,7 @@ interface FilterControlProps {
 }
 
 export const FilterControl = ({
+  facetCounts,
   filters,
   onAdd,
   onClear,
@@ -40,6 +43,7 @@ export const FilterControl = ({
           </PopoverTrigger>
           <PopoverContent side="right" align="start">
             <AddFilterForm
+              facetCounts={facetCounts}
               onAdd={(filter) => {
                 onAdd(filter)
                 setIsOpen(false)

@@ -29,6 +29,7 @@ export const AssetQuerier = () => {
     pageSize: PAGE_SIZE,
     sort,
     q: filterQuery,
+    facet: true,
   })
   const { activeDoc, setActiveDoc } = useActiveDoc(data?.docs)
 
@@ -52,6 +53,7 @@ export const AssetQuerier = () => {
               <div className="space-y-2">
                 <label className="text-sm font-medium">Filters</label>
                 <FilterControl
+                  facetCounts={data?.facetCounts}
                   filters={filters}
                   onAdd={addFilter}
                   onClear={clearFilters}

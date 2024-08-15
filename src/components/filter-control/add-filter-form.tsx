@@ -1,17 +1,36 @@
 import { Input } from '@/components/ui/input'
+import { FILTER_TYPES } from '@/lib/constants'
+import { FacetCounts } from '@/types/response-data'
 import { Filter } from '@/types/settings'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Button } from '../ui/button'
-import { TypePicker } from './type-picker'
+import { Combobox } from './combobox'
 
 interface AddFilterFormProps {
+  facetCounts?: FacetCounts
   onAdd: (filter: Filter) => void
   onCancel: () => void
 }
 
-export const AddFilterForm = ({ onAdd, onCancel }: AddFilterFormProps) => {
+export const AddFilterForm = ({
+  facetCounts,
+  onAdd,
+  onCancel,
+}: AddFilterFormProps) => {
   const [type, setType] = useState<string>()
   const [value, setValue] = useState('')
+  const valueOptions = useMemo(
+    () =>
+      type
+        ? facetCounts?.facet_fields[type]
+            ?.filter((item) => typeof item === 'string')
+            .map((value) => ({
+              label: value,
+              value,
+            }))
+        : undefined,
+    [facetCounts?.facet_fields, type],
+  )
 
   return (
     <form
@@ -26,14 +45,37 @@ export const AddFilterForm = ({ onAdd, onCancel }: AddFilterFormProps) => {
     >
       <div className="space-y-2">
         <label className="text-sm font-medium">Type</label>
-        <TypePicker type={type} setType={setType} />
+        <Combobox
+          emptyLabel="Set type"
+          placeholder="Search type..."
+          options={FILTER_TYPES.map((filterType) => ({
+            label: filterType.label,
+            value: filterType.key,
+          }))}
+          value={type}
+          setValue={(type) => {
+            setType(type)
+            setValue('')
+          }}
+        />
       </div>
       <div className="space-y-2">
         <label className="text-sm font-medium">Value</label>
-        <Input
-          value={value}
-          onChange={(e) => setValue(e.currentTarget.value)}
-        />
+        {!type || valueOptions?.length ? (
+          <Combobox
+            disabled={!type}
+            emptyLabel="Set value"
+            placeholder="Search value..."
+            options={valueOptions}
+            value={value}
+            setValue={setValue}
+          />
+        ) : (
+          <Input
+            value={value}
+            onChange={(e) => setValue(e.currentTarget.value)}
+          />
+        )}
       </div>
       <div className="flex items-center justify-end gap-2">
         <Button
