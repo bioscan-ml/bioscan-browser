@@ -15,6 +15,10 @@ export interface Doc {
   subfamily: string
 }
 
+export interface FacetCounts {
+  facet_fields: { [key: string]: (string | number)[] }
+}
+
 export interface TaxonomyTreeNode {
   children: TaxonomyTreeNode[]
   li_attr: {
@@ -24,6 +28,7 @@ export interface TaxonomyTreeNode {
   metadata: {
     label: string
     taxon: string
+    numChildren: number
     numInstances: number
   }
   text: string

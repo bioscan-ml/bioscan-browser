@@ -5,18 +5,6 @@ import { Button } from './ui/button'
 const VIEW_MODE_OPTIONS = {
   'taxonomy-viewer': [
     {
-      label: 'Table',
-      value: 'table',
-      Icon: SheetIcon,
-    },
-    {
-      label: 'Gallery',
-      value: 'gallery',
-      Icon: Grid2X2Icon,
-    },
-  ],
-  'asset-querier': [
-    {
       label: 'Gallery',
       value: 'gallery',
       Icon: Grid2X2Icon,
@@ -25,6 +13,18 @@ const VIEW_MODE_OPTIONS = {
       label: 'Chart',
       value: 'chart',
       Icon: BarChartHorizontalIcon,
+    },
+  ],
+  'asset-querier': [
+    {
+      label: 'Table',
+      value: 'table',
+      Icon: SheetIcon,
+    },
+    {
+      label: 'Gallery',
+      value: 'gallery',
+      Icon: Grid2X2Icon,
     },
   ],
 }

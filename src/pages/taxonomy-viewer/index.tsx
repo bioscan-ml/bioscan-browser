@@ -7,12 +7,24 @@ import { PaginationBar } from '@/components/pagination-bar'
 import { Sidebar } from '@/components/sidebar'
 import { TaxonomyTree } from '@/components/taxonomy-tree'
 import { ViewModeControl } from '@/components/view-mode-control'
+import { useActiveDoc } from '@/hooks/search-params/useActiveDoc'
+import { usePage } from '@/hooks/search-params/usePage'
+import { useSort } from '@/hooks/search-params/useSort'
+import { useTaxon } from '@/hooks/search-params/useTaxon'
 import { useRecords } from '@/hooks/useRecords'
 import { useTaxonomyTree } from '@/hooks/useTaxonomyTree'
-import { FIELDS, PAGE_SIZE, ROOT_NODE_ID } from '@/lib/constants'
-import { Doc } from '@/types/response-data'
-import { Sort, ViewMode } from '@/types/settings'
-import { useState } from 'react'
+import {
+  DEFAULT_PAGE,
+  DEFAULT_SORT,
+  FIELDS,
+  FILTER_TYPES,
+  PAGE_SIZE,
+  ROOT_NODE_ID,
+  TAXON_FILTER_TYPES,
+} from '@/lib/constants'
+import { findPathById } from '@/lib/findPathById'
+import { ViewMode } from '@/types/settings'
+import { useMemo, useState } from 'react'
 import { TaxonomyChart } from './taxonomy-chart'
 import { useSelectedNode } from './useSelectedNode'
 
@@ -21,22 +33,24 @@ export const TaxonomyViewer = () => {
 
   // Taxonomy tree
   const { taxonomyTree, isPending: isTaxonomyTreePending } = useTaxonomyTree()
-  const [selectedNodeId, setSelectedNodeId] = useState<string | null>(
-    ROOT_NODE_ID,
-  )
-  const selectedNode = useSelectedNode(taxonomyTree, selectedNodeId)
+  const { selectedNodeId, setSelectedNodeId } = useTaxon(ROOT_NODE_ID)
+  const defaultExpandedNodes = useMemo(() => {
+    if (!taxonomyTree || !selectedNodeId) {
+      return [ROOT_NODE_ID]
+    }
+
+    return findPathById(taxonomyTree.children, selectedNodeId)
+  }, [selectedNodeId, taxonomyTree])
 
   // Records
-  const [sort, setSort] = useState<Sort>({
-    key: 'id',
-    order: 'asc',
-  })
-  const [page, setPage] = useState(0)
+  const { page, setPage } = usePage(DEFAULT_PAGE)
+  const { sort, setSort } = useSort(DEFAULT_SORT)
+  const selectedNode = useSelectedNode(taxonomyTree, selectedNodeId)
   const q = selectedNode
-    ? `${selectedNode.metadata.taxon}: ${selectedNode.metadata.label}`
+    ? `${selectedNode.metadata.taxon}:"${selectedNode.metadata.label}"`
     : undefined
   const { data, isPending } = useRecords({ page, pageSize: PAGE_SIZE, sort, q })
-  const [activeDoc, setActiveDoc] = useState<Doc>()
+  const { activeDoc, setActiveDoc } = useActiveDoc(data?.docs)
 
   return (
     <>
@@ -58,7 +72,7 @@ export const TaxonomyViewer = () => {
                   <Loader />
                 ) : (
                   <TaxonomyTree
-                    defaultExpandedNodes={[ROOT_NODE_ID]}
+                    defaultExpandedNodes={defaultExpandedNodes}
                     selectedNodeId={selectedNodeId}
                     taxonomyTree={taxonomyTree}
                     onSelectedNodeIdChange={setSelectedNodeId}
@@ -116,6 +130,20 @@ export const TaxonomyViewer = () => {
       <DocDetails
         doc={activeDoc}
         open={!!activeDoc}
+        getFieldLink={(key, value) => {
+          if (TAXON_FILTER_TYPES.some((filterType) => filterType.key === key)) {
+            return {
+              pathname: '/taxonomy-viewer',
+              search: `taxon=${key}-${value}`,
+            }
+          }
+
+          if (FILTER_TYPES.some((filterType) => filterType.key === key))
+            return {
+              pathname: '/asset-querier',
+              search: `filter=${key}:${value}`,
+            }
+        }}
         onOpenChange={(open) => {
           if (!open) {
             setActiveDoc(undefined)

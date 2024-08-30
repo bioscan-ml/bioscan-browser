@@ -1,15 +1,16 @@
-import { Doc } from '@/types/response-data'
+import { SOLR_BASE_PATH } from '@/lib/constants'
+import { Doc, FacetCounts } from '@/types/response-data'
 import { Sort } from '@/types/settings'
 import { useQuery } from '@tanstack/react-query'
 
 const QUERY_KEY = 'records'
-const BASE_PATH = '/api/scene-toolkit/solr/bioscan5m/select'
 
 export const useRecords = (params: {
   page: number
   pageSize: number
   sort?: Sort
   q?: string
+  facet?: boolean
 }) => {
   const { isPending, error, data } = useQuery<{
     response: {
@@ -17,12 +18,26 @@ export const useRecords = (params: {
       numFound: number
       start: number
     }
+    facet_counts?: FacetCounts
   }>({
     queryKey: [QUERY_KEY, params],
-    queryFn: () => fetch(getFetchUrl(params)).then((res) => res.json()),
+    queryFn: async () => {
+      const res = await fetch(getFetchUrl(params))
+
+      return await res.json()
+    },
   })
 
-  return { isPending, error, data: data?.response }
+  return {
+    isPending,
+    error,
+    data: data
+      ? {
+          ...data.response,
+          facetCounts: data.facet_counts,
+        }
+      : undefined,
+  }
 }
 
 const getFetchUrl = (params: {
@@ -31,7 +46,7 @@ const getFetchUrl = (params: {
   sort?: Sort
   q?: string
 }) => {
-  let fetchUrl = `${BASE_PATH}?rows=${params.pageSize}&start=${params.pageSize * params.page}`
+  let fetchUrl = `${SOLR_BASE_PATH}?rows=${params.pageSize}&start=${params.pageSize * params.page}`
 
   if (params.sort) {
     fetchUrl += `&sort=${params.sort.key} ${params.sort.order}`

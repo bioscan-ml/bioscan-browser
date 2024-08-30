@@ -23,7 +23,7 @@ export const CodeBlock = ({ code }: CodeBlockProps) => {
           toast({ description: 'Copied to clipboard!' })
         }}
       >
-        <CopyIcon className="w-4 h-4 " />
+        <CopyIcon className="w-4 h-4" />
       </Button>
     </div>
   )

@@ -18,6 +18,7 @@ export const TaxonomyTree = ({
   onSelectedNodeIdChange,
 }: TaxonomyTreeProps) => (
   <SimpleTreeView
+    key={defaultExpandedNodes?.toString()}
     defaultExpandedItems={defaultExpandedNodes}
     slots={{
       expandIcon: () => <ChevronRightIcon className="w-4 h-4" />,
@@ -32,10 +33,18 @@ export const TaxonomyTree = ({
   </SimpleTreeView>
 )
 
-const TaxonomyTreeItem = ({ node }: { node: TaxonomyTreeNode }) => (
-  <TreeItem itemId={node.li_attr.id} label={node.text} className="text-sm">
-    {node.children?.map((child) => (
-      <TaxonomyTreeItem key={child.li_attr.id} node={child} />
-    ))}
-  </TreeItem>
-)
+const TaxonomyTreeItem = ({ node }: { node: TaxonomyTreeNode }) => {
+  const { label, numChildren, numInstances } = node.metadata
+
+  return (
+    <TreeItem
+      itemId={node.li_attr.id}
+      label={`${label} (${numChildren.toLocaleString()}, ${numInstances.toLocaleString()})`}
+      className="text-sm"
+    >
+      {node.children?.map((child) => (
+        <TaxonomyTreeItem key={child.li_attr.id} node={child} />
+      ))}
+    </TreeItem>
+  )
+}
