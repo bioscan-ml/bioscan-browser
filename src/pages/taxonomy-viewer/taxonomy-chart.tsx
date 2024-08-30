@@ -87,6 +87,7 @@ export const TaxonomyChart = ({
               type="number"
               height={32}
               orientation="top"
+              tickFormatter={xAxisTickFormatter}
             />
             <YAxis
               dataKey="name"
@@ -94,7 +95,7 @@ export const TaxonomyChart = ({
               axisLine={false}
               type="category"
               width={128}
-              tickFormatter={tickFormatter}
+              tickFormatter={yAxisTickFormatter}
             />
             <ChartTooltip content={<ChartTooltipContent hideIndicator />} />
             <Bar dataKey="count" fill="var(--color-count)" radius={4} />
@@ -105,9 +106,11 @@ export const TaxonomyChart = ({
   )
 }
 
-const tickFormatter = (value: string) => {
+const xAxisTickFormatter = (value: number) => value.toLocaleString()
+
+const yAxisTickFormatter = (value: string) => {
   const limit = 24
-  if (value.length < limit) {
+  if (value.length <= limit) {
     return value
   }
   return `${value.substring(0, limit - 3)}...`
