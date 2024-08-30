@@ -67,6 +67,10 @@ export const TaxonomyViewer = () => {
                 />
               </div>
               <div className="space-y-2">
+                <label className="text-sm font-medium">Order by</label>
+                <OrderByControl fields={FIELDS} sort={sort} setSort={setSort} />
+              </div>
+              <div className="space-y-2">
                 <label className="text-sm font-medium">Taxonomy</label>
                 {isTaxonomyTreePending ? (
                   <Loader />
@@ -78,10 +82,6 @@ export const TaxonomyViewer = () => {
                     onSelectedNodeIdChange={setSelectedNodeId}
                   />
                 )}
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Order by</label>
-                <OrderByControl fields={FIELDS} sort={sort} setSort={setSort} />
               </div>
             </div>
           </Sidebar>
