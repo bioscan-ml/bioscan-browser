@@ -5,6 +5,7 @@ import { OrderByControl } from '@/components/order-by-control'
 import { PageContent } from '@/components/page-content'
 import { PaginationBar } from '@/components/pagination-bar'
 import { Sidebar } from '@/components/sidebar'
+import { Table } from '@/components/table'
 import { TaxonomyTree } from '@/components/taxonomy-tree'
 import { ViewModeControl } from '@/components/view-mode-control'
 import { useActiveDoc } from '@/hooks/search-params/useActiveDoc'
@@ -100,6 +101,14 @@ export const TaxonomyViewer = () => {
                     </p>
                   </div>
                 ) : null}
+                {viewMode === 'table' && (
+                  <Table
+                    docs={data?.docs}
+                    sort={sort}
+                    onRowClick={(doc) => setActiveDoc(doc)}
+                    setSort={setSort}
+                  />
+                )}
                 {viewMode === 'gallery' && (
                   <Gallery
                     docs={data?.docs}

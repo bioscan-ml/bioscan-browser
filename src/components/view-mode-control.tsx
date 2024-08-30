@@ -1,15 +1,20 @@
+import { ViewMode } from '@/types/settings'
+import { BarChartHorizontalIcon, Grid2X2Icon, SheetIcon } from 'lucide-react'
+import { Button } from './ui/button'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from './ui/tooltip'
-import { ViewMode } from '@/types/settings'
-import { BarChartHorizontalIcon, Grid2X2Icon, SheetIcon } from 'lucide-react'
-import { Button } from './ui/button'
 
 const VIEW_MODE_OPTIONS = {
   'taxonomy-viewer': [
+    {
+      label: 'Table',
+      value: 'table',
+      Icon: SheetIcon,
+    },
     {
       label: 'Gallery',
       value: 'gallery',
