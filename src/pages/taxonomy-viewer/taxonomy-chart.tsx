@@ -57,7 +57,7 @@ export const TaxonomyChart = ({
           config={CHART_CONFIG}
           className="w-full"
           style={{
-            height: `${(chartData.length + 1) * 32}px`,
+            height: `${(chartData.length + 1) * 32 + 16}px`,
           }}
         >
           <BarChart
