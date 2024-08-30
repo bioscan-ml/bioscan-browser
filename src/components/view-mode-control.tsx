@@ -1,28 +1,47 @@
 import { ViewMode } from '@/types/settings'
-import { Grid2X2Icon, SheetIcon } from 'lucide-react'
+import { BarChartHorizontalIcon, Grid2X2Icon, SheetIcon } from 'lucide-react'
 import { Button } from './ui/button'
 
-const VIEW_MODE_OPTIONS = [
-  {
-    label: 'Table',
-    value: 'table',
-    Icon: SheetIcon,
-  },
-  {
-    label: 'Gallery',
-    value: 'gallery',
-    Icon: Grid2X2Icon,
-  },
-]
+const VIEW_MODE_OPTIONS = {
+  'taxonomy-viewer': [
+    {
+      label: 'Table',
+      value: 'table',
+      Icon: SheetIcon,
+    },
+    {
+      label: 'Gallery',
+      value: 'gallery',
+      Icon: Grid2X2Icon,
+    },
+  ],
+  'asset-querier': [
+    {
+      label: 'Gallery',
+      value: 'gallery',
+      Icon: Grid2X2Icon,
+    },
+    {
+      label: 'Chart',
+      value: 'chart',
+      Icon: BarChartHorizontalIcon,
+    },
+  ],
+}
 
 interface ViewModeProps {
+  type: 'taxonomy-viewer' | 'asset-querier'
   viewMode: ViewMode
   setViewMode: (viewMode: ViewMode) => void
 }
 
-export const ViewModeControl = ({ viewMode, setViewMode }: ViewModeProps) => (
+export const ViewModeControl = ({
+  type,
+  viewMode,
+  setViewMode,
+}: ViewModeProps) => (
   <div className="flex gap-2">
-    {VIEW_MODE_OPTIONS.map(({ label, value, Icon }) => (
+    {VIEW_MODE_OPTIONS[type].map(({ label, value, Icon }) => (
       <Button
         key={value}
         variant={viewMode === value ? 'secondary' : 'ghost'}
