@@ -16,6 +16,7 @@ import {
   DialogTitle,
 } from './ui/dialog'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs'
+import { Badge } from './ui/badge'
 
 interface DocDetailsProps {
   doc?: Doc
@@ -39,7 +40,7 @@ const DocDetailsContent = ({
   doc,
   getFieldLink,
 }: { doc: Doc } & Pick<DocDetailsProps, 'getFieldLink'>) => {
-  const { determinationLabel, ranks } = getTaxonomy(doc)
+  const { currentRank, ranks } = getTaxonomy(doc)
   const [latitude, longitude] = doc.latlon
     .split(',')
     .map((value) => Number(value))
@@ -47,11 +48,16 @@ const DocDetailsContent = ({
   return (
     <DialogContent className="h-full max-w-screen-sm flex flex-col gap-8 overflow-auto sm:h-[calc(100%-4rem)]">
       <DialogHeader>
-        <DialogTitle>{determinationLabel}</DialogTitle>
+        <div className="flex gap-4">
+          <DialogTitle>{currentRank.value}</DialogTitle>
+          <Badge variant="outline" className="uppercase">
+            {currentRank.label}
+          </Badge>
+        </div>
         <DialogDescription>
           {ranks.map((rank, index) => (
             <span key={index} className="inline-flex items-center">
-              {rank}
+              {rank.value}
               {index < ranks.length - 1 && (
                 <ChevronRight className="w-3 h-3 mx-1 opacity-50 inline" />
               )}

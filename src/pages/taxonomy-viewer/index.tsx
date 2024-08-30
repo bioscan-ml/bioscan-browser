@@ -28,6 +28,7 @@ import { ViewMode } from '@/types/settings'
 import { useMemo, useState } from 'react'
 import { TaxonomyChart } from './taxonomy-chart'
 import { useSelectedNode } from './useSelectedNode'
+import { Badge } from '@/components/ui/badge'
 
 export const TaxonomyViewer = () => {
   const [viewMode, setViewMode] = useState<ViewMode>('gallery')
@@ -92,13 +93,13 @@ export const TaxonomyViewer = () => {
             ) : (
               <>
                 {selectedNode ? (
-                  <div className="space-y-1.5 mb-4 pb-4 border-b">
+                  <div className="flex items-center gap-4 mb-4 pb-4 border-b">
                     <h2 className="text-lg font-semibold leading-none tracking-tight">
                       {selectedNode.metadata.label}
                     </h2>
-                    <p className="text-sm text-muted-foreground uppercase">
+                    <Badge variant="outline" className="uppercase">
                       {selectedNode.metadata.taxon}
-                    </p>
+                    </Badge>
                   </div>
                 ) : null}
                 {viewMode === 'table' && (
