@@ -49,6 +49,7 @@ export const AssetQuerier = () => {
               <div className="space-y-2">
                 <label className="text-sm font-medium">View mode</label>
                 <ViewModeControl
+                  type="asset-querier"
                   viewMode={viewMode}
                   setViewMode={setViewMode}
                 />
