@@ -11,7 +11,7 @@ interface GalleryProps {
 export const Gallery = ({ docs = [], onItemClick }: GalleryProps) => (
   <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
     {docs.map((doc) => {
-      const { determinationLabel, ranks } = getTaxonomy(doc)
+      const { currentRank, ranks } = getTaxonomy(doc)
 
       return (
         <div
@@ -27,11 +27,11 @@ export const Gallery = ({ docs = [], onItemClick }: GalleryProps) => (
           />
           <div className="p-3">
             <div className="space-y-1">
-              <div className="text-sm font-medium">{determinationLabel}</div>
+              <div className="text-sm font-medium">{currentRank.value}</div>
               <div className="text-xs">
                 {ranks.map((rank, index) => (
                   <span key={index} className="inline-flex items-center">
-                    {rank}
+                    {rank.value}
                     {index < ranks.length - 1 && (
                       <ChevronRightIcon className="w-3 h-3 mx-1 opacity-50 inline" />
                     )}

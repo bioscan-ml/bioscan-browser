@@ -1,17 +1,15 @@
 import { Doc } from '@/types/response-data'
+import { TAXON_FILTER_TYPES } from './constants'
 
 export const getTaxonomy = (doc: Doc) => {
-  const ranks = [
-    doc.phylum,
-    doc.class,
-    doc.order,
-    doc.family,
-    doc.subfamily,
-    doc.genus,
-    doc.species,
-  ].filter((rank) => !!rank)
+  const ranks = TAXON_FILTER_TYPES.map(({ key, label }) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const value: string = (doc as any)[key]
 
-  const [determinationLabel] = ranks.splice(-1)
+    return { key, label, value }
+  }).filter((rank) => !!rank.value)
 
-  return { determinationLabel, ranks }
+  const [currentRank] = ranks.splice(-1)
+
+  return { currentRank, ranks }
 }
