@@ -10,7 +10,7 @@ import {
   ChevronRightIcon,
   ExternalLinkIcon,
 } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { ReactNode, useMemo, useState } from 'react'
 import { Badge } from './ui/badge'
 import { Button, buttonVariants } from './ui/button'
 
@@ -18,18 +18,18 @@ const MAX_COUNT = 5
 
 interface ImagePickerProps {
   images: {
-    alt: string
     attribution?: string
+    badge: string
     id: string
     original?: string
     src: string
     thumbnail?: string
+    tooltip?: string
   }[]
 }
 
 export const ImagePicker = ({ images: _images }: ImagePickerProps) => {
   const images = useMemo(() => _images.slice(0, MAX_COUNT), [_images])
-
   const [selectedIndex, setSelectedIndex] = useState(0)
   const selectedImage = images[selectedIndex]
 
@@ -61,11 +61,11 @@ export const ImagePicker = ({ images: _images }: ImagePickerProps) => {
         <img
           className="max-w-full max-h-full"
           key={selectedImage.id}
-          alt={selectedImage.alt}
+          alt={selectedImage.badge}
           src={selectedImage.src}
         />
         <Badge variant="outline" className="absolute top-2 left-2">
-          {selectedImage.alt}
+          {selectedImage.badge}
         </Badge>
         {selectedImage.attribution && (
           <Badge variant="outline" className="absolute bottom-2 left-2">
@@ -107,28 +107,44 @@ export const ImagePicker = ({ images: _images }: ImagePickerProps) => {
       </div>
       <div className="flex justify-center gap-4">
         {images.map((image, index) => (
-          <TooltipProvider key={image.id} delayDuration={0}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <img
-                  alt={image.id}
-                  className={cn(
-                    'w-12 rounded-sm ring-2 ring-background cursor-pointer aspect-square object-cover',
-                    {
-                      ['opacity-50']: selectedImage.id !== image.id,
-                    },
-                  )}
-                  src={image.thumbnail ?? image.src}
-                  onClick={() => setSelectedIndex(index)}
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>{image.alt}</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <ThumbnailWrapper tooltip={image.tooltip}>
+            <img
+              alt={image.id}
+              className={cn(
+                'w-12 rounded-sm ring-2 ring-background cursor-pointer aspect-square object-cover',
+                {
+                  ['opacity-50']: selectedImage.id !== image.id,
+                },
+              )}
+              src={image.thumbnail ?? image.src}
+              onClick={() => setSelectedIndex(index)}
+            />
+          </ThumbnailWrapper>
         ))}
       </div>
     </div>
+  )
+}
+
+const ThumbnailWrapper = ({
+  tooltip,
+  children,
+}: {
+  tooltip?: string
+  children: ReactNode
+}) => {
+  if (!tooltip) {
+    return children
+  }
+
+  return (
+    <TooltipProvider delayDuration={0}>
+      <Tooltip>
+        <TooltipTrigger asChild>{children}</TooltipTrigger>
+        <TooltipContent>
+          <p>{tooltip}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   )
 }

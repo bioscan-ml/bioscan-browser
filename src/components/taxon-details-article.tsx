@@ -122,8 +122,8 @@ const Images = ({ taxonDetails }: { taxonDetails: TaxonDetails }) => (
     {taxonDetails.taxon_photos.length ? (
       <ImagePicker
         images={taxonDetails.taxon_photos.map(({ photo, taxon }) => ({
-          alt: taxon.name,
           attribution: photo.attribution,
+          badge: taxon.name,
           id: `${photo.id}`,
           original: `https://www.inaturalist.org/photos/${photo.id}`,
           src: photo.large_url,
