@@ -110,6 +110,10 @@
     font-family: 'Source Sans', system-ui, sans-serif;
   }
 
+  p b {
+    @apply font-medium text-foreground;
+  }
+
   h1 {
     @apply text-2xl leading-tight font-bold;
     font-family: 'Montserrat', system-ui, sans-serif;

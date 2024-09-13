@@ -1,4 +1,4 @@
-import { DocDetails } from '@/components/doc-details'
+import { DocDetails } from '@/components/doc-details/doc-details'
 import { FilterControl } from '@/components/filter-control'
 import { Gallery } from '@/components/gallery'
 import { Loader } from '@/components/loader'

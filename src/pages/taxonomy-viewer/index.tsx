@@ -1,4 +1,4 @@
-import { DocDetails } from '@/components/doc-details'
+import { DocDetails } from '@/components/doc-details/doc-details'
 import { Gallery } from '@/components/gallery'
 import { Loader } from '@/components/loader'
 import { OrderByControl } from '@/components/order-by-control'
@@ -7,6 +7,7 @@ import { PaginationBar } from '@/components/pagination-bar'
 import { Sidebar } from '@/components/sidebar'
 import { Table } from '@/components/table'
 import { TaxonomyTree } from '@/components/taxonomy-tree'
+import { Badge } from '@/components/ui/badge'
 import { ViewModeControl } from '@/components/view-mode-control'
 import { useActiveDoc } from '@/hooks/search-params/useActiveDoc'
 import { usePage } from '@/hooks/search-params/usePage'
@@ -28,7 +29,6 @@ import { ViewMode } from '@/types/settings'
 import { useMemo, useState } from 'react'
 import { TaxonomyChart } from './taxonomy-chart'
 import { useSelectedNode } from './useSelectedNode'
-import { Badge } from '@/components/ui/badge'
 
 export const TaxonomyViewer = () => {
   const [viewMode, setViewMode] = useState<ViewMode>('gallery')

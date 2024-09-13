@@ -10,15 +10,26 @@ import {
   ChevronRightIcon,
   ExternalLinkIcon,
 } from 'lucide-react'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Badge } from './ui/badge'
 import { Button, buttonVariants } from './ui/button'
 
+const MAX_COUNT = 5
+
 interface ImagePickerProps {
-  images: { id: string; src: string; thumbnail?: string; alt: string }[]
+  images: {
+    alt: string
+    attribution?: string
+    id: string
+    original?: string
+    src: string
+    thumbnail?: string
+  }[]
 }
 
-export const ImagePicker = ({ images }: ImagePickerProps) => {
+export const ImagePicker = ({ images: _images }: ImagePickerProps) => {
+  const images = useMemo(() => _images.slice(0, MAX_COUNT), [_images])
+
   const [selectedIndex, setSelectedIndex] = useState(0)
   const selectedImage = images[selectedIndex]
 
@@ -40,10 +51,15 @@ export const ImagePicker = ({ images }: ImagePickerProps) => {
     }
   }
 
+  if (!selectedImage) {
+    return null
+  }
+
   return (
     <div className="space-y-4">
       <div className="group aspect-[341/256] flex items-center justify-center relative bg-muted rounded-sm overflow-hidden">
         <img
+          className="max-w-full max-h-full"
           key={selectedImage.id}
           alt={selectedImage.alt}
           src={selectedImage.src}
@@ -51,8 +67,13 @@ export const ImagePicker = ({ images }: ImagePickerProps) => {
         <Badge variant="outline" className="absolute top-2 left-2">
           {selectedImage.alt}
         </Badge>
+        {selectedImage.attribution && (
+          <Badge variant="outline" className="absolute bottom-2 left-2">
+            {selectedImage.attribution}
+          </Badge>
+        )}
         <a
-          href={selectedImage.src}
+          href={selectedImage.original ?? selectedImage.src}
           target="_blank"
           rel="noopener noreferrer"
           className={cn(
@@ -92,7 +113,7 @@ export const ImagePicker = ({ images }: ImagePickerProps) => {
                 <img
                   alt={image.id}
                   className={cn(
-                    'w-12 rounded-sm ring-2 ring-background cursor-pointer',
+                    'w-12 rounded-sm ring-2 ring-background cursor-pointer aspect-square object-cover',
                     {
                       ['opacity-50']: selectedImage.id !== image.id,
                     },
