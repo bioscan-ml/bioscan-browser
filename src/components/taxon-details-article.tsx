@@ -55,7 +55,7 @@ const Title = ({ taxonDetails }: { taxonDetails: TaxonDetails }) => {
   const commonName = taxonDetails.preferred_common_name
 
   return (
-    <div className="flex gap-4">
+    <div className="flex items-center gap-4">
       <h3>
         {commonName
           ? `${commonName} (${taxonDetails.name})`
