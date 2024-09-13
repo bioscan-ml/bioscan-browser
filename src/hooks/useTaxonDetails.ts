@@ -21,6 +21,8 @@ export const useTaxonDetails = (taxon: {
   rankLevel: string
 }) => {
   const q = taxon.label
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const rankLevel = RANK_LEVELS[taxon.rankLevel]
 
   const { isPending, error, data } = useQuery<{
@@ -29,9 +31,7 @@ export const useTaxonDetails = (taxon: {
     queryKey: [QUERY_KEY, taxon],
     queryFn: async () => {
       // Search taxa by string
-      const taxaRes = await fetch(
-        `${API_URL}/taxa?q=${q}&taxon_id=47120&rank_level=${rankLevel}`,
-      )
+      const taxaRes = await fetch(`${API_URL}/taxa?q=${q}&taxon_id=47120`)
       const taxaData = await taxaRes.json()
       const taxonId = taxaData.results.find(
         (result: { matched_term: string }) => result.matched_term === q,
