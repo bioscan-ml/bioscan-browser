@@ -31,7 +31,7 @@ import { useSelectedNode } from './useSelectedNode'
 import { Badge } from '@/components/ui/badge'
 
 export const TaxonomyViewer = () => {
-  const [viewMode, setViewMode] = useState<ViewMode>('gallery')
+  const [viewMode, setViewMode] = useState<ViewMode>('table')
 
   // Taxonomy tree
   const { taxonomyTree, isPending: isTaxonomyTreePending } = useTaxonomyTree()
