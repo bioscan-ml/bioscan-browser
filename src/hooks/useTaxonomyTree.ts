@@ -9,6 +9,10 @@ export const useTaxonomyTree = () => {
     queryKey: [QUERY_KEY],
     queryFn: () =>
       fetch(`${BASE_PATH}/BIOSCAN_5M_taxonomy.json`).then((res) => res.json()),
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    staleTime: Infinity,
+    gcTime: Infinity,
   })
 
   return { isPending, error, taxonomyTree: data }
