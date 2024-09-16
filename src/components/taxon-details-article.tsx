@@ -58,7 +58,7 @@ const Title = ({ taxonDetails }: { taxonDetails: TaxonDetails }) => {
     <div className="flex items-center gap-4">
       <h3>
         {commonName
-          ? `${commonName} (${taxonDetails.name})`
+          ? `${taxonDetails.name} (${commonName})`
           : taxonDetails.name}
       </h3>
       <Badge variant="outline" className="uppercase">
