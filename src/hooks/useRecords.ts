@@ -5,12 +5,16 @@ import { useQuery } from '@tanstack/react-query'
 
 const QUERY_KEY = 'records'
 
-export const useRecords = (params: {
+export const useRecords = ({
+  enabled,
+  ...params
+}: {
+  enabled?: boolean
+  facet?: boolean
+  q?: string
   page: number
   pageSize: number
   sort?: Sort
-  q?: string
-  facet?: boolean
 }) => {
   const { isPending, error, data } = useQuery<{
     response: {
@@ -26,6 +30,7 @@ export const useRecords = (params: {
 
       return await res.json()
     },
+    enabled,
   })
 
   return {

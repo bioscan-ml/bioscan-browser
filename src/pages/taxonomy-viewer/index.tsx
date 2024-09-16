@@ -51,7 +51,13 @@ export const TaxonomyViewer = () => {
   const q = selectedNode
     ? `${selectedNode.metadata.taxon}:"${selectedNode.metadata.label}"`
     : undefined
-  const { data, isPending } = useRecords({ page, pageSize: PAGE_SIZE, sort, q })
+  const { data, isPending } = useRecords({
+    enabled: !isTaxonomyTreePending,
+    q,
+    page,
+    pageSize: PAGE_SIZE,
+    sort,
+  })
   const { activeDoc, setActiveDoc } = useActiveDoc(data?.docs)
 
   return (
