@@ -32,7 +32,7 @@ import { useSelectedNode } from './useSelectedNode'
 import { TaxonDetails } from '@/components/taxon-details'
 
 export const TaxonomyViewer = () => {
-  const [viewMode, setViewMode] = useState<ViewMode>('gallery')
+  const [viewMode, setViewMode] = useState<ViewMode>('table')
 
   // Taxonomy tree
   const { taxonomyTree, isPending: isTaxonomyTreePending } = useTaxonomyTree()
@@ -52,7 +52,13 @@ export const TaxonomyViewer = () => {
   const q = selectedNode
     ? `${selectedNode.metadata.taxon}:"${selectedNode.metadata.label}"`
     : undefined
-  const { data, isPending } = useRecords({ page, pageSize: PAGE_SIZE, sort, q })
+  const { data, isPending } = useRecords({
+    enabled: !isTaxonomyTreePending,
+    q,
+    page,
+    pageSize: PAGE_SIZE,
+    sort,
+  })
   const { activeDoc, setActiveDoc } = useActiveDoc(data?.docs)
 
   return (
