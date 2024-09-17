@@ -1,9 +1,10 @@
 import { useTaxonDetails } from '@/hooks/useTaxonDetails'
 import { TaxonDetails } from '@/types/response-data'
-import { ExternalLinkIcon } from 'lucide-react'
+import { ExternalLinkIcon, SearchIcon } from 'lucide-react'
 import { ImagePicker } from './image-picker'
 import { Loader } from './loader'
 import { Badge } from './ui/badge'
+import { buttonVariants } from './ui/button'
 
 interface TaxonDetailsArticleProps {
   taxon: {
@@ -25,17 +26,22 @@ export const TaxonDetailsArticle = ({ taxon }: TaxonDetailsArticleProps) => {
 
   if (!taxonDetails) {
     return (
-      <div className="h-full flex items-center justify-center">
-        <p className="text-sm text-muted-foreground">
-          No info found on{' '}
-          <a
-            href={`https://www.inaturalist.org/search?q=${taxon.label}&source=taxa`}
-            className="text-primary font-medium"
-          >
-            iNaturalist
-          </a>{' '}
-          for the current taxon.
-        </p>
+      <div className="h-full flex flex-col items-center justify-center gap-8 p-16 text-center">
+        <div>
+          <p className="text-xl font-medium mb-2">No information found</p>
+          <p className="text-sm text-muted-foreground">
+            "{taxon.label}" was not recognized by external sources.
+          </p>
+        </div>
+        <a
+          className={buttonVariants({ variant: 'outline' })}
+          href={`https://www.inaturalist.org/search?q=${taxon.label}&source=taxa`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <SearchIcon className="w-4 h-4 mr-2" />
+          Search iNaturalist
+        </a>
       </div>
     )
   }
