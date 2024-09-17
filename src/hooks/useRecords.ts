@@ -5,11 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 
 const QUERY_KEY = 'records'
 
-export const useRecords = ({
-  enabled,
-  ...params
-}: {
-  enabled?: boolean
+export const useRecords = (params: {
   facet?: boolean
   q?: string
   page: number
@@ -30,7 +26,6 @@ export const useRecords = ({
 
       return await res.json()
     },
-    enabled,
   })
 
   return {

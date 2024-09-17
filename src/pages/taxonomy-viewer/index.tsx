@@ -52,7 +52,6 @@ export const TaxonomyViewer = () => {
     ? `${selectedNode.metadata.taxon}:"${selectedNode.metadata.label}"`
     : undefined
   const { data, isPending } = useRecords({
-    enabled: !isTaxonomyTreePending,
     q,
     page,
     pageSize: PAGE_SIZE,
@@ -94,7 +93,7 @@ export const TaxonomyViewer = () => {
             </div>
           </Sidebar>
           <div className="mb-16 grow overflow-hidden">
-            {isPending ? (
+            {isPending || isTaxonomyTreePending ? (
               <Loader />
             ) : (
               <>
