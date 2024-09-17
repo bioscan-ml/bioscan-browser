@@ -86,42 +86,46 @@ export const ImagePicker = ({ images: _images }: ImagePickerProps) => {
         >
           <ExternalLinkIcon className="w-4 h-4" />
         </a>
-        <div className="hidden sm:group-hover:block">
-          <Button
-            className="absolute top-1/2 left-2 -translate-y-1/2 rounded-full"
-            variant="outline"
-            size="icon"
-            onClick={goToPrev}
-          >
-            <ChevronLeftIcon className="w-4 h-4" />
-          </Button>
-          <Button
-            className="absolute top-1/2 right-2 -translate-y-1/2 rounded-full"
-            variant="outline"
-            size="icon"
-            onClick={goToNext}
-          >
-            <ChevronRightIcon className="w-4 h-4" />
-          </Button>
+        {images.length > 1 && (
+          <div className="hidden sm:group-hover:block">
+            <Button
+              className="absolute top-1/2 left-2 -translate-y-1/2 rounded-full"
+              variant="outline"
+              size="icon"
+              onClick={goToPrev}
+            >
+              <ChevronLeftIcon className="w-4 h-4" />
+            </Button>
+            <Button
+              className="absolute top-1/2 right-2 -translate-y-1/2 rounded-full"
+              variant="outline"
+              size="icon"
+              onClick={goToNext}
+            >
+              <ChevronRightIcon className="w-4 h-4" />
+            </Button>
+          </div>
+        )}
+      </div>
+      {images.length > 1 && (
+        <div className="flex justify-center gap-4">
+          {images.map((image, index) => (
+            <ThumbnailWrapper tooltip={image.tooltip}>
+              <img
+                alt={image.id}
+                className={cn(
+                  'w-12 rounded-sm ring-2 ring-background cursor-pointer aspect-square object-cover',
+                  {
+                    ['opacity-50']: selectedImage.id !== image.id,
+                  },
+                )}
+                src={image.thumbnail ?? image.src}
+                onClick={() => setSelectedIndex(index)}
+              />
+            </ThumbnailWrapper>
+          ))}
         </div>
-      </div>
-      <div className="flex justify-center gap-4">
-        {images.map((image, index) => (
-          <ThumbnailWrapper tooltip={image.tooltip}>
-            <img
-              alt={image.id}
-              className={cn(
-                'w-12 rounded-sm ring-2 ring-background cursor-pointer aspect-square object-cover',
-                {
-                  ['opacity-50']: selectedImage.id !== image.id,
-                },
-              )}
-              src={image.thumbnail ?? image.src}
-              onClick={() => setSelectedIndex(index)}
-            />
-          </ThumbnailWrapper>
-        ))}
-      </div>
+      )}
     </div>
   )
 }
