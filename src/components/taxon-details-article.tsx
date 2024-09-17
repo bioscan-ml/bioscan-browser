@@ -1,10 +1,8 @@
 import { useTaxonDetails } from '@/hooks/useTaxonDetails'
-import { cn } from '@/lib/utils'
 import { TaxonDetails } from '@/types/response-data'
 import { ExternalLinkIcon } from 'lucide-react'
 import { ImagePicker } from './image-picker'
 import { Loader } from './loader'
-import { buttonVariants } from './ui/button'
 import { Badge } from './ui/badge'
 
 interface TaxonDetailsArticleProps {
@@ -84,10 +82,7 @@ const Summary = ({ taxonDetails }: { taxonDetails: TaxonDetails }) => {
           href={taxonDetails.wikipedia_url}
           target="_blank"
           rel="noopener noreferrer"
-          className={cn(
-            buttonVariants({ variant: 'link', size: 'auto' }),
-            'font-semibold mb-2',
-          )}
+          className="text-link font-bold mb-2"
         >
           Source: Wikipedia
           <ExternalLinkIcon className="ml-2 w-4 h-4" />
@@ -105,15 +100,12 @@ const Summary = ({ taxonDetails }: { taxonDetails: TaxonDetails }) => {
 
 const Images = ({ taxonDetails }: { taxonDetails: TaxonDetails }) => (
   <div>
-    <h3>
+    <h3 className="text-sm">
       <a
         href={`https://www.inaturalist.org/taxa/${taxonDetails.id}`}
         target="_blank"
         rel="noopener noreferrer"
-        className={cn(
-          buttonVariants({ variant: 'link', size: 'auto' }),
-          'font-semibold mb-4',
-        )}
+        className="text-link font-bold mb-2"
       >
         <span>Source: iNaturalist</span>
         <ExternalLinkIcon className="ml-2 w-4 h-4" />

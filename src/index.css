@@ -128,4 +128,8 @@
     @apply text-lg leading-tight font-bold;
     font-family: 'Montserrat', system-ui, sans-serif;
   }
+
+  .text-link {
+    @apply inline-flex items-center justify-center font-medium text-primary underline-offset-4 hover:underline;
+  }
 }

@@ -68,7 +68,10 @@ export const ImagePicker = ({ images: _images }: ImagePickerProps) => {
           {selectedImage.badge}
         </Badge>
         {selectedImage.attribution && (
-          <Badge variant="outline" className="absolute bottom-2 left-2">
+          <Badge
+            variant="outline"
+            className="absolute bottom-2 left-2 max-w-[calc(100%-4rem)]"
+          >
             {selectedImage.attribution}
           </Badge>
         )}
@@ -110,7 +113,7 @@ export const ImagePicker = ({ images: _images }: ImagePickerProps) => {
       {images.length > 1 && (
         <div className="flex justify-center gap-4">
           {images.map((image, index) => (
-            <ThumbnailWrapper tooltip={image.tooltip}>
+            <ThumbnailWrapper key={image.id} tooltip={image.tooltip}>
               <img
                 alt={image.id}
                 className={cn(

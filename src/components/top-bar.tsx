@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Menu } from './menu'
 import { PageContent } from './page-content'
-import { SearchControl } from './search-control'
+import { TaxaSearch } from './taxa-search'
 
 export const TopBar = () => (
   <header className="sticky top-0 h-16 bg-background/95 border-b z-10">
@@ -19,7 +19,7 @@ export const TopBar = () => (
         </Link>
         <Menu />
         <div className="flex-1" />
-        <SearchControl />
+        <TaxaSearch />
       </div>
     </PageContent>
   </header>

@@ -9,6 +9,8 @@ const API_URL = 'https://api.inaturalist.org/v1'
 
 const QUERY_KEY = 'taxa-search'
 
+const LIMIT = 5
+
 export const useTaxaSearch = (q: string) => {
   const { taxonomyTree, isPending: isTaxonomyTreePending } = useTaxonomyTree()
   const enabled = q.length > 3
@@ -31,9 +33,9 @@ export const useTaxaSearch = (q: string) => {
       return undefined
     }
 
-    return data.results.filter(
-      (taxon) => !!getNode(taxonomyTree, `${taxon.rank}-${taxon.name}`),
-    )
+    return data.results
+      .filter((taxon) => !!getNode(taxonomyTree, `${taxon.rank}-${taxon.name}`))
+      .slice(0, LIMIT)
   }, [taxonomyTree, data?.results])
 
   return {

@@ -107,12 +107,14 @@ export const TaxonomyViewer = () => {
                       {selectedNode.metadata.taxon}
                     </Badge>
                     <div className="flex-1" />
-                    <TaxonDetails
-                      taxon={{
-                        label: selectedNode.metadata.label,
-                        rankLevel: selectedNode.metadata.taxon,
-                      }}
-                    />
+                    <div className="p-[4px]">
+                      <TaxonDetails
+                        taxon={{
+                          label: selectedNode.metadata.label,
+                          rankLevel: selectedNode.metadata.taxon,
+                        }}
+                      />
+                    </div>
                   </div>
                 ) : null}
                 {viewMode === 'table' && (

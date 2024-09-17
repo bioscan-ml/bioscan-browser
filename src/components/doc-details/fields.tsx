@@ -1,7 +1,6 @@
 import { FIELDS } from '@/lib/constants'
 import { Doc } from '@/types/response-data'
 import { Link, To } from 'react-router-dom'
-import { buttonVariants } from '../ui/button'
 
 interface FieldsProps {
   doc: Doc
@@ -25,10 +24,7 @@ export const Fields = ({ doc, getFieldLink }: FieldsProps) => (
             {field.label}
           </span>
           {fieldLink ? (
-            <Link
-              to={fieldLink}
-              className={buttonVariants({ variant: 'link', size: 'auto' })}
-            >
+            <Link to={fieldLink} className="text-link">
               {fieldValue}
             </Link>
           ) : (

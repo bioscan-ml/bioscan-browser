@@ -9,7 +9,7 @@ import { Badge } from './ui/badge'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 
-export const SearchControl = () => {
+export const TaxaSearch = () => {
   const [searchString, setSearchString] = useState('')
   const debouncedSearchString = useDebounce(searchString, 200)
   const { data, isPending } = useTaxaSearch(debouncedSearchString)
@@ -92,7 +92,7 @@ const SearchResult = ({
         search: `taxon=${taxon.rank}-${taxon.name}`,
       }}
       onClick={onClick}
-      className="flex items-start gap-4 border-b p-4 hover:bg-muted/50"
+      className="flex items-start gap-4 border-b p-4 last:border-b-0 hover:bg-muted/50"
     >
       <img
         alt=""
@@ -107,7 +107,8 @@ const SearchResult = ({
           </Badge>
         </div>
         <span className="text-sm text-muted-foreground">
-          {taxon.preferred_common_name
+          {taxon.preferred_common_name &&
+          taxon.preferred_common_name !== matchedTerm
             ? `${taxon.preferred_common_name} (${matchedTerm})`
             : matchedTerm}
         </span>
