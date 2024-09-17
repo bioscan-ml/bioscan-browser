@@ -1,5 +1,5 @@
 import { getImageSrc } from '@/lib/getImageSrc'
-import { getTaxonomy } from '@/lib/getTaxonomy'
+import { getTaxon } from '@/lib/getTaxon'
 import { Doc } from '@/types/response-data'
 import { ChevronRightIcon } from 'lucide-react'
 
@@ -11,7 +11,7 @@ interface GalleryProps {
 export const Gallery = ({ docs = [], onItemClick }: GalleryProps) => (
   <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
     {docs.map((doc) => {
-      const { currentRank, ranks } = getTaxonomy(doc)
+      const { taxon, parents } = getTaxon(doc)
 
       return (
         <div
@@ -27,12 +27,12 @@ export const Gallery = ({ docs = [], onItemClick }: GalleryProps) => (
           />
           <div className="p-3">
             <div className="space-y-1">
-              <div className="text-sm font-medium">{currentRank.value}</div>
+              <div className="text-sm font-medium">{taxon.label}</div>
               <div className="text-xs">
-                {ranks.map((rank, index) => (
+                {parents.map((parent, index) => (
                   <span key={index} className="inline-flex items-center">
-                    {rank.value}
-                    {index < ranks.length - 1 && (
+                    {parent.label}
+                    {index < parents.length - 1 && (
                       <ChevronRightIcon className="w-3 h-3 mx-1 opacity-50 inline" />
                     )}
                   </span>

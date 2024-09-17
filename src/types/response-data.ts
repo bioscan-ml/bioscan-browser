@@ -33,3 +33,32 @@ export interface TaxonomyTreeNode {
   }
   text: string
 }
+
+export interface Taxon {
+  id: number
+  matched_term: string
+  name: string
+  rank: string
+  preferred_common_name?: string
+  default_photo?: {
+    square_url: string
+  }
+}
+
+export interface TaxonDetails extends Taxon {
+  taxon_photos: {
+    photo: {
+      attribution: string
+      id: number
+      original_url: string
+      large_url: string
+      small_url: string
+    }
+    taxon: {
+      id: number
+      name: string
+    }
+  }[]
+  wikipedia_summary?: string
+  wikipedia_url?: string
+}

@@ -110,6 +110,10 @@
     font-family: 'Source Sans', system-ui, sans-serif;
   }
 
+  p b {
+    @apply font-medium text-foreground;
+  }
+
   h1 {
     @apply text-2xl leading-tight font-bold;
     font-family: 'Montserrat', system-ui, sans-serif;
@@ -123,5 +127,9 @@
   h3 {
     @apply text-lg leading-tight font-bold;
     font-family: 'Montserrat', system-ui, sans-serif;
+  }
+
+  .text-link {
+    @apply inline-flex items-center justify-center font-medium text-primary underline-offset-4 hover:underline;
   }
 }

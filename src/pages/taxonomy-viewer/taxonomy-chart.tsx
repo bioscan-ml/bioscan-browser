@@ -18,7 +18,7 @@ interface TaxonomyChartProps {
 
 const CHART_CONFIG = {
   count: {
-    label: 'Count',
+    label: 'Records',
     color: '#99cc33',
   },
 } satisfies ChartConfig

@@ -27,7 +27,8 @@ export const PaginationBar = <T extends { id: string }>({
       <PageContent>
         <div className="h-full flex items-center justify-between gap-2">
           <p className="text-sm whitespace-nowrap shrink-0">
-            Showing {fromLabel}-{toLabel} of {totalLabel} results
+            Showing {fromLabel}-{toLabel} of {totalLabel}{' '}
+            {data.numFound === 1 ? 'record' : 'records'}
           </p>
           <PaginationControls
             currentPage={currentPage}
