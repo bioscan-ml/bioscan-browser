@@ -34,7 +34,16 @@ export const useTaxaSearch = (q: string) => {
     }
 
     return data.results
-      .filter((taxon) => !!getNode(taxonomyTree, `${taxon.rank}-${taxon.name}`))
+      .map((taxon) => {
+        const treeNode = getNode(taxonomyTree, `${taxon.rank}-${taxon.name}`)
+        const count = treeNode?.metadata.numInstances ?? 0
+
+        return {
+          ...taxon,
+          count,
+        }
+      })
+      .filter((taxon) => taxon.count !== 0)
       .slice(0, LIMIT)
   }, [taxonomyTree, data?.results])
 

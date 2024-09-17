@@ -79,7 +79,7 @@ const SearchResult = ({
   taxon,
   onClick,
 }: {
-  taxon: Taxon
+  taxon: Taxon & { count: number }
   onClick?: () => void
 }) => {
   const matchedTerm =
@@ -97,20 +97,24 @@ const SearchResult = ({
       <img
         alt=""
         src={taxon.default_photo?.square_url}
-        className="w-12 h-12 rounded-sm"
+        className="w-16 h-16 rounded-sm"
       />
       <div className="flex flex-col flex-1">
         <div className="flex items-start justify-between gap-4">
-          <span className="text-sm font-medium">{taxon.name}</span>
+          <span className="text-base font-medium">{taxon.name}</span>
           <Badge variant="outline" className="uppercase">
             {taxon.rank}
           </Badge>
         </div>
-        <span className="text-sm text-muted-foreground">
+        <span className="text-sm">
           {taxon.preferred_common_name &&
           taxon.preferred_common_name !== matchedTerm
             ? `${taxon.preferred_common_name} (${matchedTerm})`
             : matchedTerm}
+        </span>
+        <span className="text-sm text-muted-foreground">
+          {taxon.count.toLocaleString()}{' '}
+          {taxon.count === 1 ? 'record' : 'records'}
         </span>
       </div>
     </Link>
