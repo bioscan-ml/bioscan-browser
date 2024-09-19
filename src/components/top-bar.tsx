@@ -13,12 +13,12 @@ export const TopBar = () => (
             className="h-8 w-8"
             alt="Center for Biodiversity Genomics"
           />
-          <h1 className="text-primary text-base whitespace-nowrap">
+          <h1 className="text-primary text-base whitespace-nowrap hidden md:block">
             BIOSCAN Browser
           </h1>
         </Link>
         <Menu />
-        <div className="flex-1" />
+        <div className="flex-1 hidden sm:block" />
         <TaxaSearch />
       </div>
     </PageContent>
