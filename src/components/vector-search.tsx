@@ -145,7 +145,7 @@ const RecordDetails = ({ recordId }: { recordId: string }) => {
           <InfoIcon className="w-4 h-4" />
         </Button>
       </DialogTrigger>
-      {data && <DocDetailsDialogContent doc={data} />}
+      {data && <DocDetailsDialogContent doc={data} showEmbeddings={false} />}
     </Dialog>
   )
 }

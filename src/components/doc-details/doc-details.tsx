@@ -19,18 +19,28 @@ import { Images } from './images'
 export const DocDetailsDialog = ({
   doc,
   open,
+  showEmbeddings,
   onOpenChange,
 }: {
   doc?: Doc
   open: boolean
+  showEmbeddings?: boolean
   onOpenChange: (open: boolean) => void
 }) => (
   <Dialog open={open} onOpenChange={onOpenChange}>
-    {doc && <DocDetailsDialogContent doc={doc} />}
+    {doc && (
+      <DocDetailsDialogContent doc={doc} showEmbeddings={showEmbeddings} />
+    )}
   </Dialog>
 )
 
-export const DocDetailsDialogContent = ({ doc }: { doc: Doc }) => {
+export const DocDetailsDialogContent = ({
+  doc,
+  showEmbeddings,
+}: {
+  doc: Doc
+  showEmbeddings?: boolean
+}) => {
   const { taxon, parents } = getTaxon(doc)
   const [latitude, longitude] = doc.latlon
     .split(',')
@@ -56,7 +66,7 @@ export const DocDetailsDialogContent = ({ doc }: { doc: Doc }) => {
           ))}
         </DialogDescription>
       </DialogHeader>
-      <Fields doc={doc} />
+      <Fields doc={doc} showEmbeddings={showEmbeddings} />
       <Tabs defaultValue="images">
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="images">Images</TabsTrigger>
