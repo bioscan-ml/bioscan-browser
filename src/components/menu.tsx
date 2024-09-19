@@ -1,54 +1,72 @@
-import {
-  BrainCircuitIcon,
-  FilterIcon,
-  InfoIcon,
-  NetworkIcon,
-} from 'lucide-react'
+import { MAX_LG_QUERY, useMediaQuery } from '@/hooks/useMediaQuery'
+import { cn } from '@/lib/utils'
+import { PopoverTrigger } from '@radix-ui/react-popover'
+import { MenuIcon } from 'lucide-react'
 import { NavLink } from 'react-router-dom'
-import { buttonVariants } from './ui/button'
+import { Button, buttonVariants } from './ui/button'
+import { Popover, PopoverContent } from './ui/popover'
 
 const MENU_ITEMS = [
-  { to: '/taxonomy-viewer', label: 'Taxonomy viewer', icon: NetworkIcon },
-  { to: '/asset-querier', label: 'Asset querier', icon: FilterIcon },
-  { to: '/vector-search', label: 'Vector search', icon: BrainCircuitIcon },
-  { to: '/about', label: 'About the dataset', icon: InfoIcon },
+  { to: '/taxonomy-viewer', label: 'Taxonomy viewer' },
+  { to: '/asset-querier', label: 'Asset querier' },
+  { to: '/vector-search', label: 'Vector search' },
+  { to: '/about', label: 'About the dataset' },
 ]
 
-export const Menu = () => (
-  <nav>
-    <ul className="hidden gap-4 sm:flex">
-      {MENU_ITEMS.map((menuItem) => (
-        <li key={menuItem.to}>
-          <NavLink
-            className={({ isActive }) =>
-              buttonVariants({
-                variant: isActive ? 'default' : 'ghost',
-                size: 'sm',
-              })
-            }
-            to={menuItem.to}
-          >
-            {menuItem.label}
-          </NavLink>
-        </li>
-      ))}
-    </ul>
-    <ul className="flex gap-2 sm:hidden">
-      {MENU_ITEMS.map((menuItem) => (
-        <li key={menuItem.to}>
-          <NavLink
-            className={({ isActive }) =>
-              buttonVariants({
-                variant: isActive ? 'default' : 'ghost',
-                size: 'icon',
-              })
-            }
-            to={menuItem.to}
-          >
-            <menuItem.icon className="w-4 h-4" />
-          </NavLink>
-        </li>
-      ))}
-    </ul>
-  </nav>
+export const Menu = () => {
+  const isLargeScreen = useMediaQuery(MAX_LG_QUERY)
+
+  return isLargeScreen ? <DesktopMenu /> : <MobileMenu />
+}
+
+const DesktopMenu = () => (
+  <ul className="flex gap-4">
+    {MENU_ITEMS.map((menuItem) => (
+      <li key={menuItem.to}>
+        <NavLink
+          className={({ isActive }) =>
+            buttonVariants({
+              variant: isActive ? 'default' : 'ghost',
+              size: 'sm',
+            })
+          }
+          to={menuItem.to}
+        >
+          {menuItem.label}
+        </NavLink>
+      </li>
+    ))}
+  </ul>
+)
+
+const MobileMenu = () => (
+  <Popover>
+    <PopoverTrigger asChild>
+      <Button variant="outline" size="icon">
+        <MenuIcon className="w-4 h-4" />
+      </Button>
+    </PopoverTrigger>
+    <PopoverContent side="bottom" align="end" className="w-auto">
+      <ul className="flex flex-col gap-2">
+        {MENU_ITEMS.map((menuItem) => (
+          <li key={menuItem.to}>
+            <NavLink
+              className={({ isActive }) =>
+                cn(
+                  buttonVariants({
+                    variant: isActive ? 'default' : 'ghost',
+                    size: 'sm',
+                  }),
+                  'w-full',
+                )
+              }
+              to={menuItem.to}
+            >
+              {menuItem.label}
+            </NavLink>
+          </li>
+        ))}
+      </ul>
+    </PopoverContent>
+  </Popover>
 )
