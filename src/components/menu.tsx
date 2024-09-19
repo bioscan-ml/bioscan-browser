@@ -1,10 +1,16 @@
-import { InfoIcon, NetworkIcon, SearchIcon } from 'lucide-react'
+import {
+  BrainCircuitIcon,
+  FilterIcon,
+  InfoIcon,
+  NetworkIcon,
+} from 'lucide-react'
 import { NavLink } from 'react-router-dom'
 import { buttonVariants } from './ui/button'
 
 const MENU_ITEMS = [
   { to: '/taxonomy-viewer', label: 'Taxonomy viewer', icon: NetworkIcon },
-  { to: '/asset-querier', label: 'Asset querier', icon: SearchIcon },
+  { to: '/asset-querier', label: 'Asset querier', icon: FilterIcon },
+  { to: '/vector-search', label: 'Vector search', icon: BrainCircuitIcon },
   { to: '/about', label: 'About the dataset', icon: InfoIcon },
 ]
 

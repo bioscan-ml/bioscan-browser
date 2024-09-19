@@ -1,3 +1,4 @@
+import { filtersToQuery } from '@/lib/filtersToQuery'
 import { Filter } from '@/types/settings'
 import { useSearchParamsState } from './search-params/useSearchParamsState'
 
@@ -48,32 +49,4 @@ export const useFilters = () => {
       setFilters(filters.filter((f) => f.type !== type)),
     clearFilters: () => setFilters([]),
   }
-}
-
-const filterToQuery = (filter: Filter) => {
-  const query = filter.value.reduce((previousQuery, currentValue) => {
-    const currentQuery = `${filter.type}:"${currentValue}"`
-
-    return previousQuery.length
-      ? `${previousQuery} OR ${currentQuery}`
-      : currentQuery
-  }, '')
-
-  return query.length ? `(${query})` : undefined
-}
-
-const filtersToQuery = (filters: Filter[]) => {
-  const query = filters.reduce((previousQuery, currentFilter) => {
-    const currentQuery = filterToQuery(currentFilter)
-
-    if (!currentQuery) {
-      return previousQuery
-    }
-
-    return previousQuery.length
-      ? `${previousQuery} AND ${currentQuery}`
-      : currentQuery
-  }, '')
-
-  return query.length ? query : undefined
 }

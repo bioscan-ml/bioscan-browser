@@ -1,7 +1,6 @@
 import { getTaxon } from '@/lib/getTaxon'
 import { Doc } from '@/types/response-data'
 import { ChevronRight } from 'lucide-react'
-import { To } from 'react-router-dom'
 import { CodeBlock } from '../code-block'
 import { Map } from '../map'
 import { TaxonDetailsArticle } from '../taxon-details-article'
@@ -17,28 +16,31 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
 import { Fields } from './fields'
 import { Images } from './images'
 
-interface DocDetailsProps {
-  doc?: Doc
-  open: boolean
-  getFieldLink?: (key: string, value: string) => To | undefined
-  onOpenChange: (open: boolean) => void
-}
-
-export const DocDetails = ({
+export const DocDetailsDialog = ({
   doc,
   open,
-  getFieldLink,
+  showEmbeddings,
   onOpenChange,
-}: DocDetailsProps) => (
+}: {
+  doc?: Doc
+  open: boolean
+  showEmbeddings?: boolean
+  onOpenChange: (open: boolean) => void
+}) => (
   <Dialog open={open} onOpenChange={onOpenChange}>
-    {doc && <DocDetailsContent doc={doc} getFieldLink={getFieldLink} />}
+    {doc && (
+      <DocDetailsDialogContent doc={doc} showEmbeddings={showEmbeddings} />
+    )}
   </Dialog>
 )
 
-const DocDetailsContent = ({
+export const DocDetailsDialogContent = ({
   doc,
-  getFieldLink,
-}: { doc: Doc } & Pick<DocDetailsProps, 'getFieldLink'>) => {
+  showEmbeddings,
+}: {
+  doc: Doc
+  showEmbeddings?: boolean
+}) => {
   const { taxon, parents } = getTaxon(doc)
   const [latitude, longitude] = doc.latlon
     .split(',')
@@ -64,7 +66,7 @@ const DocDetailsContent = ({
           ))}
         </DialogDescription>
       </DialogHeader>
-      <Fields doc={doc} getFieldLink={getFieldLink} />
+      <Fields doc={doc} showEmbeddings={showEmbeddings} />
       <Tabs defaultValue="images">
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="images">Images</TabsTrigger>

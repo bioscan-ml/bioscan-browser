@@ -1,4 +1,4 @@
-import { DocDetails } from '@/components/doc-details/doc-details'
+import { DocDetailsDialog } from '@/components/doc-details/doc-details'
 import { Gallery } from '@/components/gallery'
 import { Loader } from '@/components/loader'
 import { OrderByControl } from '@/components/order-by-control'
@@ -20,10 +20,8 @@ import {
   DEFAULT_PAGE,
   DEFAULT_SORT,
   FIELDS,
-  FILTER_TYPES,
   PAGE_SIZE,
   ROOT_NODE_ID,
-  TAXON_FILTER_TYPES,
 } from '@/lib/constants'
 import { findPathById } from '@/lib/findPathById'
 import { ViewMode } from '@/types/settings'
@@ -53,9 +51,9 @@ export const TaxonomyViewer = () => {
     ? `${selectedNode.metadata.taxon}:"${selectedNode.metadata.label}"`
     : undefined
   const { data, isPending } = useRecords({
-    q,
     page,
     pageSize: PAGE_SIZE,
+    q,
     sort,
   })
   const { activeDoc, setActiveDoc } = useActiveDoc(data?.docs)
@@ -152,23 +150,9 @@ export const TaxonomyViewer = () => {
           setPage={setPage}
         />
       )}
-      <DocDetails
+      <DocDetailsDialog
         doc={activeDoc}
         open={!!activeDoc}
-        getFieldLink={(key, value) => {
-          if (TAXON_FILTER_TYPES.some((filterType) => filterType.key === key)) {
-            return {
-              pathname: '/taxonomy-viewer',
-              search: `taxon=${key}-${value}`,
-            }
-          }
-
-          if (FILTER_TYPES.some((filterType) => filterType.key === key))
-            return {
-              pathname: '/asset-querier',
-              search: `filter=${key}:${value}`,
-            }
-        }}
         onOpenChange={(open) => {
           if (!open) {
             setActiveDoc(undefined)
