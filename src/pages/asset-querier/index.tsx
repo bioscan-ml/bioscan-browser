@@ -1,4 +1,4 @@
-import { DocDetails } from '@/components/doc-details/doc-details'
+import { DocDetailsDialog } from '@/components/doc-details/doc-details'
 import { FilterControl } from '@/components/filter-control'
 import { Gallery } from '@/components/gallery'
 import { Loader } from '@/components/loader'
@@ -15,13 +15,7 @@ import { useSort } from '@/hooks/search-params/useSort'
 import { useFacetCounts } from '@/hooks/useFacetCounts'
 import { useFilters } from '@/hooks/useFilters'
 import { useRecords } from '@/hooks/useRecords'
-import {
-  DEFAULT_PAGE,
-  DEFAULT_SORT,
-  FIELDS,
-  FILTER_TYPES,
-  PAGE_SIZE,
-} from '@/lib/constants'
+import { DEFAULT_PAGE, DEFAULT_SORT, FIELDS, PAGE_SIZE } from '@/lib/constants'
 import { ViewMode } from '@/types/settings'
 import { useState } from 'react'
 
@@ -34,8 +28,8 @@ export const AssetQuerier = () => {
   const { data, isPending } = useRecords({
     page,
     pageSize: PAGE_SIZE,
-    sort,
     q: filterQuery,
+    sort,
   })
   const { facetCounts } = useFacetCounts()
   const { activeDoc, setActiveDoc } = useActiveDoc(data?.docs)
@@ -105,16 +99,9 @@ export const AssetQuerier = () => {
           setPage={setPage}
         />
       )}
-      <DocDetails
+      <DocDetailsDialog
         doc={activeDoc}
         open={!!activeDoc}
-        getFieldLink={(key, value) => {
-          if (FILTER_TYPES.some((filterType) => filterType.key === key))
-            return {
-              pathname: '/asset-querier',
-              search: `filter=${key}:${value}`,
-            }
-        }}
         onOpenChange={(open) => {
           if (!open) {
             setActiveDoc(undefined)
