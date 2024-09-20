@@ -40,7 +40,7 @@ export const VectorSearch = () => {
   return (
     <>
       <PageContent>
-        <div className="grid items-start gap-4 py-4 sm:flex sm:gap-8 sm:py-8">
+        <div className="grid items-start gap-4 py-4 md:flex md:gap-8 md:py-8">
           <Sidebar>
             <div className="space-y-8">
               <div className="space-y-2">
@@ -74,12 +74,12 @@ export const VectorSearch = () => {
               </div>
             </div>
           </Sidebar>
-          <div className="mb-16 grow overflow-hidden">
+          <div className="mb-16 grow overflow-hidden m-[-4px] p-[4px]">
             {isPending ? (
               <Loader />
             ) : recordId?.length ? (
               <>
-                <div className="flex items-center gap-4 mb-4 pb-4 p-[4px] border-b">
+                <div className="flex items-center gap-4 mb-4 pb-4 border-b">
                   <h2 className="text-lg font-semibold leading-none tracking-tight">
                     Embeddings for {recordId}
                   </h2>

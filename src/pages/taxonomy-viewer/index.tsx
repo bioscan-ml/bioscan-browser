@@ -62,7 +62,7 @@ export const TaxonomyViewer = () => {
   return (
     <>
       <PageContent>
-        <div className="grid items-start gap-4 py-4 sm:flex sm:gap-8 sm:py-8">
+        <div className="grid items-start gap-4 py-4 md:flex md:gap-8 md:py-8">
           <Sidebar>
             <div className="space-y-8">
               <div className="space-y-2">
@@ -92,13 +92,14 @@ export const TaxonomyViewer = () => {
               </div>
             </div>
           </Sidebar>
-          <div className="mb-16 grow overflow-hidden">
+          <div className="mb-16 grow overflow-hidden m-[-4px] p-[4px]">
             {isPending || isTaxonomyTreePending ? (
               <Loader />
             ) : (
               <>
                 {selectedNode ? (
-                  <div className="flex flex-col-reverse items-start justify-between gap-4 mb-4 p-[4px] pb-4 border-b sm:flex-row">
+                  <div className="flex flex-col items-start justify-between gap-4 mb-4 pb-4 border-b lg:flex-row-reverse">
+                    <TaxaSearch />
                     <div className="flex items-center gap-4">
                       <h2 className="text-lg font-semibold leading-none tracking-tight">
                         {selectedNode.metadata.label}
@@ -113,7 +114,6 @@ export const TaxonomyViewer = () => {
                         }}
                       />
                     </div>
-                    <TaxaSearch />
                   </div>
                 ) : null}
                 {viewMode === 'table' && (

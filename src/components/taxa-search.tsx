@@ -15,7 +15,7 @@ export const TaxaSearch = () => {
   const { data, isPending } = useTaxaSearch(debouncedSearchString)
 
   return (
-    <div className="w-full relative sm:w-64">
+    <div className="w-full relative lg:w-64">
       <SearchInput
         placeholder="Search taxa..."
         isLoading={isPending}
