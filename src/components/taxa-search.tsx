@@ -15,7 +15,7 @@ export const TaxaSearch = () => {
   const { data, isPending } = useTaxaSearch(debouncedSearchString)
 
   return (
-    <div className="w-48 relative">
+    <div className="w-full relative sm:w-64">
       <SearchInput
         placeholder="Search taxa..."
         isLoading={isPending}
@@ -23,7 +23,7 @@ export const TaxaSearch = () => {
         setSearchString={setSearchString}
       />
       {data?.length ? (
-        <div className="absolute bottom-[-0.5rem] right-0 translate-y-full w-96 rounded-md border bg-popover text-popover-foreground shadow-md">
+        <div className="absolute bottom-[-0.5rem] right-0 translate-y-full w-full rounded-md border bg-popover text-popover-foreground shadow-md z-50 sm:w-96">
           {data.map((taxon) => (
             <SearchResult
               key={taxon.id}

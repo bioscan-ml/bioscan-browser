@@ -79,14 +79,11 @@ export const VectorSearch = () => {
               <Loader />
             ) : recordId?.length ? (
               <>
-                <div className="flex items-center gap-4 mb-4 pb-4 border-b">
+                <div className="flex items-center gap-4 mb-4 pb-4 p-[4px] border-b">
                   <h2 className="text-lg font-semibold leading-none tracking-tight">
                     Embeddings for {recordId}
                   </h2>
-                  <div className="flex-1" />
-                  <div className="p-[4px]">
-                    <RecordDetails recordId={recordId} />
-                  </div>
+                  <RecordDetails recordId={recordId} />
                 </div>
                 {viewMode === 'table' && (
                   <Table
