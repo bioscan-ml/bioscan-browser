@@ -1,25 +1,22 @@
 import { Link } from 'react-router-dom'
 import { Menu } from './menu'
 import { PageContent } from './page-content'
-import { TaxaSearch } from './taxa-search'
 
 export const TopBar = () => (
-  <header className="sticky top-0 h-16 bg-background/95 border-b z-10">
+  <header className="sticky top-0 h-16 py-8 bg-background/95 border-b z-10">
     <PageContent>
-      <div className="h-full flex items-center justify-between gap-4 sm:justify-start sm:gap-8">
+      <div className="h-full flex items-center justify-between gap-8 lg:justify-start">
         <Link to="/" className="flex items-center gap-2 shrink-0">
           <img
             src="/assets/cbg.png"
             className="h-8 w-8"
             alt="Center for Biodiversity Genomics"
           />
-          <h1 className="text-primary text-base whitespace-nowrap hidden md:block">
+          <h1 className="text-primary text-base whitespace-nowrap">
             BIOSCAN Browser
           </h1>
         </Link>
         <Menu />
-        <div className="flex-1 hidden sm:block" />
-        <TaxaSearch />
       </div>
     </PageContent>
   </header>

@@ -27,7 +27,7 @@ import { Input } from './ui/input'
 export const VectorSearch = () => {
   const [searchString, setSearchString] = useState<string>('')
   const { recordId, setRecordId } = useRecordId()
-  const [viewMode, setViewMode] = useState<ViewMode>('table')
+  const [viewMode, setViewMode] = useState<ViewMode>('gallery')
   const { page, setPage } = usePage(DEFAULT_PAGE)
   const { sort, setSort } = useSort(DEFAULT_SORT)
   const { data, isPending } = useEmbeddings(recordId ?? undefined)
@@ -40,7 +40,7 @@ export const VectorSearch = () => {
   return (
     <>
       <PageContent>
-        <div className="grid items-start gap-4 py-4 sm:flex sm:gap-8 sm:py-8">
+        <div className="grid items-start gap-4 py-4 md:flex md:gap-8 md:py-8">
           <Sidebar>
             <div className="space-y-8">
               <div className="space-y-2">
@@ -63,7 +63,7 @@ export const VectorSearch = () => {
               <div className="space-y-2">
                 <label className="text-sm font-medium">View mode</label>
                 <ViewModeControl
-                  type="asset-querier"
+                  type="vector-search"
                   viewMode={viewMode}
                   setViewMode={setViewMode}
                 />
@@ -74,7 +74,7 @@ export const VectorSearch = () => {
               </div>
             </div>
           </Sidebar>
-          <div className="mb-16 grow overflow-hidden">
+          <div className="mb-16 grow overflow-hidden m-[-4px] p-[4px]">
             {isPending ? (
               <Loader />
             ) : recordId?.length ? (
@@ -83,10 +83,7 @@ export const VectorSearch = () => {
                   <h2 className="text-lg font-semibold leading-none tracking-tight">
                     Embeddings for {recordId}
                   </h2>
-                  <div className="flex-1" />
-                  <div className="p-[4px]">
-                    <RecordDetails recordId={recordId} />
-                  </div>
+                  <RecordDetails recordId={recordId} />
                 </div>
                 {viewMode === 'table' && (
                   <Table

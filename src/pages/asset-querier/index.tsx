@@ -20,7 +20,7 @@ import { ViewMode } from '@/types/settings'
 import { useState } from 'react'
 
 export const AssetQuerier = () => {
-  const [viewMode, setViewMode] = useState<ViewMode>('table')
+  const [viewMode, setViewMode] = useState<ViewMode>('gallery')
   const { page, setPage } = usePage(DEFAULT_PAGE)
   const { sort, setSort } = useSort(DEFAULT_SORT)
   const { filters, filterQuery, addFilter, removeFilter, clearFilters } =
@@ -37,7 +37,7 @@ export const AssetQuerier = () => {
   return (
     <>
       <PageContent>
-        <div className="grid items-start gap-4 py-4 sm:flex sm:gap-8 sm:py-8">
+        <div className="grid items-start gap-4 py-4 md:flex md:gap-8 md:py-8">
           <Sidebar>
             <div className="space-y-8">
               <div className="space-y-2">

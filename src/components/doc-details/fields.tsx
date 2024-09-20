@@ -59,7 +59,7 @@ const EmbeddingsValue = ({ doc }: { doc: Doc }) => {
       to={{ pathname: '/vector-search', search: `id=${doc.id}` }}
       className="text-link"
     >
-      {data.numFound} records
+      {data.numFound} {data.numFound === 1 ? 'record' : 'records'}
     </Link>
   )
 }
