@@ -30,28 +30,27 @@ const DesktopSidebar = ({ children }: SidebarProps) => (
 
 const MobileSidebar = ({ children }: SidebarProps) => {
   const [open, setIsOpen] = useState(false)
+  const ChevronIcon = open ? ChevronUpIcon : ChevronDownIcon
 
   return (
     <Collapsible
       open={open}
       onOpenChange={setIsOpen}
-      className="rounded-md border"
+      className="rounded-md border overflow-hidden"
     >
       <CollapsibleTrigger
         className={cn(
-          'w-full h-10 flex items-center justify-start gap-2 px-4',
-          open ? 'bg-muted border-b' : undefined,
+          'w-full h-10 flex items-center justify-start',
+          open ? 'bg-muted' : undefined,
         )}
       >
-        <Settings2Icon className="w-4 h-4" />
+        <Settings2Icon className="w-4 h-4 m-3" />
         <span className="text-sm font-medium grow text-left">Settings</span>
-        {open ? (
-          <ChevronUpIcon className="w-4 h-4" />
-        ) : (
-          <ChevronDownIcon className="w-4 h-4" />
-        )}
+        <ChevronIcon className="w-4 h-4 m-3" />
       </CollapsibleTrigger>
-      <CollapsibleContent className="p-4">{children}</CollapsibleContent>
+      <CollapsibleContent className="p-4 border-t">
+        {children}
+      </CollapsibleContent>
     </Collapsible>
   )
 }
