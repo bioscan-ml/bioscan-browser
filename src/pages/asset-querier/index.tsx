@@ -20,7 +20,7 @@ import { ViewMode } from '@/types/settings'
 import { useState } from 'react'
 
 export const AssetQuerier = () => {
-  const [viewMode, setViewMode] = useState<ViewMode>('table')
+  const [viewMode, setViewMode] = useState<ViewMode>('gallery')
   const { page, setPage } = usePage(DEFAULT_PAGE)
   const { sort, setSort } = useSort(DEFAULT_SORT)
   const { filters, filterQuery, addFilter, removeFilter, clearFilters } =

@@ -11,14 +11,14 @@ import {
 const VIEW_MODE_OPTIONS = {
   'taxonomy-viewer': [
     {
-      label: 'Table',
-      value: 'table',
-      Icon: SheetIcon,
-    },
-    {
       label: 'Gallery',
       value: 'gallery',
       Icon: Grid2X2Icon,
+    },
+    {
+      label: 'Table',
+      value: 'table',
+      Icon: SheetIcon,
     },
     {
       label: 'Chart',
@@ -28,20 +28,32 @@ const VIEW_MODE_OPTIONS = {
   ],
   'asset-querier': [
     {
+      label: 'Gallery',
+      value: 'gallery',
+      Icon: Grid2X2Icon,
+    },
+    {
       label: 'Table',
       value: 'table',
       Icon: SheetIcon,
     },
+  ],
+  'vector-search': [
     {
       label: 'Gallery',
       value: 'gallery',
       Icon: Grid2X2Icon,
     },
+    {
+      label: 'Table',
+      value: 'table',
+      Icon: SheetIcon,
+    },
   ],
 }
 
 interface ViewModeProps {
-  type: 'taxonomy-viewer' | 'asset-querier'
+  type: 'taxonomy-viewer' | 'asset-querier' | 'vector-search'
   viewMode: ViewMode
   setViewMode: (viewMode: ViewMode) => void
 }

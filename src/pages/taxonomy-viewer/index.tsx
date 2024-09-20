@@ -31,7 +31,7 @@ import { TaxonomyChart } from './taxonomy-chart'
 import { useSelectedNode } from './useSelectedNode'
 
 export const TaxonomyViewer = () => {
-  const [viewMode, setViewMode] = useState<ViewMode>('table')
+  const [viewMode, setViewMode] = useState<ViewMode>('gallery')
 
   // Taxonomy tree
   const { taxonomyTree, isPending: isTaxonomyTreePending } = useTaxonomyTree()

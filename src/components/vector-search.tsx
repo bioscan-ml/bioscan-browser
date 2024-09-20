@@ -27,7 +27,7 @@ import { Input } from './ui/input'
 export const VectorSearch = () => {
   const [searchString, setSearchString] = useState<string>('')
   const { recordId, setRecordId } = useRecordId()
-  const [viewMode, setViewMode] = useState<ViewMode>('table')
+  const [viewMode, setViewMode] = useState<ViewMode>('gallery')
   const { page, setPage } = usePage(DEFAULT_PAGE)
   const { sort, setSort } = useSort(DEFAULT_SORT)
   const { data, isPending } = useEmbeddings(recordId ?? undefined)
@@ -63,7 +63,7 @@ export const VectorSearch = () => {
               <div className="space-y-2">
                 <label className="text-sm font-medium">View mode</label>
                 <ViewModeControl
-                  type="asset-querier"
+                  type="vector-search"
                   viewMode={viewMode}
                   setViewMode={setViewMode}
                 />
