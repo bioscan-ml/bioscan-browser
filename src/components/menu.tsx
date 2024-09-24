@@ -10,7 +10,7 @@ import { Popover, PopoverContent } from './ui/popover'
 const MENU_ITEMS = [
   { to: '/taxonomy-viewer', label: 'Taxonomy viewer' },
   { to: '/asset-querier', label: 'Asset querier' },
-  { to: '/vector-search', label: 'Vector search' },
+  { to: '/search-similar', label: 'Search similar' },
   { to: '/about', label: 'About the dataset' },
 ]
 

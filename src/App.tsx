@@ -8,8 +8,8 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom'
+import { SearchSimilar } from './components/search-similar'
 import { TopBar } from './components/top-bar'
-import { VectorSearch } from './components/vector-search'
 import { About } from './pages/about'
 import { AssetQuerier } from './pages/asset-querier'
 import { TaxonomyViewer } from './pages/taxonomy-viewer'
@@ -20,7 +20,7 @@ const ROUTES = [
   { path: '/', element: <Navigate to="/taxonomy-viewer" replace /> },
   { path: '/taxonomy-viewer', Component: TaxonomyViewer },
   { path: '/asset-querier', Component: AssetQuerier },
-  { path: '/vector-search', Component: VectorSearch },
+  { path: '/search-similar', Component: SearchSimilar },
   { path: '/about', Component: About },
   { path: '*', element: <Navigate to="/" replace /> },
 ]

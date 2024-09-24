@@ -38,7 +38,7 @@ const VIEW_MODE_OPTIONS = {
       Icon: SheetIcon,
     },
   ],
-  'vector-search': [
+  'search-similar': [
     {
       label: 'Gallery',
       value: 'gallery',
@@ -53,7 +53,7 @@ const VIEW_MODE_OPTIONS = {
 }
 
 interface ViewModeProps {
-  type: 'taxonomy-viewer' | 'asset-querier' | 'vector-search'
+  type: 'taxonomy-viewer' | 'asset-querier' | 'search-similar'
   viewMode: ViewMode
   setViewMode: (viewMode: ViewMode) => void
 }

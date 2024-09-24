@@ -24,7 +24,7 @@ import { Button } from './ui/button'
 import { Dialog, DialogTrigger } from './ui/dialog'
 import { Input } from './ui/input'
 
-export const VectorSearch = () => {
+export const SearchSimilar = () => {
   const [searchString, setSearchString] = useState<string>('')
   const { recordId, setRecordId } = useRecordId()
   const [viewMode, setViewMode] = useState<ViewMode>('gallery')
@@ -63,7 +63,7 @@ export const VectorSearch = () => {
               <div className="space-y-2">
                 <label className="text-sm font-medium">View mode</label>
                 <ViewModeControl
-                  type="vector-search"
+                  type="search-similar"
                   viewMode={viewMode}
                   setViewMode={setViewMode}
                 />
@@ -155,7 +155,7 @@ const GetStarted = ({ onSubmit }: { onSubmit: (recordId: string) => void }) => {
       <div>
         <p className="text-xl font-medium mb-2">Get started</p>
         <p className="text-sm text-muted-foreground">
-          To search vector embeddings, first specify a record ID.
+          To search embeddings, first specify a record ID.
         </p>
       </div>
       <div className="w-full max-w-64 flex gap-2 mx-auto">
