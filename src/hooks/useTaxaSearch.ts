@@ -13,7 +13,7 @@ const LIMIT = 5
 
 export const useTaxaSearch = (q: string) => {
   const { taxonomyTree, isPending: isTaxonomyTreePending } = useTaxonomyTree()
-  const enabled = q.length > 3
+  const enabled = q.length > 0
 
   const { isPending, error, data } = useQuery<{ results: Taxon[] }>({
     queryKey: [QUERY_KEY, q],
