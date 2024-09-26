@@ -97,6 +97,7 @@ export const SearchSimilar = () => {
                   <Gallery
                     docs={data?.docs}
                     onItemClick={(doc) => setActiveDoc(doc)}
+                    onSearchClick={(doc) => setRecordId(doc.id)}
                   />
                 )}
                 {!data?.docs.length ? <NoEmbeddingsFound /> : null}

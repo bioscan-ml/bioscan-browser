@@ -1,14 +1,20 @@
 import { getImageSrc } from '@/lib/getImageSrc'
 import { getTaxon } from '@/lib/getTaxon'
 import { Doc } from '@/types/response-data'
-import { ChevronRightIcon } from 'lucide-react'
+import { ChevronRightIcon, SearchIcon } from 'lucide-react'
+import { Button } from './ui/button'
 
 interface GalleryProps {
   docs?: Doc[]
   onItemClick: (doc: Doc) => void
+  onSearchClick?: (doc: Doc) => void
 }
 
-export const Gallery = ({ docs = [], onItemClick }: GalleryProps) => (
+export const Gallery = ({
+  docs = [],
+  onItemClick,
+  onSearchClick,
+}: GalleryProps) => (
   <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
     {docs.map((doc) => {
       const { taxon, parents } = getTaxon(doc)
@@ -16,30 +22,44 @@ export const Gallery = ({ docs = [], onItemClick }: GalleryProps) => (
       return (
         <div
           key={doc.id}
-          className="rounded-md border border-input overflow-hidden cursor-pointer hover:bg-muted/50"
-          onClick={() => onItemClick(doc)}
+          className="rounded-md border border-input overflow-hidden relative"
         >
-          <img
-            alt={doc.id}
-            className="w-full aspect-[341/256]"
-            loading="lazy"
-            src={getImageSrc(doc)}
-          />
-          <div className="p-3">
-            <div className="space-y-1">
-              <div className="text-sm font-medium">{taxon.label}</div>
-              <div className="text-xs">
-                {parents.map((parent, index) => (
-                  <span key={index} className="inline-flex items-center">
-                    {parent.label}
-                    {index < parents.length - 1 && (
-                      <ChevronRightIcon className="w-3 h-3 mx-1 opacity-50 inline" />
-                    )}
-                  </span>
-                ))}
+          <div
+            className="cursor-pointer hover:bg-muted/50"
+            onClick={() => onItemClick(doc)}
+          >
+            <img
+              alt={doc.id}
+              className="w-full aspect-[341/256]"
+              loading="lazy"
+              src={getImageSrc(doc)}
+            />
+            <div className="p-3">
+              <div className="space-y-1">
+                <div className="text-sm font-medium">{taxon.label}</div>
+                <div className="text-xs">
+                  {parents.map((parent, index) => (
+                    <span key={index} className="inline-flex items-center">
+                      {parent.label}
+                      {index < parents.length - 1 && (
+                        <ChevronRightIcon className="w-3 h-3 mx-1 opacity-50 inline" />
+                      )}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
+          {onSearchClick && (
+            <Button
+              size="icon"
+              variant="outline"
+              className="m-2 absolute top-0 right-0"
+              onClick={() => onSearchClick(doc)}
+            >
+              <SearchIcon className="w-4 h-4" />
+            </Button>
+          )}
         </div>
       )
     })}
