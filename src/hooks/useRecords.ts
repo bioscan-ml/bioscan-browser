@@ -26,6 +26,7 @@ export const useRecords = (params: {
 
       return await res.json()
     },
+    retry: false,
   })
 
   return {

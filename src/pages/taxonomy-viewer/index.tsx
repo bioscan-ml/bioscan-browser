@@ -29,6 +29,7 @@ import { ViewMode } from '@/types/settings'
 import { useMemo, useState } from 'react'
 import { TaxonomyChart } from './taxonomy-chart'
 import { useSelectedNode } from './useSelectedNode'
+import { Error } from '@/components/error'
 
 export const TaxonomyViewer = () => {
   const [viewMode, setViewMode] = useState<ViewMode>('gallery')
@@ -51,7 +52,7 @@ export const TaxonomyViewer = () => {
   const q = selectedNode
     ? `${selectedNode.metadata.taxon}:"${selectedNode.metadata.label}"`
     : undefined
-  const { data, isPending } = useRecords({
+  const { data, isPending, error } = useRecords({
     page,
     pageSize: PAGE_SIZE,
     q,
@@ -95,6 +96,8 @@ export const TaxonomyViewer = () => {
           <div className="mb-16 grow overflow-hidden m-[-4px] p-[4px]">
             {isPending || isTaxonomyTreePending ? (
               <Loader />
+            ) : error ? (
+              <Error />
             ) : (
               <>
                 {selectedNode ? (

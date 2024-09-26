@@ -1,4 +1,5 @@
 import { DocDetailsDialog } from '@/components/doc-details/doc-details'
+import { Error } from '@/components/error'
 import { FilterControl } from '@/components/filter-control'
 import { Gallery } from '@/components/gallery'
 import { Loader } from '@/components/loader'
@@ -25,7 +26,7 @@ export const AssetQuerier = () => {
   const { sort, setSort } = useSort(DEFAULT_SORT)
   const { filters, filterQuery, addFilter, removeFilter, clearFilters } =
     useFilters()
-  const { data, isPending } = useRecords({
+  const { data, isPending, error } = useRecords({
     page,
     pageSize: PAGE_SIZE,
     q: filterQuery,
@@ -67,6 +68,8 @@ export const AssetQuerier = () => {
           <div className="mb-16 grow overflow-hidden">
             {isPending ? (
               <Loader />
+            ) : error ? (
+              <Error />
             ) : (
               <>
                 {viewMode === 'table' && (
