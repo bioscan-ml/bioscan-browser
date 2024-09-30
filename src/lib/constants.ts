@@ -26,6 +26,8 @@ export const TAXON_FILTER_TYPES = [
 ]
 
 export const FILTER_TYPES = [
+  { label: 'ID', key: 'id' },
+  { label: 'Sample ID', key: 'sampleid' },
   { label: 'Country', key: 'country' },
   { label: 'Province/State', key: 'province_state' },
   ...TAXON_FILTER_TYPES,
