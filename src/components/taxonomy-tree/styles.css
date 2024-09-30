@@ -7,6 +7,10 @@
   font-family: 'Source Sans', system-ui, sans-serif;
 }
 
+.MuiTreeItem-root .MuiTreeItem-content {
+  @apply items-start;
+}
+
 .MuiTreeItem-root .MuiTreeItem-content:hover,
 .MuiTreeItem-root .MuiTreeItem-content.Mui-focused:hover {
   @apply bg-muted;
@@ -15,7 +19,12 @@
 .MuiTreeItem-root .MuiTreeItem-content.Mui-selected,
 .MuiTreeItem-root .MuiTreeItem-content.Mui-selected:hover,
 .MuiTreeItem-root .MuiTreeItem-content.Mui-selected.Mui-focused {
-  @apply bg-primary text-primary-foreground;
+  @apply bg-primary;
+}
+
+.MuiTreeItem-root .MuiTreeItem-content.Mui-selected,
+.MuiTreeItem-root .MuiTreeItem-content.Mui-selected .MuiTreeItem-label > span {
+  @apply text-primary-foreground;
 }
 
 .MuiTreeItem-root .MuiTreeItem-content.Mui-focused {
