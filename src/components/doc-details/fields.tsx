@@ -17,50 +17,58 @@ export const Fields = ({ doc, showEmbeddings = true }: FieldsProps) => (
         return null
       }
 
-      const fieldLink = getFieldLink(field.key, fieldValue)
-
       return (
-        <div key={field.key} className="flex flex-col items-start text-sm">
-          <span className="font-medium text-muted-foreground">
-            {field.label}
-          </span>
-          {fieldLink ? (
-            <Link to={fieldLink} className="text-link">
-              {fieldValue}
-            </Link>
-          ) : (
-            <span>{fieldValue}</span>
-          )}
-        </div>
+        <Field
+          key={field.key}
+          label={field.label}
+          link={getFieldLink(field.key, fieldValue)}
+          value={fieldValue}
+        />
       )
     })}
-    {showEmbeddings && (
-      <div className="flex flex-col items-start text-sm">
-        <span className="font-medium text-muted-foreground">Embeddings</span>
-        <EmbeddingsValue doc={doc} />
-      </div>
+    {showEmbeddings && <EmbeddingsField doc={doc} />}
+  </div>
+)
+
+const Field = ({
+  label,
+  link,
+  value,
+}: {
+  label: string
+  link?: To
+  value: string
+}) => (
+  <div className="flex flex-col items-start text-sm">
+    <span className="font-medium text-muted-foreground">{label}</span>
+    {link ? (
+      <Link to={link} className="text-link">
+        {value}
+      </Link>
+    ) : (
+      <span>{value}</span>
     )}
   </div>
 )
 
-const EmbeddingsValue = ({ doc }: { doc: Doc }) => {
+const EmbeddingsField = ({ doc }: { doc: Doc }) => {
+  const label = 'Embeddings'
   const { data, isPending } = useEmbeddings(doc.id)
 
   if (isPending) {
-    return <span>Loading...</span>
+    return <Field label={label} value="Loading..." />
   }
 
   if (!data?.numFound) {
-    return <span>n/a</span>
+    return <Field label={label} value="n/a" />
   }
 
   return (
-    <Link
-      to={{ pathname: '/search-similar', search: `id=${doc.id}` }}
-      className="text-link"
-    >
-      {data.numFound} {data.numFound === 1 ? 'record' : 'records'}
-    </Link>
+    <Field
+      label={label}
+      link={{ pathname: '/search-similar', search: `id=${doc.id}` }}
+      value={`${data.numFound} ${data.numFound === 1 ? 'record' : 'records'}`}
+    />
   )
 }
 

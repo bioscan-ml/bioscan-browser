@@ -37,6 +37,7 @@ export const Table = ({ docs = [], sort, onRowClick, setSort }: TableProps) => (
             <TableHead key={field.key} aria-sort={ariaSort}>
               <button
                 className="w-full h-full flex items-center gap-2 whitespace-nowrap"
+                disabled={field.sortDisabled}
                 onClick={() => {
                   setSort({
                     key: field.key,

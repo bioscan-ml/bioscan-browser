@@ -1,6 +1,7 @@
 export interface Doc {
   chunk?: string
   class: string
+  collectors: string
   country: string
   family: string
   genus: string

@@ -1,11 +1,17 @@
 import { Doc } from '@/types/response-data'
 import { Sort } from '@/types/settings'
 
-export const FIELDS: { label: string; key: keyof Doc; cellClass?: string }[] = [
+export const FIELDS: {
+  label: string
+  key: keyof Doc
+  cellClass?: string
+  sortDisabled?: boolean
+}[] = [
   { label: 'ID', key: 'id', cellClass: 'font-medium' },
   { label: 'Sample ID', key: 'sampleid' },
   { label: 'Country', key: 'country' },
   { label: 'Province/State', key: 'province_state' },
+  { label: 'Collectors', key: 'collectors', sortDisabled: true },
   { label: 'Phylum', key: 'phylum' },
   { label: 'Class', key: 'class' },
   { label: 'Order', key: 'order' },
