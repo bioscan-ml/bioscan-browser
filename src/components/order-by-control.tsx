@@ -9,7 +9,7 @@ import { Doc } from '@/types/response-data'
 import { Sort, SortOrder } from '@/types/settings'
 
 interface OrderByControlProps {
-  fields: { label: string; key: keyof Doc }[]
+  fields: { label: string; key: keyof Doc; sortDisabled?: boolean }[]
   sort: Sort
   setSort: (sort: Sort) => void
 }
@@ -28,11 +28,13 @@ export const OrderByControl = ({
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
-        {fields.map((field) => (
-          <SelectItem key={field.key} value={field.key}>
-            {field.label}
-          </SelectItem>
-        ))}
+        {fields
+          .filter((field) => !field.sortDisabled)
+          .map((field) => (
+            <SelectItem key={field.key} value={field.key}>
+              {field.label}
+            </SelectItem>
+          ))}
       </SelectContent>
     </Select>
     <Select
