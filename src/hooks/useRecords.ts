@@ -52,7 +52,7 @@ export const useRecords = (params: {
     data: data
       ? {
           ...data.response,
-          docs,
+          docs: docs ?? [],
           facetCounts: data.facet_counts,
         }
       : undefined,
