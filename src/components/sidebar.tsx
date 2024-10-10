@@ -27,7 +27,7 @@ export const SidebarSection = ({
   children: ReactNode
 }) => {
   return (
-    <div className="space-y-2 md:w-56 md:sticky md:left-4">
+    <div className="space-y-2 md:w-64 md:sticky md:left-4">
       <label className="text-sm font-medium">{label}</label>
       {children}
     </div>
@@ -36,7 +36,7 @@ export const SidebarSection = ({
 
 const DesktopSidebar = ({ children }: SidebarProps) => (
   <aside
-    className="sticky top-24 w-64 h-[calc(100vh-12rem)] shrink-0 rounded-md border"
+    className="sticky top-24 w-72 h-[calc(100vh-12rem)] shrink-0 rounded-md border"
     style={{ boxSizing: 'content-box' }}
   >
     <div className="w-full h-full overflow-auto">

@@ -77,7 +77,7 @@ export const TaxonomyViewer = () => {
                 <OrderByControl fields={FIELDS} sort={sort} setSort={setSort} />
               </SidebarSection>
               <div className="space-y-2">
-                <label className="text-sm font-medium md:w-56 md:sticky md:left-4">
+                <label className="text-sm font-medium md:w-64 md:sticky md:left-4">
                   Taxonomy
                 </label>
                 {isTaxonomyTreePending ? (
