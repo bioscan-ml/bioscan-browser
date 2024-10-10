@@ -3,11 +3,10 @@ import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
-  ChartTooltipContent,
 } from '@/components/ui/chart'
 import { Doc, TaxonomyTreeNode } from '@/types/response-data'
-import { useMemo } from 'react'
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts'
+import { Fragment, useMemo } from 'react'
+import { Bar, BarChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts'
 
 interface TaxonomyChartProps {
   docs?: Doc[]
@@ -17,9 +16,12 @@ interface TaxonomyChartProps {
 }
 
 const CHART_CONFIG = {
-  count: {
+  records: {
     label: 'Records',
     color: '#99cc33',
+  },
+  children: {
+    label: 'Children',
   },
 } satisfies ChartConfig
 
@@ -37,10 +39,11 @@ export const TaxonomyChart = ({
     const chartData = selectedNode.children.map((child) => ({
       id: child.li_attr.id,
       name: child.li_attr.title,
-      count: child.metadata.numInstances,
+      records: child.metadata.numInstances,
+      children: child.metadata.numChildren,
     }))
 
-    return chartData.sort((item1, item2) => item2.count - item1.count)
+    return chartData.sort((item1, item2) => item2.records - item1.records)
   }, [selectedNode])
 
   if (!selectedNode) {
@@ -81,7 +84,7 @@ export const TaxonomyChart = ({
           >
             <CartesianGrid horizontal={false} />
             <XAxis
-              dataKey="count"
+              dataKey="records"
               tickLine={false}
               axisLine={false}
               type="number"
@@ -97,11 +100,42 @@ export const TaxonomyChart = ({
               width={128}
               tickFormatter={yAxisTickFormatter}
             />
-            <ChartTooltip content={<ChartTooltipContent hideIndicator />} />
-            <Bar dataKey="count" fill="var(--color-count)" radius={4} />
+            <ChartTooltip content={<TaxonomyChartTooltip />} />
+            <Bar dataKey="records" fill="var(--color-records)" radius={4} />
           </BarChart>
         </ChartContainer>
       )}
+    </div>
+  )
+}
+
+const TaxonomyChartTooltip = ({
+  payload,
+}: React.ComponentProps<typeof Tooltip>) => {
+  if (!payload?.length) {
+    return null
+  }
+
+  const [item] = payload
+
+  return (
+    <div className="bg-background px-2.5 py-1.5 rounded-lg border border-border/50 text-xs shadow-xl">
+      <div
+        className="grid gap-x-2.5 gap-y-1.5"
+        style={{ gridTemplateColumns: 'auto auto' }}
+      >
+        <span className="font-medium" style={{ gridColumn: 'span 2' }}>
+          {item.payload.name}
+        </span>
+        {Object.entries(CHART_CONFIG).map(([key, { label }]) => (
+          <Fragment key={key}>
+            <span className="text-muted-foreground">{label}</span>
+            <span className="font-mono font-medium tabular-nums text-foreground">
+              {item.payload[key].toLocaleString()}
+            </span>
+          </Fragment>
+        ))}
+      </div>
     </div>
   )
 }
