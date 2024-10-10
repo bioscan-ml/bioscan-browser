@@ -7,7 +7,7 @@ import { Loader } from '@/components/loader'
 import { OrderByControl } from '@/components/order-by-control'
 import { PageContent } from '@/components/page-content'
 import { PaginationBar } from '@/components/pagination-bar'
-import { Sidebar } from '@/components/sidebar'
+import { Sidebar, SidebarSection } from '@/components/sidebar'
 import { Table } from '@/components/table'
 import { ViewModeControl } from '@/components/view-mode-control'
 import { useActiveDoc } from '@/hooks/search-params/useActiveDoc'
@@ -43,8 +43,7 @@ export const SearchSimilar = () => {
         <div className="grid items-start gap-4 py-4 md:flex md:gap-8 md:py-8">
           <Sidebar>
             <div className="space-y-8">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Record ID</label>
+              <SidebarSection label="Record ID">
                 <div className="flex gap-2">
                   <Input
                     value={searchString}
@@ -59,19 +58,17 @@ export const SearchSimilar = () => {
                     <SearchIcon className="w-4 h-4" />
                   </Button>
                 </div>
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium">View mode</label>
+              </SidebarSection>
+              <SidebarSection label="View mode">
                 <ViewModeControl
                   type="search-similar"
                   viewMode={viewMode}
                   setViewMode={setViewMode}
                 />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Order by</label>
+              </SidebarSection>
+              <SidebarSection label="View mode">
                 <OrderByControl fields={FIELDS} sort={sort} setSort={setSort} />
-              </div>
+              </SidebarSection>
             </div>
           </Sidebar>
           <div className="mb-16 grow overflow-hidden m-[-4px] p-[4px]">
