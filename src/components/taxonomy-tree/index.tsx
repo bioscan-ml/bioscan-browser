@@ -42,18 +42,12 @@ const TaxonomyTreeItem = ({ node }: { node: TaxonomyTreeNode }) => {
       itemId={node.li_attr.id}
       label={
         <>
-          <Badge
-            className="mt-[-1px] mb-[-1px] ml-2 float-right"
-            variant="outline"
-          >
-            {numInstances.toLocaleString()}
-          </Badge>
-          <span className="break-all">
-            {label.split(' ').map((word, index) => (
-              <span key={index}>{word}</span>
-            ))}
-          </span>
-          <br />
+          <div className="flex items-start justify-between gap-2">
+            <span>{label}</span>
+            <Badge variant="outline" className="mt-[-1px] mb-[-1px]">
+              {numInstances.toLocaleString()}
+            </Badge>
+          </div>
           {numChildren ? (
             <span className="text-xs text-muted-foreground">
               {numChildren.toLocaleString()}{' '}
