@@ -1,5 +1,6 @@
 import { useEmbeddings } from '@/hooks/useEmbeddings'
 import { FIELDS, FILTER_TYPES, TAXON_FILTER_TYPES } from '@/lib/constants'
+import { formatFieldValue } from '@/lib/formatFieldValue'
 import { Doc } from '@/types/response-data'
 import { Link, To } from 'react-router-dom'
 
@@ -11,7 +12,7 @@ interface FieldsProps {
 export const Fields = ({ doc, showEmbeddings = true }: FieldsProps) => (
   <div className="grid gap-4 grid-cols-2">
     {FIELDS.map((field) => {
-      const fieldValue = doc[field.key]
+      const fieldValue = formatFieldValue(doc[field.key])
 
       if (!fieldValue) {
         return null
@@ -37,7 +38,7 @@ const Field = ({
 }: {
   label: string
   link?: To
-  value: string
+  value: string | string[]
 }) => (
   <div className="flex flex-col items-start text-sm">
     <span className="font-medium text-muted-foreground">{label}</span>

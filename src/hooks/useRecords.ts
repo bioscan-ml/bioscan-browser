@@ -2,7 +2,6 @@ import { SOLR_BASE_PATH } from '@/lib/constants'
 import { Doc, FacetCounts } from '@/types/response-data'
 import { Sort } from '@/types/settings'
 import { useQuery } from '@tanstack/react-query'
-import { useMemo } from 'react'
 
 const QUERY_KEY = 'records'
 
@@ -30,29 +29,12 @@ export const useRecords = (params: {
     retry: false,
   })
 
-  const docs = useMemo(
-    () =>
-      data?.response.docs.map((doc) => {
-        // Force cast collectors array to string
-        if (typeof doc.collectors === 'object') {
-          return {
-            ...doc,
-            collectors: (doc.collectors as string[]).join(', '),
-          }
-        }
-
-        return doc
-      }),
-    [data],
-  )
-
   return {
     isPending,
     error,
     data: data
       ? {
           ...data.response,
-          docs: docs ?? [],
           facetCounts: data.facet_counts,
         }
       : undefined,

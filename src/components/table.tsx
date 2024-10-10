@@ -7,6 +7,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { FIELDS } from '@/lib/constants'
+import { formatFieldValue } from '@/lib/formatFieldValue'
 import { getImageSrc } from '@/lib/getImageSrc'
 import { cn } from '@/lib/utils'
 import { Doc } from '@/types/response-data'
@@ -82,7 +83,7 @@ export const Table = ({ docs = [], sort, onRowClick, setSort }: TableProps) => (
               key={field.key}
               className={cn('whitespace-nowrap', field.cellClass)}
             >
-              {doc[field.key]}
+              {formatFieldValue(doc[field.key])}
             </TableCell>
           ))}
         </TableRow>
