@@ -119,14 +119,12 @@ const TaxonomyChartTooltip = ({
   const [item] = payload
 
   return (
-    <div className="bg-background px-2.5 py-1.5 rounded-lg border border-border/50 text-xs shadow-xl">
+    <div className="bg-background px-2.5 py-1.5 space-y-1.5 rounded-lg border border-border/50 text-xs shadow-xl">
+      <span className="font-medium">{item.payload.name}</span>
       <div
-        className="grid gap-x-2.5 gap-y-1.5"
+        className="grid gap-x-2.5 gap-y-0.5"
         style={{ gridTemplateColumns: 'auto auto' }}
       >
-        <span className="font-medium" style={{ gridColumn: 'span 2' }}>
-          {item.payload.name}
-        </span>
         {Object.entries(CHART_CONFIG).map(([key, { label }]) => (
           <Fragment key={key}>
             <span className="text-muted-foreground">{label}</span>
