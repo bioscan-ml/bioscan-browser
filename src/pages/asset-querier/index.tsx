@@ -7,7 +7,7 @@ import { NoRecordsFound } from '@/components/no-records-found'
 import { OrderByControl } from '@/components/order-by-control'
 import { PageContent } from '@/components/page-content'
 import { PaginationBar } from '@/components/pagination-bar'
-import { Sidebar } from '@/components/sidebar'
+import { Sidebar, SidebarSection } from '@/components/sidebar'
 import { Table } from '@/components/table'
 import { ViewModeControl } from '@/components/view-mode-control'
 import { useActiveDoc } from '@/hooks/search-params/useActiveDoc'
@@ -41,20 +41,17 @@ export const AssetQuerier = () => {
         <div className="grid items-start gap-4 py-4 md:flex md:gap-8 md:py-8">
           <Sidebar>
             <div className="space-y-8">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">View mode</label>
+              <SidebarSection label="View mode">
                 <ViewModeControl
                   type="asset-querier"
                   viewMode={viewMode}
                   setViewMode={setViewMode}
                 />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Order by</label>
+              </SidebarSection>
+              <SidebarSection label="Order by">
                 <OrderByControl fields={FIELDS} sort={sort} setSort={setSort} />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Filters</label>
+              </SidebarSection>
+              <SidebarSection label="Filters">
                 <FilterControl
                   facetCounts={facetCounts}
                   filters={filters}
@@ -62,7 +59,7 @@ export const AssetQuerier = () => {
                   onClear={clearFilters}
                   onRemove={removeFilter}
                 />
-              </div>
+              </SidebarSection>
             </div>
           </Sidebar>
           <div className="mb-16 grow overflow-hidden">

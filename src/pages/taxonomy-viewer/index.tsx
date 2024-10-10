@@ -1,10 +1,11 @@
 import { DocDetailsDialog } from '@/components/doc-details/doc-details'
+import { Error } from '@/components/error'
 import { Gallery } from '@/components/gallery'
 import { Loader } from '@/components/loader'
 import { OrderByControl } from '@/components/order-by-control'
 import { PageContent } from '@/components/page-content'
 import { PaginationBar } from '@/components/pagination-bar'
-import { Sidebar } from '@/components/sidebar'
+import { Sidebar, SidebarSection } from '@/components/sidebar'
 import { Table } from '@/components/table'
 import { TaxaSearch } from '@/components/taxa-search'
 import { TaxonDetails } from '@/components/taxon-details'
@@ -29,7 +30,6 @@ import { ViewMode } from '@/types/settings'
 import { useMemo, useState } from 'react'
 import { TaxonomyChart } from './taxonomy-chart'
 import { useSelectedNode } from './useSelectedNode'
-import { Error } from '@/components/error'
 
 export const TaxonomyViewer = () => {
   const [viewMode, setViewMode] = useState<ViewMode>('gallery')
@@ -66,20 +66,20 @@ export const TaxonomyViewer = () => {
         <div className="grid items-start gap-4 py-4 md:flex md:gap-8 md:py-8">
           <Sidebar>
             <div className="space-y-8">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">View mode</label>
+              <SidebarSection label="View mode">
                 <ViewModeControl
                   type="taxonomy-viewer"
                   viewMode={viewMode}
                   setViewMode={setViewMode}
                 />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Order by</label>
+              </SidebarSection>
+              <SidebarSection label="Order by">
                 <OrderByControl fields={FIELDS} sort={sort} setSort={setSort} />
-              </div>
+              </SidebarSection>
               <div className="space-y-2">
-                <label className="text-sm font-medium">Taxonomy</label>
+                <label className="text-sm font-medium md:w-64 md:sticky md:left-4">
+                  Taxonomy
+                </label>
                 {isTaxonomyTreePending ? (
                   <Loader />
                 ) : (

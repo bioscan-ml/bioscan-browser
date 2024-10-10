@@ -7,7 +7,6 @@ import { MAX_MD_QUERY, useMediaQuery } from '@/hooks/useMediaQuery'
 import { cn } from '@/lib/utils'
 import { ChevronDownIcon, ChevronUpIcon, Settings2Icon } from 'lucide-react'
 import { ReactNode, useState } from 'react'
-import { ScrollArea } from './ui/scroll-area'
 
 interface SidebarProps {
   children: ReactNode
@@ -20,11 +19,29 @@ export const Sidebar = ({ children }: SidebarProps) => {
   return <SidebarComponent>{children}</SidebarComponent>
 }
 
+export const SidebarSection = ({
+  label,
+  children,
+}: {
+  label: string
+  children: ReactNode
+}) => {
+  return (
+    <div className="space-y-2 md:w-64 md:sticky md:left-4">
+      <label className="text-sm font-medium">{label}</label>
+      {children}
+    </div>
+  )
+}
+
 const DesktopSidebar = ({ children }: SidebarProps) => (
-  <aside className="sticky top-24 w-64 h-[calc(100vh-12rem)] shrink-0 rounded-md border">
-    <ScrollArea className="w-full h-full">
-      <div className="w-[calc(100%-2rem)] py-4 mx-auto">{children}</div>
-    </ScrollArea>
+  <aside
+    className="sticky top-24 w-72 h-[calc(100vh-12rem)] shrink-0 rounded-md border"
+    style={{ boxSizing: 'content-box' }}
+  >
+    <div className="w-full h-full overflow-auto">
+      <div className="w-min min-w-full p-4">{children}</div>
+    </div>
   </aside>
 )
 
