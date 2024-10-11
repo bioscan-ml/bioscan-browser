@@ -1,6 +1,5 @@
 import { PageContent } from '@/components/page-content'
 import { buttonVariants } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
 import { ExternalLinkIcon } from 'lucide-react'
 import { CONTENT } from './content'
 
