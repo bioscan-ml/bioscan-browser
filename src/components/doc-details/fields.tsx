@@ -53,7 +53,7 @@ const Field = ({
 )
 
 const EmbeddingsField = ({ doc }: { doc: Doc }) => {
-  const label = 'Embeddings'
+  const label = 'Closest matches'
   const { data, isPending } = useEmbeddings(doc.id)
 
   if (isPending) {

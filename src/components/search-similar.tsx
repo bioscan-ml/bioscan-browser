@@ -78,7 +78,7 @@ export const SearchSimilar = () => {
               <>
                 <div className="flex items-center gap-4 mb-4 pb-4 border-b">
                   <h2 className="text-lg font-semibold leading-none tracking-tight">
-                    Embeddings for {recordId}
+                    Closest matches to {recordId}
                   </h2>
                   <RecordDetails recordId={recordId} />
                 </div>
@@ -153,7 +153,7 @@ const GetStarted = ({ onSubmit }: { onSubmit: (recordId: string) => void }) => {
       <div>
         <p className="text-xl font-medium mb-2">Get started</p>
         <p className="text-sm text-muted-foreground">
-          To search embeddings, first specify a record ID.
+          To search similar records, first specify a record ID.
         </p>
       </div>
       <div className="w-full max-w-64 flex gap-2 mx-auto">
