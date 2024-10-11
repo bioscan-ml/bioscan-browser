@@ -9,7 +9,7 @@ export interface Doc {
   latlon?: string
   order: string
   phylum: string
-  province_state: string
+  province_state?: string
   sampleid: string
   species: string
   split: string

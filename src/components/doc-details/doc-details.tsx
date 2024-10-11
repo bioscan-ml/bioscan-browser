@@ -109,10 +109,14 @@ const DocDetailsMap = ({ doc }: { doc: Doc }) => {
     .split(',')
     .map((value) => Number(value))
 
+  const locationLabel = doc.province_state
+    ? `${doc.province_state}, ${doc.country}`
+    : doc.country
+
   return (
     <Map
       marker={{ latitude, longitude }}
-      popupContent={`${doc.province_state}, ${doc.country}<br />(${latitude}, ${longitude})`}
+      popupContent={`${locationLabel}<br />(${latitude}, ${longitude})`}
     />
   )
 }
