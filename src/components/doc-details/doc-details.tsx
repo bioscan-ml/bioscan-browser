@@ -42,9 +42,6 @@ export const DocDetailsDialogContent = ({
   showEmbeddings?: boolean
 }) => {
   const { taxon, parents } = getTaxon(doc)
-  const [latitude, longitude] = doc.latlon
-    .split(',')
-    .map((value) => Number(value))
 
   return (
     <DialogContent className="h-full max-w-screen-sm flex flex-col gap-8 overflow-auto sm:h-[calc(100%-4rem)]">
@@ -78,10 +75,7 @@ export const DocDetailsDialogContent = ({
           <Images doc={doc} />
         </TabsContent>
         <TabsContent value="map">
-          <Map
-            marker={{ latitude, longitude }}
-            popupContent={`${doc.province_state}, ${doc.country}<br />(${latitude}, ${longitude})`}
-          />
+          <DocDetailsMap doc={doc} />
         </TabsContent>
         <TabsContent value="raw">
           <CodeBlock code={JSON.stringify(doc, null, 4)} />
@@ -93,5 +87,32 @@ export const DocDetailsDialogContent = ({
         </TabsContent>
       </Tabs>
     </DialogContent>
+  )
+}
+
+const DocDetailsMap = ({ doc }: { doc: Doc }) => {
+  if (!doc.latlon) {
+    return (
+      <div className="text-center space-y-8 p-16">
+        <div>
+          <p className="text-xl font-medium mb-2">Map is not available</p>
+          <p className="text-sm text-muted-foreground">
+            The current record is missing information for latitude and
+            longitude.
+          </p>
+        </div>
+      </div>
+    )
+  }
+
+  const [latitude, longitude] = doc.latlon
+    .split(',')
+    .map((value) => Number(value))
+
+  return (
+    <Map
+      marker={{ latitude, longitude }}
+      popupContent={`${doc.province_state}, ${doc.country}<br />(${latitude}, ${longitude})`}
+    />
   )
 }

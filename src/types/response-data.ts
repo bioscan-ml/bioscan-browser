@@ -6,7 +6,7 @@ export interface Doc {
   family: string
   genus: string
   id: string
-  latlon: string
+  latlon?: string
   order: string
   phylum: string
   province_state: string
