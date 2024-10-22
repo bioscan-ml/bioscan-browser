@@ -8,11 +8,13 @@ import {
 import { PAGE_SIZE_OPTIONS } from '@/lib/constants'
 
 interface PageSizeControlProps {
+  numFound: number
   pageSize: number
   setPageSize: (pageSize: number) => void
 }
 
 export const PageSizeControl = ({
+  numFound,
   pageSize,
   setPageSize,
 }: PageSizeControlProps) => {
@@ -24,7 +26,7 @@ export const PageSizeControl = ({
 
   return (
     <div className="flex items-center justify-center gap-2">
-      <p className="text-sm whitespace-nowrap">Records per page</p>
+      <p className="text-sm whitespace-nowrap">Showing </p>
       <Select
         value={`${pageSize}`}
         onValueChange={(value) => setPageSize(Number(value))}
@@ -40,6 +42,9 @@ export const PageSizeControl = ({
           ))}
         </SelectContent>
       </Select>
+      <p className="text-sm whitespace-nowrap">
+        of {numFound.toLocaleString()} {numFound === 1 ? 'record' : 'records'}
+      </p>
     </div>
   )
 }

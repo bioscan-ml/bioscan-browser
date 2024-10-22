@@ -24,7 +24,11 @@ export const PaginationBar = <T extends { id: string }>({
   <div className="fixed bottom-0 left-0 w-full h-16 bg-background/95 border-t">
     <PageContent>
       <div className="h-full flex items-center justify-between gap-4">
-        <PageSizeControl pageSize={pageSize} setPageSize={setPageSize} />
+        <PageSizeControl
+          numFound={data.numFound}
+          pageSize={pageSize}
+          setPageSize={setPageSize}
+        />
         <PaginationControls
           numFound={data.numFound}
           page={page}
