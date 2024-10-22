@@ -1,4 +1,3 @@
-import { getPaginationLabel } from '@/lib/getPaginationLabel'
 import { PageContent } from '../page-content'
 import { PageSizeControl } from './page-size-control'
 import { PaginationControls } from './pagination-controls'
