@@ -19,8 +19,7 @@ import { useTaxon } from '@/hooks/search-params/useTaxon'
 import { useRecords } from '@/hooks/useRecords'
 import { useTaxonomyTree } from '@/hooks/useTaxonomyTree'
 import {
-  DEFAULT_PAGE,
-  DEFAULT_PAGE_SIZE,
+  DEFAULT_PAGINATION,
   DEFAULT_SORT,
   FIELDS,
   ROOT_NODE_ID,
@@ -46,10 +45,8 @@ export const TaxonomyViewer = () => {
   }, [selectedNodeId, taxonomyTree])
 
   // Records
-  const { page, pageSize, setPage } = usePagination({
-    page: DEFAULT_PAGE,
-    pageSize: DEFAULT_PAGE_SIZE,
-  })
+  const { page, pageSize, setPage, setPageSize } =
+    usePagination(DEFAULT_PAGINATION)
   const { sort, setSort } = useSort(DEFAULT_SORT)
   const selectedNode = useSelectedNode(taxonomyTree, selectedNodeId)
   const q = selectedNode
@@ -155,6 +152,7 @@ export const TaxonomyViewer = () => {
           page={page}
           pageSize={pageSize}
           setPage={setPage}
+          setPageSize={setPageSize}
         />
       )}
       <DocDetailsDialog

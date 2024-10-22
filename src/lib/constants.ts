@@ -44,9 +44,9 @@ export const FILTER_TYPES = [
 
 export const SOLR_BASE_PATH = '/api/scene-toolkit/solr/bioscan5m/select'
 
-export const DEFAULT_PAGE = 0
+export const DEFAULT_PAGINATION = { page: 0, pageSize: 100 }
 
-export const DEFAULT_PAGE_SIZE = 100
+export const PAGE_SIZE_OPTIONS = [50, 100, 200, 400, 800]
 
 export const DEFAULT_SORT: Sort = {
   key: 'id',

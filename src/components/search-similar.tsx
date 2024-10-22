@@ -16,12 +16,7 @@ import { useRecordId } from '@/hooks/search-params/useRecordId'
 import { useSort } from '@/hooks/search-params/useSort'
 import { useEmbeddings } from '@/hooks/useEmbeddings'
 import { useRecord } from '@/hooks/useRecord'
-import {
-  DEFAULT_PAGE,
-  DEFAULT_PAGE_SIZE,
-  DEFAULT_SORT,
-  FIELDS,
-} from '@/lib/constants'
+import { DEFAULT_PAGINATION, DEFAULT_SORT, FIELDS } from '@/lib/constants'
 import { ViewMode } from '@/types/settings'
 import { InfoIcon, SearchIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
@@ -33,10 +28,8 @@ export const SearchSimilar = () => {
   const [searchString, setSearchString] = useState<string>('')
   const { recordId, setRecordId } = useRecordId()
   const [viewMode, setViewMode] = useState<ViewMode>('gallery')
-  const { page, pageSize, setPage } = usePagination({
-    page: DEFAULT_PAGE,
-    pageSize: DEFAULT_PAGE_SIZE,
-  })
+  const { page, pageSize, setPage, setPageSize } =
+    usePagination(DEFAULT_PAGINATION)
   const { sort, setSort } = useSort(DEFAULT_SORT)
   const { data, isPending } = useEmbeddings(recordId ?? undefined)
   const { activeDoc, setActiveDoc } = useActiveDoc(data?.docs)
@@ -119,6 +112,7 @@ export const SearchSimilar = () => {
           page={page}
           pageSize={pageSize}
           setPage={setPage}
+          setPageSize={setPageSize}
         />
       )}
       <DocDetailsDialog
