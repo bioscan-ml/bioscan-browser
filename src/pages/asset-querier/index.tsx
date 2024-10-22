@@ -101,8 +101,8 @@ export const AssetQuerier = () => {
       </PageContent>
       {data && (
         <PaginationBar
-          currentPage={page}
           data={data}
+          page={page}
           pageSize={pageSize}
           setPage={setPage}
         />
