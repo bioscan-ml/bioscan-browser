@@ -13,16 +13,15 @@ import { TaxonomyTree } from '@/components/taxonomy-tree'
 import { Badge } from '@/components/ui/badge'
 import { ViewModeControl } from '@/components/view-mode-control'
 import { useActiveDoc } from '@/hooks/search-params/useActiveDoc'
-import { usePage } from '@/hooks/search-params/usePage'
+import { usePagination } from '@/hooks/search-params/usePagination'
 import { useSort } from '@/hooks/search-params/useSort'
 import { useTaxon } from '@/hooks/search-params/useTaxon'
 import { useRecords } from '@/hooks/useRecords'
 import { useTaxonomyTree } from '@/hooks/useTaxonomyTree'
 import {
-  DEFAULT_PAGE,
+  DEFAULT_PAGINATION,
   DEFAULT_SORT,
   FIELDS,
-  PAGE_SIZE,
   ROOT_NODE_ID,
 } from '@/lib/constants'
 import { findPathById } from '@/lib/findPathById'
@@ -46,7 +45,8 @@ export const TaxonomyViewer = () => {
   }, [selectedNodeId, taxonomyTree])
 
   // Records
-  const { page, setPage } = usePage(DEFAULT_PAGE)
+  const { page, pageSize, setPage, setPageSize } =
+    usePagination(DEFAULT_PAGINATION)
   const { sort, setSort } = useSort(DEFAULT_SORT)
   const selectedNode = useSelectedNode(taxonomyTree, selectedNodeId)
   const q = selectedNode
@@ -54,7 +54,7 @@ export const TaxonomyViewer = () => {
     : undefined
   const { data, isPending, error } = useRecords({
     page,
-    pageSize: PAGE_SIZE,
+    pageSize,
     q,
     sort,
   })
@@ -148,10 +148,11 @@ export const TaxonomyViewer = () => {
       </PageContent>
       {data && (
         <PaginationBar
-          currentPage={page}
           data={data}
-          pageSize={PAGE_SIZE}
+          page={page}
+          pageSize={pageSize}
           setPage={setPage}
+          setPageSize={setPageSize}
         />
       )}
       <DocDetailsDialog

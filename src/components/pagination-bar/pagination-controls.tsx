@@ -3,36 +3,36 @@ import {
   ChevronRightIcon,
   MoreHorizontalIcon,
 } from 'lucide-react'
+import { useEffect } from 'react'
 import { getPageWindow } from '../../lib/getPageWindow'
 import { Button } from '../ui/button'
 import { PageButton } from './page-button'
-import { useEffect } from 'react'
 
 interface PaginationControlsProps {
-  currentPage: number
   numFound: number
+  page: number
   pageSize: number
   setPage: (page: number) => void
 }
 
 export const PaginationControls = ({
-  currentPage,
   numFound,
+  page,
   pageSize,
   setPage,
 }: PaginationControlsProps) => {
   const numPages = Math.max(Math.ceil(numFound / pageSize), 1)
   const firstPage = 0
   const lastPage = numPages - 1
-  const pageWindow = getPageWindow(currentPage, numPages)
+  const pageWindow = getPageWindow(page, numPages)
   const showStartDivider = pageWindow[0] - firstPage > 1
   const showEndDivider = lastPage - pageWindow[pageWindow.length - 1] > 1
 
   useEffect(() => {
-    if (currentPage >= numPages) {
+    if (page >= numPages) {
       setPage(firstPage)
     }
-  }, [currentPage, numPages, setPage])
+  }, [page, numPages, setPage])
 
   return (
     <div className="flex items-center gap-2">
@@ -40,8 +40,8 @@ export const PaginationControls = ({
         aria-label="Previous"
         variant="ghost"
         size="icon"
-        disabled={currentPage <= firstPage}
-        onClick={() => setPage(currentPage - 1)}
+        disabled={page <= firstPage}
+        onClick={() => setPage(page - 1)}
       >
         <ChevronLeftIcon className="w-4 h-4" />
       </Button>
@@ -49,24 +49,24 @@ export const PaginationControls = ({
         {!pageWindow.includes(firstPage) && (
           <PageButton
             page={firstPage}
-            active={firstPage === currentPage}
+            active={firstPage === page}
             onClick={() => setPage(firstPage)}
           />
         )}
         {showStartDivider && <MoreHorizontalIcon className="w-4 h-4" />}
-        {pageWindow.map((page) => (
+        {pageWindow.map((_page) => (
           <PageButton
-            key={page}
-            page={page}
-            active={page === currentPage}
-            onClick={() => setPage(page)}
+            key={_page}
+            page={_page}
+            active={_page === page}
+            onClick={() => setPage(_page)}
           />
         ))}
         {showEndDivider && <MoreHorizontalIcon className="w-4 h-4" />}
         {!pageWindow.includes(lastPage) && (
           <PageButton
             page={lastPage}
-            active={lastPage === currentPage}
+            active={lastPage === page}
             onClick={() => setPage(lastPage)}
           />
         )}
@@ -75,8 +75,8 @@ export const PaginationControls = ({
         aria-label="Next"
         variant="ghost"
         size="icon"
-        disabled={currentPage >= lastPage}
-        onClick={() => setPage(currentPage + 1)}
+        disabled={page >= lastPage}
+        onClick={() => setPage(page + 1)}
       >
         <ChevronRightIcon className="w-4 h-4" />
       </Button>
