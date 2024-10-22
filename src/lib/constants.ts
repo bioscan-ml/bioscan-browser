@@ -46,7 +46,7 @@ export const SOLR_BASE_PATH = '/api/scene-toolkit/solr/bioscan5m/select'
 
 export const DEFAULT_PAGE = 0
 
-export const PAGE_SIZE = 100
+export const DEFAULT_PAGE_SIZE = 100
 
 export const DEFAULT_SORT: Sort = {
   key: 'id',

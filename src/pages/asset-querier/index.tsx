@@ -11,24 +11,32 @@ import { Sidebar, SidebarSection } from '@/components/sidebar'
 import { Table } from '@/components/table'
 import { ViewModeControl } from '@/components/view-mode-control'
 import { useActiveDoc } from '@/hooks/search-params/useActiveDoc'
-import { usePage } from '@/hooks/search-params/usePage'
+import { usePagination } from '@/hooks/search-params/usePagination'
 import { useSort } from '@/hooks/search-params/useSort'
 import { useFacetCounts } from '@/hooks/useFacetCounts'
 import { useFilters } from '@/hooks/useFilters'
 import { useRecords } from '@/hooks/useRecords'
-import { DEFAULT_PAGE, DEFAULT_SORT, FIELDS, PAGE_SIZE } from '@/lib/constants'
+import {
+  DEFAULT_PAGE,
+  DEFAULT_PAGE_SIZE,
+  DEFAULT_SORT,
+  FIELDS,
+} from '@/lib/constants'
 import { ViewMode } from '@/types/settings'
 import { useState } from 'react'
 
 export const AssetQuerier = () => {
   const [viewMode, setViewMode] = useState<ViewMode>('gallery')
-  const { page, setPage } = usePage(DEFAULT_PAGE)
+  const { page, pageSize, setPage } = usePagination({
+    page: DEFAULT_PAGE,
+    pageSize: DEFAULT_PAGE_SIZE,
+  })
   const { sort, setSort } = useSort(DEFAULT_SORT)
   const { filters, filterQuery, addFilter, removeFilter, clearFilters } =
     useFilters()
   const { data, isPending, error } = useRecords({
     page,
-    pageSize: PAGE_SIZE,
+    pageSize,
     q: filterQuery,
     sort,
   })
@@ -95,7 +103,7 @@ export const AssetQuerier = () => {
         <PaginationBar
           currentPage={page}
           data={data}
-          pageSize={PAGE_SIZE}
+          pageSize={pageSize}
           setPage={setPage}
         />
       )}
