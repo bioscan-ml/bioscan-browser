@@ -58,10 +58,17 @@ export const About = () => (
         </p>
         <h4 className="mb-2">Inspecting record details</h4>
         <p className="text-muted-foreground mb-8">
-          In the record detail view, first some general information is presented
-          for the selected record. This information covers taxa, location and
-          collectors. Each record also has more details, for example 4 image
-          versions, location presented in a map format and the raw JSON data.
+          In the record detail view, we first show some general information for
+          the selected record. This information covers taxonomic details,
+          location and collectors. After this overview, we show the 4 image
+          versions (images with different resolution and crop settings),
+          followed by geographical information presented as an interactive map.
+          Also, the raw JSON data for the specific record can be inspected from
+          this view.
+        </p>
+        <p>
+          From the detail view, users can navigate to records with similar
+          attributes, as a quick way to apply filtering.
         </p>
         <h4 className="mb-2">Integrations</h4>
         <p className="text-muted-foreground mb-8">
