@@ -1,13 +1,13 @@
 # BIOSCAN Browser
 
-This is a web interface to explore the [BIOSCAN-5M](https://github.com/zahrag/BIOSCAN-5M) dataset.
+The BIOSCAN Browser is a web interface to navigate the [BIOSCAN-5M](https://github.com/zahrag/BIOSCAN-5M) dataset. The goal is to lower the threshold for users to explore the dataset by presenting data in interactive and comprehensive ways.
 
 We use TypeScript and React and TypeScript for the implementation. The project was setup using [Vite](https://vitejs.dev/).
 
 ## System requirements
 
-- Node
-- NPM
+- [Node](https://nodejs.org/)
+- [NPM](https://www.npmjs.com/)
 
 The `.nvmrc` file in project root describes the recommended Node version for this project.
 
