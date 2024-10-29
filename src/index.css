@@ -105,6 +105,7 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground text-base leading-normal font-normal;
     font-family: 'Source Sans', system-ui, sans-serif;
@@ -127,6 +128,10 @@
   h3 {
     @apply text-lg leading-tight font-bold;
     font-family: 'Montserrat', system-ui, sans-serif;
+  }
+
+  h4 {
+    @apply text-base leading-tight font-medium;
   }
 
   .text-link {
