@@ -57,7 +57,7 @@ export const About = () => (
           taxonomic ranks.
         </p>
         <h4 className="mb-2">Inspecting record details</h4>
-        <p className="text-muted-foreground mb-8">
+        <p className="text-muted-foreground mb-2">
           In the record detail view, we first show some general information for
           the selected record. This information covers taxonomic details,
           location and collectors. After this overview, we show the 4 image
@@ -66,7 +66,7 @@ export const About = () => (
           Also, the raw JSON data for the specific record can be inspected from
           this view.
         </p>
-        <p>
+        <p className="text-muted-foreground mb-8">
           From the detail view, users can navigate to records with similar
           attributes, as a quick way to apply filtering.
         </p>
