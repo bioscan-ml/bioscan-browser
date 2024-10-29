@@ -79,14 +79,16 @@ export const About = () => (
           language common name search to the taxonomy viewer.
         </p>
         <h4 className="mb-2">Resources</h4>
-        <ExternalLink
-          href="https://github.com/bioscan-ml/bioscan-browser/"
-          label="GitHub"
-        />
-        <ExternalLink
-          href="https://api.inaturalist.org/v1/docs/"
-          label="iNaturalist API"
-        />
+        <div className="flex gap-4">
+          <ExternalLink
+            href="https://github.com/bioscan-ml/bioscan-browser/"
+            label="GitHub"
+          />
+          <ExternalLink
+            href="https://api.inaturalist.org/v1/docs/"
+            label="iNaturalist API"
+          />
+        </div>
       </div>
     </article>
   </PageContent>
