@@ -11,7 +11,7 @@ const MENU_ITEMS = [
   { to: '/taxonomy-viewer', label: 'Taxonomy viewer' },
   { to: '/asset-querier', label: 'Asset querier' },
   { to: '/search-similar', label: 'Search similar' },
-  { to: '/about', label: 'About the dataset' },
+  { to: '/about', label: 'About' },
 ]
 
 export const Menu = () => {
