@@ -25,7 +25,7 @@ export const About = () => (
             label="Website"
           />
           <ExternalLink
-            href="https://github.com/zahrag/BIOSCAN-5M/"
+            href="https://github.com/bioscan-ml/BIOSCAN-5M/"
             label="GitHub"
           />
         </div>
