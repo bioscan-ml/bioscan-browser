@@ -12,7 +12,17 @@ import { Input } from './ui/input'
 export const TaxaSearch = () => {
   const [searchString, setSearchString] = useState('')
   const debouncedSearchString = useDebounce(searchString, 200)
-  const { data, isPending } = useTaxaSearch(debouncedSearchString)
+  const { data, isPending, error } = useTaxaSearch(debouncedSearchString)
+
+  const message = (() => {
+    if (!debouncedSearchString.length || isPending) {
+      return
+    }
+
+    return error?.message?.length
+      ? error.message
+      : `The search string "${debouncedSearchString}" did not match any records.`
+  })()
 
   return (
     <div className="w-full relative lg:w-64">
@@ -22,15 +32,22 @@ export const TaxaSearch = () => {
         searchString={searchString}
         setSearchString={setSearchString}
       />
-      {data?.length ? (
+      {message || data?.length ? (
         <div className="absolute bottom-[-0.5rem] right-0 translate-y-full w-full rounded-md border bg-popover text-popover-foreground shadow-md z-50 sm:w-96">
-          {data.map((taxon) => (
-            <SearchResult
-              key={taxon.id}
-              taxon={taxon}
-              onClick={() => setSearchString('')}
-            />
-          ))}
+          {data?.length ? (
+            data.map((taxon) => (
+              <SearchResult
+                key={taxon.id}
+                taxon={taxon}
+                onClick={() => setSearchString('')}
+              />
+            ))
+          ) : (
+            <div className="flex flex-col p-4">
+              <span className="text-base font-medium">No results found</span>
+              <span className="text-sm text-muted-foreground">{message}</span>
+            </div>
+          )}
         </div>
       ) : null}
     </div>

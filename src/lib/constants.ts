@@ -54,3 +54,5 @@ export const DEFAULT_SORT: Sort = {
 }
 
 export const ROOT_NODE_ID = 'phylum-Arthropoda'
+
+export const BIOSCAN_BROWSER_USER_AGENT = 'bioscan-browser/1.0.0'

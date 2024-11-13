@@ -14,7 +14,7 @@ interface TaxonDetailsArticleProps {
 }
 
 export const TaxonDetailsArticle = ({ taxon }: TaxonDetailsArticleProps) => {
-  const { taxonDetails, isPending } = useTaxonDetails(taxon)
+  const { taxonDetails, isPending, error } = useTaxonDetails(taxon)
 
   if (isPending) {
     return (
@@ -24,14 +24,16 @@ export const TaxonDetailsArticle = ({ taxon }: TaxonDetailsArticleProps) => {
     )
   }
 
+  const message = error?.message.length
+    ? error.message
+    : `"${taxon.label}" was not recognized by external sources.`
+
   if (!taxonDetails) {
     return (
       <div className="h-full flex flex-col items-center justify-center gap-8 p-16 text-center">
         <div>
           <p className="text-xl font-medium mb-2">No information found</p>
-          <p className="text-sm text-muted-foreground">
-            "{taxon.label}" was not recognized by external sources.
-          </p>
+          <p className="text-sm text-muted-foreground">{message}</p>
         </div>
         <a
           className={buttonVariants({ variant: 'outline' })}
