@@ -1,3 +1,4 @@
+import { handleINatResponse } from '@/lib/handleINatResponse'
 import { TaxonDetails } from '@/types/response-data'
 import { useQuery } from '@tanstack/react-query'
 
@@ -19,6 +20,7 @@ export const useTaxonDetails = (taxon: {
     queryFn: async () => {
       // Search taxa by string
       const taxaRes = await fetch(`${API_URL}/taxa?q=${q}&taxon_id=47120`)
+      handleINatResponse(taxaRes)
       const taxaData = await taxaRes.json()
       const taxonId = taxaData.results.find(
         (result: { matched_term: string }) => result.matched_term === q,
@@ -31,6 +33,7 @@ export const useTaxonDetails = (taxon: {
 
       // Fetch taxon details by id
       const taxonRes = await fetch(`${API_URL}/taxa/${taxonId}`)
+      handleINatResponse(taxonRes)
       const taxonData = await taxonRes.json()
 
       return taxonData
