@@ -1,3 +1,4 @@
+import { BIOSCAN_BROWSER_USER_AGENT } from '@/lib/constants'
 import { handleINatResponse } from '@/lib/handleINatResponse'
 import { TaxonDetails } from '@/types/response-data'
 import { useQuery } from '@tanstack/react-query'
@@ -19,7 +20,11 @@ export const useTaxonDetails = (taxon: {
     queryKey: [QUERY_KEY, taxon],
     queryFn: async () => {
       // Search taxa by string
-      const taxaRes = await fetch(`${API_URL}/taxa?q=${q}&taxon_id=47120`)
+      const taxaRes = await fetch(`${API_URL}/taxa?q=${q}&taxon_id=47120`, {
+        headers: {
+          'User-Agent': BIOSCAN_BROWSER_USER_AGENT,
+        },
+      })
       handleINatResponse(taxaRes)
       const taxaData = await taxaRes.json()
       const taxonId = taxaData.results.find(
@@ -32,7 +37,11 @@ export const useTaxonDetails = (taxon: {
       }
 
       // Fetch taxon details by id
-      const taxonRes = await fetch(`${API_URL}/taxa/${taxonId}`)
+      const taxonRes = await fetch(`${API_URL}/taxa/${taxonId}`, {
+        headers: {
+          'User-Agent': BIOSCAN_BROWSER_USER_AGENT,
+        },
+      })
       handleINatResponse(taxonRes)
       const taxonData = await taxonRes.json()
 
