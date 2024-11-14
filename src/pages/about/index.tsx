@@ -34,16 +34,16 @@ export const About = () => (
         <h3 className="text-primary mb-2">The Browser</h3>
         <p className="text-muted-foreground mb-8">
           The BIOSCAN Browser provides a user-friendly interface to navigate the
-          BIOSCAN-5M dataset. The idea is to lower the threshold for users to
+          BIOSCAN-5M dataset. The idea behind the browser is to lower the threshold for users to
           explore the dataset by presenting data in interactive and
-          comprehensive ways. A long term goal for the tool is to help improve
-          quality of data, by making incorrect or missing data easier to spot
+          comprehensive ways. Our long-term goal for the tool is to help improve
+          data quality, by making incorrect or missing data easier to spot
           and report.
         </p>
         <h4 className="mb-2">Browsing records</h4>
         <p className="text-muted-foreground mb-2">
           The browser provides various ways for users to explore records. From
-          the Taxonomy viewer, users can browse records using the taxonomy
+          the Taxonomy viewer, users can browse records using the taxonomic
           hierarchy as a starting point. For the selected taxon, users can
           choose to explore records from a gallery view, a table view or a chart
           view. The chart view is useful for seeing how records are distributed
@@ -60,7 +60,7 @@ export const About = () => (
         <p className="text-muted-foreground mb-2">
           In the record detail view, we first show some general information for
           the selected record. This information covers taxonomic details,
-          location and collectors. After this overview, we show the 4 image
+          collection location and information about who collected the data. After this overview, we show the 4 image
           versions (images with different resolution and crop settings),
           followed by geographical information presented as an interactive map.
           Also, the raw JSON data for the specific record can be inspected from
