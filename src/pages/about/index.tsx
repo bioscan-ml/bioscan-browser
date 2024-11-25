@@ -1,6 +1,7 @@
 import { PageContent } from '@/components/page-content'
 import { buttonVariants } from '@/components/ui/button'
-import { ExternalLinkIcon } from 'lucide-react'
+import { ExternalLinkIcon, PaletteIcon } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 export const About = () => (
   <PageContent>
@@ -11,7 +12,7 @@ export const About = () => (
       </div>
       <div>
         <img
-          src="/assets/bioscan.png"
+          src="/assets/logos/bioscan.png"
           className="h-16 w-16 float-left mr-4"
           alt=""
         />
@@ -23,7 +24,7 @@ export const About = () => (
           index numbers, and geographical information. The dataset includes
           specimens collected from 1,650 sites across 47 countries.
         </p>
-        <h4 className="mb-2">Resources</h4>
+        <h4 className="mb-4">Resources</h4>
         <div className="flex gap-4">
           <ExternalLink
             href="https://biodiversitygenomics.net/projects/5m-insects/"
@@ -37,7 +38,7 @@ export const About = () => (
       </div>
       <div>
         <img
-          src="/assets/bioscan-browser.png"
+          src="/assets/logos/bioscan-browser.png"
           className="h-16 w-16 float-left mr-4"
           alt=""
         />
@@ -88,8 +89,17 @@ export const About = () => (
           uploaded photos. Also, the iNaturalist API is used to provide a multi
           language common name search to the taxonomy viewer.
         </p>
-        <h4 className="mb-2">Resources</h4>
+        <h4 className="mb-4">Resources</h4>
         <div className="flex gap-4">
+          <Link
+            to="/style-guide"
+            className={buttonVariants({
+              variant: 'outline',
+            })}
+          >
+            <PaletteIcon className="h-4 w-4 mr-3" />
+            Style guide
+          </Link>
           <ExternalLink
             href="https://github.com/bioscan-ml/bioscan-browser/"
             label="GitHub"

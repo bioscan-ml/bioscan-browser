@@ -12,6 +12,7 @@ import { SearchSimilar } from './components/search-similar'
 import { TopBar } from './components/top-bar'
 import { About } from './pages/about'
 import { AssetQuerier } from './pages/asset-querier'
+import { StyleGuide } from './pages/style-guide'
 import { TaxonomyViewer } from './pages/taxonomy-viewer'
 
 const queryClient = new QueryClient()
@@ -22,6 +23,7 @@ const ROUTES = [
   { path: '/asset-querier', Component: AssetQuerier },
   { path: '/search-similar', Component: SearchSimilar },
   { path: '/about', Component: About },
+  { path: '/style-guide', Component: StyleGuide },
   { path: '*', element: <Navigate to="/" replace /> },
 ]
 
