@@ -25,7 +25,7 @@ export const Gallery = ({
           className="rounded-md border border-input overflow-hidden relative"
         >
           <div
-            className="cursor-pointer hover:bg-muted/50"
+            className="cursor-pointer hover:bg-muted"
             onClick={() => onItemClick(doc)}
           >
             <img

@@ -7,6 +7,7 @@ import {
 import { Doc, TaxonomyTreeNode } from '@/types/response-data'
 import { Fragment, useMemo } from 'react'
 import { Bar, BarChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts'
+import colors from 'tailwindcss/colors'
 
 interface TaxonomyChartProps {
   docs?: Doc[]
@@ -18,7 +19,7 @@ interface TaxonomyChartProps {
 const CHART_CONFIG = {
   records: {
     label: 'Records',
-    color: '#99cc33',
+    color: colors.sky[500],
   },
   children: {
     label: 'Children',

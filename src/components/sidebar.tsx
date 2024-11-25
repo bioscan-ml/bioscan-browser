@@ -36,7 +36,7 @@ export const SidebarSection = ({
 
 const DesktopSidebar = ({ children }: SidebarProps) => (
   <aside
-    className="sticky top-24 w-72 h-[calc(100vh-12rem)] shrink-0 rounded-md border"
+    className="sticky top-24 w-72 h-[calc(100vh-12rem)] shrink-0 rounded-md bg-muted border"
     style={{ boxSizing: 'content-box' }}
   >
     <div className="w-full h-full overflow-auto">

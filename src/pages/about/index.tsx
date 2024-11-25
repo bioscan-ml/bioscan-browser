@@ -4,13 +4,18 @@ import { ExternalLinkIcon } from 'lucide-react'
 
 export const About = () => (
   <PageContent>
-    <article className="max-w-screen-md py-12 space-y-12">
+    <article className="max-w-screen-md py-12 space-y-16">
       <div>
-        <h1 className="text-primary mb-2">BIOSCAN Browser</h1>
+        <h1 className="text-accent mb-2">BIOSCAN Browser</h1>
         <h2>Visualizing A Multimodal Dataset for Insect Biodiversity</h2>
       </div>
       <div>
-        <h3 className="text-primary mb-2">The Dataset</h3>
+        <img
+          src="/assets/bioscan.png"
+          className="h-16 w-16 float-left mr-4"
+          alt=""
+        />
+        <h3 className="text-accent mb-2">The Dataset</h3>
         <p className="text-muted-foreground mb-8">
           BIOSCAN-5M is a dataset containing multi-modal information for
           5,150,850 insect specimens. Except for images, the dataset includes
@@ -31,14 +36,19 @@ export const About = () => (
         </div>
       </div>
       <div>
-        <h3 className="text-primary mb-2">The Browser</h3>
+        <img
+          src="/assets/bioscan-browser.png"
+          className="h-16 w-16 float-left mr-4"
+          alt=""
+        />
+        <h3 className="text-accent mb-2">The Browser</h3>
         <p className="text-muted-foreground mb-8">
           The BIOSCAN Browser provides a user-friendly interface to navigate the
-          BIOSCAN-5M dataset. The idea behind the browser is to lower the threshold for users to
-          explore the dataset by presenting data in interactive and
-          comprehensive ways. Our long-term goal for the tool is to help improve
-          data quality, by making incorrect or missing data easier to spot
-          and report.
+          BIOSCAN-5M dataset. The idea behind the browser is to lower the
+          threshold for users to explore the dataset by presenting data in
+          interactive and comprehensive ways. Our long-term goal for the tool is
+          to help improve data quality, by making incorrect or missing data
+          easier to spot and report.
         </p>
         <h4 className="mb-2">Browsing records</h4>
         <p className="text-muted-foreground mb-2">
@@ -60,11 +70,11 @@ export const About = () => (
         <p className="text-muted-foreground mb-2">
           In the record detail view, we first show some general information for
           the selected record. This information covers taxonomic details,
-          collection location and information about who collected the data. After this overview, we show the 4 image
-          versions (images with different resolution and crop settings),
-          followed by geographical information presented as an interactive map.
-          Also, the raw JSON data for the specific record can be inspected from
-          this view.
+          collection location and information about who collected the data.
+          After this overview, we show the 4 image versions (images with
+          different resolution and crop settings), followed by geographical
+          information presented as an interactive map. Also, the raw JSON data
+          for the specific record can be inspected from this view.
         </p>
         <p className="text-muted-foreground mb-8">
           From the detail view, users can navigate to records with similar
