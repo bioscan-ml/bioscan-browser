@@ -8,9 +8,9 @@ export const TopBar = () => (
       <div className="h-full flex items-center justify-between gap-8 lg:justify-start">
         <Link to="/" className="flex items-center gap-2 shrink-0">
           <img
-            src="/assets/cbg.png"
-            className="h-8 w-8"
-            alt="Center for Biodiversity Genomics"
+            src="/assets/bioscan-browser.png"
+            className="h-12 w-12"
+            alt="Bug inside a magnifying glass"
           />
           <h1 className="text-primary text-base whitespace-nowrap">
             BIOSCAN Browser
