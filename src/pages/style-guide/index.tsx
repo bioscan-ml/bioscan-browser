@@ -2,7 +2,8 @@ import { PageContent } from '@/components/page-content'
 import { buttonVariants } from '@/components/ui/button'
 import { useToast } from '@/components/ui/toast/use-toast'
 import { cn } from '@/lib/utils'
-import { CopyIcon, DownloadIcon } from 'lucide-react'
+import { CopyIcon, DownloadIcon, ExternalLinkIcon } from 'lucide-react'
+import { CSSProperties } from 'react'
 import colors from 'tailwindcss/colors'
 
 export const StyleGuide = () => (
@@ -53,6 +54,36 @@ export const StyleGuide = () => (
             label="bioscan-browser-inverted"
             src="/assets/logos/bioscan-browser-inverted.png"
             bgTheme="dark"
+          />
+        </div>
+      </div>
+      <div>
+        <h3 className="text-accent mb-2">BIOSCAN Typography</h3>
+        <p className="text-muted-foreground mb-8">
+          For typography, we use a set of open source fonts, all avaible on{' '}
+          <a href="https://fonts.google.com/" className="text-link">
+            Google Fonts
+          </a>
+          .
+        </p>
+        <div className="grid grid-cols-3 gap-x-8 gap-y-12">
+          <FontItem
+            label="Montserrat"
+            description="Used for medium and large headings."
+            style={{ fontFamily: 'Montserrat', fontWeight: 600 }}
+            link="https://fonts.google.com/specimen/Montserrat"
+          />
+          <FontItem
+            label="Source Sans 3"
+            description="Used for small headings and body text."
+            style={{ fontFamily: 'Source Sans', fontWeight: 500 }}
+            link="https://fonts.google.com/specimen/Source+Sans+3"
+          />
+          <FontItem
+            label="Source Code Pro"
+            description="Used for code snippets and numeric values."
+            style={{ fontFamily: 'Source Code', fontWeight: 400 }}
+            link="https://fonts.google.com/specimen/Source+Code+Pro"
           />
         </div>
       </div>
@@ -186,3 +217,33 @@ const ColorItem = ({
     </div>
   )
 }
+
+const FontItem = ({
+  label,
+  description,
+  link,
+  style,
+}: {
+  label: string
+  description: string
+  link: string
+  style?: CSSProperties
+}) => (
+  <div className="w-full flex flex-col items-start justify-start p-4 rounded-md border bg-background">
+    <span className="mb-2 text-lg" style={style}>
+      {label}
+    </span>
+    <span className="mb-4 text-sm text-muted-foreground">{description}</span>
+    <a
+      href={link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={cn(
+        buttonVariants({ variant: 'outline', size: 'icon' }),
+        'self-end',
+      )}
+    >
+      <ExternalLinkIcon className="w-4 h-4" />
+    </a>
+  </div>
+)
