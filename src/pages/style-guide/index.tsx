@@ -31,7 +31,7 @@ export const StyleGuide = () => (
           <DownloadIcon className="h-4 w-4 ml-3" />
         </a>
         <h4 className="mb-4">Versions</h4>
-        <div className="max-w-lg grid grid-cols-3 gap-x-8 gap-y-12 mb-12">
+        <div className="max-w-lg grid grid-cols-3 gap-4 mb-12 sm:gap-x-8 sm:gap-y-12">
           <LogoItem label="bioscan" src="/assets/logos/bioscan.png" />
           <LogoItem
             label="bioscan-outline"
@@ -61,12 +61,17 @@ export const StyleGuide = () => (
         <h3 className="text-accent mb-2">BIOSCAN Typography</h3>
         <p className="text-muted-foreground mb-8">
           For typography, we use a set of open source fonts, all avaible on{' '}
-          <a href="https://fonts.google.com/" className="text-link">
+          <a
+            href="https://fonts.google.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-link"
+          >
             Google Fonts
           </a>
           .
         </p>
-        <div className="grid grid-cols-3 gap-x-8 gap-y-12">
+        <div className="grid grid-cols-1 gap-4 mb-12 sm:gap-8 sm:grid-cols-3">
           <FontItem
             label="Montserrat"
             description="Used for medium and large headings."
@@ -94,7 +99,7 @@ export const StyleGuide = () => (
           material, for example presentations. The color scheme is a fully
           optional resource.
         </p>
-        <div className="flex items-start justify-center flex-wrap gap-x-8 gap-y-12">
+        <div className="flex items-start justify-center flex-wrap gap-x-8 gap-y-12 mb-12">
           <ColorItem
             label="white"
             hex={colors.white}
