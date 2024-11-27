@@ -11,7 +11,7 @@ export const CodeBlock = ({ code }: CodeBlockProps) => {
 
   return (
     <div className="relative">
-      <div className="p-4 bg-muted rounded-sm overflow-auto">
+      <div className="p-4 rounded-sm border bg-muted overflow-auto">
         <pre className="text-xs text-muted-foreground">{code}</pre>
       </div>
       <Button

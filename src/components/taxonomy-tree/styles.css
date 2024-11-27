@@ -13,7 +13,7 @@
 
 .MuiTreeItem-root .MuiTreeItem-content:hover,
 .MuiTreeItem-root .MuiTreeItem-content.Mui-focused:hover {
-  @apply bg-muted;
+  @apply bg-secondary;
 }
 
 .MuiTreeItem-root .MuiTreeItem-content.Mui-selected,

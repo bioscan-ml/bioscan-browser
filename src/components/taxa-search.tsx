@@ -109,7 +109,7 @@ const SearchResult = ({
         search: `taxon=${taxon.rank}-${taxon.name}`,
       }}
       onClick={onClick}
-      className="flex items-start gap-4 border-b p-4 last:border-b-0 hover:bg-muted/50"
+      className="flex items-start gap-4 border-b p-4 last:border-b-0 hover:bg-muted"
     >
       <img
         alt=""

@@ -57,7 +57,7 @@ export const ImagePicker = ({ images: _images }: ImagePickerProps) => {
 
   return (
     <div className="space-y-4">
-      <div className="group aspect-[341/256] flex items-center justify-center relative bg-muted rounded-sm overflow-hidden">
+      <div className="group aspect-[341/256] flex items-center justify-center relative rounded-sm border bg-muted overflow-hidden">
         <img
           className="max-w-full max-h-full"
           key={selectedImage.id}

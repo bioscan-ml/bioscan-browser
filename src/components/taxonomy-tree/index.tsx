@@ -44,7 +44,11 @@ const TaxonomyTreeItem = ({ node }: { node: TaxonomyTreeNode }) => {
         <>
           <div className="flex items-start justify-between gap-2">
             <span>{label}</span>
-            <Badge variant="outline" className="mt-[-1px] mb-[-1px]">
+            <Badge
+              variant="outline"
+              className="mt-[-1px] mb-[-1px]"
+              style={{ fontFamily: 'Source Code' }}
+            >
               {numInstances.toLocaleString()}
             </Badge>
           </div>

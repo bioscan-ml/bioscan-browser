@@ -24,7 +24,7 @@ export const Map = ({ height, marker, popupContent }: MapProps) => {
   return (
     <MapContainer
       center={markerPosition}
-      className="w-full rounded-sm"
+      className="w-full rounded-sm border"
       minZoom={MIN_ZOOM}
       scrollWheelZoom
       style={{
