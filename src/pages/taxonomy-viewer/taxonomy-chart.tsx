@@ -129,7 +129,10 @@ const TaxonomyChartTooltip = ({
         {Object.entries(CHART_CONFIG).map(([key, { label }]) => (
           <Fragment key={key}>
             <span className="text-muted-foreground">{label}</span>
-            <span className="font-mono font-medium tabular-nums text-foreground">
+            <span
+              className="font-medium text-foreground"
+              style={{ fontFamily: 'Source Code' }}
+            >
               {item.payload[key].toLocaleString()}
             </span>
           </Fragment>
