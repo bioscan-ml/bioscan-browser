@@ -27,8 +27,8 @@ export const SidebarSection = ({
   children: ReactNode
 }) => {
   return (
-    <div className="space-y-2 md:w-64 md:sticky md:left-4">
-      <label className="text-sm font-medium">{label}</label>
+    <div className="flex flex-col gap-y-2 md:w-64 md:sticky md:left-4">
+      <label className="py-1.5 text-sm leading-none font-medium">{label}</label>
       {children}
     </div>
   )

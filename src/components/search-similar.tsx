@@ -1,8 +1,5 @@
-import {
-  DocDetailsDialog,
-  DocDetailsDialogContent,
-} from '@/components/doc-details/doc-details'
-import { Gallery } from '@/components/gallery'
+import { DocDetailsDialog } from '@/components/doc-details/doc-details'
+import { Gallery } from '@/components/gallery/gallery'
 import { Loader } from '@/components/loader'
 import { OrderByControl } from '@/components/order-by-control'
 import { PageContent } from '@/components/page-content'
@@ -15,13 +12,14 @@ import { usePagination } from '@/hooks/search-params/usePagination'
 import { useRecordId } from '@/hooks/search-params/useRecordId'
 import { useSort } from '@/hooks/search-params/useSort'
 import { useEmbeddings } from '@/hooks/useEmbeddings'
+import { useRandomRecord } from '@/hooks/useRandomRecord'
 import { useRecord } from '@/hooks/useRecord'
 import { DEFAULT_PAGINATION, DEFAULT_SORT, FIELDS } from '@/lib/constants'
 import { ViewMode } from '@/types/settings'
-import { InfoIcon, SearchIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { DicesIcon, SearchIcon } from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
+import { GalleryItem } from './gallery/gallery-item'
 import { Button } from './ui/button'
-import { Dialog, DialogTrigger } from './ui/dialog'
 import { Input } from './ui/input'
 
 export const SearchSimilar = () => {
@@ -44,9 +42,11 @@ export const SearchSimilar = () => {
         <div className="grid items-start gap-4 py-4 md:flex md:gap-8 md:py-8">
           <Sidebar>
             <div className="space-y-8">
-              <SidebarSection label="Record ID">
+              <SidebarSection label="Target record">
+                {recordId ? <RecordDetails recordId={recordId} /> : null}
                 <div className="flex gap-2">
                   <Input
+                    placeholder="Specify a record ID"
                     value={searchString}
                     onChange={(e) => setSearchString(e.currentTarget.value)}
                   />
@@ -67,7 +67,7 @@ export const SearchSimilar = () => {
                   setViewMode={setViewMode}
                 />
               </SidebarSection>
-              <SidebarSection label="View mode">
+              <SidebarSection label="Order by">
                 <OrderByControl fields={FIELDS} sort={sort} setSort={setSort} />
               </SidebarSection>
             </div>
@@ -75,13 +75,12 @@ export const SearchSimilar = () => {
           <div className="mb-16 grow overflow-hidden m-[-4px] p-[4px]">
             {isPending ? (
               <Loader />
-            ) : recordId?.length ? (
+            ) : data?.docs.length ? (
               <>
                 <div className="flex items-center gap-4 mb-4 pb-4 border-b">
                   <h2 className="text-lg font-semibold leading-none tracking-tight">
-                    Closest matches to {recordId}
+                    Closest matches
                   </h2>
-                  <RecordDetails recordId={recordId} />
                 </div>
                 {viewMode === 'table' && (
                   <Table
@@ -98,10 +97,19 @@ export const SearchSimilar = () => {
                     onSearchClick={(doc) => setRecordId(doc.id)}
                   />
                 )}
-                {!data?.docs.length ? <NoEmbeddingsFound /> : null}
               </>
+            ) : recordId ? (
+              <Intro
+                title="No similar records found"
+                description="No matches was found for the current search, please try a different target record."
+                onSubmit={(recordId) => setRecordId(recordId)}
+              />
             ) : (
-              <GetStarted onSubmit={(recordId) => setRecordId(recordId)} />
+              <Intro
+                title="Get started"
+                description="To search similar records, first specify a target record."
+                onSubmit={(recordId) => setRecordId(recordId)}
+              />
             )}
           </div>
         </div>
@@ -129,6 +137,7 @@ export const SearchSimilar = () => {
 }
 
 const RecordDetails = ({ recordId }: { recordId: string }) => {
+  const [open, setOpen] = useState(false)
   const { data } = useRecord(recordId)
 
   if (!data) {
@@ -136,30 +145,33 @@ const RecordDetails = ({ recordId }: { recordId: string }) => {
   }
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <InfoIcon className="w-4 h-4" />
-        </Button>
-      </DialogTrigger>
-      {data && <DocDetailsDialogContent doc={data} showEmbeddings={false} />}
-    </Dialog>
+    <>
+      <GalleryItem doc={data} onClick={() => setOpen(true)} />
+      <DocDetailsDialog doc={data} open={open} onOpenChange={setOpen} />
+    </>
   )
 }
 
-const GetStarted = ({ onSubmit }: { onSubmit: (recordId: string) => void }) => {
+const Intro = ({
+  title,
+  description,
+  onSubmit,
+}: {
+  title: string
+  description: string
+  onSubmit: (recordId: string) => void
+}) => {
   const [searchString, setSearchString] = useState<string>('')
 
   return (
     <div className="text-center space-y-8 p-16">
       <div>
-        <p className="text-xl font-medium mb-2">Get started</p>
-        <p className="text-sm text-muted-foreground">
-          To search similar records, first specify a record ID.
-        </p>
+        <p className="text-xl font-medium mb-2">{title}</p>
+        <p className="text-sm text-muted-foreground">{description}</p>
       </div>
       <div className="w-full max-w-64 flex gap-2 mx-auto">
         <Input
+          placeholder="Specify a record ID"
           value={searchString}
           onChange={(e) => setSearchString(e.currentTarget.value)}
         />
@@ -172,17 +184,28 @@ const GetStarted = ({ onSubmit }: { onSubmit: (recordId: string) => void }) => {
           <SearchIcon className="w-4 h-4" />
         </Button>
       </div>
+      <p className="text-sm text-muted-foreground">or</p>
+      <RandomSearch onClick={(recordId) => onSubmit(recordId)} />
     </div>
   )
 }
 
-const NoEmbeddingsFound = () => (
-  <div className="text-center space-y-8 p-16">
-    <div>
-      <p className="text-xl font-medium mb-2">No embeddings found</p>
-      <p className="text-sm text-muted-foreground">
-        The current record ID did not match any embeddings.
-      </p>
-    </div>
-  </div>
-)
+const RandomSearch = ({ onClick }: { onClick: (recordId: string) => void }) => {
+  const seed = useMemo(() => Date.now(), [])
+  const { data } = useRandomRecord(seed)
+
+  return (
+    <Button
+      variant="outline"
+      className="shrink-0"
+      onClick={() => {
+        if (data) {
+          onClick(data?.id)
+        }
+      }}
+    >
+      Try a random record
+      <DicesIcon className="w-4 h-4 ml-2" />
+    </Button>
+  )
+}
