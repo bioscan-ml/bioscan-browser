@@ -1,6 +1,6 @@
 import { DocDetailsDialog } from '@/components/doc-details/doc-details'
 import { Error } from '@/components/error'
-import { Gallery } from '@/components/gallery'
+import { Gallery } from '@/components/gallery/gallery'
 import { Loader } from '@/components/loader'
 import { OrderByControl } from '@/components/order-by-control'
 import { PageContent } from '@/components/page-content'

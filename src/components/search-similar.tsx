@@ -1,8 +1,5 @@
-import {
-  DocDetailsDialog,
-  DocDetailsDialogContent,
-} from '@/components/doc-details/doc-details'
-import { Gallery } from '@/components/gallery'
+import { DocDetailsDialog } from '@/components/doc-details/doc-details'
+import { Gallery } from '@/components/gallery/gallery'
 import { Loader } from '@/components/loader'
 import { OrderByControl } from '@/components/order-by-control'
 import { PageContent } from '@/components/page-content'
@@ -18,10 +15,10 @@ import { useEmbeddings } from '@/hooks/useEmbeddings'
 import { useRecord } from '@/hooks/useRecord'
 import { DEFAULT_PAGINATION, DEFAULT_SORT, FIELDS } from '@/lib/constants'
 import { ViewMode } from '@/types/settings'
-import { InfoIcon, SearchIcon } from 'lucide-react'
+import { SearchIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { GalleryItem } from './gallery/gallery-item'
 import { Button } from './ui/button'
-import { Dialog, DialogTrigger } from './ui/dialog'
 import { Input } from './ui/input'
 
 export const SearchSimilar = () => {
@@ -44,9 +41,11 @@ export const SearchSimilar = () => {
         <div className="grid items-start gap-4 py-4 md:flex md:gap-8 md:py-8">
           <Sidebar>
             <div className="space-y-8">
-              <SidebarSection label="Record ID">
+              <SidebarSection label="Target record">
+                {recordId ? <RecordDetails recordId={recordId} /> : null}
                 <div className="flex gap-2">
                   <Input
+                    placeholder="Specify a record ID"
                     value={searchString}
                     onChange={(e) => setSearchString(e.currentTarget.value)}
                   />
@@ -67,7 +66,7 @@ export const SearchSimilar = () => {
                   setViewMode={setViewMode}
                 />
               </SidebarSection>
-              <SidebarSection label="View mode">
+              <SidebarSection label="Order by">
                 <OrderByControl fields={FIELDS} sort={sort} setSort={setSort} />
               </SidebarSection>
             </div>
@@ -79,9 +78,8 @@ export const SearchSimilar = () => {
               <>
                 <div className="flex items-center gap-4 mb-4 pb-4 border-b">
                   <h2 className="text-lg font-semibold leading-none tracking-tight">
-                    Closest matches to {recordId}
+                    Closest matches
                   </h2>
-                  <RecordDetails recordId={recordId} />
                 </div>
                 {viewMode === 'table' && (
                   <Table
@@ -129,6 +127,7 @@ export const SearchSimilar = () => {
 }
 
 const RecordDetails = ({ recordId }: { recordId: string }) => {
+  const [open, setOpen] = useState(false)
   const { data } = useRecord(recordId)
 
   if (!data) {
@@ -136,14 +135,10 @@ const RecordDetails = ({ recordId }: { recordId: string }) => {
   }
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <InfoIcon className="w-4 h-4" />
-        </Button>
-      </DialogTrigger>
-      {data && <DocDetailsDialogContent doc={data} showEmbeddings={false} />}
-    </Dialog>
+    <>
+      <GalleryItem doc={data} onClick={() => setOpen(true)} />
+      <DocDetailsDialog doc={data} open={open} onOpenChange={setOpen} />
+    </>
   )
 }
 

@@ -1,4 +1,4 @@
-import { Gallery } from '@/components/gallery'
+import { Gallery } from '@/components/gallery/gallery'
 import {
   ChartConfig,
   ChartContainer,

@@ -1,7 +1,7 @@
 import { DocDetailsDialog } from '@/components/doc-details/doc-details'
 import { Error } from '@/components/error'
 import { FilterControl } from '@/components/filter-control'
-import { Gallery } from '@/components/gallery'
+import { Gallery } from '@/components/gallery/gallery'
 import { Loader } from '@/components/loader'
 import { NoRecordsFound } from '@/components/no-records-found'
 import { OrderByControl } from '@/components/order-by-control'
