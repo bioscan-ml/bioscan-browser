@@ -42,7 +42,7 @@ export const SearchSimilar = () => {
         <div className="grid items-start gap-4 py-4 md:flex md:gap-8 md:py-8">
           <Sidebar>
             <div className="space-y-8">
-              <SidebarSection label="Target record">
+              <SidebarSection label="Query record">
                 {recordId ? <RecordDetails recordId={recordId} /> : null}
                 <div className="flex gap-2">
                   <Input
@@ -101,13 +101,13 @@ export const SearchSimilar = () => {
             ) : recordId ? (
               <Intro
                 title="No similar records found"
-                description="No matches was found for the current search, please try a different target record."
+                description="No matches was found for the current search, please try a different query record."
                 onSubmit={(recordId) => setRecordId(recordId)}
               />
             ) : (
               <Intro
                 title="Get started"
-                description="To search similar records, first specify a target record."
+                description="To search similar records, first specify a query record."
                 onSubmit={(recordId) => setRecordId(recordId)}
               />
             )}
