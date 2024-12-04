@@ -8,4 +8,4 @@ export const getImageSrc = (
     | 'cropped'
     | 'cropped_256' = 'original_256',
 ) =>
-  `https://aspis.cmpt.sfu.ca/stk-bioscan/data/bioscan/bioscan5m/images/${type}/${doc.split}/${doc.chunk ? doc.chunk + '/' : ''}${doc.id}.jpg`
+  `https://aspis.cmpt.sfu.ca/data/bioscan/bioscan5m/images/${type}/${doc.split}/${doc.chunk ? doc.chunk + '/' : ''}${doc.id}.jpg`
