@@ -1,20 +1,22 @@
 import { DocDetailsDialog } from '@/components/doc-details/doc-details'
 import { Gallery } from '@/components/gallery/gallery'
 import { Loader } from '@/components/loader'
-import { OrderByControl } from '@/components/order-by-control'
 import { PageContent } from '@/components/page-content'
-import { PaginationBar } from '@/components/pagination-bar'
 import { Sidebar, SidebarSection } from '@/components/sidebar'
 import { Table } from '@/components/table'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { ViewModeControl } from '@/components/view-mode-control'
 import { useActiveDoc } from '@/hooks/search-params/useActiveDoc'
-import { usePagination } from '@/hooks/search-params/usePagination'
-import { useRecordId } from '@/hooks/search-params/useRecordId'
-import { useSort } from '@/hooks/search-params/useSort'
-import { useEmbeddings } from '@/hooks/useEmbeddings'
+import { useSampleId } from '@/hooks/search-params/useSampleId'
 import { useRandomRecord } from '@/hooks/useRandomRecord'
 import { useRecord } from '@/hooks/useRecord'
-import { DEFAULT_PAGINATION, DEFAULT_SORT, FIELDS } from '@/lib/constants'
+import { useSearchEmbeddings } from '@/hooks/useSearchEmbeddings'
 import { SearchType, ViewMode } from '@/types/settings'
 import { DicesIcon, SearchIcon } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
@@ -23,33 +25,37 @@ import { SearchTypeControl } from './search-type-control'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 
+const PAGE_SIZE_OPTIONS = [10, 50, 100]
+
 export const SearchSimilar = () => {
   const [searchString, setSearchString] = useState<string>('')
-  const { recordId, setRecordId } = useRecordId()
-  const [searchFrom, setSearchFrom] = useState<SearchType>('image')
-  const [searchTo, setSearchTo] = useState<SearchType>('image')
+  const { sampleId, setSampleId } = useSampleId()
+  const [searchFrom, setSearchFrom] = useState<SearchType>('Image')
+  const [searchTo, setSearchTo] = useState<SearchType>('Image')
   const [viewMode, setViewMode] = useState<ViewMode>('gallery')
-  const { page, pageSize, setPage, setPageSize } =
-    usePagination(DEFAULT_PAGINATION)
-  const { sort, setSort } = useSort(DEFAULT_SORT)
-  const { data, isPending } = useEmbeddings(recordId ?? undefined)
+  const [pageSize, setPageSize] = useState<number>(PAGE_SIZE_OPTIONS[0])
+  const { data, isPending } = useSearchEmbeddings({
+    sampleId,
+    searchFrom,
+    searchTo,
+    pageSize,
+  })
   const { activeDoc, setActiveDoc } = useActiveDoc(data?.docs)
-
   useEffect(() => {
-    setSearchString(recordId ?? '')
-  }, [recordId])
+    setSearchString(sampleId ?? '')
+  }, [sampleId])
 
   return (
     <>
       <PageContent>
         <div className="grid items-start gap-4 py-4 md:flex md:gap-8 md:py-8">
-          <Sidebar>
+          <Sidebar avoidPaginationBar={false}>
             <div className="space-y-8">
               <SidebarSection label="Query record">
-                {recordId ? <RecordDetails recordId={recordId} /> : null}
+                {sampleId ? <RecordDetails sampleId={sampleId} /> : null}
                 <div className="flex gap-2">
                   <Input
-                    placeholder="Specify a record ID"
+                    placeholder="Specify a sample ID"
                     value={searchString}
                     onChange={(e) => setSearchString(e.currentTarget.value)}
                   />
@@ -57,7 +63,7 @@ export const SearchSimilar = () => {
                     variant="outline"
                     size="icon"
                     className="shrink-0"
-                    onClick={() => setRecordId(searchString)}
+                    onClick={() => setSampleId(searchString)}
                   >
                     <SearchIcon className="w-4 h-4" />
                   </Button>
@@ -77,15 +83,29 @@ export const SearchSimilar = () => {
                   />
                 </SidebarSection>
               </div>
+              <SidebarSection label="Number of records">
+                <Select
+                  value={`${pageSize}`}
+                  onValueChange={(value) => setPageSize(Number(value))}
+                >
+                  <SelectTrigger className="w-min">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {PAGE_SIZE_OPTIONS.map((option) => (
+                      <SelectItem key={option} value={`${option}`}>
+                        {option}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </SidebarSection>
               <SidebarSection label="View mode">
                 <ViewModeControl
                   type="search-similar"
                   viewMode={viewMode}
                   setViewMode={setViewMode}
                 />
-              </SidebarSection>
-              <SidebarSection label="Order by">
-                <OrderByControl fields={FIELDS} sort={sort} setSort={setSort} />
               </SidebarSection>
             </div>
           </Sidebar>
@@ -102,44 +122,33 @@ export const SearchSimilar = () => {
                 {viewMode === 'table' && (
                   <Table
                     docs={data?.docs}
-                    sort={sort}
                     onRowClick={(doc) => setActiveDoc(doc)}
-                    setSort={setSort}
                   />
                 )}
                 {viewMode === 'gallery' && (
                   <Gallery
                     docs={data?.docs}
                     onItemClick={(doc) => setActiveDoc(doc)}
-                    onSearchClick={(doc) => setRecordId(doc.id)}
+                    onSearchClick={(doc) => setSampleId(doc.sampleid)}
                   />
                 )}
               </>
-            ) : recordId ? (
+            ) : sampleId ? (
               <Intro
                 title="No similar records found"
                 description="No matches was found for the current search, please try a different query record."
-                onSubmit={(recordId) => setRecordId(recordId)}
+                onSubmit={(sampleId) => setSampleId(sampleId)}
               />
             ) : (
               <Intro
                 title="Get started"
                 description="To search similar records, first specify a query record."
-                onSubmit={(recordId) => setRecordId(recordId)}
+                onSubmit={(sampleId) => setSampleId(sampleId)}
               />
             )}
           </div>
         </div>
       </PageContent>
-      {data && (
-        <PaginationBar
-          data={data}
-          page={page}
-          pageSize={pageSize}
-          setPage={setPage}
-          setPageSize={setPageSize}
-        />
-      )}
       <DocDetailsDialog
         doc={activeDoc}
         open={!!activeDoc}
@@ -148,14 +157,15 @@ export const SearchSimilar = () => {
             setActiveDoc(undefined)
           }
         }}
+        showClosestMatches={activeDoc?.sampleid !== sampleId}
       />
     </>
   )
 }
 
-const RecordDetails = ({ recordId }: { recordId: string }) => {
+const RecordDetails = ({ sampleId }: { sampleId: string }) => {
   const [open, setOpen] = useState(false)
-  const { data } = useRecord(recordId)
+  const { data } = useRecord(sampleId, 'sampleid')
 
   if (!data) {
     return null
@@ -164,7 +174,12 @@ const RecordDetails = ({ recordId }: { recordId: string }) => {
   return (
     <>
       <GalleryItem doc={data} onClick={() => setOpen(true)} />
-      <DocDetailsDialog doc={data} open={open} onOpenChange={setOpen} />
+      <DocDetailsDialog
+        doc={data}
+        open={open}
+        onOpenChange={setOpen}
+        showClosestMatches={false}
+      />
     </>
   )
 }
@@ -176,7 +191,7 @@ const Intro = ({
 }: {
   title: string
   description: string
-  onSubmit: (recordId: string) => void
+  onSubmit: (sampleId: string) => void
 }) => {
   const [searchString, setSearchString] = useState<string>('')
 
@@ -188,7 +203,7 @@ const Intro = ({
       </div>
       <div className="w-full max-w-64 flex gap-2 mx-auto">
         <Input
-          placeholder="Specify a record ID"
+          placeholder="Specify a sample ID"
           value={searchString}
           onChange={(e) => setSearchString(e.currentTarget.value)}
         />
@@ -202,12 +217,12 @@ const Intro = ({
         </Button>
       </div>
       <p className="text-sm text-muted-foreground">or</p>
-      <RandomSearch onClick={(recordId) => onSubmit(recordId)} />
+      <RandomSearch onClick={(sampleId) => onSubmit(sampleId)} />
     </div>
   )
 }
 
-const RandomSearch = ({ onClick }: { onClick: (recordId: string) => void }) => {
+const RandomSearch = ({ onClick }: { onClick: (sampleId: string) => void }) => {
   const seed = useMemo(() => Date.now(), [])
   const { data } = useRandomRecord(seed)
 
@@ -217,7 +232,7 @@ const RandomSearch = ({ onClick }: { onClick: (recordId: string) => void }) => {
       className="shrink-0"
       onClick={() => {
         if (data) {
-          onClick(data?.id)
+          onClick(data?.sampleid)
         }
       }}
     >

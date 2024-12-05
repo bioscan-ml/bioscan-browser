@@ -1,4 +1,4 @@
-import { SOLR_BASE_PATH } from '@/lib/constants'
+import { getFetchUrl } from '@/lib/getFetchUrl'
 import { Doc, FacetCounts } from '@/types/response-data'
 import { Sort } from '@/types/settings'
 import { useQuery } from '@tanstack/react-query'
@@ -39,21 +39,4 @@ export const useRecords = (params: {
         }
       : undefined,
   }
-}
-
-const getFetchUrl = (params: {
-  page: number
-  pageSize: number
-  sort?: Sort
-  q?: string
-}) => {
-  let fetchUrl = `${SOLR_BASE_PATH}?rows=${params.pageSize}&start=${params.pageSize * params.page}`
-
-  if (params.sort) {
-    fetchUrl += `&sort=${params.sort.key} ${params.sort.order}`
-  }
-
-  fetchUrl += `&q=${params.q ?? '*:*'}`
-
-  return fetchUrl
 }

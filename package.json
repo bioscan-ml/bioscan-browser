@@ -40,6 +40,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@gradio/client": "^1.8.0",
     "@types/leaflet": "^1.9.12",
     "@types/lodash": "^4.17.7",
     "@types/node": "^20.14.9",

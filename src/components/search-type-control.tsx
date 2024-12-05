@@ -11,12 +11,12 @@ import {
 const SEATCH_TYPE_OPTIONS = [
   {
     label: 'Image',
-    value: 'image',
+    value: 'Image',
     Icon: ImageIcon,
   },
   {
     label: 'DNA',
-    value: 'dna',
+    value: 'DNA',
     Icon: DnaIcon,
   },
 ]

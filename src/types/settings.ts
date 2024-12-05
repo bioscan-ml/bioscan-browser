@@ -2,7 +2,7 @@ export type ViewMode = 'chart' | 'gallery' | 'table'
 
 export type SortOrder = 'asc' | 'desc'
 
-export type SearchType = 'image' | 'dna'
+export type SearchType = 'Image' | 'DNA'
 
 export interface Sort {
   key: string

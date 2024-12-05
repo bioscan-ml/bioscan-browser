@@ -9,14 +9,22 @@ import { ChevronDownIcon, ChevronUpIcon, Settings2Icon } from 'lucide-react'
 import { ReactNode, useState } from 'react'
 
 interface SidebarProps {
+  avoidPaginationBar?: boolean
   children: ReactNode
 }
 
-export const Sidebar = ({ children }: SidebarProps) => {
+export const Sidebar = ({
+  avoidPaginationBar = true,
+  children,
+}: SidebarProps) => {
   const isLargeScreen = useMediaQuery(MAX_MD_QUERY, true)
   const SidebarComponent = isLargeScreen ? DesktopSidebar : MobileSidebar
 
-  return <SidebarComponent>{children}</SidebarComponent>
+  return (
+    <SidebarComponent avoidPaginationBar={avoidPaginationBar}>
+      {children}
+    </SidebarComponent>
+  )
 }
 
 export const SidebarSection = ({
@@ -41,9 +49,12 @@ export const SidebarSection = ({
   )
 }
 
-const DesktopSidebar = ({ children }: SidebarProps) => (
+const DesktopSidebar = ({ avoidPaginationBar, children }: SidebarProps) => (
   <aside
-    className="sticky top-24 w-72 h-[calc(100vh-12rem)] shrink-0 rounded-md bg-muted border"
+    className={cn(
+      'sticky top-24 w-72 h-[calc(100vh-8rem)] shrink-0 rounded-md bg-muted border',
+      { 'h-[calc(100vh-12rem)]': avoidPaginationBar },
+    )}
     style={{ boxSizing: 'content-box' }}
   >
     <div className="w-full h-full overflow-auto">

@@ -1,15 +1,17 @@
-import { useEmbeddings } from '@/hooks/useEmbeddings'
 import { FIELDS, FILTER_TYPES, TAXON_FILTER_TYPES } from '@/lib/constants'
 import { formatFieldValue } from '@/lib/formatFieldValue'
+import { cn } from '@/lib/utils'
 import { Doc } from '@/types/response-data'
+import { SearchIcon } from 'lucide-react'
 import { Link, To } from 'react-router-dom'
+import { buttonVariants } from '../ui/button'
 
 interface FieldsProps {
   doc: Doc
-  showEmbeddings?: boolean
+  showClosestMatches?: boolean
 }
 
-export const Fields = ({ doc, showEmbeddings = true }: FieldsProps) => (
+export const Fields = ({ doc, showClosestMatches = true }: FieldsProps) => (
   <div className="grid gap-4 grid-cols-2">
     {FIELDS.map((field) => {
       const fieldValue = formatFieldValue(doc[field.key])
@@ -27,7 +29,7 @@ export const Fields = ({ doc, showEmbeddings = true }: FieldsProps) => (
         />
       )
     })}
-    {showEmbeddings && <EmbeddingsField doc={doc} />}
+    {showClosestMatches && <ClosestMatchesField doc={doc} />}
   </div>
 )
 
@@ -52,26 +54,20 @@ const Field = ({
   </div>
 )
 
-const EmbeddingsField = ({ doc }: { doc: Doc }) => {
-  const label = 'Closest matches'
-  const { data, isPending } = useEmbeddings(doc.id)
-
-  if (isPending) {
-    return <Field label={label} value="Loading..." />
-  }
-
-  if (!data?.numFound) {
-    return <Field label={label} value="n/a" />
-  }
-
-  return (
-    <Field
-      label={label}
-      link={{ pathname: '/search-similar', search: `id=${doc.id}` }}
-      value={`${data.numFound} ${data.numFound === 1 ? 'record' : 'records'}`}
-    />
-  )
-}
+const ClosestMatchesField = ({ doc }: { doc: Doc }) => (
+  <div className="flex flex-col items-start text-sm">
+    <span className="font-medium text-muted-foreground mb-2">
+      Closest matches
+    </span>
+    <Link
+      className={cn(buttonVariants({ variant: 'outline' }), 'w-min')}
+      to={{ pathname: '/search-similar', search: `sampleid=${doc.sampleid}` }}
+    >
+      Search
+      <SearchIcon className="w-4 h-4 ml-2" />
+    </Link>
+  </div>
+)
 
 const getFieldLink = (key: string, value: string): To | undefined => {
   if (TAXON_FILTER_TYPES.some((filterType) => filterType.key === key)) {

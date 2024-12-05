@@ -3,7 +3,7 @@ import { Menu } from './menu'
 import { PageContent } from './page-content'
 
 export const TopBar = () => (
-  <header className="sticky top-0 h-16 py-8 bg-muted/95 border-b z-10">
+  <header className="sticky top-0 h-16 bg-muted/95 border-b z-10 box-border">
     <PageContent>
       <div className="h-full flex items-center justify-between gap-12 lg:justify-start">
         <Link to="/" className="flex items-center gap-2 shrink-0">

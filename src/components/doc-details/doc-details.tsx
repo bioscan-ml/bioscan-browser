@@ -19,27 +19,30 @@ import { Images } from './images'
 export const DocDetailsDialog = ({
   doc,
   open,
-  showEmbeddings,
+  showClosestMatches,
   onOpenChange,
 }: {
   doc?: Doc
   open: boolean
-  showEmbeddings?: boolean
+  showClosestMatches?: boolean
   onOpenChange: (open: boolean) => void
 }) => (
   <Dialog open={open} onOpenChange={onOpenChange}>
     {doc && (
-      <DocDetailsDialogContent doc={doc} showEmbeddings={showEmbeddings} />
+      <DocDetailsDialogContent
+        doc={doc}
+        showClosestMatches={showClosestMatches}
+      />
     )}
   </Dialog>
 )
 
 export const DocDetailsDialogContent = ({
   doc,
-  showEmbeddings,
+  showClosestMatches,
 }: {
   doc: Doc
-  showEmbeddings?: boolean
+  showClosestMatches?: boolean
 }) => {
   const { taxon, parents } = getTaxon(doc)
 
@@ -63,7 +66,7 @@ export const DocDetailsDialogContent = ({
           ))}
         </DialogDescription>
       </DialogHeader>
-      <Fields doc={doc} showEmbeddings={showEmbeddings} />
+      <Fields doc={doc} showClosestMatches={showClosestMatches} />
       <Tabs defaultValue="images">
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="images">Images</TabsTrigger>
