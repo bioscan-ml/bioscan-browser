@@ -116,7 +116,7 @@ export const SearchSimilar = () => {
               <>
                 <div className="flex items-center gap-4 mb-4 pb-4 border-b">
                   <h2 className="text-lg font-semibold leading-none tracking-tight">
-                    Closest matches
+                    Closest {data.docs.length} matches
                   </h2>
                 </div>
                 {viewMode === 'table' && (
