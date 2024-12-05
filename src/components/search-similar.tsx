@@ -15,16 +15,19 @@ import { useEmbeddings } from '@/hooks/useEmbeddings'
 import { useRandomRecord } from '@/hooks/useRandomRecord'
 import { useRecord } from '@/hooks/useRecord'
 import { DEFAULT_PAGINATION, DEFAULT_SORT, FIELDS } from '@/lib/constants'
-import { ViewMode } from '@/types/settings'
+import { SearchType, ViewMode } from '@/types/settings'
 import { DicesIcon, SearchIcon } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { GalleryItem } from './gallery/gallery-item'
+import { SearchTypeControl } from './search-type-control'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 
 export const SearchSimilar = () => {
   const [searchString, setSearchString] = useState<string>('')
   const { recordId, setRecordId } = useRecordId()
+  const [searchFrom, setSearchFrom] = useState<SearchType>('image')
+  const [searchTo, setSearchTo] = useState<SearchType>('image')
   const [viewMode, setViewMode] = useState<ViewMode>('gallery')
   const { page, pageSize, setPage, setPageSize } =
     usePagination(DEFAULT_PAGINATION)
@@ -60,6 +63,20 @@ export const SearchSimilar = () => {
                   </Button>
                 </div>
               </SidebarSection>
+              <div className="flex gap-8">
+                <SidebarSection className="md:w-min" label="Search from">
+                  <SearchTypeControl
+                    searchType={searchFrom}
+                    setSearchType={setSearchFrom}
+                  />
+                </SidebarSection>
+                <SidebarSection className="md:w-min" label="Search to">
+                  <SearchTypeControl
+                    searchType={searchTo}
+                    setSearchType={setSearchTo}
+                  />
+                </SidebarSection>
+              </div>
               <SidebarSection label="View mode">
                 <ViewModeControl
                   type="search-similar"

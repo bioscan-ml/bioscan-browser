@@ -20,14 +20,21 @@ export const Sidebar = ({ children }: SidebarProps) => {
 }
 
 export const SidebarSection = ({
-  label,
   children,
+  className,
+  label,
 }: {
-  label: string
   children: ReactNode
+  className?: string
+  label: string
 }) => {
   return (
-    <div className="flex flex-col gap-y-2 md:w-64 md:sticky md:left-4">
+    <div
+      className={cn(
+        'flex flex-col gap-y-2 md:w-64 md:sticky md:left-4',
+        className,
+      )}
+    >
       <label className="py-1.5 text-sm leading-none font-medium">{label}</label>
       {children}
     </div>
