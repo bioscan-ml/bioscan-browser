@@ -19,7 +19,7 @@ export const StyleGuide = () => (
           Outlined or inverted logos can be used for special cases.
         </p>
         <a
-          href="/assets/bioscan-logo-pack@v1.zip"
+          href="/assets/bioscan-logo-pack@v2.zip"
           className={cn(
             'mb-12',
             buttonVariants({
@@ -40,6 +40,19 @@ export const StyleGuide = () => (
           <LogoItem
             label="bioscan-inverted"
             src="/assets/logos/bioscan-inverted.png"
+            bgTheme="dark"
+          />
+          <LogoItem
+            label="bioscan-dataset"
+            src="/assets/logos/bioscan-dataset.png"
+          />
+          <LogoItem
+            label="bioscan-dataset-outline"
+            src="/assets/logos/bioscan-dataset-outline.png"
+          />
+          <LogoItem
+            label="bioscan-dataset-inverted"
+            src="/assets/logos/bioscan-dataset-inverted.png"
             bgTheme="dark"
           />
           <LogoItem
@@ -134,8 +147,8 @@ export const StyleGuide = () => (
             iconTheme="light"
           />
           <ColorItem
-            label="emerald-600"
-            hex={colors.emerald[600]}
+            label="emerald-700"
+            hex={colors.emerald[700]}
             description="Used as a primary color"
             iconTheme="light"
           />
