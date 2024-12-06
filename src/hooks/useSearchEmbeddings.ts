@@ -34,7 +34,7 @@ export const useSearchEmbeddings = (params: {
         id: params.sampleId,
         key_type: params.searchFrom,
         query_type: params.searchTo,
-        num_results: params.pageSize,
+        num_results: params.pageSize + 1,
       })
       const sampleIds: string[] = JSON.parse(
         (result.data as string[])[0].replace(/'/g, '"'),
@@ -48,7 +48,7 @@ export const useSearchEmbeddings = (params: {
       const q = filtersToQuery([
         {
           type: 'sampleid',
-          value: sampleIds,
+          value: sampleIds.filter((sampleId) => sampleId !== params.sampleId), // Filter out query record
         },
       ])
       const recordsRes = await fetch(
