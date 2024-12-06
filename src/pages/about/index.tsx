@@ -12,8 +12,8 @@ export const About = () => (
       </div>
       <div>
         <img
-          src="/assets/logos/bioscan.png"
-          className="h-16 w-16 float-left mr-4"
+          src="/assets/logos/bioscan-dataset.png"
+          className="h-24 w-24 float-left mr-4"
           alt=""
         />
         <h3 className="text-accent mb-2">The Dataset</h3>
@@ -39,7 +39,7 @@ export const About = () => (
       <div>
         <img
           src="/assets/logos/bioscan-browser.png"
-          className="h-16 w-16 float-left mr-4"
+          className="h-24 w-24 float-left mr-4"
           alt=""
         />
         <h3 className="text-accent mb-2">The Browser</h3>
