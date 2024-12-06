@@ -13,10 +13,11 @@ export const StyleGuide = () => (
       <div>
         <h3 className="text-accent mb-2">BIOSCAN Logo Pack</h3>
         <p className="text-muted-foreground mb-8">
-          We provide one logo for the dataset and a variant for the browser. The
-          logo pack includes 6 versions in total and files in both vector (SVG)
-          and pixel (PNG) format. The main logos are the colored versions.
-          Outlined or inverted logos can be used for special cases.
+          We provide one generic logo, one variant for the dataset and one
+          variant for the browser. The logo pack includes 9 versions in total
+          and files in both vector (SVG) and pixel (PNG) format. The main logos
+          are the colored versions. Outlined or inverted logos can be used for
+          special cases.
         </p>
         <a
           href="/assets/bioscan-logo-pack@v2.zip"
