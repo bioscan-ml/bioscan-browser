@@ -13,11 +13,13 @@ import {
 } from '@/components/ui/select'
 import { ViewModeControl } from '@/components/view-mode-control'
 import { useActiveDoc } from '@/hooks/search-params/useActiveDoc'
+import { usePageSize } from '@/hooks/search-params/usePageSize'
 import { useSampleId } from '@/hooks/search-params/useSampleId'
+import { useSearchType } from '@/hooks/search-params/useSearchType'
 import { useRandomSampleId } from '@/hooks/useRandomSampleId'
 import { useRecord } from '@/hooks/useRecord'
 import { useSearchEmbeddings } from '@/hooks/useSearchEmbeddings'
-import { SearchType, ViewMode } from '@/types/settings'
+import { ViewMode } from '@/types/settings'
 import { DicesIcon, SearchIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { GalleryItem } from './gallery/gallery-item'
@@ -36,10 +38,9 @@ const PAGE_SIZE_OPTIONS = [10, 50, 100]
 export const SearchSimilar = () => {
   const [searchString, setSearchString] = useState<string>('')
   const { sampleId, setSampleId } = useSampleId()
-  const [searchFrom, setSearchFrom] = useState<SearchType>('Image')
-  const [searchTo, setSearchTo] = useState<SearchType>('Image')
+  const { searchFrom, setSearchFrom, searchTo, setSearchTo } = useSearchType()
   const [viewMode, setViewMode] = useState<ViewMode>('gallery')
-  const [pageSize, setPageSize] = useState<number>(PAGE_SIZE_OPTIONS[0])
+  const { pageSize, setPageSize } = usePageSize()
   const { data, isPending } = useSearchEmbeddings({
     sampleId,
     searchFrom,
@@ -96,21 +97,10 @@ export const SearchSimilar = () => {
                 </SidebarSection>
               </div>
               <SidebarSection label="Number of records">
-                <Select
-                  value={`${pageSize}`}
-                  onValueChange={(value) => setPageSize(Number(value))}
-                >
-                  <SelectTrigger className="w-min">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {PAGE_SIZE_OPTIONS.map((option) => (
-                      <SelectItem key={option} value={`${option}`}>
-                        {option}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <PageSizeControl
+                  pageSize={pageSize}
+                  setPageSize={setPageSize}
+                />
               </SidebarSection>
               <SidebarSection label="View mode">
                 <ViewModeControl
@@ -193,6 +183,38 @@ const RecordDetails = ({ sampleId }: { sampleId: string }) => {
         showClosestMatches={false}
       />
     </>
+  )
+}
+
+const PageSizeControl = ({
+  pageSize,
+  setPageSize,
+}: {
+  pageSize: number
+  setPageSize: (pageSize: number) => void
+}) => {
+  const options = PAGE_SIZE_OPTIONS.some((option) => option === pageSize)
+    ? PAGE_SIZE_OPTIONS
+    : [...PAGE_SIZE_OPTIONS, pageSize].sort(
+        (option1, option2) => option1 - option2,
+      )
+
+  return (
+    <Select
+      value={`${pageSize}`}
+      onValueChange={(value) => setPageSize(Number(value))}
+    >
+      <SelectTrigger className="w-min">
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent>
+        {options.map((option) => (
+          <SelectItem key={option} value={`${option}`}>
+            {option}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   )
 }
 
