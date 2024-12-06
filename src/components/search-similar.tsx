@@ -24,6 +24,12 @@ import { GalleryItem } from './gallery/gallery-item'
 import { SearchTypeControl } from './search-type-control'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from './ui/tooltip'
 
 const PAGE_SIZE_OPTIONS = [10, 50, 100]
 
@@ -242,14 +248,23 @@ const RandomSearch = ({
 
   if (size === 'icon') {
     return (
-      <Button
-        variant="outline"
-        size="icon"
-        className="shrink-0"
-        onClick={onClick}
-      >
-        <DicesIcon className="w-4 h-4" />
-      </Button>
+      <TooltipProvider delayDuration={0}>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="outline"
+              size="icon"
+              className="shrink-0"
+              onClick={onClick}
+            >
+              <DicesIcon className="w-4 h-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="bottom">
+            <p>Try a random record</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     )
   }
 
