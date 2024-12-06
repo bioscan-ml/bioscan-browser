@@ -36,7 +36,6 @@ export const useSearchEmbeddings = (params: {
         query_type: params.searchTo,
         num_results: params.pageSize,
       })
-
       const sampleIds: string[] = JSON.parse(
         (result.data as string[])[0].replace(/'/g, '"'),
       )
@@ -75,6 +74,7 @@ export const useSearchEmbeddings = (params: {
         },
       }
     },
+    enabled: !!params.sampleId,
     retry: false,
   })
 

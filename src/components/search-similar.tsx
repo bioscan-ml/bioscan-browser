@@ -14,12 +14,12 @@ import {
 import { ViewModeControl } from '@/components/view-mode-control'
 import { useActiveDoc } from '@/hooks/search-params/useActiveDoc'
 import { useSampleId } from '@/hooks/search-params/useSampleId'
-import { useRandomRecord } from '@/hooks/useRandomRecord'
+import { useRandomSampleId } from '@/hooks/useRandomSampleId'
 import { useRecord } from '@/hooks/useRecord'
 import { useSearchEmbeddings } from '@/hooks/useSearchEmbeddings'
 import { SearchType, ViewMode } from '@/types/settings'
 import { DicesIcon, SearchIcon } from 'lucide-react'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { GalleryItem } from './gallery/gallery-item'
 import { SearchTypeControl } from './search-type-control'
 import { Button } from './ui/button'
@@ -67,6 +67,7 @@ export const SearchSimilar = () => {
                   >
                     <SearchIcon className="w-4 h-4" />
                   </Button>
+                  <RandomSearch onClick={setSampleId} size="icon" />
                 </div>
               </SidebarSection>
               <div className="flex gap-8">
@@ -110,7 +111,7 @@ export const SearchSimilar = () => {
             </div>
           </Sidebar>
           <div className="mb-16 grow overflow-hidden m-[-4px] p-[4px]">
-            {isPending ? (
+            {isPending && sampleId ? (
               <Loader />
             ) : data?.docs.length ? (
               <>
@@ -217,25 +218,43 @@ const Intro = ({
         </Button>
       </div>
       <p className="text-sm text-muted-foreground">or</p>
-      <RandomSearch onClick={(sampleId) => onSubmit(sampleId)} />
+      <RandomSearch onClick={onSubmit} />
     </div>
   )
 }
 
-const RandomSearch = ({ onClick }: { onClick: (sampleId: string) => void }) => {
-  const seed = useMemo(() => Date.now(), [])
-  const { data } = useRandomRecord(seed)
+const RandomSearch = ({
+  onClick: _onClick,
+  size = 'sm',
+}: {
+  onClick: (sampleId: string) => void
+  size?: 'sm' | 'icon'
+}) => {
+  const [seed, setSeed] = useState(Date.now())
+  const { data } = useRandomSampleId(seed)
+
+  const onClick = () => {
+    if (data) {
+      _onClick(data)
+    }
+    setSeed(Date.now())
+  }
+
+  if (size === 'icon') {
+    return (
+      <Button
+        variant="outline"
+        size="icon"
+        className="shrink-0"
+        onClick={onClick}
+      >
+        <DicesIcon className="w-4 h-4" />
+      </Button>
+    )
+  }
 
   return (
-    <Button
-      variant="outline"
-      className="shrink-0"
-      onClick={() => {
-        if (data) {
-          onClick(data?.sampleid)
-        }
-      }}
-    >
+    <Button variant="outline" size="sm" className="shrink-0" onClick={onClick}>
       Try a random record
       <DicesIcon className="w-4 h-4 ml-2" />
     </Button>
