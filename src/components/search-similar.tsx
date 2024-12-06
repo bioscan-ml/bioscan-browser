@@ -143,7 +143,7 @@ export const SearchSimilar = () => {
             ) : sampleId ? (
               <Intro
                 title="No similar records found"
-                description="No matches was found for the current search, please try a different query record."
+                description="No matches were found for the current search, please try a different query record."
                 onSubmit={(sampleId) => setSampleId(sampleId)}
               />
             ) : (
