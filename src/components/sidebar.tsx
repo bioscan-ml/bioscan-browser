@@ -9,34 +9,52 @@ import { ChevronDownIcon, ChevronUpIcon, Settings2Icon } from 'lucide-react'
 import { ReactNode, useState } from 'react'
 
 interface SidebarProps {
+  avoidPaginationBar?: boolean
   children: ReactNode
 }
 
-export const Sidebar = ({ children }: SidebarProps) => {
+export const Sidebar = ({
+  avoidPaginationBar = true,
+  children,
+}: SidebarProps) => {
   const isLargeScreen = useMediaQuery(MAX_MD_QUERY, true)
   const SidebarComponent = isLargeScreen ? DesktopSidebar : MobileSidebar
 
-  return <SidebarComponent>{children}</SidebarComponent>
+  return (
+    <SidebarComponent avoidPaginationBar={avoidPaginationBar}>
+      {children}
+    </SidebarComponent>
+  )
 }
 
 export const SidebarSection = ({
-  label,
   children,
+  className,
+  label,
 }: {
-  label: string
   children: ReactNode
+  className?: string
+  label: string
 }) => {
   return (
-    <div className="flex flex-col gap-y-2 md:w-64 md:sticky md:left-4">
+    <div
+      className={cn(
+        'flex flex-col gap-y-2 md:w-64 md:sticky md:left-4',
+        className,
+      )}
+    >
       <label className="py-1.5 text-sm leading-none font-medium">{label}</label>
       {children}
     </div>
   )
 }
 
-const DesktopSidebar = ({ children }: SidebarProps) => (
+const DesktopSidebar = ({ avoidPaginationBar, children }: SidebarProps) => (
   <aside
-    className="sticky top-24 w-72 h-[calc(100vh-12rem)] shrink-0 rounded-md bg-muted border"
+    className={cn(
+      'sticky top-24 w-72 h-[calc(100vh-8rem)] shrink-0 rounded-md bg-muted border',
+      { 'h-[calc(100vh-12rem)]': avoidPaginationBar },
+    )}
     style={{ boxSizing: 'content-box' }}
   >
     <div className="w-full h-full overflow-auto">

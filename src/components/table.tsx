@@ -16,9 +16,9 @@ import { ArrowDownIcon, ArrowUpIcon } from 'lucide-react'
 
 interface TableProps {
   docs?: Doc[]
-  sort: Sort
+  sort?: Sort
   onRowClick: (doc: Doc) => void
-  setSort: (sort: Sort) => void
+  setSort?: (sort: Sort) => void
 }
 
 export const Table = ({ docs = [], sort, onRowClick, setSort }: TableProps) => (
@@ -27,9 +27,9 @@ export const Table = ({ docs = [], sort, onRowClick, setSort }: TableProps) => (
       <TableRow>
         <TableHead />
         {FIELDS.map((field) => {
-          const isSorted = sort.key === field.key
+          const isSorted = sort?.key === field.key
           const ariaSort = isSorted
-            ? sort.order === 'asc'
+            ? sort?.order === 'asc'
               ? 'ascending'
               : 'descending'
             : undefined
@@ -38,15 +38,19 @@ export const Table = ({ docs = [], sort, onRowClick, setSort }: TableProps) => (
             <TableHead key={field.key} aria-sort={ariaSort}>
               <button
                 className="w-full h-full flex items-center gap-2 whitespace-nowrap"
-                disabled={field.sortDisabled}
+                disabled={!setSort || field.sortDisabled}
                 onClick={() => {
+                  if (!setSort) {
+                    return
+                  }
+
                   setSort({
                     key: field.key,
                     order: isSorted
                       ? sort.order === 'asc'
                         ? 'desc'
                         : 'asc'
-                      : sort.order,
+                      : 'asc',
                   })
                 }}
               >

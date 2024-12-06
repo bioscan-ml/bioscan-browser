@@ -5,15 +5,15 @@ import { useQuery } from '@tanstack/react-query'
 
 const QUERY_KEY = 'record'
 
-export const useRecord = (id: string) => {
+export const useRecord = (id: string, type: 'id' | 'sampleid' = 'id') => {
   const { isPending, error, data } = useQuery<{
     response: {
       docs: Doc[]
     }
   }>({
-    queryKey: [QUERY_KEY, { id }],
+    queryKey: [QUERY_KEY, { id, type }],
     queryFn: async () => {
-      const q = filtersToQuery([{ type: 'id', value: [id] }])
+      const q = filtersToQuery([{ type, value: [id] }])
       const res = await fetch(`${SOLR_BASE_PATH}?q=${q}`)
 
       return await res.json()
