@@ -47,9 +47,14 @@ export const SearchSimilar = () => {
     pageSize,
   })
   const { activeDoc, setActiveDoc } = useActiveDoc(data?.docs)
+
   useEffect(() => {
     setSearchString(sampleId ?? '')
   }, [sampleId])
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [data])
 
   return (
     <>
