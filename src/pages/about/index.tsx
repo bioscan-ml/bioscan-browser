@@ -83,11 +83,15 @@ export const About = () => (
         </p>
         <h4 className="mb-2">Integrations</h4>
         <p className="text-muted-foreground mb-8">
-          The iNaturalist API is used to populate views with more details about
-          the current taxa, both in the Taxonomy viewer and in the record detail
-          view. This information includes common names, Wikipedia summaries and
-          uploaded photos. Also, the iNaturalist API is used to provide a multi
-          language common name search to the taxonomy viewer.
+          The{' '}
+          <a href="https://api.inaturalist.org/v1/docs/" className="text-link">
+            iNaturalist API
+          </a>{' '}
+          is used to populate views with more details about the current taxa,
+          both in the Taxonomy viewer and in the record detail view. This
+          information includes common names, Wikipedia summaries and uploaded
+          photos. Also, the iNaturalist API is used to provide a multi language
+          common name search to the taxonomy viewer.
         </p>
         <h4 className="mb-4">Resources</h4>
         <div className="flex gap-4">
@@ -105,8 +109,8 @@ export const About = () => (
             label="GitHub"
           />
           <ExternalLink
-            href="https://api.inaturalist.org/v1/docs/"
-            label="iNaturalist API"
+            href="https://bioscan-browser.cronitorstatus.com/"
+            label="System status"
           />
         </div>
       </div>
