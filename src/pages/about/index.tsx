@@ -1,5 +1,6 @@
 import { PageContent } from '@/components/page-content'
 import { buttonVariants } from '@/components/ui/button'
+import { RESOURCES } from '@/lib/constants'
 import { ExternalLinkIcon, PaletteIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
@@ -26,14 +27,8 @@ export const About = () => (
         </p>
         <h4 className="mb-4">Resources</h4>
         <div className="flex gap-4">
-          <ExternalLink
-            href="https://biodiversitygenomics.net/projects/5m-insects/"
-            label="Website"
-          />
-          <ExternalLink
-            href="https://github.com/bioscan-ml/BIOSCAN-5M/"
-            label="GitHub"
-          />
+          <ExternalLink href={RESOURCES.DATASET_WEBSITE} label="Website" />
+          <ExternalLink href={RESOURCES.DATASET_GITHUB} label="GitHub" />
         </div>
       </div>
       <div>
@@ -83,11 +78,15 @@ export const About = () => (
         </p>
         <h4 className="mb-2">Integrations</h4>
         <p className="text-muted-foreground mb-8">
-          The iNaturalist API is used to populate views with more details about
-          the current taxa, both in the Taxonomy viewer and in the record detail
-          view. This information includes common names, Wikipedia summaries and
-          uploaded photos. Also, the iNaturalist API is used to provide a multi
-          language common name search to the taxonomy viewer.
+          The{' '}
+          <a href={RESOURCES.INATURALIST_API} className="text-link">
+            iNaturalist API
+          </a>{' '}
+          is used to populate views with more details about the current taxa,
+          both in the Taxonomy viewer and in the record detail view. This
+          information includes common names, Wikipedia summaries and uploaded
+          photos. Also, the iNaturalist API is used to provide a multi language
+          common name search to the taxonomy viewer.
         </p>
         <h4 className="mb-4">Resources</h4>
         <div className="flex gap-4">
@@ -100,14 +99,8 @@ export const About = () => (
             <PaletteIcon className="h-4 w-4 mr-3" />
             Style guide
           </Link>
-          <ExternalLink
-            href="https://github.com/bioscan-ml/bioscan-browser/"
-            label="GitHub"
-          />
-          <ExternalLink
-            href="https://api.inaturalist.org/v1/docs/"
-            label="iNaturalist API"
-          />
+          <ExternalLink href={RESOURCES.GITHUB} label="GitHub" />
+          <ExternalLink href={RESOURCES.SYSTEM_STATUS} label="System status" />
         </div>
       </div>
     </article>
