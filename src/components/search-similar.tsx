@@ -20,7 +20,7 @@ import { useRandomSampleId } from '@/hooks/useRandomSampleId'
 import { useRecord } from '@/hooks/useRecord'
 import { useSearchEmbeddings } from '@/hooks/useSearchEmbeddings'
 import { ViewMode } from '@/types/settings'
-import { DicesIcon, SearchIcon } from 'lucide-react'
+import { DicesIcon, Loader2Icon, SearchIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { GalleryItem } from './gallery/gallery-item'
 import { SearchTypeControl } from './search-type-control'
@@ -264,7 +264,8 @@ const RandomSearch = ({
   size?: 'sm' | 'icon'
 }) => {
   const [seed, setSeed] = useState(Date.now())
-  const { data } = useRandomSampleId(seed)
+  const { data, isPending } = useRandomSampleId(seed)
+  const isLoading = !data && isPending
 
   const onClick = () => {
     if (data) {
@@ -279,12 +280,17 @@ const RandomSearch = ({
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
+              disabled={isLoading}
               variant="outline"
               size="icon"
               className="shrink-0"
               onClick={onClick}
             >
-              <DicesIcon className="w-4 h-4" />
+              {isLoading ? (
+                <Loader2Icon className="w-4 h-4 animate-spin" />
+              ) : (
+                <DicesIcon className="w-4 h-4" />
+              )}
             </Button>
           </TooltipTrigger>
           <TooltipContent side="bottom">
@@ -296,9 +302,19 @@ const RandomSearch = ({
   }
 
   return (
-    <Button variant="outline" size="sm" className="shrink-0" onClick={onClick}>
+    <Button
+      disabled={isLoading}
+      variant="outline"
+      size="sm"
+      className="shrink-0"
+      onClick={onClick}
+    >
       Try a random record
-      <DicesIcon className="w-4 h-4 ml-2" />
+      {isLoading ? (
+        <Loader2Icon className="w-4 h-4 ml-2 animate-spin" />
+      ) : (
+        <DicesIcon className="w-4 h-4 ml-2" />
+      )}
     </Button>
   )
 }
