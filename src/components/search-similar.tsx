@@ -19,9 +19,16 @@ import { useSearchType } from '@/hooks/search-params/useSearchType'
 import { useRandomSampleId } from '@/hooks/useRandomSampleId'
 import { useRecord } from '@/hooks/useRecord'
 import { useSearchEmbeddings } from '@/hooks/useSearchEmbeddings'
+import { cn } from '@/lib/utils'
 import { ViewMode } from '@/types/settings'
-import { DicesIcon, Loader2Icon, SearchIcon } from 'lucide-react'
+import {
+  AlertCircleIcon,
+  DicesIcon,
+  Loader2Icon,
+  SearchIcon,
+} from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { Error } from './error'
 import { GalleryItem } from './gallery/gallery-item'
 import { SearchTypeControl } from './search-type-control'
 import { Button } from './ui/button'
@@ -41,7 +48,7 @@ export const SearchSimilar = () => {
   const { searchFrom, setSearchFrom, searchTo, setSearchTo } = useSearchType()
   const [viewMode, setViewMode] = useState<ViewMode>('gallery')
   const { pageSize, setPageSize } = usePageSize()
-  const { data, isPending } = useSearchEmbeddings({
+  const { data, isPending, error } = useSearchEmbeddings({
     sampleId,
     searchFrom,
     searchTo,
@@ -136,11 +143,15 @@ export const SearchSimilar = () => {
                 )}
               </>
             ) : sampleId ? (
-              <Intro
-                title="No similar records found"
-                description="No matches were found for the current search, please try a different query record."
-                onSubmit={(sampleId) => setSampleId(sampleId)}
-              />
+              error ? (
+                <Error message="Could not search similar records, please try again later." />
+              ) : (
+                <Intro
+                  title="No similar records found"
+                  description="No matches were found for the current search, please try a different query record."
+                  onSubmit={(sampleId) => setSampleId(sampleId)}
+                />
+              )
             ) : (
               <Intro
                 title="Get started"
@@ -251,7 +262,9 @@ const Intro = ({
         </Button>
       </div>
       <p className="text-sm text-muted-foreground">or</p>
-      <RandomSearch onClick={onSubmit} />
+      <div>
+        <RandomSearch onClick={onSubmit} />
+      </div>
     </div>
   )
 }
@@ -264,8 +277,12 @@ const RandomSearch = ({
   size?: 'sm' | 'icon'
 }) => {
   const [seed, setSeed] = useState(Date.now())
-  const { data, isPending } = useRandomSampleId(seed)
+  const { data, isPending, error } = useRandomSampleId(seed)
   const isLoading = !data && isPending
+
+  const iconClassName = cn('w-4 h-4', {
+    'ml-2': size === 'sm',
+  })
 
   const onClick = () => {
     if (data) {
@@ -274,7 +291,13 @@ const RandomSearch = ({
     setSeed(Date.now())
   }
 
-  if (size === 'icon') {
+  const tooltip = error
+    ? 'Could not load random records, please try again later.'
+    : size === 'icon'
+      ? 'Try a random record'
+      : undefined
+
+  if (tooltip) {
     return (
       <TooltipProvider delayDuration={0}>
         <Tooltip>
@@ -282,19 +305,24 @@ const RandomSearch = ({
             <Button
               disabled={isLoading}
               variant="outline"
-              size="icon"
+              size={size}
               className="shrink-0"
               onClick={onClick}
             >
-              {isLoading ? (
-                <Loader2Icon className="w-4 h-4 animate-spin" />
+              {size === 'sm' ? <span>Try a random record</span> : null}
+              {error ? (
+                <AlertCircleIcon
+                  className={cn(iconClassName, 'text-destructive')}
+                />
+              ) : isLoading ? (
+                <Loader2Icon className={cn(iconClassName, 'animate-spin')} />
               ) : (
-                <DicesIcon className="w-4 h-4" />
+                <DicesIcon className={iconClassName} />
               )}
             </Button>
           </TooltipTrigger>
           <TooltipContent side="bottom">
-            <p>Try a random record</p>
+            <p>{tooltip}</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
@@ -305,15 +333,17 @@ const RandomSearch = ({
     <Button
       disabled={isLoading}
       variant="outline"
-      size="sm"
+      size={size}
       className="shrink-0"
       onClick={onClick}
     >
-      Try a random record
-      {isLoading ? (
-        <Loader2Icon className="w-4 h-4 ml-2 animate-spin" />
+      {size === 'sm' ? <span>Try a random record</span> : null}
+      {error ? (
+        <AlertCircleIcon className={cn(iconClassName, 'text-destructive')} />
+      ) : isLoading ? (
+        <Loader2Icon className={cn(iconClassName, 'animate-spin')} />
       ) : (
-        <DicesIcon className="w-4 h-4 ml-2" />
+        <DicesIcon className={iconClassName} />
       )}
     </Button>
   )
