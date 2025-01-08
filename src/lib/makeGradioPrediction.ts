@@ -2,7 +2,7 @@
 
 import { readStream } from './readStream'
 
-const API_URL = 'https://spathi.cmpt.sfu.ca/bioscan-browser/gradio_api'
+const API_URL = '/gradio'
 
 export const makeGradioPrediction = async ({
   data = [],
