@@ -1,12 +1,11 @@
 import { filtersToQuery } from '@/lib/filtersToQuery'
 import { getFetchUrl } from '@/lib/getFetchUrl'
+import { makeGradioPrediction } from '@/lib/makeGradioPrediction'
 import { Doc } from '@/types/response-data'
 import { SearchType, Sort } from '@/types/settings'
-import { Client } from '@gradio/client'
 import { useQuery } from '@tanstack/react-query'
 
-const GRADIO_APP_REF = 'bioscan-ml/browser-backend'
-const GRADIO_ENDPOINT = '/searchEmbeddings'
+const GRADIO_METHOD = 'searchEmbeddings'
 const QUERY_KEY = 'search-embeddings'
 
 export const useSearchEmbeddings = (params: {
@@ -29,16 +28,12 @@ export const useSearchEmbeddings = (params: {
         throw Error()
       }
 
-      const client = await Client.connect(GRADIO_APP_REF)
-      const result = await client.predict(GRADIO_ENDPOINT, {
-        id: params.sampleId,
-        key_type: params.searchFrom,
-        query_type: params.searchTo,
-        num_results: params.pageSize + 1,
+      // TODO: In practice, this call will never complete. When this issue is resolved, we can start parse the response.
+      const predictionRes = await makeGradioPrediction({
+        method: GRADIO_METHOD,
       })
-      const sampleIds: string[] = JSON.parse(
-        (result.data as string[])[0].replace(/'/g, '"'),
-      )
+
+      const sampleIds: string[] = []
 
       if (!sampleIds?.length) {
         throw Error()
