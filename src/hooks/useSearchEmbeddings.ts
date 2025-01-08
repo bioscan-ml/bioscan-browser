@@ -29,7 +29,7 @@ export const useSearchEmbeddings = (params: {
       }
 
       // TODO: In practice, this call will never complete. When this issue is resolved, we can start parse the response.
-      const predictionRes = await makeGradioPrediction({
+      await makeGradioPrediction({
         method: GRADIO_METHOD,
       })
 
