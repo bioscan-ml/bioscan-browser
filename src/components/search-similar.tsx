@@ -48,7 +48,7 @@ export const SearchSimilar = () => {
   const { searchFrom, setSearchFrom, searchTo, setSearchTo } = useSearchType()
   const [viewMode, setViewMode] = useState<ViewMode>('gallery')
   const { pageSize, setPageSize } = usePageSize()
-  const { data, isPending, error } = useSearchEmbeddings({
+  const { data, isPending, error, refetch } = useSearchEmbeddings({
     queryId,
     searchFrom,
     searchTo,
@@ -144,7 +144,10 @@ export const SearchSimilar = () => {
               </>
             ) : queryId ? (
               error ? (
-                <Error message="Could not search similar records, please try again later." />
+                <Error
+                  message="Could not search similar records, please try again later."
+                  retry={refetch}
+                />
               ) : (
                 <Intro
                   title="No similar records found"
