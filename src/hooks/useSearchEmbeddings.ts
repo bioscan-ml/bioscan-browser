@@ -9,7 +9,7 @@ const GRADIO_METHOD = 'searchEmbeddings'
 const QUERY_KEY = 'search-embeddings'
 
 export const useSearchEmbeddings = (params: {
-  sampleId: string | null
+  queryId: string | null
   searchFrom: SearchType
   searchTo: SearchType
   pageSize: number
@@ -24,7 +24,7 @@ export const useSearchEmbeddings = (params: {
   }>({
     queryKey: [QUERY_KEY, params],
     queryFn: async () => {
-      if (!params.sampleId) {
+      if (!params.queryId) {
         throw Error()
       }
 
@@ -32,7 +32,7 @@ export const useSearchEmbeddings = (params: {
       const predictionRes = await makeGradioPrediction({
         method: GRADIO_METHOD,
         data: [
-          params.sampleId,
+          params.queryId,
           params.searchFrom,
           params.searchTo,
           'FlatIP(default)',
@@ -40,11 +40,11 @@ export const useSearchEmbeddings = (params: {
         ],
       })
 
-      const sampleIds: string[] = JSON.parse(
+      const recordIds: string[] = JSON.parse(
         predictionRes.split('data: ')[1].trim().slice(2, -2).replace(/'/g, '"'),
       )
 
-      if (!sampleIds?.length) {
+      if (!recordIds?.length) {
         throw Error()
       }
 
@@ -52,7 +52,7 @@ export const useSearchEmbeddings = (params: {
       const q = filtersToQuery([
         {
           type: 'id',
-          value: sampleIds.filter((sampleId) => sampleId !== params.sampleId), // Filter out query record
+          value: recordIds.filter((recordId) => recordId !== params.queryId), // Filter out query record
         },
       ])
       const recordsRes = await fetch(
@@ -68,7 +68,7 @@ export const useSearchEmbeddings = (params: {
 
       const docs = data.response.docs.sort(
         (doc1: Doc, doc2: Doc) =>
-          sampleIds.indexOf(doc1.sampleid) - sampleIds.indexOf(doc2.sampleid),
+          recordIds.indexOf(doc1.id) - recordIds.indexOf(doc2.id),
       )
 
       return {
@@ -78,7 +78,7 @@ export const useSearchEmbeddings = (params: {
         },
       }
     },
-    enabled: !!params.sampleId,
+    enabled: !!params.queryId,
     retry: false,
   })
 

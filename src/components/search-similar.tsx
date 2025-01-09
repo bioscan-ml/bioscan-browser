@@ -14,7 +14,7 @@ import {
 import { ViewModeControl } from '@/components/view-mode-control'
 import { useActiveDoc } from '@/hooks/search-params/useActiveDoc'
 import { usePageSize } from '@/hooks/search-params/usePageSize'
-import { useSampleId } from '@/hooks/search-params/useSampleId'
+import { useQueryId } from '@/hooks/search-params/useQueryId'
 import { useSearchType } from '@/hooks/search-params/useSearchType'
 import { useRandomSampleId } from '@/hooks/useRandomSampleId'
 import { useRecord } from '@/hooks/useRecord'
@@ -44,12 +44,12 @@ const PAGE_SIZE_OPTIONS = [10, 50, 100]
 
 export const SearchSimilar = () => {
   const [searchString, setSearchString] = useState<string>('')
-  const { sampleId, setSampleId } = useSampleId()
+  const { queryId, setQueryId } = useQueryId()
   const { searchFrom, setSearchFrom, searchTo, setSearchTo } = useSearchType()
   const [viewMode, setViewMode] = useState<ViewMode>('gallery')
   const { pageSize, setPageSize } = usePageSize()
   const { data, isPending, error } = useSearchEmbeddings({
-    sampleId,
+    queryId,
     searchFrom,
     searchTo,
     pageSize,
@@ -57,8 +57,8 @@ export const SearchSimilar = () => {
   const { activeDoc, setActiveDoc } = useActiveDoc(data?.docs)
 
   useEffect(() => {
-    setSearchString(sampleId ?? '')
-  }, [sampleId])
+    setSearchString(queryId ?? '')
+  }, [queryId])
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -71,10 +71,10 @@ export const SearchSimilar = () => {
           <Sidebar avoidPaginationBar={false}>
             <div className="space-y-8">
               <SidebarSection label="Query record">
-                {sampleId ? <RecordDetails sampleId={sampleId} /> : null}
+                {queryId ? <RecordDetails queryId={queryId} /> : null}
                 <div className="flex gap-2">
                   <Input
-                    placeholder="Specify a sample ID"
+                    placeholder="Specify a record ID"
                     value={searchString}
                     onChange={(e) => setSearchString(e.currentTarget.value)}
                   />
@@ -82,11 +82,11 @@ export const SearchSimilar = () => {
                     variant="outline"
                     size="icon"
                     className="shrink-0"
-                    onClick={() => setSampleId(searchString)}
+                    onClick={() => setQueryId(searchString)}
                   >
                     <SearchIcon className="w-4 h-4" />
                   </Button>
-                  <RandomSearch onClick={setSampleId} size="icon" />
+                  <RandomSearch onClick={setQueryId} size="icon" />
                 </div>
               </SidebarSection>
               <div className="flex gap-8">
@@ -119,7 +119,7 @@ export const SearchSimilar = () => {
             </div>
           </Sidebar>
           <div className="mb-16 grow overflow-hidden m-[-4px] p-[4px]">
-            {isPending && sampleId ? (
+            {isPending && queryId ? (
               <Loader />
             ) : data?.docs.length ? (
               <>
@@ -138,25 +138,25 @@ export const SearchSimilar = () => {
                   <Gallery
                     docs={data?.docs}
                     onItemClick={(doc) => setActiveDoc(doc)}
-                    onSearchClick={(doc) => setSampleId(doc.sampleid)}
+                    onSearchClick={(doc) => setQueryId(doc.id)}
                   />
                 )}
               </>
-            ) : sampleId ? (
+            ) : queryId ? (
               error ? (
                 <Error message="Could not search similar records, please try again later." />
               ) : (
                 <Intro
                   title="No similar records found"
                   description="No matches were found for the current search, please try a different query record."
-                  onSubmit={(sampleId) => setSampleId(sampleId)}
+                  onSubmit={(queryId) => setQueryId(queryId)}
                 />
               )
             ) : (
               <Intro
                 title="Get started"
                 description="To search similar records, first specify a query record."
-                onSubmit={(sampleId) => setSampleId(sampleId)}
+                onSubmit={(queryId) => setQueryId(queryId)}
               />
             )}
           </div>
@@ -170,15 +170,15 @@ export const SearchSimilar = () => {
             setActiveDoc(undefined)
           }
         }}
-        showClosestMatches={activeDoc?.sampleid !== sampleId}
+        showClosestMatches={activeDoc?.id !== queryId}
       />
     </>
   )
 }
 
-const RecordDetails = ({ sampleId }: { sampleId: string }) => {
+const RecordDetails = ({ queryId }: { queryId: string }) => {
   const [open, setOpen] = useState(false)
-  const { data } = useRecord(sampleId, 'sampleid')
+  const { data } = useRecord(queryId, 'id')
 
   if (!data) {
     return null
@@ -236,7 +236,7 @@ const Intro = ({
 }: {
   title: string
   description: string
-  onSubmit: (sampleId: string) => void
+  onSubmit: (queryId: string) => void
 }) => {
   const [searchString, setSearchString] = useState<string>('')
 
@@ -248,7 +248,7 @@ const Intro = ({
       </div>
       <div className="w-full max-w-64 flex gap-2 mx-auto">
         <Input
-          placeholder="Specify a sample ID"
+          placeholder="Specify a record ID"
           value={searchString}
           onChange={(e) => setSearchString(e.currentTarget.value)}
         />
@@ -273,7 +273,7 @@ const RandomSearch = ({
   onClick: _onClick,
   size = 'sm',
 }: {
-  onClick: (sampleId: string) => void
+  onClick: (queryId: string) => void
   size?: 'sm' | 'icon'
 }) => {
   const [seed, setSeed] = useState(Date.now())

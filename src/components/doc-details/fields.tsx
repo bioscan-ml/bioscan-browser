@@ -61,7 +61,7 @@ const ClosestMatchesField = ({ doc }: { doc: Doc }) => (
     </span>
     <Link
       className={cn(buttonVariants({ variant: 'outline' }), 'w-min')}
-      to={{ pathname: '/search-similar', search: `sampleid=${doc.sampleid}` }}
+      to={{ pathname: '/search-similar', search: `queryid=${doc.id}` }}
     >
       Search
       <SearchIcon className="w-4 h-4 ml-2" />
