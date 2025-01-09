@@ -29,19 +29,20 @@ export const useSearchEmbeddings = (params: {
       }
 
       // TODO: In practice, this call will never complete. When this issue is resolved, we can start parse the response.
-      await makeGradioPrediction({
+      const predictionRes = await makeGradioPrediction({
         method: GRADIO_METHOD,
         data: [
-          {
-            id: params.sampleId,
-            key_type: params.searchFrom,
-            query_type: params.searchTo,
-            num_results: params.pageSize + 1,
-          },
+          params.sampleId,
+          params.searchFrom,
+          params.searchTo,
+          'FlatIP(default)',
+          params.pageSize + 1,
         ],
       })
 
-      const sampleIds: string[] = []
+      const sampleIds: string[] = JSON.parse(
+        predictionRes.split('data: ')[1].trim().slice(2, -2).replace(/'/g, '"'),
+      )
 
       if (!sampleIds?.length) {
         throw Error()
@@ -50,7 +51,7 @@ export const useSearchEmbeddings = (params: {
       // Use sample ids to get records
       const q = filtersToQuery([
         {
-          type: 'sampleid',
+          type: 'id',
           value: sampleIds.filter((sampleId) => sampleId !== params.sampleId), // Filter out query record
         },
       ])

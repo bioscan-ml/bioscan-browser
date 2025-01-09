@@ -8,7 +8,7 @@ export const makeGradioPrediction = async ({
   data = [],
   method,
 }: {
-  data?: any[]
+  data?: (string | number)[]
   method: 'getRandID' | 'searchEmbeddings'
 }): Promise<string> => {
   // Get event id
