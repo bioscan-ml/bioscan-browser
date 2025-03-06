@@ -49,7 +49,7 @@ export const DEFAULT_PAGINATION = { page: 0, pageSize: 100 }
 export const PAGE_SIZE_OPTIONS = [50, 100, 250, 500, 1000]
 
 export const DEFAULT_SORT: Sort = {
-  key: 'id',
+  key: `random_${new Date().getTime()}`,
   order: 'asc',
 }
 
