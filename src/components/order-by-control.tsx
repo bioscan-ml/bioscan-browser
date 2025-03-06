@@ -31,9 +31,9 @@ export const OrderByControl = ({
         onValueChange={(value) => {
           if (value === VALUE_RANDOM) {
             const seed = new Date().getTime()
-            setSort({ ...sort, key: `${VALUE_RANDOM}_${seed}` })
+            setSort({ key: `${VALUE_RANDOM}_${seed}` })
           } else {
-            setSort({ ...sort, key: value })
+            setSort({ key: value, order: sort.order ?? 'asc' })
           }
         }}
       >
@@ -58,7 +58,7 @@ export const OrderByControl = ({
           variant="outline"
           onClick={() => {
             const seed = new Date().getTime()
-            setSort({ ...sort, key: `${VALUE_RANDOM}_${seed}` })
+            setSort({ key: `${VALUE_RANDOM}_${seed}` })
           }}
         >
           <DicesIcon className="w-4 h-4" />
