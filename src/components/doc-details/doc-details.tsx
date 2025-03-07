@@ -13,6 +13,7 @@ import {
   DialogTitle,
 } from '../ui/dialog'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
+import { BookmarkControl } from './bookmark-control'
 import { Fields } from './fields'
 import { Images } from './images'
 
@@ -49,11 +50,12 @@ export const DocDetailsDialogContent = ({
   return (
     <DialogContent className="h-full max-w-screen-sm flex flex-col gap-8 overflow-auto sm:h-[calc(100%-4rem)]">
       <DialogHeader>
-        <div className="flex gap-4">
+        <div className="flex items-center gap-4">
           <DialogTitle>{taxon.label}</DialogTitle>
           <Badge variant="outline" className="uppercase">
             {taxon.rankLabel}
           </Badge>
+          <BookmarkControl doc={doc} />
         </div>
         <DialogDescription>
           {parents.map((parent, index) => (
