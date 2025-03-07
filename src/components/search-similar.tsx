@@ -170,7 +170,6 @@ export const SearchSimilar = () => {
             setActiveDoc(undefined)
           }
         }}
-        showClosestMatches={activeDoc?.sampleid !== sampleId}
       />
     </>
   )
@@ -187,12 +186,7 @@ const RecordDetails = ({ sampleId }: { sampleId: string }) => {
   return (
     <>
       <GalleryItem doc={data} onClick={() => setOpen(true)} />
-      <DocDetailsDialog
-        doc={data}
-        open={open}
-        onOpenChange={setOpen}
-        showClosestMatches={false}
-      />
+      <DocDetailsDialog doc={data} open={open} onOpenChange={setOpen} />
     </>
   )
 }
