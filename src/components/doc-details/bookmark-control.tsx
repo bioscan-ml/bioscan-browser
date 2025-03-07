@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { useBookmarks } from '@/lib/bookmarks/useBookmarks'
 import { Doc } from '@/types/response-data'
 import { BookmarkIcon } from 'lucide-react'
 import { useState } from 'react'
@@ -17,8 +18,8 @@ interface BookmarkControlProps {
 }
 
 export const BookmarkControl = ({ doc }: BookmarkControlProps) => {
-  const [comment, setComment] = useState<string>()
-  const [isBookmarked, setIsBookmarked] = useState(false)
+  const { bookmarks, addBookmark, removeBookmark } = useBookmarks()
+  const bookmark = bookmarks.find((b) => b.recordId === doc.id)
   const [isNew, setIsNew] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
 
@@ -41,43 +42,46 @@ export const BookmarkControl = ({ doc }: BookmarkControlProps) => {
                 size="icon"
                 variant="ghost"
                 onClick={() => {
-                  if (!isBookmarked) {
-                    setIsBookmarked(true)
+                  if (!bookmark) {
+                    addBookmark({ recordId: doc.id })
                     setIsNew(true)
                   }
                 }}
               >
                 <BookmarkIcon
                   className="w-4 h-4"
-                  color={isBookmarked ? colors.emerald[500] : colors.gray[800]}
-                  fill={isBookmarked ? colors.emerald[500] : colors.transparent}
+                  color={bookmark ? colors.emerald[500] : colors.gray[800]}
+                  fill={bookmark ? colors.emerald[500] : colors.transparent}
                 />
               </Button>
             </PopoverTrigger>
           </TooltipTrigger>
           <TooltipContent side="bottom">
-            <p>{isBookmarked ? 'Edit bookmark' : 'Add bookmark'}</p>
+            <p>{bookmark ? 'Edit bookmark' : 'Add bookmark'}</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
       <PopoverContent>
-        <BookmarkForm
-          defaultComment={comment}
-          id={doc.id}
-          isNew={isNew}
-          onAdd={(comment) => {
-            setIsBookmarked(true)
-            setComment(comment)
-            setIsOpen(false)
-            setIsNew(false)
-          }}
-          onRemove={() => {
-            setIsBookmarked(false)
-            setComment(undefined)
-            setIsOpen(false)
-            setIsNew(false)
-          }}
-        />
+        {bookmark ? (
+          <BookmarkForm
+            defaultComment={bookmark.comment}
+            id={doc.id}
+            isNew={isNew}
+            onAdd={(comment) => {
+              addBookmark({
+                recordId: doc.id,
+                comment,
+              })
+              setIsOpen(false)
+              setIsNew(false)
+            }}
+            onRemove={() => {
+              removeBookmark(doc.id)
+              setIsOpen(false)
+              setIsNew(false)
+            }}
+          />
+        ) : null}
       </PopoverContent>
     </Popover>
   )
