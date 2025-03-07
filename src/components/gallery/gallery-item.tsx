@@ -15,7 +15,7 @@ export const GalleryItem = ({ children, doc, onClick }: GalleryItemProps) => {
 
   return (
     <div className="rounded-md border border-input bg-card overflow-hidden relative">
-      <div className="cursor-pointer hover:bg-muted" onClick={onClick}>
+      <div className="h-full cursor-pointer hover:bg-muted" onClick={onClick}>
         <img
           alt={doc.id}
           className="w-full aspect-[341/256]"
