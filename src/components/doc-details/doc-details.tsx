@@ -1,19 +1,19 @@
-import { getTaxon } from '@/lib/getTaxon'
-import { Doc } from '@/types/response-data'
-import { ChevronRight } from 'lucide-react'
-import { CodeBlock } from '../code-block'
-import { Map } from '../map'
-import { TaxonDetailsArticle } from '../taxon-details-article'
-import { Badge } from '../ui/badge'
+import { Badge } from '@/components/ui/badge'
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '../ui/dialog'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
-import { BookmarkControl } from './bookmark-control'
+} from '@/components/ui/dialog'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { getTaxon } from '@/lib/getTaxon'
+import { Doc } from '@/types/response-data'
+import { ChevronRight } from 'lucide-react'
+import { BookmarkControl } from '../bookmark-control'
+import { CodeBlock } from '../code-block'
+import { Map } from '../map'
+import { TaxonDetailsArticle } from '../taxon-details-article'
 import { Fields } from './fields'
 import { Images } from './images'
 

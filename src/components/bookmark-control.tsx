@@ -1,23 +1,31 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { useBookmarks } from '@/lib/bookmarks/useBookmarks'
-import { Doc } from '@/types/response-data'
-import { BookmarkIcon } from 'lucide-react'
-import { useState } from 'react'
-import colors from 'tailwindcss/colors'
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '../ui/tooltip'
+} from '@/components/ui/tooltip'
+import { useBookmarks } from '@/lib/bookmarks/useBookmarks'
+import { Doc } from '@/types/response-data'
+import { BookmarkIcon } from 'lucide-react'
+import { useState } from 'react'
+import colors from 'tailwindcss/colors'
 
 interface BookmarkControlProps {
   doc: Doc
+  variant?: 'ghost' | 'outline'
 }
 
-export const BookmarkControl = ({ doc }: BookmarkControlProps) => {
+export const BookmarkControl = ({
+  doc,
+  variant = 'ghost',
+}: BookmarkControlProps) => {
   const { bookmarks, addBookmark, removeBookmark } = useBookmarks()
   const bookmark = bookmarks.find((b) => b.recordId === doc.id)
   const [isNew, setIsNew] = useState(false)
@@ -39,14 +47,14 @@ export const BookmarkControl = ({ doc }: BookmarkControlProps) => {
           <TooltipTrigger asChild>
             <PopoverTrigger asChild>
               <Button
-                size="icon"
-                variant="ghost"
                 onClick={() => {
                   if (!bookmark) {
                     addBookmark({ recordId: doc.id })
                     setIsNew(true)
                   }
                 }}
+                size="icon"
+                variant={variant}
               >
                 <BookmarkIcon
                   className="w-4 h-4"
