@@ -11,6 +11,7 @@ const MENU_ITEMS = [
   { to: '/taxonomy-viewer', label: 'Taxonomy viewer' },
   { to: '/asset-querier', label: 'Asset querier' },
   { to: '/search-similar', label: 'Search similar' },
+  { to: '/my-bookmarks', label: 'My bookmarks' },
   { to: '/about', label: 'About' },
 ]
 

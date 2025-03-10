@@ -10,8 +10,10 @@ import {
 } from 'react-router-dom'
 import { SearchSimilar } from './components/search-similar'
 import { TopBar } from './components/top-bar'
+import { BookmarksContextProvider } from './lib/bookmarks/provider'
 import { About } from './pages/about'
 import { AssetQuerier } from './pages/asset-querier'
+import { MyBookmarks } from './pages/my-bookmarks'
 import { StyleGuide } from './pages/style-guide'
 import { TaxonomyViewer } from './pages/taxonomy-viewer'
 
@@ -22,6 +24,7 @@ const ROUTES = [
   { path: '/taxonomy-viewer', Component: TaxonomyViewer },
   { path: '/asset-querier', Component: AssetQuerier },
   { path: '/search-similar', Component: SearchSimilar },
+  { path: '/my-bookmarks', Component: MyBookmarks },
   { path: '/about', Component: About },
   { path: '/style-guide', Component: StyleGuide },
   { path: '*', element: <Navigate to="/" replace /> },
@@ -30,18 +33,20 @@ const ROUTES = [
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <TopBar />
-        <main>
-          <Routes>
-            {ROUTES.map((route) => (
-              <Route key={route.path} {...route} />
-            ))}
-          </Routes>
-        </main>
-        <Toaster />
-        <ScrollToTop />
-      </BrowserRouter>
+      <BookmarksContextProvider>
+        <BrowserRouter>
+          <TopBar />
+          <main>
+            <Routes>
+              {ROUTES.map((route) => (
+                <Route key={route.path} {...route} />
+              ))}
+            </Routes>
+          </main>
+          <Toaster />
+          <ScrollToTop />
+        </BrowserRouter>
+      </BookmarksContextProvider>
     </QueryClientProvider>
   )
 }
