@@ -4,11 +4,19 @@ import { BookmarkGalleryItem } from '@/components/gallery/bookmark-gallery-item'
 import { Loader } from '@/components/loader'
 import { NoRecordsFound } from '@/components/no-records-found'
 import { PageContent } from '@/components/page-content'
+import { Button } from '@/components/ui/button'
 import { useActiveDoc } from '@/hooks/search-params/useActiveDoc'
 import { useRecords } from '@/hooks/useRecords'
 import { useBookmarks } from '@/lib/bookmarks/useBookmarks'
 import { DEFAULT_PAGINATION } from '@/lib/constants'
 import { filtersToQuery } from '@/lib/filtersToQuery'
+import { InfoIcon } from 'lucide-react'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 
 export const MyBookmarks = () => {
   const { bookmarks } = useBookmarks()
@@ -41,6 +49,26 @@ export const MyBookmarks = () => {
                   <h2 className="text-lg font-semibold leading-none tracking-tight">
                     My bookmarks
                   </h2>
+                  <TooltipProvider delayDuration={0}>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button variant="ghost" size="icon">
+                          <InfoIcon className="w-4 h-4" />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent
+                        className="w-72 text-center"
+                        side="bottom"
+                      >
+                        <p>
+                          If you see an interesting record, you can bookmark it
+                          with a comment and find it again later. Bookmarks are
+                          stored in your browser and will disappear if you clear
+                          your browser data.
+                        </p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </div>
 
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
