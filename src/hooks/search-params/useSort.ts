@@ -1,15 +1,21 @@
 import { Sort } from '@/types/settings'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useSingleSearchParamsState } from './useSearchParamsState'
 
 const SEARCH_PARAM_KEY = 'sort'
 const SEARCH_PARAM_KEY_DELIMITER = ' '
 
-export const useSort = (defaultSort: Sort) => {
-  const [sortParams, setSortParams] = useSingleSearchParamsState(
-    SEARCH_PARAM_KEY,
-    `${defaultSort.key}${SEARCH_PARAM_KEY_DELIMITER}${defaultSort.order}`,
-  )
+export const useSort = () => {
+  const [sortParams, setSortParams] =
+    useSingleSearchParamsState(SEARCH_PARAM_KEY)
+
+  const defaultSort = useMemo(() => {
+    const seed = new Date().getTime()
+
+    return {
+      key: `random_${seed}`,
+    }
+  }, [])
 
   const sort = useMemo(() => {
     if (!sortParams) {
@@ -24,10 +30,23 @@ export const useSort = (defaultSort: Sort) => {
     } as Sort
   }, [defaultSort, sortParams])
 
+  const setSort = (sort: Sort) => {
+    if (sort.order) {
+      setSortParams(`${sort.key}${SEARCH_PARAM_KEY_DELIMITER}${sort.order}`)
+    } else {
+      setSortParams(`${sort.key}`)
+    }
+  }
+
+  useEffect(() => {
+    if (!sortParams) {
+      setSort(defaultSort)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortParams])
+
   return {
     sort,
-    setSort: (sort: Sort) => {
-      setSortParams(`${sort.key}${SEARCH_PARAM_KEY_DELIMITER}${sort.order}`)
-    },
+    setSort,
   }
 }

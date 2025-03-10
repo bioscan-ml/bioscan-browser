@@ -28,6 +28,10 @@ export const useRecords = (
     queryFn: async () => {
       const res = await fetch(getFetchUrl(params))
 
+      if (!res.ok) {
+        throw Error()
+      }
+
       return await res.json()
     },
     retry: false,
@@ -37,7 +41,7 @@ export const useRecords = (
     isLoading,
     isPending,
     error,
-    data: data
+    data: data?.response
       ? {
           ...data.response,
           facetCounts: data.facet_counts,

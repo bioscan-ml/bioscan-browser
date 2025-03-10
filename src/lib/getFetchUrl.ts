@@ -10,7 +10,11 @@ export const getFetchUrl = (params: {
   let fetchUrl = `${SOLR_BASE_PATH}?rows=${params.pageSize}&start=${params.pageSize * params.page}`
 
   if (params.sort) {
-    fetchUrl += `&sort=${params.sort.key} ${params.sort.order}`
+    if (params.sort.order) {
+      fetchUrl += `&sort=${params.sort.key} ${params.sort.order}`
+    } else {
+      fetchUrl += `&sort=${params.sort.key} asc`
+    }
   }
 
   fetchUrl += `&q=${params.q ?? '*:*'}`
