@@ -49,7 +49,10 @@ export const BookmarkControl = ({
               <Button
                 onClick={() => {
                   if (!bookmark) {
-                    addBookmark({ recordId: doc.id })
+                    addBookmark({
+                      recordId: doc.id,
+                      timestamp: new Date().toISOString(),
+                    })
                     setIsNew(true)
                   }
                 }}
@@ -79,6 +82,7 @@ export const BookmarkControl = ({
               addBookmark({
                 recordId: doc.id,
                 comment,
+                timestamp: bookmark.timestamp ?? new Date().toISOString(),
               })
               setIsOpen(false)
               setIsNew(false)

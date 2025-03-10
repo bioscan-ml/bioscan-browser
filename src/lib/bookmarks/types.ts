@@ -1,6 +1,7 @@
 export interface Bookmark {
   recordId: string
   comment?: string
+  timestamp?: string
 }
 
 export interface BookmarksContextValues {

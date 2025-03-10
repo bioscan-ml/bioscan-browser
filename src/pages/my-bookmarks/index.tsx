@@ -17,6 +17,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { useMemo } from 'react'
 
 export const MyBookmarks = () => {
   const { bookmarks } = useBookmarks()
@@ -26,13 +27,34 @@ export const MyBookmarks = () => {
       q: filtersToQuery([
         {
           type: 'id',
-          value: bookmarks.map((bookmark) => bookmark.recordId),
+          value: bookmarks.map((bookmark) => bookmark.recordId).sort(),
         },
       ]),
     },
     bookmarks.length > 0,
   )
-  const { activeDoc, setActiveDoc } = useActiveDoc(data?.docs)
+  const docs = useMemo(() => {
+    if (!data?.docs) {
+      return undefined
+    }
+
+    return data.docs.sort((doc1, doc2) => {
+      const timestamp1 = bookmarks.find(
+        (bookmark) => bookmark.recordId === doc1.id,
+      )?.timestamp
+      const timestamp2 = bookmarks.find(
+        (bookmark) => bookmark.recordId === doc2.id,
+      )?.timestamp
+
+      if (!timestamp1 || !timestamp2) {
+        return 0
+      }
+
+      return new Date(timestamp1).getTime() - new Date(timestamp2).getTime()
+    })
+  }, [data, bookmarks])
+
+  const { activeDoc, setActiveDoc } = useActiveDoc(docs)
 
   return (
     <>
@@ -72,8 +94,9 @@ export const MyBookmarks = () => {
                 </div>
 
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-                  {data?.docs.map((doc) => (
+                  {docs?.map((doc) => (
                     <BookmarkGalleryItem
+                      key={doc.id}
                       doc={doc}
                       onClick={() => setActiveDoc(doc)}
                     />
