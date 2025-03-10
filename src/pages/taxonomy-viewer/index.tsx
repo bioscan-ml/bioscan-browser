@@ -18,12 +18,7 @@ import { useSort } from '@/hooks/search-params/useSort'
 import { useTaxon } from '@/hooks/search-params/useTaxon'
 import { useRecords } from '@/hooks/useRecords'
 import { useTaxonomyTree } from '@/hooks/useTaxonomyTree'
-import {
-  DEFAULT_PAGINATION,
-  DEFAULT_SORT,
-  FIELDS,
-  ROOT_NODE_ID,
-} from '@/lib/constants'
+import { DEFAULT_PAGINATION, FIELDS, ROOT_NODE_ID } from '@/lib/constants'
 import { findPathById } from '@/lib/findPathById'
 import { ViewMode } from '@/types/settings'
 import { useMemo, useState } from 'react'
@@ -47,7 +42,7 @@ export const TaxonomyViewer = () => {
   // Records
   const { page, pageSize, setPage, setPageSize } =
     usePagination(DEFAULT_PAGINATION)
-  const { sort, setSort } = useSort(DEFAULT_SORT)
+  const { sort, setSort } = useSort()
   const selectedNode = useSelectedNode(taxonomyTree, selectedNodeId)
   const q = selectedNode
     ? `${selectedNode.metadata.taxon}:"${selectedNode.metadata.label}"`
@@ -146,7 +141,7 @@ export const TaxonomyViewer = () => {
           </div>
         </div>
       </PageContent>
-      {data && (
+      {data?.docs ? (
         <PaginationBar
           data={data}
           page={page}
@@ -154,7 +149,7 @@ export const TaxonomyViewer = () => {
           setPage={setPage}
           setPageSize={setPageSize}
         />
-      )}
+      ) : null}
       <DocDetailsDialog
         doc={activeDoc}
         open={!!activeDoc}

@@ -16,7 +16,7 @@ import { useSort } from '@/hooks/search-params/useSort'
 import { useFacetCounts } from '@/hooks/useFacetCounts'
 import { useFilters } from '@/hooks/useFilters'
 import { useRecords } from '@/hooks/useRecords'
-import { DEFAULT_PAGINATION, DEFAULT_SORT, FIELDS } from '@/lib/constants'
+import { DEFAULT_PAGINATION, FIELDS } from '@/lib/constants'
 import { ViewMode } from '@/types/settings'
 import { useState } from 'react'
 
@@ -24,7 +24,7 @@ export const AssetQuerier = () => {
   const [viewMode, setViewMode] = useState<ViewMode>('gallery')
   const { page, pageSize, setPage, setPageSize } =
     usePagination(DEFAULT_PAGINATION)
-  const { sort, setSort } = useSort(DEFAULT_SORT)
+  const { sort, setSort } = useSort()
   const { filters, filterQuery, addFilter, removeFilter, clearFilters } =
     useFilters()
   const { data, isPending, error } = useRecords({

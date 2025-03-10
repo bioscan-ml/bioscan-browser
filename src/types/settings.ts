@@ -6,7 +6,7 @@ export type SearchType = 'Image' | 'DNA'
 
 export interface Sort {
   key: string
-  order: SortOrder
+  order?: SortOrder
 }
 
 export interface Filter {
