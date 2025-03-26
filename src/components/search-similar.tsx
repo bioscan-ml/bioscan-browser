@@ -144,7 +144,7 @@ export const SearchSimilar = () => {
               </>
             ) : sampleId ? (
               error ? (
-                <Error message="Could not search similar records, please try again later." />
+                <Error message="Could not find similar records, please try again later." />
               ) : (
                 <Intro
                   title="No similar records found"
@@ -155,7 +155,7 @@ export const SearchSimilar = () => {
             ) : (
               <Intro
                 title="Get started"
-                description="To search similar records, first specify a query record."
+                description="To find similar records, first specify a query record."
                 onSubmit={(sampleId) => setSampleId(sampleId)}
               />
             )}

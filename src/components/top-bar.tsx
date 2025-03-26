@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Menu } from './menu'
+import { Menu } from './menu/menu'
 import { PageContent } from './page-content'
 
 export const TopBar = () => (
