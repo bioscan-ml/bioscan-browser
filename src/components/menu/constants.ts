@@ -2,8 +2,8 @@ import { RESOURCES } from '@/lib/constants'
 import { MenuItem } from './types'
 
 export const MENU_ITEMS: MenuItem[] = [
-  { id: 'asset-querier', label: 'Search & filter', to: '/asset-querier' },
-  { id: 'taxonomy-viewer', label: 'Taxonomy tree', to: '/taxonomy-viewer' },
+  { id: 'search', label: 'Search & filter', to: '/search' },
+  { id: 'taxonomy-tree', label: 'Taxonomy tree', to: '/taxonomy-tree' },
   {
     id: 'resources',
     label: 'Resources',
@@ -11,7 +11,7 @@ export const MENU_ITEMS: MenuItem[] = [
       {
         id: 'find-similar',
         label: 'Find similar',
-        to: '/search-similar',
+        to: '/find-similar',
         flags: {
           experimental: true,
         },

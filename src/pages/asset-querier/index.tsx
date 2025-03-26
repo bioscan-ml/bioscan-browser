@@ -44,7 +44,7 @@ export const AssetQuerier = () => {
             <div className="space-y-8">
               <SidebarSection label="View mode">
                 <ViewModeControl
-                  type="asset-querier"
+                  type="search"
                   viewMode={viewMode}
                   setViewMode={setViewMode}
                 />

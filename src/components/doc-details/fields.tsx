@@ -66,7 +66,7 @@ const ClosestMatchesField = ({ doc }: { doc: Doc }) => (
     </span>
     <Link
       className={cn(buttonVariants({ variant: 'outline' }), 'w-min')}
-      to={{ pathname: '/search-similar', search: `sampleid=${doc.sampleid}` }}
+      to={{ pathname: '/find-similar', search: `sampleid=${doc.sampleid}` }}
     >
       Search
       <SearchIcon className="w-4 h-4 ml-2" />
@@ -77,14 +77,14 @@ const ClosestMatchesField = ({ doc }: { doc: Doc }) => (
 const getFieldLink = (key: string, value: string): To | undefined => {
   if (TAXON_FILTER_TYPES.some((filterType) => filterType.key === key)) {
     return {
-      pathname: '/taxonomy-viewer',
+      pathname: '/taxonomy-tree',
       search: `taxon=${key}-${value}`,
     }
   }
 
   if (FILTER_TYPES.some((filterType) => filterType.key === key))
     return {
-      pathname: '/asset-querier',
+      pathname: '/search',
       search: `filter=${key}:${value}`,
     }
 }

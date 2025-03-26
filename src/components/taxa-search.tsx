@@ -105,7 +105,7 @@ const SearchResult = ({
   return (
     <Link
       to={{
-        pathname: '/taxonomy-viewer',
+        pathname: '/taxonomy-tree',
         search: `taxon=${taxon.rank}-${taxon.name}`,
       }}
       onClick={onClick}

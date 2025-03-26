@@ -20,13 +20,13 @@ import { TaxonomyViewer } from './pages/taxonomy-viewer'
 const queryClient = new QueryClient()
 
 const ROUTES = [
-  { path: '/', element: <Navigate to="/taxonomy-viewer" replace /> },
-  { path: '/taxonomy-viewer', Component: TaxonomyViewer },
-  { path: '/asset-querier', Component: AssetQuerier },
-  { path: '/search-similar', Component: SearchSimilar },
-  { path: '/my-bookmarks', Component: MyBookmarks },
-  { path: '/about', Component: About },
+  { path: '/', element: <Navigate to="/search" replace /> },
+  { path: '/search', Component: AssetQuerier },
+  { path: '/taxonomy-tree', Component: TaxonomyViewer },
+  { path: '/find-similar', Component: SearchSimilar },
   { path: '/style-guide', Component: StyleGuide },
+  { path: '/about', Component: About },
+  { path: '/my-bookmarks', Component: MyBookmarks },
   { path: '*', element: <Navigate to="/" replace /> },
 ]
 

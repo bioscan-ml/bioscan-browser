@@ -111,7 +111,7 @@ export const SearchSimilar = () => {
               </SidebarSection>
               <SidebarSection label="View mode">
                 <ViewModeControl
-                  type="search-similar"
+                  type="find-similar"
                   viewMode={viewMode}
                   setViewMode={setViewMode}
                 />

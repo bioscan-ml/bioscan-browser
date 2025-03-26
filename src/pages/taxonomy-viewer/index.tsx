@@ -63,7 +63,7 @@ export const TaxonomyViewer = () => {
             <div className="space-y-8">
               <SidebarSection label="View mode">
                 <ViewModeControl
-                  type="taxonomy-viewer"
+                  type="taxonomy-tree"
                   viewMode={viewMode}
                   setViewMode={setViewMode}
                 />
