@@ -6,6 +6,7 @@ import { MENU_ITEMS } from './constants'
 import { MenuNavItem } from './menu-nav-item'
 import { useState } from 'react'
 import { Flags } from './types'
+import { matchPath, useLocation, useParams } from 'react-router-dom'
 
 export const DesktopMenu = () => (
   <ul className="flex gap-4">
@@ -32,12 +33,16 @@ const DropdownMenu = ({
   children: { flags?: Flags; id: string; label: string; to: string }[]
   label: string
 }) => {
+  const location = useLocation()
   const [open, setIsOpen] = useState(false)
+  const isActive = children.some((child) =>
+    matchPath(child.to, location.pathname),
+  )
 
   return (
     <Popover open={open} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <Button size="sm" variant="ghost">
+        <Button size="sm" variant={isActive ? 'default' : 'ghost'}>
           {label}
           <ChevronDownIcon className="w-4 h-4 ml-2" />
         </Button>
