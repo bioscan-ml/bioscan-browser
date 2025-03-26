@@ -3,9 +3,9 @@ import { MenuIcon } from 'lucide-react'
 import { useState } from 'react'
 import { Button } from '../ui/button'
 import { Popover, PopoverContent } from '../ui/popover'
+import { Separator } from '../ui/separator'
 import { MENU_ITEMS } from './constants'
 import { MenuNavItem } from './menu-nav-item'
-import { Separator } from '../ui/separator'
 import { Flags } from './types'
 
 export const MobileMenu = () => {
@@ -18,7 +18,7 @@ export const MobileMenu = () => {
           <MenuIcon className="w-4 h-4" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent side="bottom" align="end" className="w-auto">
+      <PopoverContent side="bottom" align="start" className="w-auto">
         <ul className="grid gap-2">
           {MENU_ITEMS.map((menuItem) => (
             <li key={menuItem.id}>

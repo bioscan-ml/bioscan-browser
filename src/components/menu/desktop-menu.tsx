@@ -1,12 +1,12 @@
 import { PopoverTrigger } from '@radix-ui/react-popover'
 import { ChevronDownIcon } from 'lucide-react'
+import { useState } from 'react'
+import { matchPath, useLocation } from 'react-router-dom'
 import { Button } from '../ui/button'
 import { Popover, PopoverContent } from '../ui/popover'
 import { MENU_ITEMS } from './constants'
 import { MenuNavItem } from './menu-nav-item'
-import { useState } from 'react'
 import { Flags } from './types'
-import { matchPath, useLocation, useParams } from 'react-router-dom'
 
 export const DesktopMenu = () => (
   <ul className="flex gap-4">

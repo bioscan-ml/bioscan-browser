@@ -37,3 +37,7 @@ export const MENU_ITEMS: MenuItem[] = [
   },
   { id: 'about', label: 'About', to: '/about' },
 ]
+
+export const USER_MENU_ITEMS = [
+  { id: 'my-bookmarks', label: 'My bookmarks', to: '/my-bookmarks' },
+]
