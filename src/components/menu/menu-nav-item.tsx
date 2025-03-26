@@ -17,26 +17,47 @@ export const MenuNavItem = ({
   label: string
   onClick?: () => void
   to: string
-}) => (
-  <NavLink
-    className={({ isActive }) =>
-      cn(
-        buttonVariants({
-          variant: isActive ? 'default' : 'ghost',
-          size: 'sm',
-        }),
-        'w-full justify-between',
-      )
-    }
-    onClick={onClick}
-    to={to}
-  >
-    {label}
-    {flags.experimental ? (
-      <Badge className="ml-4" variant="outline">
-        Experimental
-      </Badge>
-    ) : null}
-    {flags.external ? <ExternalLinkIcon className="w-4 h-4 ml-4" /> : null}
-  </NavLink>
-)
+}) => {
+  if (flags.external) {
+    return (
+      <a
+        className={cn(
+          buttonVariants({
+            variant: 'ghost',
+            size: 'sm',
+          }),
+          'w-full justify-between',
+        )}
+        href={to}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        {label}
+        <ExternalLinkIcon className="h-4 w-4 ml-3" />
+      </a>
+    )
+  }
+
+  return (
+    <NavLink
+      className={({ isActive }) =>
+        cn(
+          buttonVariants({
+            variant: isActive ? 'default' : 'ghost',
+            size: 'sm',
+          }),
+          'w-full justify-between',
+        )
+      }
+      onClick={onClick}
+      to={to}
+    >
+      {label}
+      {flags.experimental ? (
+        <Badge className="ml-3" variant="outline">
+          Experimental
+        </Badge>
+      ) : null}
+    </NavLink>
+  )
+}
