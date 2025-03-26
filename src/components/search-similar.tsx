@@ -49,7 +49,7 @@ export const SearchSimilar = () => {
   const { searchFrom, setSearchFrom, searchTo, setSearchTo } = useSearchType()
   const [viewMode, setViewMode] = useState<ViewMode>('gallery')
   const { pageSize, setPageSize } = usePageSize()
-  const { data, isPending, error } = useSearchEmbeddings({
+  const { data, isPending } = useSearchEmbeddings({
     sampleId,
     searchFrom,
     searchTo,
