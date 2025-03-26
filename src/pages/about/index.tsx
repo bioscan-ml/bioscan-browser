@@ -1,8 +1,7 @@
 import { PageContent } from '@/components/page-content'
 import { buttonVariants } from '@/components/ui/button'
 import { RESOURCES } from '@/lib/constants'
-import { ExternalLinkIcon, PaletteIcon } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { ExternalLinkIcon } from 'lucide-react'
 
 export const About = () => (
   <PageContent>
@@ -88,20 +87,6 @@ export const About = () => (
           photos. Also, the iNaturalist API is used to provide a multi language
           common name search to the taxonomy viewer.
         </p>
-        <h4 className="mb-4">Resources</h4>
-        <div className="flex gap-4">
-          <Link
-            to="/style-guide"
-            className={buttonVariants({
-              variant: 'outline',
-            })}
-          >
-            <PaletteIcon className="h-4 w-4 mr-3" />
-            Style guide
-          </Link>
-          <ExternalLink href={RESOURCES.GITHUB} label="GitHub" />
-          <ExternalLink href={RESOURCES.SYSTEM_STATUS} label="System status" />
-        </div>
       </div>
     </article>
   </PageContent>
