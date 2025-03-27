@@ -1,9 +1,9 @@
+import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { FILTER_TYPES } from '@/lib/constants'
 import { FacetCounts } from '@/types/response-data'
 import { Filter } from '@/types/settings'
 import { useMemo, useState } from 'react'
-import { Button } from '../ui/button'
 import { Combobox } from './combobox'
 
 interface AddFilterFormProps {

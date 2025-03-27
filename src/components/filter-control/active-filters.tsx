@@ -1,7 +1,7 @@
+import { Badge } from '@/components/ui/badge'
 import { FILTER_TYPES } from '@/lib/constants'
 import { Filter } from '@/types/settings'
 import { X } from 'lucide-react'
-import { Badge } from '../ui/badge'
 
 interface ActiveFiltersProps {
   filters: Filter[]

@@ -1,8 +1,8 @@
+import { Badge } from '@/components/ui/badge'
+import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { ExternalLinkIcon } from 'lucide-react'
 import { NavLink } from 'react-router-dom'
-import { Badge } from '../ui/badge'
-import { buttonVariants } from '../ui/button'
 
 export const MenuNavItem = ({
   flags = {},

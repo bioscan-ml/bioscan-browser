@@ -1,3 +1,5 @@
+import { buttonVariants } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
 import {
   FIELDS,
   FILTER_TYPES,
@@ -9,8 +11,6 @@ import { cn } from '@/lib/utils'
 import { Doc } from '@/types/response-data'
 import { SearchIcon } from 'lucide-react'
 import { Link, To } from 'react-router-dom'
-import { buttonVariants } from '../ui/button'
-import { Separator } from '../ui/separator'
 
 interface FieldsProps {
   doc: Doc
