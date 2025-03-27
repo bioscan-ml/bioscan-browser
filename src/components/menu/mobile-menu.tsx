@@ -14,7 +14,7 @@ export const MobileMenu = () => {
   return (
     <Popover open={open} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button className="shrink-0" size="icon" variant="outline">
           <MenuIcon className="w-4 h-4" />
         </Button>
       </PopoverTrigger>

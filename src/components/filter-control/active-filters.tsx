@@ -12,9 +12,8 @@ export const ActiveFilters = ({ filters, onRemove }: ActiveFiltersProps) => (
   <div className="flex flex-wrap gap-2 mb-4">
     {filters.map((filter, index) => (
       <Badge
-        key={index}
-        variant="secondary"
         className="cursor-pointer"
+        key={index}
         onClick={() => onRemove(filter.type)}
       >
         {

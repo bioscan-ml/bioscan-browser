@@ -9,6 +9,7 @@ import { PageContent } from '@/components/page-content'
 import { PaginationBar } from '@/components/pagination-bar'
 import { Sidebar, SidebarSection } from '@/components/sidebar'
 import { Table } from '@/components/table'
+import { TaxaSearch } from '@/components/taxa-search'
 import { ViewModeControl } from '@/components/view-mode-control'
 import { useActiveDoc } from '@/hooks/search-params/useActiveDoc'
 import { usePagination } from '@/hooks/search-params/usePagination'
@@ -19,8 +20,10 @@ import { useRecords } from '@/hooks/useRecords'
 import { DEFAULT_PAGINATION, FIELDS } from '@/lib/constants'
 import { ViewMode } from '@/types/settings'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export const AssetQuerier = () => {
+  const navigate = useNavigate()
   const [viewMode, setViewMode] = useState<ViewMode>('gallery')
   const { page, pageSize, setPage, setPageSize } =
     usePagination(DEFAULT_PAGINATION)
@@ -63,13 +66,28 @@ export const AssetQuerier = () => {
               </SidebarSection>
             </div>
           </Sidebar>
-          <div className="mb-16 grow overflow-hidden">
+          <div className="mb-16 grow overflow-hidden m-[-4px] p-[4px]">
             {isPending ? (
               <Loader />
             ) : error ? (
               <Error />
             ) : (
               <>
+                <div className="flex flex-col-reverse items-start justify-between gap-4 mb-4 pb-4 border-b lg:flex-row">
+                  <div className="h-10 flex items-center gap-4">
+                    <h2 className="text-lg font-semibold leading-none tracking-tight">
+                      Showing {data?.numFound.toLocaleString()} record(s)
+                    </h2>
+                  </div>
+                  <TaxaSearch
+                    onTaxonSelect={(taxon) => {
+                      navigate({
+                        pathname: '/search',
+                        search: `filter=${taxon.rank}:${taxon.name}`,
+                      })
+                    }}
+                  />
+                </div>
                 {viewMode === 'table' && (
                   <Table
                     docs={data?.docs}

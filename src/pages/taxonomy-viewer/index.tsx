@@ -22,10 +22,12 @@ import { DEFAULT_PAGINATION, FIELDS, ROOT_NODE_ID } from '@/lib/constants'
 import { findPathById } from '@/lib/findPathById'
 import { ViewMode } from '@/types/settings'
 import { useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { TaxonomyChart } from './taxonomy-chart'
 import { useSelectedNode } from './useSelectedNode'
 
 export const TaxonomyViewer = () => {
+  const navigate = useNavigate()
   const [viewMode, setViewMode] = useState<ViewMode>('gallery')
 
   // Taxonomy tree
@@ -96,8 +98,7 @@ export const TaxonomyViewer = () => {
             ) : (
               <>
                 {selectedNode ? (
-                  <div className="flex flex-col items-start justify-between gap-4 mb-4 pb-4 border-b lg:flex-row-reverse">
-                    <TaxaSearch />
+                  <div className="flex flex-col-reverse items-start justify-between gap-4 mb-4 pb-4 border-b lg:flex-row">
                     <div className="flex items-center gap-4">
                       <h2 className="text-lg font-semibold leading-none tracking-tight">
                         {selectedNode.metadata.label}
@@ -112,6 +113,14 @@ export const TaxonomyViewer = () => {
                         }}
                       />
                     </div>
+                    <TaxaSearch
+                      onTaxonSelect={(taxon) => {
+                        navigate({
+                          pathname: '/taxonomy-tree',
+                          search: `taxon=${taxon.rank}-${taxon.name}`,
+                        })
+                      }}
+                    />
                   </div>
                 ) : null}
                 {viewMode === 'table' && (

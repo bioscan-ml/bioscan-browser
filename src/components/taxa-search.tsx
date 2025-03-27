@@ -3,13 +3,16 @@ import { useTaxaSearch } from '@/hooks/useTaxaSearch'
 import { Taxon } from '@/types/response-data'
 import { SearchIcon, X } from 'lucide-react'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { Loader } from './loader'
 import { Badge } from './ui/badge'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 
-export const TaxaSearch = () => {
+export const TaxaSearch = ({
+  onTaxonSelect,
+}: {
+  onTaxonSelect: (taxon: Taxon) => void
+}) => {
   const [searchString, setSearchString] = useState('')
   const debouncedSearchString = useDebounce(searchString, 200)
   const { data, isPending, error } = useTaxaSearch(debouncedSearchString)
@@ -38,8 +41,11 @@ export const TaxaSearch = () => {
             data.map((taxon) => (
               <SearchResult
                 key={taxon.id}
+                onClick={() => {
+                  onTaxonSelect(taxon)
+                  setSearchString('')
+                }}
                 taxon={taxon}
-                onClick={() => setSearchString('')}
               />
             ))
           ) : (
@@ -93,23 +99,19 @@ const SearchInput = ({
 )
 
 const SearchResult = ({
-  taxon,
   onClick,
+  taxon,
 }: {
-  taxon: Taxon & { count: number }
   onClick?: () => void
+  taxon: Taxon & { count: number }
 }) => {
   const matchedTerm =
     taxon.matched_term.charAt(0).toUpperCase() + taxon.matched_term.slice(1)
 
   return (
-    <Link
-      to={{
-        pathname: '/taxonomy-tree',
-        search: `taxon=${taxon.rank}-${taxon.name}`,
-      }}
+    <div
+      className="flex items-start gap-4 border-b p-4 cursor-pointer last:border-b-0 hover:bg-muted"
       onClick={onClick}
-      className="flex items-start gap-4 border-b p-4 last:border-b-0 hover:bg-muted"
     >
       <img
         alt=""
@@ -134,6 +136,6 @@ const SearchResult = ({
           {taxon.count === 1 ? 'record' : 'records'}
         </span>
       </div>
-    </Link>
+    </div>
   )
 }

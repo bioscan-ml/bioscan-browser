@@ -120,7 +120,7 @@ export const SearchSimilar = () => {
             </div>
           </Sidebar>
           <div className="mb-16 grow overflow-hidden m-[-4px] p-[4px]">
-            <div className="flex items-center gap-4 mb-4 pb-4 border-b">
+            <div className="h-10 flex items-center gap-4 mb-4 pb-4 border-b">
               <h2 className="text-lg font-semibold leading-none tracking-tight">
                 Find similar
               </h2>

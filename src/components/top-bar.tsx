@@ -28,7 +28,7 @@ const DesktopTopBar = () => (
 const MobileTopBar = () => (
   <header className="sticky top-0 h-16 bg-muted/95 border-b z-10 box-border">
     <PageContent>
-      <div className="h-full flex items-center justify-between gap-12">
+      <div className="h-full flex items-center justify-between gap-4">
         <MobileMenu />
         <Logo />
         <UserMenu />

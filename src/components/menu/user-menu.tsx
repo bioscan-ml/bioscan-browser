@@ -12,7 +12,7 @@ export const UserMenu = () => {
   return (
     <Popover open={open} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <Button variant="ghost" size="icon">
+        <Button className="shrink-0" size="icon" variant="ghost">
           <UserIcon className="w-4 h-4" />
         </Button>
       </PopoverTrigger>
