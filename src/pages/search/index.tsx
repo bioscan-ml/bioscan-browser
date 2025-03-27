@@ -76,7 +76,7 @@ export const Search = () => {
                 <div className="flex flex-col-reverse items-start justify-between gap-4 mb-4 pb-4 border-b lg:flex-row">
                   <div className="h-10 flex items-center gap-4">
                     <h2 className="text-lg font-semibold leading-none tracking-tight">
-                      Showing {data?.numFound.toLocaleString()} record(s)
+                      Search & filter
                     </h2>
                   </div>
                   <TaxaSearch
