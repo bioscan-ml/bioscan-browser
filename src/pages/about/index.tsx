@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 export const About = () => (
   <PageContent>
-    <article className="max-w-screen-md py-12 space-y-16">
+    <article className="max-w-screen-md py-6 space-y-8 md:py-12 md:space-y-16">
       <div>
         <h1 className="text-accent mb-2">BIOSCAN Browser</h1>
         <h2>Visualizing A Multimodal Dataset for Insect Biodiversity</h2>

@@ -8,7 +8,7 @@ import colors from 'tailwindcss/colors'
 
 export const StyleGuide = () => (
   <PageContent>
-    <article className="max-w-screen-md py-12 space-y-16">
+    <article className="max-w-screen-md py-6 space-y-8 md:py-12 md:space-y-16">
       <h1 className="text-accent mb-2">Style guide</h1>
       <div>
         <h3 className="text-accent mb-2">BIOSCAN Logo Pack</h3>
