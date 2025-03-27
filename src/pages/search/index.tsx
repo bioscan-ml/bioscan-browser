@@ -17,12 +17,12 @@ import { useSort } from '@/hooks/search-params/useSort'
 import { useFacetCounts } from '@/hooks/useFacetCounts'
 import { useFilters } from '@/hooks/useFilters'
 import { useRecords } from '@/hooks/useRecords'
-import { DEFAULT_PAGINATION, FIELDS } from '@/lib/constants'
+import { DEFAULT_PAGINATION, FIELDS, PATHS } from '@/lib/constants'
 import { ViewMode } from '@/types/settings'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-export const AssetQuerier = () => {
+export const Search = () => {
   const navigate = useNavigate()
   const [viewMode, setViewMode] = useState<ViewMode>('gallery')
   const { page, pageSize, setPage, setPageSize } =
@@ -82,7 +82,7 @@ export const AssetQuerier = () => {
                   <TaxaSearch
                     onTaxonSelect={(taxon) => {
                       navigate({
-                        pathname: '/search',
+                        pathname: PATHS.SEARCH,
                         search: `filter=${taxon.rank}:${taxon.name}`,
                       })
                     }}

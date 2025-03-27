@@ -1,6 +1,6 @@
 import { PageContent } from '@/components/page-content'
 import { buttonVariants } from '@/components/ui/button'
-import { RESOURCES } from '@/lib/constants'
+import { PATHS, RESOURCES } from '@/lib/constants'
 import { ExternalLinkIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
@@ -50,7 +50,7 @@ export const About = () => (
         <p className="text-muted-foreground mb-2">
           The browser provides various ways for users to explore records. From
           the{' '}
-          <Link className="text-link" to="/taxonomy-tree">
+          <Link className="text-link" to={PATHS.TAXONOMY_TREE}>
             Taxonomy tree
           </Link>{' '}
           view, users can browse records using the taxonomic hierarchy as a
@@ -61,7 +61,7 @@ export const About = () => (
         </p>
         <p className="text-muted-foreground mb-8">
           The{' '}
-          <Link className="text-link" to="search">
+          <Link className="text-link" to={PATHS.SEARCH}>
             Search & filter
           </Link>{' '}
           view is similar to the taxonomy tree view, except this view has custom

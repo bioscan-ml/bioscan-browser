@@ -1,9 +1,9 @@
-import { RESOURCES } from '@/lib/constants'
+import { PATHS, RESOURCES } from '@/lib/constants'
 import { MenuItem } from './types'
 
 export const MENU_ITEMS: MenuItem[] = [
-  { id: 'search', label: 'Search & filter', to: '/search' },
-  { id: 'taxonomy-tree', label: 'Taxonomy tree', to: '/taxonomy-tree' },
+  { id: 'search', label: 'Search & filter', to: PATHS.SEARCH },
+  { id: 'taxonomy-tree', label: 'Taxonomy tree', to: PATHS.TAXONOMY_TREE },
   {
     id: 'resources',
     label: 'Resources',
@@ -11,12 +11,12 @@ export const MENU_ITEMS: MenuItem[] = [
       {
         id: 'find-similar',
         label: 'Find similar',
-        to: '/find-similar',
+        to: PATHS.FIND_SIMILAR,
         flags: {
           experimental: true,
         },
       },
-      { id: 'style-guide', label: 'Style guide', to: '/style-guide' },
+      { id: 'style-guide', label: 'Style guide', to: PATHS.STYLE_GUIDE },
       {
         id: 'system-status',
         label: 'System status',
@@ -35,9 +35,9 @@ export const MENU_ITEMS: MenuItem[] = [
       },
     ],
   },
-  { id: 'about', label: 'About', to: '/about' },
+  { id: 'about', label: 'About', to: PATHS.ABOUT },
 ]
 
 export const USER_MENU_ITEMS = [
-  { id: 'my-bookmarks', label: 'My bookmarks', to: '/my-bookmarks' },
+  { id: 'my-bookmarks', label: 'My bookmarks', to: PATHS.MY_BOOKMARKS },
 ]

@@ -1,4 +1,9 @@
-import { FIELDS, FILTER_TYPES, TAXON_FILTER_TYPES } from '@/lib/constants'
+import {
+  FIELDS,
+  FILTER_TYPES,
+  PATHS,
+  TAXON_FILTER_TYPES,
+} from '@/lib/constants'
 import { formatFieldValue } from '@/lib/formatFieldValue'
 import { cn } from '@/lib/utils'
 import { Doc } from '@/types/response-data'
@@ -66,7 +71,7 @@ const ClosestMatchesField = ({ doc }: { doc: Doc }) => (
     </span>
     <Link
       className={cn(buttonVariants({ variant: 'outline' }), 'w-min')}
-      to={{ pathname: '/find-similar', search: `sampleid=${doc.sampleid}` }}
+      to={{ pathname: PATHS.FIND_SIMILAR, search: `sampleid=${doc.sampleid}` }}
     >
       Search
       <SearchIcon className="w-4 h-4 ml-2" />
@@ -77,14 +82,14 @@ const ClosestMatchesField = ({ doc }: { doc: Doc }) => (
 const getFieldLink = (key: string, value: string): To | undefined => {
   if (TAXON_FILTER_TYPES.some((filterType) => filterType.key === key)) {
     return {
-      pathname: '/taxonomy-tree',
+      pathname: PATHS.TAXONOMY_TREE,
       search: `taxon=${key}-${value}`,
     }
   }
 
   if (FILTER_TYPES.some((filterType) => filterType.key === key))
     return {
-      pathname: '/search',
+      pathname: PATHS.SEARCH,
       search: `filter=${key}:${value}`,
     }
 }

@@ -9,7 +9,7 @@ import { Sidebar, SidebarSection } from '@/components/sidebar'
 import { Table } from '@/components/table'
 import { TaxaSearch } from '@/components/taxa-search'
 import { TaxonDetails } from '@/components/taxon-details'
-import { TaxonomyTree } from '@/components/taxonomy-tree'
+import { TaxonomyTree as TaxonomyTreeComponent } from '@/components/taxonomy-tree'
 import { Badge } from '@/components/ui/badge'
 import { ViewModeControl } from '@/components/view-mode-control'
 import { useActiveDoc } from '@/hooks/search-params/useActiveDoc'
@@ -18,7 +18,12 @@ import { useSort } from '@/hooks/search-params/useSort'
 import { useTaxon } from '@/hooks/search-params/useTaxon'
 import { useRecords } from '@/hooks/useRecords'
 import { useTaxonomyTree } from '@/hooks/useTaxonomyTree'
-import { DEFAULT_PAGINATION, FIELDS, ROOT_NODE_ID } from '@/lib/constants'
+import {
+  DEFAULT_PAGINATION,
+  FIELDS,
+  PATHS,
+  ROOT_NODE_ID,
+} from '@/lib/constants'
 import { findPathById } from '@/lib/findPathById'
 import { ViewMode } from '@/types/settings'
 import { useMemo, useState } from 'react'
@@ -26,7 +31,7 @@ import { useNavigate } from 'react-router-dom'
 import { TaxonomyChart } from './taxonomy-chart'
 import { useSelectedNode } from './useSelectedNode'
 
-export const TaxonomyViewer = () => {
+export const TaxonomyTree = () => {
   const navigate = useNavigate()
   const [viewMode, setViewMode] = useState<ViewMode>('gallery')
 
@@ -80,7 +85,7 @@ export const TaxonomyViewer = () => {
                 {isTaxonomyTreePending ? (
                   <Loader />
                 ) : (
-                  <TaxonomyTree
+                  <TaxonomyTreeComponent
                     defaultExpandedNodes={defaultExpandedNodes}
                     selectedNodeId={selectedNodeId}
                     taxonomyTree={taxonomyTree}
@@ -116,7 +121,7 @@ export const TaxonomyViewer = () => {
                     <TaxaSearch
                       onTaxonSelect={(taxon) => {
                         navigate({
-                          pathname: '/taxonomy-tree',
+                          pathname: PATHS.TAXONOMY_TREE,
                           search: `taxon=${taxon.rank}-${taxon.name}`,
                         })
                       }}
