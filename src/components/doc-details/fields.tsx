@@ -1,11 +1,16 @@
-import { FIELDS, FILTER_TYPES, TAXON_FILTER_TYPES } from '@/lib/constants'
+import { buttonVariants } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
+import {
+  FIELDS,
+  FILTER_TYPES,
+  PATHS,
+  TAXON_FILTER_TYPES,
+} from '@/lib/constants'
 import { formatFieldValue } from '@/lib/formatFieldValue'
 import { cn } from '@/lib/utils'
 import { Doc } from '@/types/response-data'
 import { SearchIcon } from 'lucide-react'
 import { Link, To } from 'react-router-dom'
-import { buttonVariants } from '../ui/button'
-import { Separator } from '../ui/separator'
 
 interface FieldsProps {
   doc: Doc
@@ -66,7 +71,7 @@ const ClosestMatchesField = ({ doc }: { doc: Doc }) => (
     </span>
     <Link
       className={cn(buttonVariants({ variant: 'outline' }), 'w-min')}
-      to={{ pathname: '/search-similar', search: `sampleid=${doc.sampleid}` }}
+      to={{ pathname: PATHS.FIND_SIMILAR, search: `sampleid=${doc.sampleid}` }}
     >
       Search
       <SearchIcon className="w-4 h-4 ml-2" />
@@ -77,14 +82,14 @@ const ClosestMatchesField = ({ doc }: { doc: Doc }) => (
 const getFieldLink = (key: string, value: string): To | undefined => {
   if (TAXON_FILTER_TYPES.some((filterType) => filterType.key === key)) {
     return {
-      pathname: '/taxonomy-viewer',
+      pathname: PATHS.TAXONOMY_TREE,
       search: `taxon=${key}-${value}`,
     }
   }
 
   if (FILTER_TYPES.some((filterType) => filterType.key === key))
     return {
-      pathname: '/asset-querier',
+      pathname: PATHS.SEARCH,
       search: `filter=${key}:${value}`,
     }
 }

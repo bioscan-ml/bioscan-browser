@@ -1,5 +1,15 @@
 import { Doc } from '@/types/response-data'
 
+export const PATHS = {
+  ABOUT: '/about',
+  FIND_SIMILAR: '/find-similar',
+  HOME: '/',
+  MY_BOOKMARKS: '/my-bookmarks',
+  SEARCH: '/search',
+  STYLE_GUIDE: '/style-guide',
+  TAXONOMY_TREE: '/taxonomy-tree',
+}
+
 export const FIELDS: {
   label: string
   key: keyof Doc

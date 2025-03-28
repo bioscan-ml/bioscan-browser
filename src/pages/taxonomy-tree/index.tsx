@@ -9,7 +9,7 @@ import { Sidebar, SidebarSection } from '@/components/sidebar'
 import { Table } from '@/components/table'
 import { TaxaSearch } from '@/components/taxa-search'
 import { TaxonDetails } from '@/components/taxon-details'
-import { TaxonomyTree } from '@/components/taxonomy-tree'
+import { TaxonomyTree as TaxonomyTreeComponent } from '@/components/taxonomy-tree'
 import { Badge } from '@/components/ui/badge'
 import { ViewModeControl } from '@/components/view-mode-control'
 import { useActiveDoc } from '@/hooks/search-params/useActiveDoc'
@@ -18,14 +18,21 @@ import { useSort } from '@/hooks/search-params/useSort'
 import { useTaxon } from '@/hooks/search-params/useTaxon'
 import { useRecords } from '@/hooks/useRecords'
 import { useTaxonomyTree } from '@/hooks/useTaxonomyTree'
-import { DEFAULT_PAGINATION, FIELDS, ROOT_NODE_ID } from '@/lib/constants'
+import {
+  DEFAULT_PAGINATION,
+  FIELDS,
+  PATHS,
+  ROOT_NODE_ID,
+} from '@/lib/constants'
 import { findPathById } from '@/lib/findPathById'
 import { ViewMode } from '@/types/settings'
 import { useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { TaxonomyChart } from './taxonomy-chart'
 import { useSelectedNode } from './useSelectedNode'
 
-export const TaxonomyViewer = () => {
+export const TaxonomyTree = () => {
+  const navigate = useNavigate()
   const [viewMode, setViewMode] = useState<ViewMode>('gallery')
 
   // Taxonomy tree
@@ -63,7 +70,7 @@ export const TaxonomyViewer = () => {
             <div className="space-y-8">
               <SidebarSection label="View mode">
                 <ViewModeControl
-                  type="taxonomy-viewer"
+                  type="taxonomy-tree"
                   viewMode={viewMode}
                   setViewMode={setViewMode}
                 />
@@ -78,7 +85,7 @@ export const TaxonomyViewer = () => {
                 {isTaxonomyTreePending ? (
                   <Loader />
                 ) : (
-                  <TaxonomyTree
+                  <TaxonomyTreeComponent
                     defaultExpandedNodes={defaultExpandedNodes}
                     selectedNodeId={selectedNodeId}
                     taxonomyTree={taxonomyTree}
@@ -96,8 +103,7 @@ export const TaxonomyViewer = () => {
             ) : (
               <>
                 {selectedNode ? (
-                  <div className="flex flex-col items-start justify-between gap-4 mb-4 pb-4 border-b lg:flex-row-reverse">
-                    <TaxaSearch />
+                  <div className="flex flex-col-reverse items-start justify-between gap-4 mb-4 pb-4 border-b lg:flex-row">
                     <div className="flex items-center gap-4">
                       <h2 className="text-lg font-semibold leading-none tracking-tight">
                         {selectedNode.metadata.label}
@@ -112,6 +118,14 @@ export const TaxonomyViewer = () => {
                         }}
                       />
                     </div>
+                    <TaxaSearch
+                      onTaxonSelect={(taxon) => {
+                        navigate({
+                          pathname: PATHS.TAXONOMY_TREE,
+                          search: `taxon=${taxon.rank}-${taxon.name}`,
+                        })
+                      }}
+                    />
                   </div>
                 ) : null}
                 {viewMode === 'table' && (

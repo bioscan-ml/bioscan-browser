@@ -1,6 +1,6 @@
+import { Button } from '@/components/ui/button'
 import { Doc } from '@/types/response-data'
 import { SearchIcon } from 'lucide-react'
-import { Button } from '../ui/button'
 import { GalleryItem } from './gallery-item'
 
 interface GalleryProps {

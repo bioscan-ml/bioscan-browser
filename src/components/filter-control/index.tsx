@@ -1,15 +1,15 @@
+import { Button } from '@/components/ui/button'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
+import { FacetCounts } from '@/types/response-data'
 import { Filter } from '@/types/settings'
 import { PlusIcon } from 'lucide-react'
 import { useState } from 'react'
-import { Button } from '../ui/button'
 import { ActiveFilters } from './active-filters'
 import { AddFilterForm } from './add-filter-form'
-import { FacetCounts } from '@/types/response-data'
 
 interface FilterControlProps {
   facetCounts?: FacetCounts

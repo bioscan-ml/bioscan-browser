@@ -1,11 +1,11 @@
+import { Button } from '@/components/ui/button'
+import { getPageWindow } from '@/lib/getPageWindow'
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   MoreHorizontalIcon,
 } from 'lucide-react'
 import { useEffect } from 'react'
-import { getPageWindow } from '../../lib/getPageWindow'
-import { Button } from '../ui/button'
 import { PageButton } from './page-button'
 
 interface PaginationControlsProps {
