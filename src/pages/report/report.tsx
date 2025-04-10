@@ -12,7 +12,9 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
+import { REPORT_TYPES } from '@/hooks/github/constants'
 import { ReportFormData } from '@/hooks/github/types'
+import { useCreateIssue } from '@/hooks/github/useCreateIssue'
 import { useId } from '@/hooks/search-params/useId'
 import { useRecord } from '@/hooks/useRecord'
 import { getImageSrc } from '@/lib/getImageSrc'
@@ -22,20 +24,6 @@ import { ExternalLinkIcon, Loader2Icon, SearchIcon } from 'lucide-react'
 import { ReactNode, useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
-const REPORT_TYPES = [
-  { title: 'No insect in the image', label: 'image' },
-  { title: 'Insect is not clearly visible', label: 'image' },
-  { title: 'Image contains multiple insects', label: 'image' },
-  { title: 'Insect is cropped incorrectly', label: 'image' },
-  { title: 'Metadata is not correct', label: 'metadata' },
-  { title: 'Contest current label', label: 'taxonomic label' },
-  {
-    title: 'Suggest label for deeper taxonomic level',
-    label: 'taxonomic label',
-  },
-  { title: 'Other report' },
-]
-
 const ERROR_MESSAGES = {
   REQUIRED: 'This field is required.',
   NOT_FOUND: 'Could not find record, please try again.',
@@ -44,13 +32,7 @@ const ERROR_MESSAGES = {
 
 export const Report = () => {
   const { id, setId } = useId()
-  const { createIssue, error, isPending, isSuccess, reset } = {
-    createIssue: () => {},
-    error: null,
-    isPending: false,
-    isSuccess: false,
-    reset: () => {},
-  }
+  const { createIssue, error, isPending, isSuccess, reset } = useCreateIssue()
 
   return (
     <PageContent>
