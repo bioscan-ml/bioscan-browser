@@ -16,6 +16,7 @@ import { Map } from '../map'
 import { TaxonDetailsArticle } from '../taxon-details-article'
 import { Fields } from './fields'
 import { Images } from './images'
+import { ReportInfo } from './report-info'
 
 export const DocDetailsDialog = ({
   doc,
@@ -48,7 +49,7 @@ export const DocDetailsDialogContent = ({
   const { taxon, parents } = getTaxon(doc)
 
   return (
-    <DialogContent className="h-full max-w-screen-sm flex flex-col gap-8 overflow-auto sm:h-[calc(100%-4rem)]">
+    <DialogContent className="h-full max-w-screen-md flex flex-col gap-8 overflow-auto sm:h-[calc(100%-4rem)]">
       <DialogHeader>
         <div className="flex items-center gap-4">
           <DialogTitle>{taxon.label}</DialogTitle>
@@ -83,7 +84,7 @@ export const DocDetailsDialogContent = ({
           <DocDetailsMap doc={doc} />
         </TabsContent>
         <TabsContent value="raw">
-          <CodeBlock code={JSON.stringify(doc, null, 4)} />
+          <CodeBlock copyable code={JSON.stringify(doc, null, 4)} />
         </TabsContent>
         <TabsContent value="learn-more">
           <div className="my-8">
@@ -91,6 +92,7 @@ export const DocDetailsDialogContent = ({
           </div>
         </TabsContent>
       </Tabs>
+      <ReportInfo doc={doc} />
     </DialogContent>
   )
 }

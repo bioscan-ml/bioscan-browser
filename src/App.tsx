@@ -14,6 +14,7 @@ import { BookmarksContextProvider } from './lib/bookmarks/provider'
 import { PATHS } from './lib/constants'
 import { About } from './pages/about'
 import { MyBookmarks } from './pages/my-bookmarks'
+import { Report } from './pages/report/report'
 import { Search } from './pages/search'
 import { StyleGuide } from './pages/style-guide'
 import { TaxonomyTree } from './pages/taxonomy-tree'
@@ -25,6 +26,7 @@ const ROUTES = [
   { path: PATHS.SEARCH, Component: Search },
   { path: PATHS.TAXONOMY_TREE, Component: TaxonomyTree },
   { path: PATHS.FIND_SIMILAR, Component: SearchSimilar },
+  { path: PATHS.REPORT, Component: Report },
   { path: PATHS.STYLE_GUIDE, Component: StyleGuide },
   { path: PATHS.ABOUT, Component: About },
   { path: PATHS.MY_BOOKMARKS, Component: MyBookmarks },

@@ -5,6 +5,7 @@ export const PATHS = {
   FIND_SIMILAR: '/find-similar',
   HOME: '/',
   MY_BOOKMARKS: '/my-bookmarks',
+  REPORT: '/report',
   SEARCH: '/search',
   STYLE_GUIDE: '/style-guide',
   TAXONOMY_TREE: '/taxonomy-tree',
