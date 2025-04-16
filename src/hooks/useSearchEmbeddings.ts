@@ -15,7 +15,7 @@ export const useSearchEmbeddings = (params: {
   pageSize: number
   sort?: Sort
 }) => {
-  const { isPending, error, data, refetch } = useQuery<{
+  const { data, error, isPending, refetch } = useQuery<{
     response: {
       docs: Doc[]
       numFound: number
@@ -83,9 +83,9 @@ export const useSearchEmbeddings = (params: {
   })
 
   return {
-    isPending,
-    error,
     data: data?.response,
+    error,
+    isPending,
     refetch,
   }
 }

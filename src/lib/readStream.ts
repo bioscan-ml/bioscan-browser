@@ -4,7 +4,7 @@ export const readStream = async (url: string): Promise<string> => {
   let result = ''
 
   try {
-    const response = await fetch(url)
+    const response = await fetch(url, { signal: AbortSignal.timeout(10000) })
 
     if (!response.body) {
       throw new Error('Response is not a readable stream')

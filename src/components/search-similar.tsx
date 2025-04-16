@@ -50,7 +50,7 @@ export const SearchSimilar = () => {
   const { searchFrom, setSearchFrom, searchTo, setSearchTo } = useSearchType()
   const [viewMode, setViewMode] = useState<ViewMode>('gallery')
   const { pageSize, setPageSize } = usePageSize()
-  const { data, isPending } = useSearchEmbeddings({
+  const { data, isPending, refetch } = useSearchEmbeddings({
     queryId,
     searchFrom,
     searchTo,
@@ -84,7 +84,13 @@ export const SearchSimilar = () => {
                     variant="outline"
                     size="icon"
                     className="shrink-0"
-                    onClick={() => setQueryId(searchString)}
+                    onClick={() => {
+                      if (queryId === searchString) {
+                        refetch()
+                      } else {
+                        setQueryId(queryId)
+                      }
+                    }}
                   >
                     <SearchIcon className="w-4 h-4" />
                   </Button>
@@ -157,9 +163,16 @@ export const SearchSimilar = () => {
               </>
             ) : queryId ? (
               <Intro
+                defaultSearchString={searchString}
                 description="No matches were found, please try a different query record."
                 error
-                onSubmit={(queryId) => setQueryId(queryId)}
+                onSubmit={(newQueryId) => {
+                  if (queryId === newQueryId) {
+                    refetch()
+                  } else {
+                    setQueryId(queryId)
+                  }
+                }}
                 title="No similar records found"
               />
             ) : (
@@ -234,17 +247,21 @@ const PageSizeControl = ({
 }
 
 const Intro = ({
+  defaultSearchString,
   error,
   title,
   description,
   onSubmit,
 }: {
+  defaultSearchString?: string
   error?: boolean
   title: string
   description: string
   onSubmit: (queryId: string) => void
 }) => {
-  const [searchString, setSearchString] = useState<string>('')
+  const [searchString, setSearchString] = useState<string>(
+    defaultSearchString ?? '',
+  )
 
   return (
     <div className="text-center space-y-8 p-16">

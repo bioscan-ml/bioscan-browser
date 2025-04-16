@@ -13,13 +13,14 @@ export const makeGradioPrediction = async ({
 }): Promise<string> => {
   // Get event id
   const eventIdRes = await fetch(`${API_URL}/call/${method}`, {
+    body: JSON.stringify({
+      data,
+    }),
     headers: {
       'Content-Type': 'application/json',
     },
     method: 'POST',
-    body: JSON.stringify({
-      data,
-    }),
+    signal: AbortSignal.timeout(10000),
   })
   const eventIdData = await eventIdRes.json()
   const eventId = eventIdData.event_id
