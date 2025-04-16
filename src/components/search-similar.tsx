@@ -97,7 +97,7 @@ export const SearchSimilar = () => {
                   <RandomSearch onClick={setQueryId} size="icon" />
                 </div>
               </SidebarSection>
-              <div className="flex gap-8">
+              <div className="flex gap-8 hidden">
                 <SidebarSection className="md:w-min" label="Search from">
                   <SearchTypeControl
                     searchType={searchFrom}
