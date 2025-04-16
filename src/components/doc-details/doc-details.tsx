@@ -37,20 +37,15 @@ export const DocDetailsDialogContent = ({ doc }: { doc: Doc }) => {
 
   return (
     <DialogContent className="h-full max-w-screen-sm flex flex-col gap-8 overflow-auto sm:h-[calc(100%-4rem)]">
-      <DialogHeader className="self-start">
-        <div className="flex items-center justify-between gap-8">
-          <div className="flex items-center gap-4">
-            <DialogTitle>{taxon.label}</DialogTitle>
-            <Badge variant="outline" className="uppercase">
-              {taxon.rankLabel}
-            </Badge>
-          </div>
-          <div className="flex items-center gap-4">
-            <FindSimilarControl doc={doc} />
-            <BookmarkControl doc={doc} />
-          </div>
+      <DialogHeader>
+        <div className="flex items-center gap-4">
+          <DialogTitle>{taxon.label}</DialogTitle>
+          <Badge variant="outline" className="uppercase">
+            {taxon.rankLabel}
+          </Badge>
+          <BookmarkControl doc={doc} />
         </div>
-        <DialogDescription>
+        <DialogDescription className="mb-4">
           {parents.map((parent, index) => (
             <span key={index} className="inline-flex items-center">
               {parent.label}
@@ -60,6 +55,9 @@ export const DocDetailsDialogContent = ({ doc }: { doc: Doc }) => {
             </span>
           ))}
         </DialogDescription>
+        <div className="flex items-center gap-4">
+          <FindSimilarControl doc={doc} size="sm" variant="outline" />
+        </div>
       </DialogHeader>
       <Fields doc={doc} />
       <Tabs defaultValue="images">
