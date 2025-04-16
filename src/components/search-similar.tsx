@@ -25,12 +25,13 @@ import {
   AlertCircleIcon,
   DicesIcon,
   Loader2Icon,
+  RocketIcon,
   SearchIcon,
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { Error } from './error'
 import { GalleryItem } from './gallery/gallery-item'
 import { SearchTypeControl } from './search-type-control'
+import { Badge } from './ui/badge'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import {
@@ -48,7 +49,7 @@ export const SearchSimilar = () => {
   const { searchFrom, setSearchFrom, searchTo, setSearchTo } = useSearchType()
   const [viewMode, setViewMode] = useState<ViewMode>('gallery')
   const { pageSize, setPageSize } = usePageSize()
-  const { data, isPending, error, refetch } = useSearchEmbeddings({
+  const { data, isPending } = useSearchEmbeddings({
     queryId,
     searchFrom,
     searchTo,
@@ -111,7 +112,7 @@ export const SearchSimilar = () => {
               </SidebarSection>
               <SidebarSection label="View mode">
                 <ViewModeControl
-                  type="search-similar"
+                  type="find-similar"
                   viewMode={viewMode}
                   setViewMode={setViewMode}
                 />
@@ -119,15 +120,16 @@ export const SearchSimilar = () => {
             </div>
           </Sidebar>
           <div className="mb-16 grow overflow-hidden m-[-4px] p-[4px]">
+            <div className="h-10 flex items-center gap-4 mb-4 pb-4 border-b">
+              <h2 className="text-lg font-semibold leading-none tracking-tight">
+                Find similar
+              </h2>
+              <Badge variant="outline">Experimental</Badge>
+            </div>
             {isPending && queryId ? (
               <Loader />
             ) : data?.docs.length ? (
               <>
-                <div className="flex items-center gap-4 mb-4 pb-4 border-b">
-                  <h2 className="text-lg font-semibold leading-none tracking-tight">
-                    Closest {data.docs.length} matches
-                  </h2>
-                </div>
                 {viewMode === 'table' && (
                   <Table
                     docs={data?.docs}
@@ -143,23 +145,17 @@ export const SearchSimilar = () => {
                 )}
               </>
             ) : queryId ? (
-              error ? (
-                <Error
-                  message="Could not search similar records, please try again later."
-                  retry={refetch}
-                />
-              ) : (
-                <Intro
-                  title="No similar records found"
-                  description="No matches were found for the current search, please try a different query record."
-                  onSubmit={(queryId) => setQueryId(queryId)}
-                />
-              )
+              <Intro
+                description="No matches were found, please try a different query record."
+                error
+                onSubmit={(queryId) => setQueryId(queryId)}
+                title="No similar records found"
+              />
             ) : (
               <Intro
-                title="Get started"
-                description="To search similar records, first specify a query record."
+                description="To find similar records, first specify a query record."
                 onSubmit={(queryId) => setQueryId(queryId)}
+                title="Get started"
               />
             )}
           </div>
@@ -173,7 +169,6 @@ export const SearchSimilar = () => {
             setActiveDoc(undefined)
           }
         }}
-        showClosestMatches={activeDoc?.id !== queryId}
       />
     </>
   )
@@ -190,12 +185,7 @@ const RecordDetails = ({ queryId }: { queryId: string }) => {
   return (
     <>
       <GalleryItem doc={data} onClick={() => setOpen(true)} />
-      <DocDetailsDialog
-        doc={data}
-        open={open}
-        onOpenChange={setOpen}
-        showClosestMatches={false}
-      />
+      <DocDetailsDialog doc={data} open={open} onOpenChange={setOpen} />
     </>
   )
 }
@@ -233,10 +223,12 @@ const PageSizeControl = ({
 }
 
 const Intro = ({
+  error,
   title,
   description,
   onSubmit,
 }: {
+  error?: boolean
   title: string
   description: string
   onSubmit: (queryId: string) => void
@@ -245,6 +237,11 @@ const Intro = ({
 
   return (
     <div className="text-center space-y-8 p-16">
+      {error ? (
+        <AlertCircleIcon className="text-destructive inline" />
+      ) : (
+        <RocketIcon className="w-10 h-10 text-accent inline" />
+      )}
       <div>
         <p className="text-xl font-medium mb-2">{title}</p>
         <p className="text-sm text-muted-foreground">{description}</p>

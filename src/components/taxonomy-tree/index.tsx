@@ -1,8 +1,8 @@
+import { Badge } from '@/components/ui/badge'
 import { TaxonomyTreeNode } from '@/types/response-data'
 import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView'
 import { TreeItem } from '@mui/x-tree-view/TreeItem'
 import { ChevronDownIcon, ChevronRightIcon } from 'lucide-react'
-import { Badge } from '../ui/badge'
 import './styles.css'
 
 interface TaxonomyTreeProps {

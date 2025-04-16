@@ -1,5 +1,14 @@
 import { Doc } from '@/types/response-data'
-import { Sort } from '@/types/settings'
+
+export const PATHS = {
+  ABOUT: '/about',
+  FIND_SIMILAR: '/find-similar',
+  HOME: '/',
+  MY_BOOKMARKS: '/my-bookmarks',
+  SEARCH: '/search',
+  STYLE_GUIDE: '/style-guide',
+  TAXONOMY_TREE: '/taxonomy-tree',
+}
 
 export const FIELDS: {
   label: string
@@ -47,11 +56,6 @@ export const SOLR_BASE_PATH = '/api/scene-toolkit/solr/bioscan5m/select'
 export const DEFAULT_PAGINATION = { page: 0, pageSize: 100 }
 
 export const PAGE_SIZE_OPTIONS = [50, 100, 250, 500, 1000]
-
-export const DEFAULT_SORT: Sort = {
-  key: 'id',
-  order: 'asc',
-}
 
 export const ROOT_NODE_ID = 'phylum-Arthropoda'
 

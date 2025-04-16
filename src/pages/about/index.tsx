@@ -1,12 +1,12 @@
 import { PageContent } from '@/components/page-content'
 import { buttonVariants } from '@/components/ui/button'
-import { RESOURCES } from '@/lib/constants'
-import { ExternalLinkIcon, PaletteIcon } from 'lucide-react'
+import { PATHS, RESOURCES } from '@/lib/constants'
+import { ExternalLinkIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 export const About = () => (
   <PageContent>
-    <article className="max-w-screen-md py-12 space-y-16">
+    <article className="max-w-screen-md py-6 space-y-8 md:py-12 md:space-y-16">
       <div>
         <h1 className="text-accent mb-2">BIOSCAN Browser</h1>
         <h2>Visualizing A Multimodal Dataset for Insect Biodiversity</h2>
@@ -49,18 +49,25 @@ export const About = () => (
         <h4 className="mb-2">Browsing records</h4>
         <p className="text-muted-foreground mb-2">
           The browser provides various ways for users to explore records. From
-          the Taxonomy viewer, users can browse records using the taxonomic
-          hierarchy as a starting point. For the selected taxon, users can
-          choose to explore records from a gallery view, a table view or a chart
-          view. The chart view is useful for seeing how records are distributed
-          for lower taxonomic ranks.
+          the{' '}
+          <Link className="text-link" to={PATHS.TAXONOMY_TREE}>
+            Taxonomy tree
+          </Link>{' '}
+          view, users can browse records using the taxonomic hierarchy as a
+          starting point. For the selected taxon, users can choose to explore
+          records from a gallery view, a table view or a chart view. The chart
+          view is useful for seeing how records are distributed for lower
+          taxonomic ranks.
         </p>
         <p className="text-muted-foreground mb-8">
-          The Asset querier is similar to the Taxonomy viewer, except this view
-          has custom filtering support. Filters can be combined in various ways
-          to narrow down the result. The Asset querier currently has 14 filter
-          types, for example Country, Province/State and all the 7 main
-          taxonomic ranks.
+          The{' '}
+          <Link className="text-link" to={PATHS.SEARCH}>
+            Search & filter
+          </Link>{' '}
+          view is similar to the taxonomy tree view, except this view has custom
+          search and filtering support. Filters can be combined in various ways
+          to narrow down the result. We currently support 14 filter types, for
+          example Country, Province/State and all the 7 main taxonomic ranks.
         </p>
         <h4 className="mb-2">Inspecting record details</h4>
         <p className="text-muted-foreground mb-2">
@@ -83,25 +90,11 @@ export const About = () => (
             iNaturalist API
           </a>{' '}
           is used to populate views with more details about the current taxa,
-          both in the Taxonomy viewer and in the record detail view. This
+          both in the taxonomy tree view and in the record detail view. This
           information includes common names, Wikipedia summaries and uploaded
           photos. Also, the iNaturalist API is used to provide a multi language
-          common name search to the taxonomy viewer.
+          common name search to the taxonomy tree view.
         </p>
-        <h4 className="mb-4">Resources</h4>
-        <div className="flex gap-4">
-          <Link
-            to="/style-guide"
-            className={buttonVariants({
-              variant: 'outline',
-            })}
-          >
-            <PaletteIcon className="h-4 w-4 mr-3" />
-            Style guide
-          </Link>
-          <ExternalLink href={RESOURCES.GITHUB} label="GitHub" />
-          <ExternalLink href={RESOURCES.SYSTEM_STATUS} label="System status" />
-        </div>
       </div>
     </article>
   </PageContent>

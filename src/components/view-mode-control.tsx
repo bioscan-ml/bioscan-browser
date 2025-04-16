@@ -9,7 +9,19 @@ import {
 } from './ui/tooltip'
 
 const VIEW_MODE_OPTIONS = {
-  'taxonomy-viewer': [
+  search: [
+    {
+      label: 'Gallery',
+      value: 'gallery',
+      Icon: Grid2X2Icon,
+    },
+    {
+      label: 'Table',
+      value: 'table',
+      Icon: SheetIcon,
+    },
+  ],
+  'taxonomy-tree': [
     {
       label: 'Gallery',
       value: 'gallery',
@@ -26,19 +38,7 @@ const VIEW_MODE_OPTIONS = {
       Icon: BarChartHorizontalIcon,
     },
   ],
-  'asset-querier': [
-    {
-      label: 'Gallery',
-      value: 'gallery',
-      Icon: Grid2X2Icon,
-    },
-    {
-      label: 'Table',
-      value: 'table',
-      Icon: SheetIcon,
-    },
-  ],
-  'search-similar': [
+  'find-similar': [
     {
       label: 'Gallery',
       value: 'gallery',
@@ -53,7 +53,7 @@ const VIEW_MODE_OPTIONS = {
 }
 
 interface ViewModeProps {
-  type: 'taxonomy-viewer' | 'asset-querier' | 'search-similar'
+  type: 'search' | 'taxonomy-tree' | 'find-similar'
   viewMode: ViewMode
   setViewMode: (viewMode: ViewMode) => void
 }

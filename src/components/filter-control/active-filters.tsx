@@ -1,7 +1,7 @@
+import { Badge } from '@/components/ui/badge'
 import { FILTER_TYPES } from '@/lib/constants'
 import { Filter } from '@/types/settings'
 import { X } from 'lucide-react'
-import { Badge } from '../ui/badge'
 
 interface ActiveFiltersProps {
   filters: Filter[]
@@ -12,9 +12,8 @@ export const ActiveFilters = ({ filters, onRemove }: ActiveFiltersProps) => (
   <div className="flex flex-wrap gap-2 mb-4">
     {filters.map((filter, index) => (
       <Badge
-        key={index}
-        variant="secondary"
         className="cursor-pointer"
+        key={index}
         onClick={() => onRemove(filter.type)}
       >
         {
