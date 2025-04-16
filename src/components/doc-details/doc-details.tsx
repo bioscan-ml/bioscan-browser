@@ -12,6 +12,7 @@ import { Doc } from '@/types/response-data'
 import { ChevronRight } from 'lucide-react'
 import { BookmarkControl } from '../bookmark-control'
 import { CodeBlock } from '../code-block'
+import { FindSimilarControl } from '../find-similar-control'
 import { Map } from '../map'
 import { TaxonDetailsArticle } from '../taxon-details-article'
 import { Fields } from './fields'
@@ -20,31 +21,18 @@ import { Images } from './images'
 export const DocDetailsDialog = ({
   doc,
   open,
-  showClosestMatches,
   onOpenChange,
 }: {
   doc?: Doc
   open: boolean
-  showClosestMatches?: boolean
   onOpenChange: (open: boolean) => void
 }) => (
   <Dialog open={open} onOpenChange={onOpenChange}>
-    {doc && (
-      <DocDetailsDialogContent
-        doc={doc}
-        showClosestMatches={showClosestMatches}
-      />
-    )}
+    {doc && <DocDetailsDialogContent doc={doc} />}
   </Dialog>
 )
 
-export const DocDetailsDialogContent = ({
-  doc,
-  showClosestMatches,
-}: {
-  doc: Doc
-  showClosestMatches?: boolean
-}) => {
+export const DocDetailsDialogContent = ({ doc }: { doc: Doc }) => {
   const { taxon, parents } = getTaxon(doc)
 
   return (
@@ -57,7 +45,7 @@ export const DocDetailsDialogContent = ({
           </Badge>
           <BookmarkControl doc={doc} />
         </div>
-        <DialogDescription>
+        <DialogDescription className="mb-4">
           {parents.map((parent, index) => (
             <span key={index} className="inline-flex items-center">
               {parent.label}
@@ -67,8 +55,11 @@ export const DocDetailsDialogContent = ({
             </span>
           ))}
         </DialogDescription>
+        <div className="flex items-center gap-4">
+          <FindSimilarControl doc={doc} size="sm" variant="outline" />
+        </div>
       </DialogHeader>
-      <Fields doc={doc} showClosestMatches={showClosestMatches} />
+      <Fields doc={doc} />
       <Tabs defaultValue="images">
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="images">Images</TabsTrigger>
