@@ -1,4 +1,5 @@
 import { Gallery } from '@/components/gallery/gallery'
+import { GalleryItem } from '@/components/gallery/gallery-item'
 import {
   ChartConfig,
   ChartContainer,
@@ -54,7 +55,15 @@ export const TaxonomyChart = ({
   return (
     <div>
       {chartData.length === 0 ? (
-        <Gallery docs={docs} onItemClick={onItemClick} />
+        <Gallery>
+          {docs?.map((doc) => (
+            <GalleryItem
+              key={doc.id}
+              doc={doc}
+              onClick={() => onItemClick(doc)}
+            />
+          ))}
+        </Gallery>
       ) : (
         <ChartContainer
           key={selectedNode.li_attr.id}

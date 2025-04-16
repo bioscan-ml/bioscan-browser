@@ -29,6 +29,7 @@ import {
   SearchIcon,
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { FindSimilarControl } from './find-similar-control'
 import { GalleryItem } from './gallery/gallery-item'
 import { SearchTypeControl } from './search-type-control'
 import { Badge } from './ui/badge'
@@ -137,11 +138,21 @@ export const SearchSimilar = () => {
                   />
                 )}
                 {viewMode === 'gallery' && (
-                  <Gallery
-                    docs={data?.docs}
-                    onItemClick={(doc) => setActiveDoc(doc)}
-                    onSearchClick={(doc) => setQueryId(doc.id)}
-                  />
+                  <Gallery>
+                    {data?.docs.map((doc) => (
+                      <GalleryItem
+                        key={doc.id}
+                        doc={doc}
+                        onClick={() => setActiveDoc(doc)}
+                      >
+                        <FindSimilarControl
+                          doc={doc}
+                          className="m-2 absolute top-0 right-0"
+                          variant="outline"
+                        />
+                      </GalleryItem>
+                    ))}
+                  </Gallery>
                 )}
               </>
             ) : queryId ? (
