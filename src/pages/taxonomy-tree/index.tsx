@@ -1,5 +1,6 @@
 import { DocDetailsDialog } from '@/components/doc-details/doc-details'
 import { Error } from '@/components/error'
+import { DnaGalleryItem } from '@/components/gallery/dna-gallery-item'
 import { Gallery } from '@/components/gallery/gallery'
 import { GalleryItem } from '@/components/gallery/gallery-item'
 import { Loader } from '@/components/loader'
@@ -155,6 +156,17 @@ export const TaxonomyTree = () => {
                     onBarClick={setSelectedNodeId}
                     onItemClick={(doc) => setActiveDoc(doc)}
                   />
+                )}
+                {viewMode === 'dna' && (
+                  <div className="grid gap-8">
+                    {data?.docs.map((doc) => (
+                      <DnaGalleryItem
+                        key={doc.id}
+                        doc={doc}
+                        onClick={() => setActiveDoc(doc)}
+                      />
+                    ))}
+                  </div>
                 )}
               </>
             )}

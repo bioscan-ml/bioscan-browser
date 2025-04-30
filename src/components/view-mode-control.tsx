@@ -1,5 +1,10 @@
 import { ViewMode } from '@/types/settings'
-import { BarChartHorizontalIcon, Grid2X2Icon, SheetIcon } from 'lucide-react'
+import {
+  BarChartHorizontalIcon,
+  DnaIcon,
+  Grid2X2Icon,
+  SheetIcon,
+} from 'lucide-react'
 import { Button } from './ui/button'
 import {
   Tooltip,
@@ -20,6 +25,11 @@ const VIEW_MODE_OPTIONS = {
       value: 'table',
       Icon: SheetIcon,
     },
+    {
+      label: 'DNA',
+      value: 'dna',
+      Icon: DnaIcon,
+    },
   ],
   'taxonomy-tree': [
     {
@@ -36,6 +46,11 @@ const VIEW_MODE_OPTIONS = {
       label: 'Chart',
       value: 'chart',
       Icon: BarChartHorizontalIcon,
+    },
+    {
+      label: 'DNA',
+      value: 'dna',
+      Icon: DnaIcon,
     },
   ],
   'find-similar': [

@@ -1,4 +1,4 @@
-export type ViewMode = 'chart' | 'gallery' | 'table'
+export type ViewMode = 'chart' | 'gallery' | 'table' | 'dna'
 
 export type SortOrder = 'asc' | 'desc'
 
