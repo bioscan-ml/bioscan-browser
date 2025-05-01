@@ -68,7 +68,7 @@ export const DnaBarcode = ({
           download={`barcode-${doc.id}.png`}
           href={dataURL}
         >
-          Download
+          Download PNG
           <DownloadIcon className="w-4 h-4 ml-2" />
         </a>
       ) : null}
