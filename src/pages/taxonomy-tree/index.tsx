@@ -158,7 +158,7 @@ export const TaxonomyTree = () => {
                   />
                 )}
                 {viewMode === 'dna' && (
-                  <div className="grid gap-8">
+                  <div className="grid">
                     {data?.docs.map((doc) => (
                       <DnaGalleryItem
                         key={doc.id}
