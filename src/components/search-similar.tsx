@@ -30,6 +30,7 @@ import {
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { FindSimilarControl } from './find-similar-control'
+import { DnaBarcodeGalleryItem } from './gallery/dna-barcode-gallery-item'
 import { GalleryItem } from './gallery/gallery-item'
 import { SearchTypeControl } from './search-type-control'
 import { Badge } from './ui/badge'
@@ -159,6 +160,17 @@ export const SearchSimilar = () => {
                       </GalleryItem>
                     ))}
                   </Gallery>
+                )}
+                {viewMode === 'dna-barcode' && (
+                  <div className="grid">
+                    {data?.docs.map((doc) => (
+                      <DnaBarcodeGalleryItem
+                        key={doc.id}
+                        doc={doc}
+                        onClick={() => setActiveDoc(doc)}
+                      />
+                    ))}
+                  </div>
                 )}
               </>
             ) : queryId ? (
