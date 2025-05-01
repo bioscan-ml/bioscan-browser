@@ -13,7 +13,9 @@ export const Dna = ({ doc }: ImagesProps) => {
   return (
     <div className="grid gap-4 w-full">
       <div className="flex flex-col items-start text-sm">
-        <span className="font-medium text-muted-foreground">DNA BIN</span>
+        <span className="font-medium text-muted-foreground">
+          Barcode Index Number (BIN)
+        </span>
         <Link
           to={{
             pathname: PATHS.SEARCH,
@@ -28,13 +30,15 @@ export const Dna = ({ doc }: ImagesProps) => {
         <span className="font-medium text-muted-foreground">Nucleotides</span>
         <span className="break-all">{nucleotides.length} bp</span>
       </div>
+      <div className="flex flex-col items-start text-sm overflow-auto">
+        <span className="sticky left-0 font-medium text-muted-foreground">
+          Barcode
+        </span>
+        <DnaBarcode doc={doc} height={128} showDownloadLink />
+      </div>
       <div className="flex flex-col items-start text-sm">
         <span className="font-medium text-muted-foreground">Sequence</span>
         <span className="break-all">{nucleotides}</span>
-      </div>
-      <div className="flex flex-col items-start text-sm">
-        <span className="font-medium text-muted-foreground">Barcode</span>
-        <DnaBarcode doc={doc} />
       </div>
     </div>
   )
