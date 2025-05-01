@@ -5,12 +5,6 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import colors from 'tailwindcss/colors'
 import { buttonVariants } from '../ui/button'
 
-interface DnaBarcodeProps {
-  doc: Doc
-  height?: number
-  showDownloadLink?: boolean
-}
-
 const COLOR_MAP: { [key: string]: string } = {
   A: '#FF6666', // red
   T: '#6666FF', // blue
@@ -20,6 +14,12 @@ const COLOR_MAP: { [key: string]: string } = {
 }
 
 const STROKE_WIDTH = 1
+
+interface DnaBarcodeProps {
+  doc: Doc
+  height?: number
+  showDownloadLink?: boolean
+}
 
 export const DnaBarcode = ({
   doc,
@@ -36,29 +36,29 @@ export const DnaBarcode = ({
 
   useEffect(() => {
     const canvas = canvasRef.current
-    const context = canvas?.getContext('2d')
-
-    if (context) {
-      context.clearRect(0, 0, width, height)
-
-      nucleotides.forEach((nucleotide, index) => {
-        context.fillStyle = COLOR_MAP[nucleotide]
-        context.fillRect(index * STROKE_WIDTH, 0, STROKE_WIDTH, height)
-      })
-    }
 
     if (canvas) {
+      const context = canvas?.getContext('2d')
+
+      if (context) {
+        // Clear canvas
+        context.clearRect(0, 0, width, height)
+
+        // Draw on canvas
+        nucleotides.forEach((nucleotide, index) => {
+          context.fillStyle = COLOR_MAP[nucleotide]
+          context.fillRect(index * STROKE_WIDTH, 0, STROKE_WIDTH, height)
+        })
+      }
+
+      // Update PNG download data
       setDataURL(canvas.toDataURL())
     }
   }, [height, nucleotides, width])
 
   return (
     <div className="space-y-2">
-      <canvas
-        ref={canvasRef}
-        width={nucleotides.length * STROKE_WIDTH}
-        height={height}
-      />
+      <canvas ref={canvasRef} width={width} height={height} />
       {showDownloadLink ? (
         <a
           className={cn(
