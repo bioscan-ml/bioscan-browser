@@ -62,7 +62,7 @@ export const DocDetailsDialogContent = ({ doc }: { doc: Doc }) => {
       </DialogHeader>
       <Fields doc={doc} />
       <Tabs defaultValue="images">
-        <TabsList className="grid w-full grid-cols-5">
+        <TabsList>
           <TabsTrigger value="images">Images</TabsTrigger>
           <TabsTrigger value="dna">DNA</TabsTrigger>
           <TabsTrigger value="map">Map</TabsTrigger>
