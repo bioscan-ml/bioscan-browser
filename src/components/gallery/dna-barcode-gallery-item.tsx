@@ -3,12 +3,15 @@ import { Doc } from '@/types/response-data'
 import { ChevronRightIcon } from 'lucide-react'
 import { DnaBarcode } from '../dna-barcode/dna-barcode'
 
-interface GalleryItemProps {
+interface DnaBarcodeGalleryItemProps {
   doc: Doc
   onClick: () => void
 }
 
-export const DnaGalleryItem = ({ doc, onClick }: GalleryItemProps) => {
+export const DnaBarcodeGalleryItem = ({
+  doc,
+  onClick,
+}: DnaBarcodeGalleryItemProps) => {
   const { taxon, parents } = getTaxon(doc)
 
   return (

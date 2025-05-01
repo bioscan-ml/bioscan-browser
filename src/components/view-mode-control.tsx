@@ -1,7 +1,7 @@
 import { ViewMode } from '@/types/settings'
 import {
   BarChartHorizontalIcon,
-  DnaIcon,
+  BarcodeIcon,
   Grid2X2Icon,
   SheetIcon,
 } from 'lucide-react'
@@ -26,9 +26,9 @@ const VIEW_MODE_OPTIONS = {
       Icon: SheetIcon,
     },
     {
-      label: 'DNA',
-      value: 'dna',
-      Icon: DnaIcon,
+      label: 'DNA barcode',
+      value: 'dna-barcode',
+      Icon: BarcodeIcon,
     },
   ],
   'taxonomy-tree': [
@@ -43,14 +43,14 @@ const VIEW_MODE_OPTIONS = {
       Icon: SheetIcon,
     },
     {
+      label: 'DNA barcode',
+      value: 'dna-barcode',
+      Icon: BarcodeIcon,
+    },
+    {
       label: 'Chart',
       value: 'chart',
       Icon: BarChartHorizontalIcon,
-    },
-    {
-      label: 'DNA',
-      value: 'dna',
-      Icon: DnaIcon,
     },
   ],
   'find-similar': [
@@ -63,6 +63,11 @@ const VIEW_MODE_OPTIONS = {
       label: 'Table',
       value: 'table',
       Icon: SheetIcon,
+    },
+    {
+      label: 'DNA barcode',
+      value: 'dna-barcode',
+      Icon: BarcodeIcon,
     },
   ],
 }

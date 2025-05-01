@@ -1,6 +1,6 @@
 import { DocDetailsDialog } from '@/components/doc-details/doc-details'
 import { Error } from '@/components/error'
-import { DnaGalleryItem } from '@/components/gallery/dna-gallery-item'
+import { DnaBarcodeGalleryItem } from '@/components/gallery/dna-barcode-gallery-item'
 import { Gallery } from '@/components/gallery/gallery'
 import { GalleryItem } from '@/components/gallery/gallery-item'
 import { Loader } from '@/components/loader'
@@ -157,10 +157,10 @@ export const TaxonomyTree = () => {
                     onItemClick={(doc) => setActiveDoc(doc)}
                   />
                 )}
-                {viewMode === 'dna' && (
+                {viewMode === 'dna-barcode' && (
                   <div className="grid">
                     {data?.docs.map((doc) => (
-                      <DnaGalleryItem
+                      <DnaBarcodeGalleryItem
                         key={doc.id}
                         doc={doc}
                         onClick={() => setActiveDoc(doc)}
