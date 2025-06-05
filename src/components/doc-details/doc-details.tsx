@@ -15,6 +15,7 @@ import { CodeBlock } from '../code-block'
 import { FindSimilarControl } from '../find-similar-control'
 import { Map } from '../map'
 import { TaxonDetailsArticle } from '../taxon-details-article'
+import { Dna } from './dna'
 import { Fields } from './fields'
 import { Images } from './images'
 
@@ -36,7 +37,7 @@ export const DocDetailsDialogContent = ({ doc }: { doc: Doc }) => {
   const { taxon, parents } = getTaxon(doc)
 
   return (
-    <DialogContent className="h-full max-w-screen-sm flex flex-col gap-8 overflow-auto sm:h-[calc(100%-4rem)]">
+    <DialogContent className="h-full max-w-screen-md flex flex-col gap-8 overflow-auto sm:h-[calc(100%-4rem)]">
       <DialogHeader>
         <div className="flex items-center gap-4">
           <DialogTitle>{taxon.label}</DialogTitle>
@@ -61,14 +62,18 @@ export const DocDetailsDialogContent = ({ doc }: { doc: Doc }) => {
       </DialogHeader>
       <Fields doc={doc} />
       <Tabs defaultValue="images">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList>
           <TabsTrigger value="images">Images</TabsTrigger>
+          <TabsTrigger value="dna">DNA</TabsTrigger>
           <TabsTrigger value="map">Map</TabsTrigger>
           <TabsTrigger value="raw">Raw</TabsTrigger>
           <TabsTrigger value="learn-more">Learn more</TabsTrigger>
         </TabsList>
         <TabsContent value="images">
           <Images doc={doc} />
+        </TabsContent>
+        <TabsContent value="dna">
+          <Dna doc={doc} />
         </TabsContent>
         <TabsContent value="map">
           <DocDetailsMap doc={doc} />

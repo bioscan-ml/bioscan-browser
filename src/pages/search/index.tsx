@@ -1,6 +1,7 @@
 import { DocDetailsDialog } from '@/components/doc-details/doc-details'
 import { Error } from '@/components/error'
 import { FilterControl } from '@/components/filter-control'
+import { DnaBarcodeGalleryItem } from '@/components/gallery/dna-barcode-gallery-item'
 import { Gallery } from '@/components/gallery/gallery'
 import { GalleryItem } from '@/components/gallery/gallery-item'
 import { Loader } from '@/components/loader'
@@ -107,6 +108,17 @@ export const Search = () => {
                       />
                     ))}
                   </Gallery>
+                )}
+                {viewMode === 'dna-barcode' && (
+                  <div className="grid">
+                    {data?.docs.map((doc) => (
+                      <DnaBarcodeGalleryItem
+                        key={doc.id}
+                        doc={doc}
+                        onClick={() => setActiveDoc(doc)}
+                      />
+                    ))}
+                  </div>
                 )}
                 {data?.docs.length === 0 && (
                   <NoRecordsFound onClearFilters={clearFilters} />
