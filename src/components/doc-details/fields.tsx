@@ -1,4 +1,3 @@
-import { buttonVariants } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import {
   FIELDS,
@@ -7,17 +6,14 @@ import {
   TAXON_FILTER_TYPES,
 } from '@/lib/constants'
 import { formatFieldValue } from '@/lib/formatFieldValue'
-import { cn } from '@/lib/utils'
 import { Doc } from '@/types/response-data'
-import { SearchIcon } from 'lucide-react'
 import { Link, To } from 'react-router-dom'
 
 interface FieldsProps {
   doc: Doc
-  showClosestMatches?: boolean
 }
 
-export const Fields = ({ doc, showClosestMatches }: FieldsProps) => (
+export const Fields = ({ doc }: FieldsProps) => (
   <div className="flex items-start gap-4">
     <div className="grid gap-4 flex-1">
       <Field doc={doc} fieldKey="id" />
@@ -25,7 +21,6 @@ export const Fields = ({ doc, showClosestMatches }: FieldsProps) => (
       <Field doc={doc} fieldKey="country" />
       <Field doc={doc} fieldKey="province_state" />
       <Field doc={doc} fieldKey="collectors" />
-      {showClosestMatches && <ClosestMatchesField doc={doc} />}
     </div>
     <Separator className="shrink-0" orientation="vertical" />
     <div className="grid gap-4 flex-1">
@@ -63,21 +58,6 @@ const Field = ({ doc, fieldKey }: { doc: Doc; fieldKey: keyof Doc }) => {
     </div>
   )
 }
-
-const ClosestMatchesField = ({ doc }: { doc: Doc }) => (
-  <div className="flex flex-col items-start text-sm">
-    <span className="font-medium text-muted-foreground mb-2">
-      Closest matches
-    </span>
-    <Link
-      className={cn(buttonVariants({ variant: 'outline' }), 'w-min')}
-      to={{ pathname: PATHS.FIND_SIMILAR, search: `sampleid=${doc.sampleid}` }}
-    >
-      Search
-      <SearchIcon className="w-4 h-4 ml-2" />
-    </Link>
-  </div>
-)
 
 const getFieldLink = (key: string, value: string): To | undefined => {
   if (TAXON_FILTER_TYPES.some((filterType) => filterType.key === key)) {

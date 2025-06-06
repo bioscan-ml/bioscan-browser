@@ -12,8 +12,10 @@ import { Doc } from '@/types/response-data'
 import { ChevronRight } from 'lucide-react'
 import { BookmarkControl } from '../bookmark-control'
 import { CodeBlock } from '../code-block'
+import { FindSimilarControl } from '../find-similar-control'
 import { Map } from '../map'
 import { TaxonDetailsArticle } from '../taxon-details-article'
+import { Dna } from './dna'
 import { Fields } from './fields'
 import { Images } from './images'
 import { ReportInfo } from './report-info'
@@ -21,31 +23,18 @@ import { ReportInfo } from './report-info'
 export const DocDetailsDialog = ({
   doc,
   open,
-  showClosestMatches,
   onOpenChange,
 }: {
   doc?: Doc
   open: boolean
-  showClosestMatches?: boolean
   onOpenChange: (open: boolean) => void
 }) => (
   <Dialog open={open} onOpenChange={onOpenChange}>
-    {doc && (
-      <DocDetailsDialogContent
-        doc={doc}
-        showClosestMatches={showClosestMatches}
-      />
-    )}
+    {doc && <DocDetailsDialogContent doc={doc} />}
   </Dialog>
 )
 
-export const DocDetailsDialogContent = ({
-  doc,
-  showClosestMatches,
-}: {
-  doc: Doc
-  showClosestMatches?: boolean
-}) => {
+export const DocDetailsDialogContent = ({ doc }: { doc: Doc }) => {
   const { taxon, parents } = getTaxon(doc)
 
   return (
@@ -58,7 +47,7 @@ export const DocDetailsDialogContent = ({
           </Badge>
           <BookmarkControl doc={doc} />
         </div>
-        <DialogDescription>
+        <DialogDescription className="mb-4">
           {parents.map((parent, index) => (
             <span key={index} className="inline-flex items-center">
               {parent.label}
@@ -68,17 +57,24 @@ export const DocDetailsDialogContent = ({
             </span>
           ))}
         </DialogDescription>
+        <div className="flex items-center gap-4">
+          <FindSimilarControl doc={doc} size="sm" variant="outline" />
+        </div>
       </DialogHeader>
-      <Fields doc={doc} showClosestMatches={showClosestMatches} />
+      <Fields doc={doc} />
       <Tabs defaultValue="images">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList>
           <TabsTrigger value="images">Images</TabsTrigger>
+          <TabsTrigger value="dna">DNA</TabsTrigger>
           <TabsTrigger value="map">Map</TabsTrigger>
           <TabsTrigger value="raw">Raw</TabsTrigger>
           <TabsTrigger value="learn-more">Learn more</TabsTrigger>
         </TabsList>
         <TabsContent value="images">
           <Images doc={doc} />
+        </TabsContent>
+        <TabsContent value="dna">
+          <Dna doc={doc} />
         </TabsContent>
         <TabsContent value="map">
           <DocDetailsMap doc={doc} />

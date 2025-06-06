@@ -19,7 +19,7 @@ export const TaxonDetails = ({ taxon }: TaxonDetailsProps) => (
         <InfoIcon className="w-4 h-4" />
       </Button>
     </DialogTrigger>
-    <DialogContent className="h-full max-w-screen-sm flex flex-col gap-8 overflow-auto sm:h-[calc(100%-4rem)]">
+    <DialogContent className="h-full max-w-screen-md flex flex-col gap-8 overflow-auto sm:h-[calc(100%-4rem)]">
       <VisuallyHidden.Root>
         <DialogTitle>{taxon.label}</DialogTitle>
         <DialogDescription />

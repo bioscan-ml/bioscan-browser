@@ -3,6 +3,8 @@ export interface Doc {
   class: string
   collectors: string[]
   country: string
+  dna_barcode: string
+  dna_bin: string
   family: string
   genus: string
   id: string

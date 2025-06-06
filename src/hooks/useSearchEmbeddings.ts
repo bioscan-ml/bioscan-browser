@@ -1,22 +1,21 @@
 import { filtersToQuery } from '@/lib/filtersToQuery'
 import { getFetchUrl } from '@/lib/getFetchUrl'
+import { makeGradioPrediction } from '@/lib/makeGradioPrediction'
 import { Doc } from '@/types/response-data'
 import { SearchType, Sort } from '@/types/settings'
-import { Client } from '@gradio/client'
 import { useQuery } from '@tanstack/react-query'
 
-const GRADIO_APP_REF = 'bioscan-ml/browser-backend'
-const GRADIO_ENDPOINT = '/searchEmbeddings'
+const GRADIO_METHOD = 'searchEmbeddings'
 const QUERY_KEY = 'search-embeddings'
 
 export const useSearchEmbeddings = (params: {
-  sampleId: string | null
+  queryId: string | null
   searchFrom: SearchType
   searchTo: SearchType
   pageSize: number
   sort?: Sort
 }) => {
-  const { isPending, error, data } = useQuery<{
+  const { data, error, isPending, refetch } = useQuery<{
     response: {
       docs: Doc[]
       numFound: number
@@ -25,30 +24,35 @@ export const useSearchEmbeddings = (params: {
   }>({
     queryKey: [QUERY_KEY, params],
     queryFn: async () => {
-      if (!params.sampleId) {
+      if (!params.queryId) {
         throw Error()
       }
 
-      const client = await Client.connect(GRADIO_APP_REF)
-      const result = await client.predict(GRADIO_ENDPOINT, {
-        id: params.sampleId,
-        key_type: params.searchFrom,
-        query_type: params.searchTo,
-        num_results: params.pageSize + 1,
+      // TODO: In practice, this call will never complete. When this issue is resolved, we can start parse the response.
+      const predictionRes = await makeGradioPrediction({
+        method: GRADIO_METHOD,
+        data: [
+          params.queryId,
+          params.searchFrom,
+          params.searchTo,
+          'FlatIP(default)',
+          params.pageSize + 1,
+        ],
       })
-      const sampleIds: string[] = JSON.parse(
-        (result.data as string[])[0].replace(/'/g, '"'),
+
+      const recordIds: string[] = JSON.parse(
+        predictionRes.split('data: ')[1].trim().slice(2, -2).replace(/'/g, '"'),
       )
 
-      if (!sampleIds?.length) {
+      if (!recordIds?.length) {
         throw Error()
       }
 
       // Use sample ids to get records
       const q = filtersToQuery([
         {
-          type: 'sampleid',
-          value: sampleIds.filter((sampleId) => sampleId !== params.sampleId), // Filter out query record
+          type: 'id',
+          value: recordIds.filter((recordId) => recordId !== params.queryId), // Filter out query record
         },
       ])
       const recordsRes = await fetch(
@@ -64,7 +68,7 @@ export const useSearchEmbeddings = (params: {
 
       const docs = data.response.docs.sort(
         (doc1: Doc, doc2: Doc) =>
-          sampleIds.indexOf(doc1.sampleid) - sampleIds.indexOf(doc2.sampleid),
+          recordIds.indexOf(doc1.id) - recordIds.indexOf(doc2.id),
       )
 
       return {
@@ -74,13 +78,14 @@ export const useSearchEmbeddings = (params: {
         },
       }
     },
-    enabled: !!params.sampleId,
+    enabled: !!params.queryId,
     retry: false,
   })
 
   return {
-    isPending,
-    error,
     data: data?.response,
+    error,
+    isPending,
+    refetch,
   }
 }
