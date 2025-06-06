@@ -172,7 +172,7 @@ export const SearchSimilar = () => {
                   if (queryId === newQueryId) {
                     refetch()
                   } else {
-                    setQueryId(queryId)
+                    setQueryId(newQueryId)
                   }
                 }}
                 title="No similar records found"
@@ -180,7 +180,7 @@ export const SearchSimilar = () => {
             ) : (
               <Intro
                 description="To find similar records, first specify a query record."
-                onSubmit={(queryId) => setQueryId(queryId)}
+                onSubmit={(newQueryId) => setQueryId(newQueryId)}
                 title="Get started"
               />
             )}
