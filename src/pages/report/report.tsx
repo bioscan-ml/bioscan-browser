@@ -20,8 +20,8 @@ import { useRecord } from '@/hooks/useRecord'
 import { getImageSrc } from '@/lib/getImageSrc'
 import { cn } from '@/lib/utils'
 import { Doc } from '@/types/response-data'
-import { ExternalLinkIcon, Loader2Icon, SearchIcon } from 'lucide-react'
-import { ReactNode, useEffect } from 'react'
+import { ExternalLinkIcon, Loader2Icon } from 'lucide-react'
+import { ReactNode } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
 const ERROR_MESSAGES = {
@@ -120,15 +120,10 @@ const ReportForm = ({
     data: doc,
     error: recordError,
     isPending: recordIsPending,
-    refetch,
   } = useRecord(id?.length ? id : undefined)
-  const { control, setValue, handleSubmit, reset } = useForm<ReportFormData>({
-    defaultValues: { comments: '', id: '', type: '', name: '' },
+  const { control, handleSubmit, reset } = useForm<ReportFormData>({
+    defaultValues: { comments: '', id: id ?? '', type: '', name: '' },
   })
-
-  useEffect(() => {
-    setValue('id', id ?? '')
-  }, [id, setValue])
 
   const onClear = () => {
     reset()
@@ -162,22 +157,14 @@ const ReportForm = ({
               }
             >
               <div className="flex gap-2">
-                <Input {...field} placeholder="Specify a record ID" />
-                <Button
-                  className="shrink-0"
-                  onClick={() => {
-                    if (id === field.value) {
-                      refetch()
-                    } else {
-                      setId(field.value ?? null)
-                    }
+                <Input
+                  {...field}
+                  onChange={(e) => {
+                    field.onChange(e)
+                    setId(e.currentTarget.value ?? null)
                   }}
-                  size="icon"
-                  type="button"
-                  variant="outline"
-                >
-                  <SearchIcon className="w-4 h-4" />
-                </Button>
+                  placeholder="Specify a record ID"
+                />
               </div>
             </FormField>
           )}
