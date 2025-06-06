@@ -79,22 +79,12 @@ export const SearchSimilar = () => {
                   <Input
                     placeholder="Specify a record ID"
                     value={searchString}
-                    onChange={(e) => setSearchString(e.currentTarget.value)}
-                  />
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="shrink-0"
-                    onClick={() => {
-                      if (queryId === searchString) {
-                        refetch()
-                      } else {
-                        setQueryId(queryId)
-                      }
+                    onChange={(e) => {
+                      const { value } = e.currentTarget
+                      setSearchString(value)
+                      setQueryId(value)
                     }}
-                  >
-                    <SearchIcon className="w-4 h-4" />
-                  </Button>
+                  />
                   <RandomSearch onClick={setQueryId} size="icon" />
                 </div>
               </SidebarSection>
