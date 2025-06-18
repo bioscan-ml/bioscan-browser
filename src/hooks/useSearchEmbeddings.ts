@@ -7,7 +7,7 @@ import { useQuery } from '@tanstack/react-query'
 
 const GRADIO_METHOD = 'searchEmbeddings'
 const QUERY_KEY = 'search-embeddings'
-const INDEX_TYPE = 'PQR64x4fsr'
+const INDEX_TYPE = 'PQ64x4fsr'
 
 export const useSearchEmbeddings = (params: {
   queryId: string | null
