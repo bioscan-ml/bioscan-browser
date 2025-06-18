@@ -35,7 +35,6 @@ export const useSearchEmbeddings = (params: {
           params.queryId,
           params.searchFrom,
           params.searchTo,
-          'FlatIP(default)',
           params.pageSize + 1,
         ],
       })
