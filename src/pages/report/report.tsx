@@ -216,15 +216,32 @@ const ReportForm = ({
             </FormField>
           )}
         />
-        <Controller
-          control={control}
-          name="name"
-          render={({ field, fieldState }) => (
-            <FormField label="Your name" error={fieldState.error?.message}>
-              <Input {...field} />
-            </FormField>
-          )}
-        />
+        <div>
+          <h4 className="mb-2">Submitted by</h4>
+          <div className="grid grid-cols-2 gap-8">
+            <Controller
+              control={control}
+              name="name"
+              render={({ field, fieldState }) => (
+                <FormField label="Name" error={fieldState.error?.message}>
+                  <Input {...field} />
+                </FormField>
+              )}
+            />
+            <Controller
+              control={control}
+              name="gitHubUser"
+              render={({ field, fieldState }) => (
+                <FormField
+                  label="GitHub user"
+                  error={fieldState.error?.message}
+                >
+                  <Input {...field} />
+                </FormField>
+              )}
+            />
+          </div>
+        </div>
       </div>
       <div className="flex flex-col gap-2">
         <div className="flex justify-start gap-4">

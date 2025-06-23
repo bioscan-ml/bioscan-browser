@@ -69,7 +69,7 @@ ${data.formData.comments.length ? data.formData.comments : 'No comments'}
 
 ### Submitted by
 
-${data.formData.name.length ? data.formData.name : 'Anonymous user'} from BIOSCAN Browser
+${getUser(data)} from BIOSCAN Browser
 
 `
 }
@@ -82,4 +82,24 @@ const generateIssueLabels = (data: { formData: ReportFormData }) => {
   const label = reportType?.label
 
   return ['report', ...(label ? [label] : [])]
+}
+
+const getUser = (data: { formData: ReportFormData; doc: Doc }) => {
+  if (data.formData.gitHubUser.length) {
+    const gitHubUser = data.formData.gitHubUser.includes('@')
+      ? data.formData.gitHubUser
+      : `@${data.formData.gitHubUser}`
+
+    if (data.formData.name.length) {
+      return `${data.formData.name} (${gitHubUser})`
+    } else {
+      return gitHubUser
+    }
+  }
+
+  if (data.formData.name.length) {
+    return data.formData.name
+  }
+
+  return 'Anonymous user'
 }
