@@ -20,4 +20,20 @@ const REPORT_TYPES = [
   { title: 'Other report' },
 ]
 
-export { APP_ID, INSTALLATION_ID, OWNER, REPO, REPORT_TYPES }
+const COMMENT_INSTRUCTIONS: { [label: string]: string } = {
+  image:
+    'Please include other comments about the problematic image. You may also leave this field blank.',
+  metadata:
+    'Please describe what metadata seems to not be correct and why you think so. If you have suggestions on what would be correct, please include those details as well.',
+  label:
+    'Please be as detailed as possible about label change suggestions. What seems wrong? What would be correct? Why do you think this would be correct?',
+}
+
+export {
+  APP_ID,
+  INSTALLATION_ID,
+  OWNER,
+  REPO,
+  REPORT_TYPES,
+  COMMENT_INSTRUCTIONS,
+}

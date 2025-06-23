@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
-import { REPORT_TYPES } from '@/hooks/github/constants'
+import { COMMENT_INSTRUCTIONS, REPORT_TYPES } from '@/hooks/github/constants'
 import { ReportFormData } from '@/hooks/github/types'
 import { useCreateIssue } from '@/hooks/github/useCreateIssue'
 import { useId } from '@/hooks/search-params/useId'
@@ -121,9 +121,10 @@ const ReportForm = ({
     error: recordError,
     isPending: recordIsPending,
   } = useRecord(id?.length ? id : undefined)
-  const { control, handleSubmit, reset } = useForm<ReportFormData>({
+  const { control, watch, handleSubmit, reset } = useForm<ReportFormData>({
     defaultValues: { comments: '', id: id ?? '', type: '', name: '' },
   })
+  const type = watch('type')
 
   const onClear = () => {
     reset()
@@ -210,14 +211,24 @@ const ReportForm = ({
         <Controller
           control={control}
           name="comments"
-          render={({ field, fieldState }) => (
-            <FormField label="Comments" error={fieldState.error?.message}>
-              <Textarea {...field} />
-            </FormField>
-          )}
+          render={({ field, fieldState }) => {
+            const label = REPORT_TYPES.find(
+              ({ title }) => type === title,
+            )?.label
+
+            return (
+              <FormField
+                label="Comments"
+                description={label ? COMMENT_INSTRUCTIONS[label] : undefined}
+                error={fieldState.error?.message}
+              >
+                <Textarea {...field} />
+              </FormField>
+            )
+          }}
         />
         <div>
-          <h4 className="mb-2">Submitted by</h4>
+          <h4 className="mb-2">Submitted by (optional)</h4>
           <div className="grid grid-cols-2 gap-8">
             <Controller
               control={control}
@@ -255,6 +266,9 @@ const ReportForm = ({
             Clear
           </Button>
         </div>
+        <p className="text-xs text-muted-foreground italic">
+          All information submitted will be public on GitHub.
+        </p>
         {error ? (
           <span className="text-xs text-destructive italic">
             {ERROR_MESSAGES.UNKNOWN}
@@ -318,17 +332,24 @@ const RecordDetails = ({
 const FormField = ({
   children,
   className,
+  description,
   error,
   label,
 }: {
   children: ReactNode
   className?: string
+  description?: string
   error?: string
   label: string
 }) => (
   <div className={cn('flex flex-col gap-y-2', className)}>
     <label className="py-1.5 text-sm leading-none font-medium">{label}</label>
     {children}
+    {description ? (
+      <span className="text-xs text-muted-foreground italic">
+        {description}
+      </span>
+    ) : null}
     {error ? (
       <span className="text-xs text-destructive italic">{error}</span>
     ) : null}
