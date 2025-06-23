@@ -180,13 +180,26 @@ const ReportForm = ({
           render={({ field, fieldState }) => (
             <FormField label="Report type *" error={fieldState.error?.message}>
               <Select value={field.value} onValueChange={field.onChange}>
-                <SelectTrigger ref={field.ref}>
+                <SelectTrigger
+                  ref={field.ref}
+                  className="[&>span:first-child]:contents"
+                >
                   <SelectValue placeholder="Select a type" />
                 </SelectTrigger>
                 <SelectContent>
-                  {REPORT_TYPES.map(({ title }) => (
-                    <SelectItem key={title} value={title}>
-                      {title}
+                  {REPORT_TYPES.map(({ title, label }) => (
+                    <SelectItem
+                      key={title}
+                      value={title}
+                      className="[&>span:last-child]:contents"
+                    >
+                      <div className="flex-1 flex gap-2">
+                        <span>{title}</span>
+                        <div className="flex-1" />
+                        {label ? (
+                          <Badge variant="outline">{label}</Badge>
+                        ) : null}
+                      </div>
                     </SelectItem>
                   ))}
                 </SelectContent>

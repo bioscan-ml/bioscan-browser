@@ -12,10 +12,10 @@ const REPORT_TYPES = [
   { title: 'Image contains multiple insects', label: 'image' },
   { title: 'Insect is cropped incorrectly', label: 'image' },
   { title: 'Metadata is not correct', label: 'metadata' },
-  { title: 'Contest current label', label: 'taxonomic label' },
+  { title: 'Contest current label', label: 'label' },
   {
     title: 'Suggest label for deeper taxonomic level',
-    label: 'taxonomic label',
+    label: 'label',
   },
   { title: 'Other report' },
 ]
