@@ -191,8 +191,8 @@ const ReportForm = ({
                   {REPORT_TYPES.map(({ title, label }) => (
                     <SelectItem
                       key={title}
-                      value={title}
                       className="[&>span:last-child]:contents"
+                      value={title}
                     >
                       <div className="flex-1 flex gap-2">
                         <span>{title}</span>

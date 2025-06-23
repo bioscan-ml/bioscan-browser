@@ -16,7 +16,7 @@ export const MENU_ITEMS: MenuItem[] = [
           experimental: true,
         },
       },
-      { id: 'report', label: 'Report', to: PATHS.REPORT },
+      { id: 'report', label: 'Report a problem', to: PATHS.REPORT },
       { id: 'style-guide', label: 'Style guide', to: PATHS.STYLE_GUIDE },
       {
         id: 'system-status',
