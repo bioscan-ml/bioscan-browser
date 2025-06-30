@@ -1,10 +1,10 @@
-const APP_ID = 1203652
+const APP_ID = 1471676
 
-const INSTALLATION_ID = 63888647
+const INSTALLATION_ID = 73295615
 
-const OWNER = 'annavik'
+const OWNER = 'bioscan-ml'
 
-const REPO = 'bioscan-experiments'
+const REPO = 'bioscan-5m'
 
 const REPORT_TYPES = [
   { title: 'No insect in the image', label: 'image' },
