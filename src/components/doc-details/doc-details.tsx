@@ -45,7 +45,6 @@ export const DocDetailsDialogContent = ({ doc }: { doc: Doc }) => {
           <Badge variant="outline" className="uppercase">
             {taxon.rankLabel}
           </Badge>
-          <BookmarkControl doc={doc} />
         </div>
         <DialogDescription className="mb-4">
           {parents.map((parent, index) => (
@@ -57,8 +56,9 @@ export const DocDetailsDialogContent = ({ doc }: { doc: Doc }) => {
             </span>
           ))}
         </DialogDescription>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <FindSimilarControl doc={doc} variant="outline" />
+          <BookmarkControl doc={doc} />
           <ReportIssueControl doc={doc} size="icon" />
         </div>
       </DialogHeader>

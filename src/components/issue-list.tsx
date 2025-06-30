@@ -22,21 +22,19 @@ export const IssueList = ({ id }: { id: string }) => {
       {isPending ? (
         <span className="text-sm">Loading...</span>
       ) : error ? (
-        <div className="flex items-center gap-2">
-          <div className="w-5 h-5 flex items-center justify-center">
-            <AlertCircleIcon className="w-4 h-4 text-destructive" />
-          </div>
-          <span className="text-sm">Could not load issues</span>
-        </div>
+        <span className="text-sm">
+          <AlertCircleIcon className="inline w-4 h-4 mr-2 text-destructive" />
+          <span>Could not load issues</span>
+        </span>
       ) : (
-        <div className="flex flex-col items-start mb-4">
+        <div className="flex flex-col items-start gap-2">
           {issues?.length ? (
             issues.map((issue) => (
               <div
                 key={issue.id}
-                className="w-full flex items-start justify-start gap-2 py-2 [&:not(:last-child)]:border-b"
+                className="w-full flex items-start justify-start"
               >
-                <div className="w-5 h-5 flex items-center justify-center shrink-0">
+                <div className="h-5 flex items-center justify-center shrink-0 mr-2">
                   <TooltipProvider delayDuration={0}>
                     <Tooltip>
                       <TooltipTrigger>
@@ -57,15 +55,13 @@ export const IssueList = ({ id }: { id: string }) => {
                   </TooltipProvider>
                 </div>
                 <a
-                  className="grow flex items-start justify-between gap-2 text-sm text-link"
+                  className="inline text-sm text-link"
                   href={issue.html_url}
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  <span>{issue.title}</span>
-                  <div className="w-5 h-5 flex items-center justify-center shrink-0">
-                    <ExternalLinkIcon className="w-4 h-4" />
-                  </div>
+                  {issue.title}
+                  <ExternalLinkIcon className="inline w-4 h-4 ml-2" />
                 </a>
               </div>
             ))

@@ -1,4 +1,5 @@
 import { CodeBlock } from '@/components/code-block'
+import { DocDetailsDialog } from '@/components/doc-details/doc-details'
 import { Loader } from '@/components/loader'
 import { PageContent } from '@/components/page-content'
 import { Badge } from '@/components/ui/badge'
@@ -12,6 +13,12 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 import { COMMENT_INSTRUCTIONS, REPORT_TYPES } from '@/hooks/github/constants'
 import { ReportFormData } from '@/hooks/github/types'
 import { useCreateIssue } from '@/hooks/github/useCreateIssue'
@@ -21,8 +28,8 @@ import { RESOURCES } from '@/lib/constants'
 import { getImageSrc } from '@/lib/getImageSrc'
 import { cn } from '@/lib/utils'
 import { Doc } from '@/types/response-data'
-import { ExternalLinkIcon, Loader2Icon } from 'lucide-react'
-import { ReactNode } from 'react'
+import { ExternalLinkIcon, EyeIcon, Loader2Icon } from 'lucide-react'
+import { ReactNode, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
 const ERROR_MESSAGES = {
@@ -43,11 +50,12 @@ export const Report = () => {
           <h1 className="text-accent mb-2">Report</h1>
           <p className="text-muted-foreground mb-8">
             Here you can report a problem or suggest updates to BIOSCAN-5M. Your
-            report will be submitted as a GitHub issue. If the report is
-            approved, the update will be included with the next version of the
-            dataset. Thank you for helping us improve BIOSCAN-5M! !
+            report will be submitted as a GitHub issue and you can follow the
+            report progress in the GitHub project. If the report is approved,
+            the update will be included with the next version of the dataset.
+            Thank you for helping us improve BIOSCAN-5M!
           </p>
-          <div className="flex gap-2">
+          <div className="flex gap-4">
             <a
               className={buttonVariants({ variant: 'outline' })}
               href={RESOURCES.DATASET_GITHUB_ISSUES}
@@ -152,7 +160,13 @@ const ReportForm = ({
     isPending: recordIsPending,
   } = useRecord(id?.length ? id : undefined)
   const { control, watch, handleSubmit, reset } = useForm<ReportFormData>({
-    defaultValues: { comments: '', id: id ?? '', type: '', name: '' },
+    defaultValues: {
+      comments: '',
+      id: id ?? '',
+      type: '',
+      name: '',
+      gitHubUser: '',
+    },
   })
   const type = watch('type')
 
@@ -163,7 +177,7 @@ const ReportForm = ({
 
   return (
     <form
-      className="p-8 space-y-8 rounded-sm bg-muted border md:p-12 md:space-y-12"
+      className="p-6 space-y-8 rounded-sm bg-muted border md:p-12 md:space-y-12"
       onSubmit={handleSubmit((formData) => {
         if (doc) {
           createIssue({ formData, doc })
@@ -196,6 +210,7 @@ const ReportForm = ({
                   }}
                   placeholder="Specify a record ID"
                 />
+                {doc ? <RecordDetailsDialog doc={doc} /> : null}
               </div>
             </FormField>
           )}
@@ -259,7 +274,7 @@ const ReportForm = ({
         />
         <div>
           <h4 className="mb-2">Submitted by (optional)</h4>
-          <div className="grid grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
             <Controller
               control={control}
               name="name"
@@ -355,6 +370,33 @@ const RecordDetails = ({
       <FormField label="Metadata">
         <CodeBlock expandable code={JSON.stringify(doc, null, 4)} />
       </FormField>
+    </>
+  )
+}
+
+const RecordDetailsDialog = ({ doc }: { doc: Doc }) => {
+  const [open, setOpen] = useState(false)
+
+  return (
+    <>
+      <TooltipProvider delayDuration={0}>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              onClick={() => setOpen(true)}
+              size="icon"
+              type="button"
+              variant="ghost"
+            >
+              <EyeIcon className="w-4 h-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="bottom">
+            <p>Show details</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+      <DocDetailsDialog doc={doc} open={!!open} onOpenChange={setOpen} />
     </>
   )
 }
