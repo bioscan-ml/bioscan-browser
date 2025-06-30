@@ -13,7 +13,7 @@ const app = new App({
 })
 
 export const useCreateIssue = () => {
-  const { mutate, isPending, isSuccess, error, reset } = useMutation({
+  const { mutate, isPending, isSuccess, error, reset, data } = useMutation({
     mutationFn: async (data: { formData: ReportFormData; doc: Doc }) => {
       const octokit = await app.getInstallationOctokit(INSTALLATION_ID)
 
@@ -27,7 +27,7 @@ export const useCreateIssue = () => {
     },
   })
 
-  return { createIssue: mutate, isPending, isSuccess, error, reset }
+  return { createIssue: mutate, isPending, isSuccess, error, reset, data }
 }
 
 const generateIssueTitle = (data: { formData: ReportFormData; doc: Doc }) =>

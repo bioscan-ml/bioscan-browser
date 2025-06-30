@@ -7,7 +7,9 @@ import {
 } from '@/lib/constants'
 import { formatFieldValue } from '@/lib/formatFieldValue'
 import { Doc } from '@/types/response-data'
+import { ReactNode } from 'react'
 import { Link, To } from 'react-router-dom'
+import { IssueList } from '../issue-list'
 
 interface FieldsProps {
   doc: Doc
@@ -16,26 +18,29 @@ interface FieldsProps {
 export const Fields = ({ doc }: FieldsProps) => (
   <div className="flex items-start gap-4">
     <div className="grid gap-4 flex-1">
-      <Field doc={doc} fieldKey="id" />
-      <Field doc={doc} fieldKey="sampleid" />
-      <Field doc={doc} fieldKey="country" />
-      <Field doc={doc} fieldKey="province_state" />
-      <Field doc={doc} fieldKey="collectors" />
+      <DocField doc={doc} fieldKey="id" />
+      <DocField doc={doc} fieldKey="sampleid" />
+      <DocField doc={doc} fieldKey="country" />
+      <DocField doc={doc} fieldKey="province_state" />
+      <DocField doc={doc} fieldKey="collectors" />
+      <Field label="Reported issues">
+        <IssueList id={doc.id} />
+      </Field>
     </div>
     <Separator className="shrink-0" orientation="vertical" />
     <div className="grid gap-4 flex-1">
-      <Field doc={doc} fieldKey="phylum" />
-      <Field doc={doc} fieldKey="class" />
-      <Field doc={doc} fieldKey="order" />
-      <Field doc={doc} fieldKey="family" />
-      <Field doc={doc} fieldKey="subfamily" />
-      <Field doc={doc} fieldKey="genus" />
-      <Field doc={doc} fieldKey="species" />
+      <DocField doc={doc} fieldKey="phylum" />
+      <DocField doc={doc} fieldKey="class" />
+      <DocField doc={doc} fieldKey="order" />
+      <DocField doc={doc} fieldKey="family" />
+      <DocField doc={doc} fieldKey="subfamily" />
+      <DocField doc={doc} fieldKey="genus" />
+      <DocField doc={doc} fieldKey="species" />
     </div>
   </div>
 )
 
-const Field = ({ doc, fieldKey }: { doc: Doc; fieldKey: keyof Doc }) => {
+const DocField = ({ doc, fieldKey }: { doc: Doc; fieldKey: keyof Doc }) => {
   const field = FIELDS.find((field) => field.key === fieldKey)
   const value = formatFieldValue(doc[fieldKey])
 
@@ -46,8 +51,7 @@ const Field = ({ doc, fieldKey }: { doc: Doc; fieldKey: keyof Doc }) => {
   const link = getFieldLink(field.key, value)
 
   return (
-    <div className="flex flex-col items-start text-sm">
-      <span className="font-medium text-muted-foreground">{field.label}</span>
+    <Field label={field.label}>
       {link ? (
         <Link to={link} className="text-link">
           {value}
@@ -55,9 +59,16 @@ const Field = ({ doc, fieldKey }: { doc: Doc; fieldKey: keyof Doc }) => {
       ) : (
         <span>{value}</span>
       )}
-    </div>
+    </Field>
   )
 }
+
+const Field = ({ children, label }: { children: ReactNode; label: string }) => (
+  <div className="flex flex-col items-start text-sm">
+    <span className="font-medium text-muted-foreground">{label}</span>
+    {children}
+  </div>
+)
 
 const getFieldLink = (key: string, value: string): To | undefined => {
   if (TAXON_FILTER_TYPES.some((filterType) => filterType.key === key)) {

@@ -14,11 +14,11 @@ import { BookmarkControl } from '../bookmark-control'
 import { CodeBlock } from '../code-block'
 import { FindSimilarControl } from '../find-similar-control'
 import { Map } from '../map'
+import { ReportIssueControl } from '../report-issue-control'
 import { TaxonDetailsArticle } from '../taxon-details-article'
 import { Dna } from './dna'
 import { Fields } from './fields'
 import { Images } from './images'
-import { ReportInfo } from './report-info'
 
 export const DocDetailsDialog = ({
   doc,
@@ -58,7 +58,8 @@ export const DocDetailsDialogContent = ({ doc }: { doc: Doc }) => {
           ))}
         </DialogDescription>
         <div className="flex items-center gap-4">
-          <FindSimilarControl doc={doc} size="sm" variant="outline" />
+          <FindSimilarControl doc={doc} variant="outline" />
+          <ReportIssueControl doc={doc} size="icon" />
         </div>
       </DialogHeader>
       <Fields doc={doc} />
@@ -88,7 +89,6 @@ export const DocDetailsDialogContent = ({ doc }: { doc: Doc }) => {
           </div>
         </TabsContent>
       </Tabs>
-      <ReportInfo doc={doc} />
     </DialogContent>
   )
 }

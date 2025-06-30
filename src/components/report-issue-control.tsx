@@ -8,22 +8,22 @@ import {
 import { PATHS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import { Doc } from '@/types/response-data'
-import { SearchIcon } from 'lucide-react'
+import { FlagIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
-interface FindSimilarControlProps {
+interface ReportIssueControlProps {
   className?: string
   doc: Doc
   size?: 'default' | 'icon'
   variant?: 'ghost' | 'outline'
 }
 
-export const FindSimilarControl = ({
+export const ReportIssueControl = ({
   className,
   doc,
   size = 'default',
   variant = 'ghost',
-}: FindSimilarControlProps) => {
+}: ReportIssueControlProps) => {
   if (size === 'icon') {
     return (
       <TooltipProvider delayDuration={0}>
@@ -32,15 +32,15 @@ export const FindSimilarControl = ({
             <Link
               className={cn(buttonVariants({ size, variant }), className)}
               to={{
-                pathname: PATHS.FIND_SIMILAR,
-                search: `queryid=${doc.id}`,
+                pathname: PATHS.REPORT,
+                search: `id=${doc.id}`,
               }}
             >
-              <SearchIcon className="w-4 h-4" />
+              <FlagIcon className="w-4 h-4" />
             </Link>
           </TooltipTrigger>
           <TooltipContent side="bottom">
-            <p>Find similar</p>
+            <p>Report issue</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
@@ -51,12 +51,12 @@ export const FindSimilarControl = ({
     <Link
       className={cn(buttonVariants({ size, variant }), className)}
       to={{
-        pathname: PATHS.FIND_SIMILAR,
-        search: `queryid=${doc.id}`,
+        pathname: PATHS.REPORT,
+        search: `id=${doc.id}`,
       }}
     >
-      <SearchIcon className="w-4 h-4 mr-2" />
-      Find similar
+      <FlagIcon className="w-4 h-4 mr-2" />
+      Report issue
     </Link>
   )
 }

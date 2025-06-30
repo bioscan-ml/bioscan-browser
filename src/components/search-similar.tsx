@@ -143,8 +143,9 @@ export const SearchSimilar = () => {
                         onClick={() => setActiveDoc(doc)}
                       >
                         <FindSimilarControl
-                          doc={doc}
                           className="m-2 absolute top-0 right-0"
+                          doc={doc}
+                          size="icon"
                           variant="outline"
                         />
                       </GalleryItem>

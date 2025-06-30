@@ -17,6 +17,7 @@ import { ReportFormData } from '@/hooks/github/types'
 import { useCreateIssue } from '@/hooks/github/useCreateIssue'
 import { useId } from '@/hooks/search-params/useId'
 import { useRecord } from '@/hooks/useRecord'
+import { RESOURCES } from '@/lib/constants'
 import { getImageSrc } from '@/lib/getImageSrc'
 import { cn } from '@/lib/utils'
 import { Doc } from '@/types/response-data'
@@ -32,14 +33,40 @@ const ERROR_MESSAGES = {
 
 export const Report = () => {
   const { id, setId } = useId()
-  const { createIssue, error, isPending, isSuccess, reset } = useCreateIssue()
+  const { createIssue, error, isPending, isSuccess, reset, data } =
+    useCreateIssue()
 
   return (
     <PageContent>
-      <article className="max-w-screen-md py-6 space-y-8 md:py-12 md:space-y-12">
+      <div className="max-w-screen-md py-6 space-y-8 md:py-12 md:space-y-12">
         <div>
           <h1 className="text-accent mb-2">Report</h1>
-          <h2>Report a problem or suggest updates to BIOSCAN-5M</h2>
+          <p className="text-muted-foreground mb-8">
+            Here you can report a problem or suggest updates to BIOSCAN-5M. Your
+            report will be submitted as a GitHub issue. If the report is
+            approved, the update will be included with the next version of the
+            dataset. Thank you for helping us improve BIOSCAN-5M! !
+          </p>
+          <div className="flex gap-2">
+            <a
+              className={buttonVariants({ variant: 'outline' })}
+              href={RESOURCES.DATASET_GITHUB_ISSUES}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              GitHub issues
+              <ExternalLinkIcon className="w-4 h-4 ml-2" />
+            </a>
+            <a
+              className={buttonVariants({ variant: 'outline' })}
+              href={RESOURCES.DATASET_GITHUB_PROJECT}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              GitHub project
+              <ExternalLinkIcon className="w-4 h-4 ml-2" />
+            </a>
+          </div>
         </div>
         {isSuccess ? (
           <AfterSubmit
@@ -47,6 +74,7 @@ export const Report = () => {
               setId(null)
               reset()
             }}
+            url={data?.data.html_url}
           />
         ) : (
           <ReportForm
@@ -57,15 +85,17 @@ export const Report = () => {
             setId={setId}
           />
         )}
-      </article>
+      </div>
     </PageContent>
   )
 }
 
 const AfterSubmit = ({
   onNewReportClick,
+  url,
 }: {
   onNewReportClick: () => void
+  url?: string
 }) => (
   <div className="p-8 rounded-sm bg-muted border md:p-12">
     <h3 className="text-accent mb-8">
@@ -73,29 +103,29 @@ const AfterSubmit = ({
     </h3>
     <h4 className="mb-2">What happens now?</h4>
     <p className="text-muted-foreground mb-8">
-      Your report has been submitted as a{' '}
-      <a className="text-link" href="#">
-        GitHub issue
-      </a>{' '}
-      and a dataset admin will now take a closer look at it. This can take a few
-      days, weeks or even months. It all depends on our current availability,
-      but also the report type. Reports related to the taxonomic label typically
-      take longer time to resolve. If the report is approved, the update will be
-      included with the next version of the dataset.
+      Your report has been submitted as a GitHub issue and a dataset admin will
+      now take a closer look at it. This can take a few days, weeks or even
+      months. It all depends on our current availability, but also the report
+      type. Reports related to the taxonomic label typically take longer time to
+      resolve. If the report is approved, the update will be included with the
+      next version of the dataset.
     </p>
     <h4 className="mb-2">How can I follow the report progress?</h4>
     <p className="text-muted-foreground mb-8">
-      You can follow the report progress and related conversations on{' '}
-      <a className="text-link" href="">
-        GitHub
-      </a>
-      !
+      You can follow the report progress and related conversations on GitHub!
     </p>
     <div className="flex gap-2">
-      <a className={buttonVariants()} href="#">
-        Your report
-        <ExternalLinkIcon className="w-4 h-4 ml-2" />
-      </a>
+      {url ? (
+        <a
+          className={buttonVariants()}
+          href={url}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Your report
+          <ExternalLinkIcon className="w-4 h-4 ml-2" />
+        </a>
+      ) : null}
       <Button variant="outline" onClick={onNewReportClick}>
         New report
       </Button>
