@@ -122,7 +122,7 @@ const AfterSubmit = ({
     <p className="text-muted-foreground mb-8">
       You can follow the report progress and related conversations on GitHub!
     </p>
-    <div className="flex gap-2">
+    <div className="flex gap-4">
       {url ? (
         <a
           className={buttonVariants()}

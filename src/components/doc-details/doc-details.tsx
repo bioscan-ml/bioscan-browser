@@ -40,7 +40,7 @@ export const DocDetailsDialogContent = ({ doc }: { doc: Doc }) => {
   return (
     <DialogContent className="h-full max-w-screen-md flex flex-col gap-8 overflow-auto sm:h-[calc(100%-4rem)]">
       <DialogHeader>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 mb-2">
           <DialogTitle>{taxon.label}</DialogTitle>
           <Badge variant="outline" className="uppercase">
             {taxon.rankLabel}
