@@ -17,7 +17,7 @@ export const FIELDS: {
   cellClass?: string
   sortDisabled?: boolean
 }[] = [
-  { label: 'ID', key: 'id', cellClass: 'font-medium' },
+  { label: 'Record ID', key: 'id', cellClass: 'font-medium' },
   { label: 'Sample ID', key: 'sampleid' },
   { label: 'Country', key: 'country' },
   { label: 'Province/State', key: 'province_state' },
