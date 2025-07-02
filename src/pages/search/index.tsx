@@ -4,6 +4,7 @@ import { FilterControl } from '@/components/filter-control'
 import { DnaBarcodeGalleryItem } from '@/components/gallery/dna-barcode-gallery-item'
 import { Gallery } from '@/components/gallery/gallery'
 import { GalleryItem } from '@/components/gallery/gallery-item'
+import { Input } from '@/components/input'
 import { Loader } from '@/components/loader'
 import { NoRecordsFound } from '@/components/no-records-found'
 import { OrderByControl } from '@/components/order-by-control'
@@ -14,12 +15,14 @@ import { Table } from '@/components/table'
 import { TaxaSearch } from '@/components/taxa-search'
 import { ViewModeControl } from '@/components/view-mode-control'
 import { useActiveDoc } from '@/hooks/search-params/useActiveDoc'
+import { useId } from '@/hooks/search-params/useId'
 import { usePagination } from '@/hooks/search-params/usePagination'
 import { useSort } from '@/hooks/search-params/useSort'
 import { useFacetCounts } from '@/hooks/useFacetCounts'
 import { useFilters } from '@/hooks/useFilters'
 import { useRecords } from '@/hooks/useRecords'
 import { DEFAULT_PAGINATION, FIELDS, PATHS } from '@/lib/constants'
+import { filtersToQuery } from '@/lib/filtersToQuery'
 import { ViewMode } from '@/types/settings'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -30,12 +33,18 @@ export const Search = () => {
   const { page, pageSize, setPage, setPageSize } =
     usePagination(DEFAULT_PAGINATION)
   const { sort, setSort } = useSort()
-  const { filters, filterQuery, addFilter, removeFilter, clearFilters } =
-    useFilters()
+  const { id, setId } = useId()
+  const { filters, addFilter, removeFilter, clearFilters } = useFilters()
   const { data, isPending, error } = useRecords({
     page,
     pageSize,
-    q: filterQuery,
+    q: filtersToQuery([
+      ...filters,
+      {
+        type: 'id',
+        value: id ? [id] : [],
+      },
+    ]),
     sort,
   })
   const { facetCounts } = useFacetCounts()
@@ -57,7 +66,14 @@ export const Search = () => {
               <SidebarSection label="Order by">
                 <OrderByControl fields={FIELDS} sort={sort} setSort={setSort} />
               </SidebarSection>
-              <SidebarSection label="Filters">
+              <SidebarSection label="Record ID">
+                <Input
+                  placeholder="Specify a record ID"
+                  setValue={(value) => setId(value)}
+                  value={id ?? ''}
+                />
+              </SidebarSection>
+              <SidebarSection label="Filter">
                 <FilterControl
                   facetCounts={facetCounts}
                   filters={filters}
@@ -121,7 +137,12 @@ export const Search = () => {
                   </div>
                 )}
                 {data?.docs.length === 0 && (
-                  <NoRecordsFound onClearFilters={clearFilters} />
+                  <NoRecordsFound
+                    onClearFilters={() => {
+                      clearFilters()
+                      setId(null)
+                    }}
+                  />
                 )}
               </>
             )}

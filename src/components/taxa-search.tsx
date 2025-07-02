@@ -1,12 +1,10 @@
 import { useDebounce } from '@/hooks/useDebounce'
 import { useTaxaSearch } from '@/hooks/useTaxaSearch'
 import { Taxon } from '@/types/response-data'
-import { SearchIcon, X } from 'lucide-react'
 import { useState } from 'react'
-import { Loader } from './loader'
+
 import { Badge } from './ui/badge'
-import { Button } from './ui/button'
-import { Input } from './ui/input'
+import { Input } from './input'
 
 export const TaxaSearch = ({
   onTaxonSelect,
@@ -29,11 +27,12 @@ export const TaxaSearch = ({
 
   return (
     <div className="w-full relative lg:w-64">
-      <SearchInput
-        placeholder="Search taxa..."
+      <Input
         isLoading={isPending}
-        searchString={searchString}
-        setSearchString={setSearchString}
+        placeholder="Search taxa..."
+        setValue={setSearchString}
+        value={searchString}
+        variant="search"
       />
       {message || data?.length ? (
         <div className="absolute bottom-[-0.5rem] right-0 translate-y-full w-full rounded-md border bg-popover text-popover-foreground shadow-md z-50 sm:w-96">
@@ -59,44 +58,6 @@ export const TaxaSearch = ({
     </div>
   )
 }
-
-const SearchInput = ({
-  placeholder,
-  isLoading,
-  searchString,
-  setSearchString,
-}: {
-  isLoading?: boolean
-  placeholder?: string
-  searchString: string
-  setSearchString: (searchString: string) => void
-}) => (
-  <div className="relative">
-    <div className="w-10 h-10 absolute top-0 left-0 flex items-center justify-center">
-      <SearchIcon className="w-4 h-4 text-muted-foreground" />
-    </div>
-    <Input
-      className="px-10"
-      placeholder={placeholder}
-      value={searchString}
-      onChange={(e) => setSearchString(e.currentTarget.value)}
-    />
-    <div className="absolute top-0 right-0 flex items-center justify-center">
-      {isLoading ? (
-        <Loader className="w-10 h-10 p-2" />
-      ) : searchString.length ? (
-        <Button
-          aria-label="Clear"
-          size="icon"
-          variant="ghost"
-          onClick={() => setSearchString('')}
-        >
-          <X className="w-4 h-4" />
-        </Button>
-      ) : null}
-    </div>
-  </div>
-)
 
 const SearchResult = ({
   onClick,
