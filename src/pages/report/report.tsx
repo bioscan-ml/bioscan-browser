@@ -158,7 +158,7 @@ const ReportForm = ({
     data: doc,
     error: recordError,
     isPending: recordIsPending,
-  } = useRecord(id?.length ? id : undefined)
+  } = useRecord({ id: id?.length ? id : undefined })
   const { control, watch, handleSubmit, reset } = useForm<ReportFormData>({
     defaultValues: {
       comments: '',

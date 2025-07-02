@@ -203,7 +203,7 @@ export const SearchSimilar = () => {
 
 const RecordDetails = ({ queryId }: { queryId: string }) => {
   const [open, setOpen] = useState(false)
-  const { data } = useRecord(queryId, 'id')
+  const { data } = useRecord({ id: queryId })
 
   if (!data) {
     return null
