@@ -73,6 +73,13 @@ export const SearchSimilar = () => {
         <div className="grid items-start gap-4 py-4 md:flex md:gap-8 md:py-8">
           <Sidebar avoidPaginationBar={false}>
             <div className="space-y-8">
+              <SidebarSection label="View mode">
+                <ViewModeControl
+                  type="find-similar"
+                  viewMode={viewMode}
+                  setViewMode={setViewMode}
+                />
+              </SidebarSection>
               <SidebarSection label="Query record">
                 {queryId ? <RecordDetails queryId={queryId} /> : null}
                 <div className="flex gap-2">
@@ -106,13 +113,6 @@ export const SearchSimilar = () => {
                 <PageSizeControl
                   pageSize={pageSize}
                   setPageSize={setPageSize}
-                />
-              </SidebarSection>
-              <SidebarSection label="View mode">
-                <ViewModeControl
-                  type="find-similar"
-                  viewMode={viewMode}
-                  setViewMode={setViewMode}
                 />
               </SidebarSection>
             </div>
