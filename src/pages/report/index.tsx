@@ -23,6 +23,7 @@ import { COMMENT_INSTRUCTIONS, REPORT_TYPES } from '@/hooks/github/constants'
 import { ReportFormData } from '@/hooks/github/types'
 import { useCreateIssue } from '@/hooks/github/useCreateIssue'
 import { useId } from '@/hooks/search-params/useId'
+import { useBoldRecord } from '@/hooks/useBoldRecord'
 import { useRecord } from '@/hooks/useRecord'
 import { RESOURCES } from '@/lib/constants'
 import { getImageSrc } from '@/lib/getImageSrc'
@@ -148,7 +149,11 @@ const ReportForm = ({
   isPending,
   setId,
 }: {
-  createIssue: (data: { formData: ReportFormData; doc: Doc }) => void
+  createIssue: (data: {
+    formData: ReportFormData
+    doc: Doc
+    boldDoc?: unknown
+  }) => void
   error: Error | null
   id: string | null
   isPending: boolean
@@ -156,9 +161,12 @@ const ReportForm = ({
 }) => {
   const {
     data: doc,
-    error: recordError,
-    isPending: recordIsPending,
+    error: docError,
+    isPending: docIsPending,
   } = useRecord({ id: id?.length ? id : undefined })
+  const { data: boldDoc, isPending: boldDocIsPending } = useBoldRecord({
+    id: id?.length ? id : undefined,
+  })
   const { control, watch, handleSubmit, reset } = useForm<ReportFormData>({
     defaultValues: {
       comments: '',
@@ -180,7 +188,7 @@ const ReportForm = ({
       className="p-6 space-y-8 rounded-sm bg-muted border md:p-12 md:space-y-12"
       onSubmit={handleSubmit((formData) => {
         if (doc) {
-          createIssue({ formData, doc })
+          createIssue({ formData, doc, boldDoc })
         }
       })}
     >
@@ -196,7 +204,7 @@ const ReportForm = ({
               error={
                 fieldState.error?.message
                   ? fieldState.error.message
-                  : recordError
+                  : docError
                     ? ERROR_MESSAGES.NOT_FOUND
                     : undefined
               }
@@ -215,7 +223,14 @@ const ReportForm = ({
             </FormField>
           )}
         />
-        {id && <RecordDetails doc={doc} isPending={recordIsPending} />}
+        {id && (
+          <RecordDetails
+            boldDoc={boldDoc}
+            boldDocIsPending={boldDocIsPending}
+            doc={doc}
+            docIsPending={docIsPending}
+          />
+        )}
       </div>
       <div className="space-y-8">
         <h3 className="text-accent mb-8">Report details</h3>
@@ -325,13 +340,17 @@ const ReportForm = ({
 }
 
 const RecordDetails = ({
+  boldDoc,
+  boldDocIsPending,
   doc,
-  isPending,
+  docIsPending,
 }: {
+  boldDoc?: unknown
+  boldDocIsPending: boolean
   doc?: Doc
-  isPending: boolean
+  docIsPending: boolean
 }) => {
-  if (isPending) {
+  if (docIsPending) {
     return <Loader />
   }
 
@@ -342,7 +361,7 @@ const RecordDetails = ({
   return (
     <>
       <FormField label="Images">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-8">
           <div className="relative">
             <img
               alt={doc.id}
@@ -367,9 +386,26 @@ const RecordDetails = ({
           </div>
         </div>
       </FormField>
-      <FormField label="Metadata">
-        <CodeBlock expandable code={JSON.stringify(doc, null, 4)} />
-      </FormField>
+      <div>
+        <h4 className="mb-2">Metadata</h4>
+        <div className="grid grid-cols-1 gap-8">
+          <FormField label="BIOSCAN-5M">
+            <CodeBlock expandable code={JSON.stringify(doc, null, 4)} />
+          </FormField>
+          <FormField label="BOLD">
+            <CodeBlock
+              expandable={!!boldDoc}
+              code={
+                boldDocIsPending
+                  ? 'Loading...'
+                  : boldDoc
+                    ? JSON.stringify(boldDoc, null, 4)
+                    : 'Not found'
+              }
+            />
+          </FormField>
+        </div>
+      </div>
     </>
   )
 }

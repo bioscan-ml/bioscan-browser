@@ -14,7 +14,11 @@ const app = new App({
 
 export const useCreateIssue = () => {
   const { mutate, isPending, isSuccess, error, reset, data } = useMutation({
-    mutationFn: async (data: { formData: ReportFormData; doc: Doc }) => {
+    mutationFn: async (data: {
+      formData: ReportFormData
+      doc: Doc
+      boldDoc?: unknown
+    }) => {
       const octokit = await app.getInstallationOctokit(INSTALLATION_ID)
 
       return await octokit.rest.issues.create({
@@ -33,7 +37,11 @@ export const useCreateIssue = () => {
 const generateIssueTitle = (data: { formData: ReportFormData; doc: Doc }) =>
   `[${data.doc.id}]: ${data.formData.type}`
 
-const generateIssueBody = (data: { formData: ReportFormData; doc: Doc }) => {
+const generateIssueBody = (data: {
+  formData: ReportFormData
+  doc: Doc
+  boldDoc?: unknown
+}) => {
   return `## Record details
 
 ### Record ID
@@ -53,6 +61,16 @@ ${data.doc.id}
 
 \`\`\`
 ${JSON.stringify(data.doc, null, 4)}
+\`\`\`
+
+</details>
+
+<details>
+
+<summary>BOLD</summary>
+
+\`\`\`
+${data.boldDoc ? JSON.stringify(data.boldDoc, null, 4) : 'Not found'}
 \`\`\`
 
 </details>
