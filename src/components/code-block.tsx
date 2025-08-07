@@ -1,7 +1,7 @@
 import { useToast } from '@/components/ui/toast/use-toast'
 import { cn } from '@/lib/utils'
 import { ChevronsUpDown, CopyIcon } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from './ui/button'
 
 interface CodeBlockProps {
@@ -13,6 +13,10 @@ interface CodeBlockProps {
 export const CodeBlock = ({ code, copyable, expandable }: CodeBlockProps) => {
   const { toast } = useToast()
   const [expanded, setExpanded] = useState(expandable ? false : true)
+
+  useEffect(() => {
+    setExpanded(expandable ? false : true)
+  }, [expandable])
 
   return (
     <div
