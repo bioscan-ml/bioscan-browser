@@ -1,10 +1,12 @@
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { PATHS } from '@/lib/constants'
 import { getTaxon } from '@/lib/getTaxon'
 import { Doc } from '@/types/response-data'
 import { ChevronRight } from 'lucide-react'
 import { BookmarkControl } from '../bookmark-control'
 import { CodeBlock } from '../code-block'
+import { CopyLinkControl } from '../copy-link-control'
 import { FindSimilarControl } from '../find-similar-control'
 import { ReportIssueControl } from '../report-issue-control'
 import { TaxonDetailsArticle } from '../taxon-details-article'
@@ -13,7 +15,11 @@ import { Fields } from './fields'
 import { Images } from './images'
 import { Map } from './map'
 
-export const DocDetails = ({ doc }: { doc: Doc }) => {
+interface DocDetailsProps {
+  doc: Doc
+}
+
+export const DocDetails = ({ doc }: DocDetailsProps) => {
   const { taxon, parents } = getTaxon(doc)
 
   return (
@@ -41,6 +47,9 @@ export const DocDetails = ({ doc }: { doc: Doc }) => {
           <FindSimilarControl doc={doc} variant="outline" />
           <BookmarkControl doc={doc} />
           <ReportIssueControl doc={doc} size="icon" />
+          <CopyLinkControl
+            link={`${window.location.host}${PATHS.RECORD.replace(':id', doc.id)}`}
+          />
         </div>
       </div>
       <Fields doc={doc} />
