@@ -16,8 +16,8 @@ interface FieldsProps {
 }
 
 export const Fields = ({ doc }: FieldsProps) => (
-  <div className="flex items-start gap-4">
-    <div className="grid gap-4 flex-1">
+  <div className="flex items-start gap-4 items-stretch">
+    <div className="space-y-4 flex-1">
       <DocField doc={doc} fieldKey="id" />
       <DocField doc={doc} fieldKey="sampleid" />
       <DocField doc={doc} fieldKey="country" />
@@ -27,8 +27,8 @@ export const Fields = ({ doc }: FieldsProps) => (
         <IssueList id={doc.id} />
       </Field>
     </div>
-    <Separator className="shrink-0" orientation="vertical" />
-    <div className="grid gap-4 flex-1">
+    <Separator className="h-auto shrink-0" orientation="vertical" />
+    <div className="space-y-4 flex-1">
       <DocField doc={doc} fieldKey="phylum" />
       <DocField doc={doc} fieldKey="class" />
       <DocField doc={doc} fieldKey="order" />
