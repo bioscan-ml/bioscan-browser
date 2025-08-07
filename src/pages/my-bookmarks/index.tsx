@@ -1,22 +1,22 @@
-import { DocDetailsDialog } from '@/components/doc-details/doc-details'
+import { DocDetailsDialog } from '@/components/doc-details/doc-details-dialog'
 import { Error } from '@/components/error'
 import { BookmarkGalleryItem } from '@/components/gallery/bookmark-gallery-item'
 import { Loader } from '@/components/loader'
 import { NoRecordsFound } from '@/components/no-records-found'
 import { PageContent } from '@/components/page-content'
 import { Button } from '@/components/ui/button'
-import { useActiveDoc } from '@/hooks/search-params/useActiveDoc'
-import { useRecords } from '@/hooks/useRecords'
-import { useBookmarks } from '@/lib/bookmarks/useBookmarks'
-import { DEFAULT_PAGINATION } from '@/lib/constants'
-import { filtersToQuery } from '@/lib/filtersToQuery'
-import { InfoIcon } from 'lucide-react'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { useActiveDoc } from '@/hooks/search-params/useActiveDoc'
+import { useRecords } from '@/hooks/useRecords'
+import { useBookmarks } from '@/lib/bookmarks/useBookmarks'
+import { DEFAULT_PAGINATION } from '@/lib/constants'
+import { filtersToQuery } from '@/lib/filtersToQuery'
+import { InfoIcon } from 'lucide-react'
 import { useMemo } from 'react'
 
 export const MyBookmarks = () => {

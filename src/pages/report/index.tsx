@@ -1,5 +1,5 @@
 import { CodeBlock } from '@/components/code-block'
-import { DocDetailsDialog } from '@/components/doc-details/doc-details'
+import { DocDetailsDialog } from '@/components/doc-details/doc-details-dialog'
 import { Loader } from '@/components/loader'
 import { PageContent } from '@/components/page-content'
 import { Badge } from '@/components/ui/badge'

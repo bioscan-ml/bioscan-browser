@@ -1,4 +1,4 @@
-import { DocDetailsDialog } from '@/components/doc-details/doc-details'
+import { DocDetailsDialog } from '@/components/doc-details/doc-details-dialog'
 import { Error } from '@/components/error'
 import { FilterControl } from '@/components/filter-control'
 import { DnaBarcodeGalleryItem } from '@/components/gallery/dna-barcode-gallery-item'
