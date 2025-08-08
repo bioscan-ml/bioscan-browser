@@ -19,6 +19,9 @@ interface DocDetailsProps {
   doc: Doc
 }
 
+const getRecordLink = (id: string) =>
+  `${window.location.protocol}//${window.location.host}${PATHS.RECORD.replace(':id', id)}`
+
 export const DocDetails = ({ doc }: DocDetailsProps) => {
   const { taxon, parents } = getTaxon(doc)
 
@@ -47,9 +50,7 @@ export const DocDetails = ({ doc }: DocDetailsProps) => {
           <FindSimilarControl doc={doc} variant="outline" />
           <BookmarkControl doc={doc} />
           <ReportIssueControl doc={doc} size="icon" />
-          <CopyLinkControl
-            link={`${window.location.host}${PATHS.RECORD.replace(':id', doc.id)}`}
-          />
+          <CopyLinkControl link={getRecordLink(doc.id)} />
         </div>
       </div>
       <Fields doc={doc} />
