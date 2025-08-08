@@ -1,4 +1,10 @@
 import { Button } from '@/components/ui/button'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 import { LinkIcon } from 'lucide-react'
 import { useToast } from './ui/toast/use-toast'
 
@@ -10,16 +16,25 @@ export const CopyLinkControl = ({ link }: CopyLinkControlProps) => {
   const { toast } = useToast()
 
   return (
-    <Button
-      onClick={() => {
-        navigator.clipboard.writeText(link)
-        toast({ description: 'Copied to clipboard!' })
-      }}
-      size="icon"
-      type="button"
-      variant="ghost"
-    >
-      <LinkIcon className="w-4 h-4" />
-    </Button>
+    <TooltipProvider delayDuration={0}>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            onClick={() => {
+              navigator.clipboard.writeText(link)
+              toast({ description: 'Copied to clipboard!' })
+            }}
+            size="icon"
+            type="button"
+            variant="ghost"
+          >
+            <LinkIcon className="w-4 h-4" />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent side="bottom">
+          <p>Copy link</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   )
 }
