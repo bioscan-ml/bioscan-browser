@@ -1,4 +1,4 @@
-import { DocDetailsDialog } from '@/components/doc-details/doc-details'
+import { DocDetailsDialog } from '@/components/doc-details/doc-details-dialog'
 import { Gallery } from '@/components/gallery/gallery'
 import { Loader } from '@/components/loader'
 import { PageContent } from '@/components/page-content'

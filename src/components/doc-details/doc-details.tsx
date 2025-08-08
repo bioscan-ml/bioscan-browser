@@ -1,52 +1,39 @@
 import { Badge } from '@/components/ui/badge'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { PATHS } from '@/lib/constants'
 import { getTaxon } from '@/lib/getTaxon'
 import { Doc } from '@/types/response-data'
 import { ChevronRight } from 'lucide-react'
 import { BookmarkControl } from '../bookmark-control'
 import { CodeBlock } from '../code-block'
+import { CopyLinkControl } from '../copy-link-control'
 import { FindSimilarControl } from '../find-similar-control'
-import { Map } from '../map'
 import { ReportIssueControl } from '../report-issue-control'
 import { TaxonDetailsArticle } from '../taxon-details-article'
 import { Dna } from './dna'
 import { Fields } from './fields'
 import { Images } from './images'
+import { Map } from './map'
 
-export const DocDetailsDialog = ({
-  doc,
-  open,
-  onOpenChange,
-}: {
-  doc?: Doc
-  open: boolean
-  onOpenChange: (open: boolean) => void
-}) => (
-  <Dialog open={open} onOpenChange={onOpenChange}>
-    {doc && <DocDetailsDialogContent doc={doc} />}
-  </Dialog>
-)
+interface DocDetailsProps {
+  doc: Doc
+}
 
-export const DocDetailsDialogContent = ({ doc }: { doc: Doc }) => {
+export const DocDetails = ({ doc }: DocDetailsProps) => {
   const { taxon, parents } = getTaxon(doc)
 
   return (
-    <DialogContent className="h-full max-w-screen-md flex flex-col gap-8 overflow-auto sm:h-[calc(100%-4rem)]">
-      <DialogHeader>
+    <div className="flex flex-col gap-8">
+      <div className="flex flex-col -m-6 mb-0 p-6 bg-muted border-b">
         <div className="flex items-center gap-4 mb-2">
-          <DialogTitle>{taxon.label}</DialogTitle>
+          <h2 className="text-lg font-semibold leading-none tracking-tight">
+            {taxon.label}
+          </h2>
           <Badge variant="outline" className="uppercase">
             {taxon.rankLabel}
           </Badge>
         </div>
-        <DialogDescription className="mb-4">
+        <p className="text-sm text-muted-foreground mb-4">
           {parents.map((parent, index) => (
             <span key={index} className="inline-flex items-center">
               {parent.label}
@@ -55,13 +42,16 @@ export const DocDetailsDialogContent = ({ doc }: { doc: Doc }) => {
               )}
             </span>
           ))}
-        </DialogDescription>
+        </p>
         <div className="flex items-center gap-2">
           <FindSimilarControl doc={doc} variant="outline" />
           <BookmarkControl doc={doc} />
           <ReportIssueControl doc={doc} size="icon" />
+          <CopyLinkControl
+            link={`${window.location.host}${PATHS.RECORD.replace(':id', doc.id)}`}
+          />
         </div>
-      </DialogHeader>
+      </div>
       <Fields doc={doc} />
       <Tabs defaultValue="images">
         <TabsList>
@@ -78,7 +68,7 @@ export const DocDetailsDialogContent = ({ doc }: { doc: Doc }) => {
           <Dna doc={doc} />
         </TabsContent>
         <TabsContent value="map">
-          <DocDetailsMap doc={doc} />
+          <Map doc={doc} />
         </TabsContent>
         <TabsContent value="raw">
           <CodeBlock copyable code={JSON.stringify(doc, null, 4)} />
@@ -89,37 +79,6 @@ export const DocDetailsDialogContent = ({ doc }: { doc: Doc }) => {
           </div>
         </TabsContent>
       </Tabs>
-    </DialogContent>
-  )
-}
-
-const DocDetailsMap = ({ doc }: { doc: Doc }) => {
-  if (!doc.latlon) {
-    return (
-      <div className="text-center space-y-8 p-16">
-        <div>
-          <p className="text-xl font-medium mb-2">Map is not available</p>
-          <p className="text-sm text-muted-foreground">
-            The current record is missing information for latitude and
-            longitude.
-          </p>
-        </div>
-      </div>
-    )
-  }
-
-  const [latitude, longitude] = doc.latlon
-    .split(',')
-    .map((value) => Number(value))
-
-  const locationLabel = doc.province_state
-    ? `${doc.province_state}, ${doc.country}`
-    : doc.country
-
-  return (
-    <Map
-      marker={{ latitude, longitude }}
-      popupContent={`${locationLabel}<br />(${latitude}, ${longitude})`}
-    />
+    </div>
   )
 }
