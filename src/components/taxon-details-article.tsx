@@ -9,7 +9,7 @@ import { buttonVariants } from './ui/button'
 interface TaxonDetailsArticleProps {
   taxon: {
     label: string
-    rankLevel: string
+    rankKey: string
   }
 }
 

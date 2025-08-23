@@ -4,6 +4,7 @@ import { useMutation } from '@tanstack/react-query'
 import { App } from 'octokit'
 import { APP_ID, INSTALLATION_ID, OWNER, REPO, REPORT_TYPES } from './constants'
 import { ReportFormData } from './types'
+import { getTaxon } from '@/lib/getTaxon'
 
 const PRIVATE_KEY = import.meta.env.VITE_GITHUB_APP_PRIVATE_KEY
 
@@ -42,11 +43,13 @@ const generateIssueBody = (data: {
   doc: Doc
   boldDoc?: unknown
 }) => {
+  const { taxon } = getTaxon(data.doc)
+
   return `## Record details
 
 ### Record ID
 
-${data.doc.id}
+[${data.doc.id}](https://bioscan-browser.netlify.app/record/${data.doc.id})
 
 ### Images
 
@@ -74,6 +77,12 @@ ${data.boldDoc ? JSON.stringify(data.boldDoc, null, 4) : 'Not found'}
 \`\`\`
 
 </details>
+
+### Links
+- [Record details (BIOSCAN Browser)](https://bioscan-browser.netlify.app/record/${data.doc.id})
+- [Record details (BOLD Systems)](https://portal.boldsystems.org/record/${data.doc.id})
+- [Samples with same taxonomic label](https://bioscan-browser.netlify.app/taxonomy-tree?taxon=${taxon.rankKey}-${taxon.label})
+- [Samples with same DNA barcode](https://bioscan-browser.netlify.app/search?filter=dna_bin:${data.doc.dna_bin})
 
 ## Report details
 
