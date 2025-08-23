@@ -9,6 +9,7 @@ const REPO = 'bioscan-5m'
 const REPORT_TYPES = [
   { title: 'No insect in the image', label: 'image' },
   { title: 'Insect is not clearly visible', label: 'image' },
+  { title: 'Image contains a broken insect', label: 'image' },
   { title: 'Image contains multiple insects', label: 'image' },
   { title: 'Insect is cropped incorrectly', label: 'image' },
   { title: 'Metadata is not correct', label: 'metadata' },
