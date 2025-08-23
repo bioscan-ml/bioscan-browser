@@ -6,7 +6,7 @@ export const getTaxon = (doc: Doc) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const value: string = (doc as any)[key]
 
-    return { rankLevel: key, rankLabel: label, label: value }
+    return { rankKey: key, rankLabel: label, label: value }
   }).filter((rank) => !!rank.label)
 
   const [taxon] = taxa.splice(-1)

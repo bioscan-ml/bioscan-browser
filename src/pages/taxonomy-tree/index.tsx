@@ -116,7 +116,7 @@ export const TaxonomyTree = () => {
                       <TaxonDetails
                         taxon={{
                           label: selectedNode.metadata.label,
-                          rankLevel: selectedNode.metadata.taxon,
+                          rankKey: selectedNode.metadata.taxon,
                         }}
                       />
                     </div>

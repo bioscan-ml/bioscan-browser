@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogTitle, DialogTrigger } from './ui/dialog'
 interface TaxonDetailsProps {
   taxon: {
     label: string
-    rankLevel: string
+    rankKey: string
   }
 }
 

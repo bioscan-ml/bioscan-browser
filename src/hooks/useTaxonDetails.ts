@@ -8,10 +8,7 @@ const API_URL = 'https://api.inaturalist.org/v1'
 
 const QUERY_KEY = 'taxon-details'
 
-export const useTaxonDetails = (taxon: {
-  label: string
-  rankLevel: string
-}) => {
+export const useTaxonDetails = (taxon: { label: string; rankKey: string }) => {
   const q = taxon.label
 
   const { isPending, error, data } = useQuery<{
