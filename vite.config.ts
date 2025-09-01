@@ -18,6 +18,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
+      '/backend': {
+        target: 'https://spathi.cmpt.sfu.ca/bioscan-browser-flask',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/backend/, ''),
+      },
       '/gradio': {
         target: 'https://spathi.cmpt.sfu.ca/bioscan-browser/gradio_api',
         changeOrigin: true,

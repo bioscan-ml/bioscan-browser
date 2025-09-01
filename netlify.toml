@@ -5,6 +5,12 @@ status = 200
 force = true
 
 [[redirects]]
+from = "/backend/*"
+to = "https://spathi.cmpt.sfu.ca/bioscan-browser-flask/:splat"
+status = 200
+force = true
+
+[[redirects]]
 from = "/gradio/*"
 to = "https://spathi.cmpt.sfu.ca/bioscan-browser/gradio_api/:splat"
 status = 200

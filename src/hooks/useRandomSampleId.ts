@@ -1,20 +1,14 @@
-import { makeGradioPrediction } from '@/lib/makeGradioPrediction'
 import { useQuery } from '@tanstack/react-query'
 
-const GRADIO_METHOD = 'getRandID'
-const QUERY_KEY = 'random-id'
+const URL = 'backend/random-id'
 
 export const useRandomSampleId = (seed: number) => {
   const { isPending, error, data } = useQuery<string>({
-    queryKey: [QUERY_KEY, { seed }],
+    queryKey: [URL, { seed }],
     queryFn: async () => {
-      const predictionRes = await makeGradioPrediction({
-        method: GRADIO_METHOD,
-      })
-      const responseData: string[] = JSON.parse(
-        predictionRes.split('data: ')[1].replace(/'/g, '"'),
-      )
-      const sampleId = responseData[0]
+      const res = await fetch(URL)
+      const data = await res.json()
+      const sampleId = data['random_id']
 
       if (!sampleId) {
         throw Error()

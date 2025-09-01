@@ -1,13 +1,11 @@
 import { filtersToQuery } from '@/lib/filtersToQuery'
 import { getFetchUrl } from '@/lib/getFetchUrl'
-import { makeGradioPrediction } from '@/lib/makeGradioPrediction'
 import { Doc } from '@/types/response-data'
 import { SearchType, Sort } from '@/types/settings'
 import { useQuery } from '@tanstack/react-query'
 
-const GRADIO_METHOD = 'searchEmbeddings'
-const QUERY_KEY = 'search-embeddings'
 const INDEX_TYPE = 'PQ64x4fsr'
+const URL = 'backend/search-id'
 
 export const useSearchEmbeddings = (params: {
   queryId: string | null
@@ -23,58 +21,59 @@ export const useSearchEmbeddings = (params: {
       start: number
     }
   }>({
-    queryKey: [QUERY_KEY, params],
+    queryKey: [URL, params],
     queryFn: async () => {
       if (!params.queryId) {
         throw Error()
       }
 
-      // TODO: In practice, this call will never complete. When this issue is resolved, we can start parse the response.
-      const predictionRes = await makeGradioPrediction({
-        method: GRADIO_METHOD,
-        data: [
-          params.queryId,
-          params.searchFrom,
-          params.searchTo,
-          INDEX_TYPE,
-          params.pageSize + 1,
-        ],
+      const searchRes = await fetch(URL, {
+        body: JSON.stringify({
+          index_type: INDEX_TYPE,
+          key_type: params.searchTo,
+          num_results: params.pageSize + 1,
+          process_id: params.queryId,
+          query_type: params.searchFrom,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        signal: AbortSignal.timeout(10000),
       })
+      const searchData = await searchRes.json()
 
-      const recordIds: string[] = JSON.parse(
-        predictionRes.split('data: ')[1].trim().slice(2, -2).replace(/'/g, '"'),
-      )
+      const recordIds: string[] = searchData['matches'] ?? []
 
       if (!recordIds?.length) {
         throw Error()
       }
 
-      // Use sample ids to get records
-      const q = filtersToQuery([
-        {
-          type: 'id',
-          value: recordIds.filter((recordId) => recordId !== params.queryId), // Filter out query record
-        },
-      ])
       const recordsRes = await fetch(
         getFetchUrl({
-          q,
+          q: filtersToQuery([
+            {
+              type: 'id',
+              value: recordIds.filter(
+                (recordId) => recordId !== params.queryId, // Filter out query record
+              ),
+            },
+          ]),
           page: 0,
           pageSize: params.pageSize,
           sort: params.sort,
         }),
       )
+      const recordsData = await recordsRes.json()
 
-      const data = await recordsRes.json()
-
-      const docs = data.response.docs.sort(
+      const docs = recordsData.response.docs.sort(
         (doc1: Doc, doc2: Doc) =>
           recordIds.indexOf(doc1.id) - recordIds.indexOf(doc2.id),
       )
 
       return {
         response: {
-          ...data.response,
+          ...recordsData.response,
           docs,
         },
       }
