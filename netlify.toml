@@ -11,12 +11,6 @@ status = 200
 force = true
 
 [[redirects]]
-from = "/gradio/*"
-to = "https://spathi.cmpt.sfu.ca/bioscan-browser/gradio_api/:splat"
-status = 200
-force = true
-
-[[redirects]]
 from = "/*"
 to = "/index.html"
 status = 200
