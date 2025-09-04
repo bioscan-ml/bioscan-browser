@@ -18,10 +18,10 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
-      '/gradio': {
-        target: 'https://spathi.cmpt.sfu.ca/bioscan-browser/gradio_api',
+      '/backend': {
+        target: 'https://spathi.cmpt.sfu.ca/bioscan-browser',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/gradio/, ''),
+        rewrite: (path) => path.replace(/^\/backend/, ''),
       },
     },
   },
