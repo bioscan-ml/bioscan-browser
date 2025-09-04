@@ -6,7 +6,7 @@ force = true
 
 [[redirects]]
 from = "/backend/*"
-to = "https://spathi.cmpt.sfu.ca/bioscan-browser-flask/:splat"
+to = "https://spathi.cmpt.sfu.ca/bioscan-browser/:splat"
 status = 200
 force = true
 

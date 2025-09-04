@@ -19,7 +19,7 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
       '/backend': {
-        target: 'https://spathi.cmpt.sfu.ca/bioscan-browser-flask',
+        target: 'https://spathi.cmpt.sfu.ca/bioscan-browser',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/backend/, ''),
       },
