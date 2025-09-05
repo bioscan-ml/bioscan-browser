@@ -1,9 +1,9 @@
+import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { Doc } from '@/types/response-data'
 import { DownloadIcon } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import colors from 'tailwindcss/colors'
-import { buttonVariants } from '../ui/button'
 
 const COLOR_MAP: { [key: string]: string } = {
   A: '#FF6666', // red

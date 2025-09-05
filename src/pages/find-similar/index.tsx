@@ -4,6 +4,9 @@ import { Loader } from '@/components/loader'
 import { PageContent } from '@/components/page-content'
 import { Sidebar, SidebarSection } from '@/components/sidebar'
 import { Table } from '@/components/table'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import {
   Select,
   SelectContent,
@@ -11,6 +14,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 import { ViewModeControl } from '@/components/view-mode-control'
 import { useActiveDoc } from '@/hooks/search-params/useActiveDoc'
 import { usePageSize } from '@/hooks/search-params/usePageSize'
@@ -29,23 +38,14 @@ import {
   SearchIcon,
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { FindSimilarControl } from './find-similar-control'
-import { DnaBarcodeGalleryItem } from './gallery/dna-barcode-gallery-item'
-import { GalleryItem } from './gallery/gallery-item'
-import { SearchTypeControl } from './search-type-control'
-import { Badge } from './ui/badge'
-import { Button } from './ui/button'
-import { Input } from './ui/input'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from './ui/tooltip'
+import { FindSimilarControl } from '../../components/find-similar-control'
+import { DnaBarcodeGalleryItem } from '../../components/gallery/dna-barcode-gallery-item'
+import { GalleryItem } from '../../components/gallery/gallery-item'
+import { SearchTypeControl } from '../../components/search-type-control'
 
 const PAGE_SIZE_OPTIONS = [10, 50, 100]
 
-export const SearchSimilar = () => {
+export const FindSimilar = () => {
   const [searchString, setSearchString] = useState<string>('')
   const { queryId, setQueryId } = useQueryId()
   const { searchFrom, setSearchFrom, searchTo, setSearchTo } = useSearchType()
@@ -302,17 +302,17 @@ const Intro = ({
 
 const RandomSearch = ({
   onClick: _onClick,
-  size = 'sm',
+  size = 'default',
 }: {
   onClick: (queryId: string) => void
-  size?: 'sm' | 'icon'
+  size?: 'default' | 'icon'
 }) => {
   const [seed, setSeed] = useState(Date.now())
   const { data, isPending, error } = useRandomSampleId(seed)
   const isLoading = !data && isPending
 
   const iconClassName = cn('w-4 h-4', {
-    'ml-2': size === 'sm',
+    'ml-2': size === 'default',
   })
 
   const onClick = () => {
@@ -340,7 +340,7 @@ const RandomSearch = ({
               className="shrink-0"
               onClick={onClick}
             >
-              {size === 'sm' ? <span>Try a random record</span> : null}
+              {size === 'default' ? <span>Try a random record</span> : null}
               {error ? (
                 <AlertCircleIcon
                   className={cn(iconClassName, 'text-destructive')}
@@ -368,7 +368,7 @@ const RandomSearch = ({
       className="shrink-0"
       onClick={onClick}
     >
-      {size === 'sm' ? <span>Try a random record</span> : null}
+      {size === 'default' ? <span>Try a random record</span> : null}
       {error ? (
         <AlertCircleIcon className={cn(iconClassName, 'text-destructive')} />
       ) : isLoading ? (

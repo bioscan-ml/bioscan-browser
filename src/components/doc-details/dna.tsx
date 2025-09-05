@@ -1,15 +1,15 @@
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 import { PATHS } from '@/lib/constants'
 import { Doc } from '@/types/response-data'
 import { TooltipPortal } from '@radix-ui/react-tooltip'
 import { InfoIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { DnaBarcode } from '../dna-barcode/dna-barcode'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '../ui/tooltip'
 
 interface ImagesProps {
   doc: Doc
