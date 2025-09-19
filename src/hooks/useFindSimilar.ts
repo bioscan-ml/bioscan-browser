@@ -5,15 +5,55 @@ import { SearchType, Sort } from '@/types/settings'
 import { useQuery } from '@tanstack/react-query'
 
 const INDEX_TYPE = 'PQ64x4fsr'
-const URL = 'backend/search-id'
+const SEARCH_ID_URL = 'backend/search-id'
+const SEARCH_IMAGE_URL = 'backend/search-image'
+const QUERY_KEY = 'search-embeddings'
 
-export const useSearchEmbeddings = (params: {
-  queryId: string | null
+interface Params {
+  id: string | null
+  image: File | null
+  pageSize: number
   searchFrom: SearchType
   searchTo: SearchType
-  pageSize: number
   sort?: Sort
-}) => {
+}
+
+const search = async (params: Params) => {
+  if (params.id) {
+    return await fetch(SEARCH_ID_URL, {
+      body: JSON.stringify({
+        index_type: INDEX_TYPE,
+        key_type: params.searchTo,
+        num_results: params.pageSize + 1,
+        process_id: params.id,
+        query_type: params.searchFrom,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      signal: AbortSignal.timeout(10000),
+    })
+  }
+
+  if (params.image) {
+    const data = new FormData()
+    data.append('image', params.image)
+    data.append('index_type', INDEX_TYPE)
+    data.append('key_type', params.searchTo)
+    data.append('num_results', `${params.pageSize + 1}`)
+
+    return await fetch(SEARCH_IMAGE_URL, {
+      body: data,
+      method: 'POST',
+      signal: AbortSignal.timeout(10000),
+    })
+  }
+
+  throw Error()
+}
+
+export const useFindSimilar = (params: Params) => {
   const { data, error, isPending, refetch } = useQuery<{
     response: {
       docs: Doc[]
@@ -21,28 +61,14 @@ export const useSearchEmbeddings = (params: {
       start: number
     }
   }>({
-    queryKey: [URL, params],
+    queryKey: [QUERY_KEY, params],
     queryFn: async () => {
-      if (!params.queryId) {
+      if (!params.id && !params.image) {
         throw Error()
       }
 
-      const searchRes = await fetch(URL, {
-        body: JSON.stringify({
-          index_type: INDEX_TYPE,
-          key_type: params.searchTo,
-          num_results: params.pageSize + 1,
-          process_id: params.queryId,
-          query_type: params.searchFrom,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-        signal: AbortSignal.timeout(10000),
-      })
+      const searchRes = await search(params)
       const searchData = await searchRes.json()
-
       const recordIds: string[] = searchData['matches'] ?? []
 
       if (!recordIds?.length) {
@@ -55,7 +81,7 @@ export const useSearchEmbeddings = (params: {
             {
               type: 'id',
               value: recordIds.filter(
-                (recordId) => recordId !== params.queryId, // Filter out query record
+                (recordId) => recordId !== params.id, // Filter out current record
               ),
             },
           ]),
@@ -78,7 +104,7 @@ export const useSearchEmbeddings = (params: {
         },
       }
     },
-    enabled: !!params.queryId,
+    enabled: !!(params.id || params.image),
     retry: false,
   })
 

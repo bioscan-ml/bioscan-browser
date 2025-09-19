@@ -33,7 +33,7 @@ export const FindSimilarControl = ({
               className={cn(buttonVariants({ size, variant }), className)}
               to={{
                 pathname: PATHS.FIND_SIMILAR,
-                search: `queryid=${doc.id}`,
+                search: `id=${doc.id}`,
               }}
             >
               <SearchIcon className="w-4 h-4" />
@@ -52,7 +52,7 @@ export const FindSimilarControl = ({
       className={cn(buttonVariants({ size, variant }), className)}
       to={{
         pathname: PATHS.FIND_SIMILAR,
-        search: `queryid=${doc.id}`,
+        search: `id=${doc.id}`,
       }}
     >
       <SearchIcon className="w-4 h-4 mr-2" />

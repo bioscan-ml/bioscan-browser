@@ -20,20 +20,19 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { UploadImage } from '@/components/ui/upload-image'
 import { ViewModeControl } from '@/components/view-mode-control'
 import { useActiveDoc } from '@/hooks/search-params/useActiveDoc'
+import { useId } from '@/hooks/search-params/useId'
 import { usePageSize } from '@/hooks/search-params/usePageSize'
-import { useQueryId } from '@/hooks/search-params/useQueryId'
 import { useSearchType } from '@/hooks/search-params/useSearchType'
+import { useFindSimilar } from '@/hooks/useFindSimilar'
 import { useRandomSampleId } from '@/hooks/useRandomSampleId'
 import { useRecord } from '@/hooks/useRecord'
-import { useSearchEmbeddings } from '@/hooks/useSearchEmbeddings'
-import { cn } from '@/lib/utils'
 import { ViewMode } from '@/types/settings'
 import {
   AlertCircleIcon,
   DicesIcon,
-  Loader2Icon,
   RocketIcon,
   SearchIcon,
 } from 'lucide-react'
@@ -47,12 +46,14 @@ const PAGE_SIZE_OPTIONS = [10, 50, 100]
 
 export const FindSimilar = () => {
   const [searchString, setSearchString] = useState<string>('')
-  const { queryId, setQueryId } = useQueryId()
+  const { id, setId } = useId()
+  const [image, setImage] = useState<File | null>(null)
   const { searchFrom, setSearchFrom, searchTo, setSearchTo } = useSearchType()
   const [viewMode, setViewMode] = useState<ViewMode>('gallery')
   const { pageSize, setPageSize } = usePageSize()
-  const { data, isPending, refetch } = useSearchEmbeddings({
-    queryId,
+  const { data, isPending, refetch } = useFindSimilar({
+    id,
+    image,
     searchFrom,
     searchTo,
     pageSize,
@@ -60,12 +61,34 @@ export const FindSimilar = () => {
   const { activeDoc, setActiveDoc } = useActiveDoc(data?.docs)
 
   useEffect(() => {
-    setSearchString(queryId ?? '')
-  }, [queryId])
+    setSearchString(id ?? '')
+  }, [id])
 
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [data])
+
+  const onSubmit = (values: { id?: string; image?: File }) => {
+    if (values.id) {
+      if (id === values.id) {
+        refetch()
+      } else {
+        setId(values.id)
+      }
+    } else {
+      setId(null)
+    }
+
+    if (values.image) {
+      if (image === values.image) {
+        refetch()
+      } else {
+        setImage(values.image)
+      }
+    } else {
+      setImage(null)
+    }
+  }
 
   return (
     <>
@@ -81,7 +104,13 @@ export const FindSimilar = () => {
                 />
               </SidebarSection>
               <SidebarSection label="Query record">
-                {queryId ? <RecordDetails queryId={queryId} /> : null}
+                {id ? (
+                  <RecordDetails id={id} />
+                ) : image ? (
+                  <div className="rounded-md border border-input bg-card overflow-hidden relative">
+                    <img src={URL.createObjectURL(image)} />
+                  </div>
+                ) : null}
                 <div className="flex gap-2">
                   <Input
                     placeholder="Specify a record ID"
@@ -89,10 +118,10 @@ export const FindSimilar = () => {
                     onChange={(e) => {
                       const { value } = e.currentTarget
                       setSearchString(value)
-                      setQueryId(value)
+                      setId(value)
                     }}
                   />
-                  <RandomSearch onClick={setQueryId} size="icon" />
+                  <RandomSearch onClick={setId} />
                 </div>
               </SidebarSection>
               <div className="flex gap-8">
@@ -124,7 +153,7 @@ export const FindSimilar = () => {
               </h2>
               <Badge variant="outline">Experimental</Badge>
             </div>
-            {isPending && queryId ? (
+            {isPending && (id || image) ? (
               <Loader />
             ) : data?.docs.length ? (
               <>
@@ -164,24 +193,18 @@ export const FindSimilar = () => {
                   </div>
                 )}
               </>
-            ) : queryId ? (
+            ) : id || image ? (
               <Intro
                 defaultSearchString={searchString}
                 description="No matches were found, please try a different query record."
                 error
-                onSubmit={(newQueryId) => {
-                  if (queryId === newQueryId) {
-                    refetch()
-                  } else {
-                    setQueryId(newQueryId)
-                  }
-                }}
+                onSubmit={onSubmit}
                 title="No similar records found"
               />
             ) : (
               <Intro
                 description="To find similar records, first specify a query record."
-                onSubmit={(newQueryId) => setQueryId(newQueryId)}
+                onSubmit={onSubmit}
                 title="Get started"
               />
             )}
@@ -201,9 +224,9 @@ export const FindSimilar = () => {
   )
 }
 
-const RecordDetails = ({ queryId }: { queryId: string }) => {
+const RecordDetails = ({ id }: { id: string }) => {
   const [open, setOpen] = useState(false)
-  const { data } = useRecord({ id: queryId })
+  const { data } = useRecord({ id })
 
   if (!data) {
     return null
@@ -260,7 +283,7 @@ const Intro = ({
   error?: boolean
   title: string
   description: string
-  onSubmit: (queryId: string) => void
+  onSubmit: (values: { id?: string; image?: File }) => void
 }) => {
   const [searchString, setSearchString] = useState<string>(
     defaultSearchString ?? '',
@@ -283,99 +306,65 @@ const Intro = ({
           value={searchString}
           onChange={(e) => setSearchString(e.currentTarget.value)}
         />
-        <Button
-          variant="outline"
-          size="icon"
-          className="shrink-0"
-          onClick={() => onSubmit(searchString)}
-        >
-          <SearchIcon className="w-4 h-4" />
-        </Button>
+        {searchString ? (
+          <Button
+            variant="outline"
+            size="icon"
+            className="shrink-0"
+            onClick={() => onSubmit({ id: searchString })}
+          >
+            <SearchIcon className="w-4 h-4" />
+          </Button>
+        ) : (
+          <RandomSearch onClick={(id) => onSubmit({ id })} />
+        )}
       </div>
       <p className="text-sm text-muted-foreground">or</p>
-      <div>
-        <RandomSearch onClick={onSubmit} />
-      </div>
+      <UploadImage onChange={(image) => onSubmit({ image })} />
     </div>
   )
 }
 
 const RandomSearch = ({
   onClick: _onClick,
-  size = 'default',
 }: {
   onClick: (queryId: string) => void
-  size?: 'default' | 'icon'
 }) => {
   const [seed, setSeed] = useState(Date.now())
   const { data, isPending, error } = useRandomSampleId(seed)
   const isLoading = !data && isPending
 
-  const iconClassName = cn('w-4 h-4', {
-    'ml-2': size === 'default',
-  })
-
-  const onClick = () => {
-    if (data) {
-      _onClick(data)
-    }
-    setSeed(Date.now())
-  }
-
   const tooltip = error
     ? 'Could not load random records, please try again later.'
-    : size === 'icon'
-      ? 'Try a random record'
-      : undefined
-
-  if (tooltip) {
-    return (
-      <TooltipProvider delayDuration={0}>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              disabled={isLoading}
-              variant="outline"
-              size={size}
-              className="shrink-0"
-              onClick={onClick}
-            >
-              {size === 'default' ? <span>Try a random record</span> : null}
-              {error ? (
-                <AlertCircleIcon
-                  className={cn(iconClassName, 'text-destructive')}
-                />
-              ) : isLoading ? (
-                <Loader2Icon className={cn(iconClassName, 'animate-spin')} />
-              ) : (
-                <DicesIcon className={iconClassName} />
-              )}
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent side="bottom">
-            <p>{tooltip}</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    )
-  }
+    : 'Try a random record'
 
   return (
-    <Button
-      disabled={isLoading}
-      variant="outline"
-      size={size}
-      className="shrink-0"
-      onClick={onClick}
-    >
-      {size === 'default' ? <span>Try a random record</span> : null}
-      {error ? (
-        <AlertCircleIcon className={cn(iconClassName, 'text-destructive')} />
-      ) : isLoading ? (
-        <Loader2Icon className={cn(iconClassName, 'animate-spin')} />
-      ) : (
-        <DicesIcon className={iconClassName} />
-      )}
-    </Button>
+    <TooltipProvider delayDuration={0}>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            className="shrink-0"
+            disabled={isLoading}
+            onClick={() => {
+              if (data) {
+                _onClick(data)
+              }
+              setSeed(Date.now())
+            }}
+            size="icon"
+            variant="outline"
+          >
+            {error ? (
+              <AlertCircleIcon className="w-4 h-4 text-destructive" />
+            ) : (
+              <DicesIcon className="w-4 h-4" />
+            )}
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent side="bottom">
+          <p>{tooltip}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   )
 }
