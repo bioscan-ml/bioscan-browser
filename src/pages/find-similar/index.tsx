@@ -96,14 +96,7 @@ export const FindSimilar = () => {
         <div className="grid items-start gap-4 py-4 md:flex md:gap-8 md:py-8">
           <Sidebar avoidPaginationBar={false}>
             <div className="space-y-8">
-              <SidebarSection label="View mode">
-                <ViewModeControl
-                  type="find-similar"
-                  viewMode={viewMode}
-                  setViewMode={setViewMode}
-                />
-              </SidebarSection>
-              <SidebarSection label="Query record">
+              <SidebarSection label="Search query">
                 {id ? (
                   <RecordDetails id={id} />
                 ) : image ? (
@@ -123,6 +116,13 @@ export const FindSimilar = () => {
                   />
                   <RandomSearch onClick={setId} />
                 </div>
+              </SidebarSection>
+              <SidebarSection label="View mode">
+                <ViewModeControl
+                  type="find-similar"
+                  viewMode={viewMode}
+                  setViewMode={setViewMode}
+                />
               </SidebarSection>
               <div className="flex gap-8">
                 <SidebarSection className="md:w-min" label="Search from">
@@ -196,14 +196,14 @@ export const FindSimilar = () => {
             ) : id || image ? (
               <Intro
                 defaultSearchString={searchString}
-                description="No matches were found, please try a different query record."
+                description="No matches were found, please try a different search query."
                 error
                 onSubmit={onSubmit}
                 title="No similar records found"
               />
             ) : (
               <Intro
-                description="To find similar records, first specify a query record."
+                description="To find similar records, first specify a search query."
                 onSubmit={onSubmit}
                 title="Get started"
               />
