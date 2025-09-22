@@ -28,10 +28,12 @@ export const Sidebar = ({
 }
 
 export const SidebarSection = ({
+  accessory,
   children,
   className,
   label,
 }: {
+  accessory?: ReactNode
   children: ReactNode
   className?: string
   label: string
@@ -43,7 +45,12 @@ export const SidebarSection = ({
         className,
       )}
     >
-      <label className="py-1.5 text-sm leading-none font-medium">{label}</label>
+      <div className="h-10 flex items-center justify-between">
+        <label className="py-1.5 text-sm leading-none font-medium">
+          {label}
+        </label>
+        {accessory}
+      </div>
       {children}
     </div>
   )

@@ -22,11 +22,13 @@ const SEATCH_TYPE_OPTIONS = [
 ]
 
 interface SearchTypeProps {
+  disabled?: boolean
   searchType: SearchType
   setSearchType: (searchType: SearchType) => void
 }
 
 export const SearchTypeControl = ({
+  disabled,
   searchType,
   setSearchType,
 }: SearchTypeProps) => (
@@ -37,9 +39,10 @@ export const SearchTypeControl = ({
           <TooltipTrigger asChild>
             <Button
               key={value}
-              variant={searchType === value ? 'secondary' : 'ghost'}
-              size="icon"
+              disabled={disabled}
               onClick={() => setSearchType(value as SearchType)}
+              size="icon"
+              variant={searchType === value ? 'secondary' : 'ghost'}
             >
               <Icon className="w-4 h-4" />
             </Button>

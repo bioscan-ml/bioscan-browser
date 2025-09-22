@@ -1,11 +1,22 @@
-import { UploadIcon } from 'lucide-react'
-import { useRef } from 'react'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
+import { ReactNode, useRef } from 'react'
 import { Button } from './button'
 
 export const UploadImage = ({
+  children,
   onChange,
+  size = 'default',
+  tooltip,
 }: {
+  children: ReactNode
   onChange: (file?: File) => void
+  size?: 'icon' | 'default'
+  tooltip?: string
 }) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -21,14 +32,34 @@ export const UploadImage = ({
           onChange(file)
         }}
       />
-      <Button
-        variant="outline"
-        className="shrink-0"
-        onClick={() => inputRef.current?.click()}
-      >
-        <UploadIcon className="w-4 h-4 mr-2" />
-        Upload image
-      </Button>
+      {tooltip ? (
+        <TooltipProvider delayDuration={0}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="outline"
+                className="shrink-0"
+                size={size}
+                onClick={() => inputRef.current?.click()}
+              >
+                {children}
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              <p>{tooltip}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      ) : (
+        <Button
+          variant="outline"
+          className="shrink-0"
+          size={size}
+          onClick={() => inputRef.current?.click()}
+        >
+          {children}
+        </Button>
+      )}
     </>
   )
 }

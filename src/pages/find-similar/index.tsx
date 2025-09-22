@@ -33,8 +33,11 @@ import { ViewMode } from '@/types/settings'
 import {
   AlertCircleIcon,
   DicesIcon,
+  PenIcon,
   RocketIcon,
   SearchIcon,
+  UploadIcon,
+  XIcon,
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { FindSimilarControl } from '../../components/find-similar-control'
@@ -74,6 +77,7 @@ export const FindSimilar = () => {
         refetch()
       } else {
         setId(values.id)
+        setImage(null)
       }
     } else {
       setId(null)
@@ -84,6 +88,8 @@ export const FindSimilar = () => {
         refetch()
       } else {
         setImage(values.image)
+        setSearchFrom('Image')
+        setId(null)
       }
     } else {
       setImage(null)
@@ -96,27 +102,58 @@ export const FindSimilar = () => {
         <div className="grid items-start gap-4 py-4 md:flex md:gap-8 md:py-8">
           <Sidebar avoidPaginationBar={false}>
             <div className="space-y-8">
-              <SidebarSection label="Search query">
-                {id ? (
+              {id ? (
+                <SidebarSection
+                  label="Search query"
+                  accessory={
+                    <Button
+                      onClick={() => setId(null)}
+                      size="icon"
+                      variant="ghost"
+                    >
+                      <XIcon className="w-4 h-4" />
+                    </Button>
+                  }
+                >
                   <RecordDetails id={id} />
-                ) : image ? (
+                  <div className="flex gap-2">
+                    <Input
+                      placeholder="Specify a record ID"
+                      value={searchString}
+                      onChange={(e) => {
+                        const { value } = e.currentTarget
+                        setSearchString(value)
+                        setId(value)
+                      }}
+                    />
+                    <RandomSearch onClick={setId} />
+                  </div>
+                </SidebarSection>
+              ) : null}
+              {image ? (
+                <SidebarSection
+                  label="Search query"
+                  accessory={
+                    <Button
+                      onClick={() => setImage(null)}
+                      size="icon"
+                      variant="ghost"
+                    >
+                      <XIcon className="w-4 h-4" />
+                    </Button>
+                  }
+                >
                   <div className="rounded-md border border-input bg-card overflow-hidden relative">
                     <img src={URL.createObjectURL(image)} />
                   </div>
-                ) : null}
-                <div className="flex gap-2">
-                  <Input
-                    placeholder="Specify a record ID"
-                    value={searchString}
-                    onChange={(e) => {
-                      const { value } = e.currentTarget
-                      setSearchString(value)
-                      setId(value)
-                    }}
-                  />
-                  <RandomSearch onClick={setId} />
-                </div>
-              </SidebarSection>
+                  <div>
+                    <UploadImage onChange={(image) => onSubmit({ image })}>
+                      <PenIcon className="w-4 h-4 mr-2" />
+                      <span>Change image</span>
+                    </UploadImage>
+                  </div>
+                </SidebarSection>
+              ) : null}
               <SidebarSection label="View mode">
                 <ViewModeControl
                   type="find-similar"
@@ -127,6 +164,7 @@ export const FindSimilar = () => {
               <div className="flex gap-8">
                 <SidebarSection className="md:w-min" label="Search from">
                   <SearchTypeControl
+                    disabled={!!image}
                     searchType={searchFrom}
                     setSearchType={setSearchFrom}
                   />
@@ -195,16 +233,19 @@ export const FindSimilar = () => {
               </>
             ) : id || image ? (
               <Intro
-                defaultSearchString={searchString}
                 description="No matches were found, please try a different search query."
                 error
                 onSubmit={onSubmit}
+                searchString={searchString}
+                setSearchString={setSearchString}
                 title="No similar records found"
               />
             ) : (
               <Intro
                 description="To find similar records, first specify a search query."
                 onSubmit={onSubmit}
+                searchString={searchString}
+                setSearchString={setSearchString}
                 title="Get started"
               />
             )}
@@ -273,22 +314,20 @@ const PageSizeControl = ({
 }
 
 const Intro = ({
-  defaultSearchString,
-  error,
-  title,
   description,
+  error,
   onSubmit,
+  searchString,
+  setSearchString,
+  title,
 }: {
-  defaultSearchString?: string
-  error?: boolean
-  title: string
   description: string
+  error?: boolean
   onSubmit: (values: { id?: string; image?: File }) => void
+  searchString: string
+  setSearchString: (searchString: string) => void
+  title: string
 }) => {
-  const [searchString, setSearchString] = useState<string>(
-    defaultSearchString ?? '',
-  )
-
   return (
     <div className="text-center space-y-8 p-16">
       {error ? (
@@ -320,7 +359,10 @@ const Intro = ({
         )}
       </div>
       <p className="text-sm text-muted-foreground">or</p>
-      <UploadImage onChange={(image) => onSubmit({ image })} />
+      <UploadImage onChange={(image) => onSubmit({ image })}>
+        <UploadIcon className="w-4 h-4 mr-2" />
+        <span>Upload image</span>
+      </UploadImage>
     </div>
   )
 }
