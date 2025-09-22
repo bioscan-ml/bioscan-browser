@@ -104,7 +104,7 @@ export const FindSimilar = () => {
             <div className="space-y-8">
               {id ? (
                 <SidebarSection
-                  label="Search query"
+                  label="Query record"
                   accessory={
                     <Button
                       onClick={() => setId(null)}
@@ -132,7 +132,7 @@ export const FindSimilar = () => {
               ) : null}
               {image ? (
                 <SidebarSection
-                  label="Search query"
+                  label="Query image"
                   accessory={
                     <Button
                       onClick={() => setImage(null)}
