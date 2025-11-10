@@ -51,7 +51,8 @@ export const FILTER_TYPES = [
   { label: 'Chunk', key: 'chunk' },
 ]
 
-export const SOLR_BASE_PATH = '/api/scene-toolkit/solr/bioscan5m/select'
+export const SOLR_BASE_PATH =
+  'https://aspis.cmpt.sfu.ca/scene-toolkit/solr/bioscan5m/select'
 
 export const DEFAULT_PAGINATION = { page: 0, pageSize: 100 }
 
