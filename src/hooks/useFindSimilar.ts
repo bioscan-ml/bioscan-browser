@@ -38,7 +38,7 @@ const search = async (params: Params) => {
 
   if (params.image) {
     const data = new FormData()
-    data.append('image', params.image)
+    data.append('images', params.image)
     data.append('index_type', INDEX_TYPE)
     data.append('key_type', params.searchTo)
     data.append('num_results', `${params.pageSize + 1}`)
