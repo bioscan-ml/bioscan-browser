@@ -69,7 +69,8 @@ export const useFindSimilar = (params: Params) => {
 
       const searchRes = await search(params)
       const searchData = await searchRes.json()
-      const recordIds: string[] = searchData['matches'] ?? []
+      const recordIds: string[] =
+        searchData['matches'] ?? searchData['results'][0]['matches'] ?? []
 
       if (!recordIds?.length) {
         throw Error()
