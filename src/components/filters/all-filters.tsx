@@ -1,9 +1,7 @@
 import { Button } from '@/components/ui/button'
 import {
   Sheet,
-  SheetClose,
   SheetContent,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -31,10 +29,10 @@ export const AllFilters = ({ facetCounts, filters }: AllFiltersProps) => {
         <Button variant="outline">All filters</Button>
       </SheetTrigger>
       <SheetContent className="flex flex-col gap-0 p-0 overflow-y-auto">
-        <SheetHeader className="sticky top-0 p-6 bg-muted border-b">
+        <SheetHeader className="sticky top-0 p-4 bg-muted border-b">
           <SheetTitle>All filters</SheetTitle>
         </SheetHeader>
-        <div className="grow space-y-4 p-6">
+        <div className="grow space-y-4 p-4">
           {FILTER_TYPES.map(({ key, label }) => (
             <FilterControl
               key={key}
@@ -44,12 +42,6 @@ export const AllFilters = ({ facetCounts, filters }: AllFiltersProps) => {
             />
           ))}
         </div>
-        <SheetFooter className="sticky bottom-0 p-6 bg-muted border-t">
-          <Button type="submit">Apply</Button>
-          <SheetClose asChild>
-            <Button variant="outline">Cancel</Button>
-          </SheetClose>
-        </SheetFooter>
       </SheetContent>
     </Sheet>
   )
