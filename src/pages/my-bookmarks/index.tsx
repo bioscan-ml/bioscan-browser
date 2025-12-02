@@ -26,8 +26,8 @@ export const MyBookmarks = () => {
       ...DEFAULT_PAGINATION,
       q: filtersToQuery([
         {
-          type: 'id',
-          value: bookmarks.map((bookmark) => bookmark.recordId).sort(),
+          key: 'id',
+          values: bookmarks.map((bookmark) => bookmark.recordId).sort(),
         },
       ]),
     },

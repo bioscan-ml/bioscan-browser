@@ -10,6 +10,6 @@ export interface Sort {
 }
 
 export interface Filter {
-  type: string
-  value: string[]
+  key: string
+  values: string[]
 }

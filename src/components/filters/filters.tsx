@@ -16,9 +16,9 @@ import { FilterControl } from './filter-control'
 interface FiltersProps {
   facetCounts?: FacetCounts
   filters: Filter[]
-  onAdd: (params: { type: string; value: string }) => void
+  onAdd: (params: { key: string; value: string }) => void
   onClear: () => void
-  onRemove: (params: { type: string; value: string }) => void
+  onRemove: (params: { key: string; value: string }) => void
 }
 
 export const Filters = ({
@@ -30,7 +30,7 @@ export const Filters = ({
 }: FiltersProps) => {
   const [open, setIsOpen] = useState(false)
   const filterCount = filters.reduce((previousValue, currentValue) => {
-    previousValue += currentValue.value.length
+    previousValue += currentValue.values.length
 
     return previousValue
   }, 0)
@@ -54,15 +54,15 @@ export const Filters = ({
         </SheetHeader>
         <div className="grow space-y-4 p-4">
           {FILTER_TYPES.map(({ key, label }) => {
-            const values = filters.find((f) => f.type === key)?.value
+            const values = filters.find((f) => f.key === key)?.values
 
             return (
               <FilterControl
                 key={key}
                 facetFields={facetCounts?.facet_fields[key]}
                 label={label}
-                onAdd={(value) => onAdd({ type: key, value })}
-                onRemove={(value) => onRemove({ type: key, value })}
+                onAdd={(value) => onAdd({ key, value })}
+                onRemove={(value) => onRemove({ key, value })}
                 values={values}
               />
             )

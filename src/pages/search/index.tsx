@@ -42,8 +42,8 @@ export const Search = () => {
     q: filtersToQuery([
       ...filters,
       {
-        type: 'id',
-        value: id ? [id] : [],
+        key: 'id',
+        values: id ? [id] : [],
       },
     ]),
     sort,
