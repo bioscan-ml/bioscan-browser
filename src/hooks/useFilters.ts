@@ -9,44 +9,54 @@ export const useFilters = () => {
 
   const filters: Filter[] =
     _filters?.map((filter) => {
-      const [type, ...rest] = filter.split(':')
-      const _value = rest.join(':')
-      const value = _value.split(',')
+      const [key, ...rest] = filter.split(':')
+      const _values = rest.join(':')
+      const values = _values.split(',')
 
-      return { type, value }
+      return { key, values }
     }) ?? []
 
   const setFilters = (filters: Filter[]) => {
     _setFilters(
-      filters.map((filter) => `${filter.type}:${filter.value.join(',')}`),
+      filters.map((filter) => `${filter.key}:${filter.values.join(',')}`),
     )
   }
 
   return {
     filters,
     filterQuery: filtersToQuery(filters),
-    addFilter: (filter: Filter) => {
-      const currentFilter = filters.find((f) => f.type === filter.type)
+    addFilter: ({ key, value }: { key: string; value: string }) => {
+      const currentFilter = filters.find((f) => f.key === key)
+
+      if (currentFilter) {
+        if (!currentFilter.values.includes(value)) {
+          // Update current filter
+          const filter = {
+            key,
+            values: [...currentFilter.values, value],
+          }
+          setFilters([...filters.filter((f) => f.key !== key), filter])
+        }
+      } else {
+        // Add new filter
+        setFilters([...filters, { key, values: [value] }])
+      }
+    },
+    removeFilter: ({ key, value }: { key: string; value: string }) => {
+      const currentFilter = filters.find((f) => f.key === key)
 
       if (currentFilter) {
         // Update current filter
+        const filter = {
+          key,
+          values: currentFilter.values.filter((v) => v !== value),
+        }
         setFilters([
-          ...filters.filter((f) => f.type !== filter.type),
-          {
-            type: filter.type,
-            value: [
-              ...currentFilter.value,
-              ...filter.value.filter((f) => !currentFilter.value.includes(f)),
-            ],
-          },
+          ...filters.filter((f) => f.key !== key),
+          ...(filter.values.length ? [filter] : []),
         ])
-      } else {
-        // Add new filter
-        setFilters([...filters, filter])
       }
     },
-    removeFilter: (type: string) =>
-      setFilters(filters.filter((f) => f.type !== type)),
     clearFilters: () => setFilters([]),
   }
 }

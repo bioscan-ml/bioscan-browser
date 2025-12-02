@@ -1,6 +1,7 @@
 import { DocDetailsDialog } from '@/components/doc-details/doc-details-dialog'
 import { Error } from '@/components/error'
-import { FilterControl } from '@/components/filter-control'
+import { ActiveFilters } from '@/components/filters/active-filters'
+import { Filters } from '@/components/filters/filters'
 import { DnaBarcodeGalleryItem } from '@/components/gallery/dna-barcode-gallery-item'
 import { Gallery } from '@/components/gallery/gallery'
 import { GalleryItem } from '@/components/gallery/gallery-item'
@@ -41,8 +42,8 @@ export const Search = () => {
     q: filtersToQuery([
       ...filters,
       {
-        type: 'id',
-        value: id ? [id] : [],
+        key: 'id',
+        values: id ? [id] : [],
       },
     ]),
     sort,
@@ -73,14 +74,25 @@ export const Search = () => {
                   value={id ?? ''}
                 />
               </SidebarSection>
-              <SidebarSection label="Filter">
-                <FilterControl
-                  facetCounts={facetCounts}
-                  filters={filters}
-                  onAdd={addFilter}
-                  onClear={clearFilters}
-                  onRemove={removeFilter}
-                />
+              <SidebarSection
+                accessory={
+                  <Filters
+                    facetCounts={facetCounts}
+                    filters={filters}
+                    onAdd={addFilter}
+                    onClear={clearFilters}
+                    onRemove={removeFilter}
+                  />
+                }
+                label="Filters"
+              >
+                {filters.length ? (
+                  <ActiveFilters filters={filters} onRemove={removeFilter} />
+                ) : (
+                  <span className="text-sm text-muted-foreground">
+                    No filters applied
+                  </span>
+                )}
               </SidebarSection>
             </div>
           </Sidebar>

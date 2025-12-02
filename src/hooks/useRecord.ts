@@ -19,7 +19,7 @@ export const useRecord = ({
         throw Error()
       }
 
-      const q = filtersToQuery([{ type: 'id', value: [id] }])
+      const q = filtersToQuery([{ key: 'id', values: [id] }])
       const res = await fetch(`${SOLR_BASE_PATH}?q=${q}`)
       const data = await res.json()
       const doc = data.response.docs[0]

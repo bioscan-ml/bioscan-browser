@@ -53,8 +53,8 @@ export const useSearchEmbeddings = (params: {
         getFetchUrl({
           q: filtersToQuery([
             {
-              type: 'id',
-              value: recordIds.filter(
+              key: 'id',
+              values: recordIds.filter(
                 (recordId) => recordId !== params.queryId, // Filter out query record
               ),
             },

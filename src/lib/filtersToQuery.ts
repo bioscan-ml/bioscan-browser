@@ -1,8 +1,8 @@
 import { Filter } from '@/types/settings'
 
 const filterToQuery = (filter: Filter) => {
-  const query = filter.value.reduce((previousQuery, currentValue) => {
-    const currentQuery = `${filter.type}:"${currentValue}"`
+  const query = filter.values.reduce((previousQuery, currentValue) => {
+    const currentQuery = `${filter.key}:"${currentValue}"`
 
     return previousQuery.length
       ? `${previousQuery} OR ${currentQuery}`
