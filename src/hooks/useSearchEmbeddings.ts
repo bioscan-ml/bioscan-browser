@@ -1,3 +1,4 @@
+import { BACKEND_BASE_PATH } from '@/lib/constants'
 import { filtersToQuery } from '@/lib/filtersToQuery'
 import { getFetchUrl } from '@/lib/getFetchUrl'
 import { Doc } from '@/types/response-data'
@@ -5,7 +6,7 @@ import { SearchType, Sort } from '@/types/settings'
 import { useQuery } from '@tanstack/react-query'
 
 const INDEX_TYPE = 'PQ64x4fsr'
-const URL = 'backend/search-id'
+const URL = `${BACKEND_BASE_PATH}/search-id`
 
 export const useSearchEmbeddings = (params: {
   queryId: string | null
