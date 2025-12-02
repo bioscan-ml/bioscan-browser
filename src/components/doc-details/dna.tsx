@@ -48,7 +48,7 @@ export const Dna = ({ doc }: ImagesProps) => {
         <Link
           to={{
             pathname: PATHS.SEARCH,
-            search: `filter=dna_bin:${doc.dna_bin}`,
+            search: `dna_bin=${doc.dna_bin}`,
           }}
           className="text-link"
         >

@@ -81,6 +81,6 @@ const getFieldLink = (key: string, value: string): To | undefined => {
   if (FILTER_TYPES.some((filterType) => filterType.key === key))
     return {
       pathname: PATHS.SEARCH,
-      search: `filter=${key}:${value}`,
+      search: `${key}=${value}`,
     }
 }

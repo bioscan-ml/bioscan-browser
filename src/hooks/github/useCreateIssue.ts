@@ -82,7 +82,7 @@ ${data.boldDoc ? JSON.stringify(data.boldDoc, null, 4) : 'Not found'}
 - [Record details (BIOSCAN Browser)](https://bioscan-browser.netlify.app/record/${data.doc.id})
 - [Record details (BOLD Systems)](https://portal.boldsystems.org/record/${data.doc.id})
 - [Samples with same taxonomic label](https://bioscan-browser.netlify.app/taxonomy-tree?taxon=${taxon.rankKey}-${taxon.label})
-- [Samples with same DNA barcode](https://bioscan-browser.netlify.app/search?filter=dna_bin:${data.doc.dna_bin})
+- [Samples with same DNA barcode](https://bioscan-browser.netlify.app/search?dna_bin=${data.doc.dna_bin})
 
 ## Report details
 
