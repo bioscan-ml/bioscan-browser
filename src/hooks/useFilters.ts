@@ -25,28 +25,38 @@ export const useFilters = () => {
   return {
     filters,
     filterQuery: filtersToQuery(filters),
-    addFilter: (filter: Filter) => {
-      const currentFilter = filters.find((f) => f.type === filter.type)
+    addFilter: ({ type, value }: { type: string; value: string }) => {
+      const currentFilter = filters.find((f) => f.type === type)
+
+      if (currentFilter) {
+        if (!currentFilter.value.includes(value)) {
+          // Update current filter
+          const filter = {
+            type,
+            value: [...currentFilter.value, value],
+          }
+          setFilters([...filters.filter((f) => f.type !== type), filter])
+        }
+      } else {
+        // Add new filter
+        setFilters([...filters, { type, value: [value] }])
+      }
+    },
+    removeFilter: ({ type, value }: { type: string; value: string }) => {
+      const currentFilter = filters.find((f) => f.type === type)
 
       if (currentFilter) {
         // Update current filter
+        const filter = {
+          type,
+          value: currentFilter.value.filter((v) => v !== value),
+        }
         setFilters([
-          ...filters.filter((f) => f.type !== filter.type),
-          {
-            type: filter.type,
-            value: [
-              ...currentFilter.value,
-              ...filter.value.filter((f) => !currentFilter.value.includes(f)),
-            ],
-          },
+          ...filters.filter((f) => f.type !== type),
+          ...(filter.value.length ? [filter] : []),
         ])
-      } else {
-        // Add new filter
-        setFilters([...filters, filter])
       }
     },
-    removeFilter: (type: string) =>
-      setFilters(filters.filter((f) => f.type !== type)),
     clearFilters: () => setFilters([]),
   }
 }

@@ -132,7 +132,7 @@ const Images = ({ taxonDetails }: { taxonDetails: TaxonDetails }) => (
       />
     ) : (
       <p className="text-sm text-muted-foreground">
-        No images found for the current taxon.
+        No images found for the current taxon
       </p>
     )}
   </div>

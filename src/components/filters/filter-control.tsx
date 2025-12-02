@@ -4,44 +4,41 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible'
-import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
-import { Filter } from '@/types/settings'
 import { ChevronsUpDownIcon, XIcon } from 'lucide-react'
 import { useState } from 'react'
 import { buttonVariants } from '../ui/button'
 import { Combobox } from './combobox'
 
 interface FilterControlProps {
-  label: string
-  filter?: Filter
   facetFields?: (string | number)[]
+  label: string
+  onAdd: (value: string) => void
+  onRemove: (value: string) => void
+  values?: string[]
 }
 
 export const FilterControl = ({
   facetFields,
-  filter,
   label,
+  onAdd,
+  onRemove,
+  values = [],
 }: FilterControlProps) => {
-  const [open, setIsOpen] = useState(false)
-  const valueOptions = facetFields
+  const [open, setIsOpen] = useState(!!values.length)
+  const options = facetFields
     ?.filter((item) => typeof item === 'string')
     .map((value) => ({
-      label: value,
-      value,
+      label: `${value}`,
+      value: `${value}`,
     }))
-  const values = filter?.value ?? []
 
   return (
     <Collapsible open={open} onOpenChange={setIsOpen}>
       <CollapsibleTrigger
-        className={cn(
-          buttonVariants({ variant: values.length ? 'default' : 'outline' }),
-          'w-full',
-          {
-            'rounded-b-none': open,
-          },
-        )}
+        className={cn(buttonVariants({ variant: 'outline' }), 'w-full', {
+          'bg-muted rounded-b-none': open,
+        })}
       >
         <span className="text-sm font-medium grow text-left">
           {values.length ? `${label} (${values.length})` : label}
@@ -49,37 +46,23 @@ export const FilterControl = ({
         <ChevronsUpDownIcon className="w-4 h-4" />
       </CollapsibleTrigger>
       <CollapsibleContent className="p-4 border-x border-b rounded-b-md">
-        <div>
-          {valueOptions?.length ? (
-            <div className="flex items-center gap-2 flex-wrap">
-              {values.map((value) => (
-                <button
-                  className={badgeVariants()}
-                  onClick={() => {
-                    /* TODO */
-                  }}
-                >
-                  <span>{value}</span>
-                  <XIcon className="w-3 h-3 ml-2" />
-                </button>
-              ))}
-              <Combobox
-                label="Add"
-                options={valueOptions}
-                placeholder="Search value..."
-                onSelect={() => {
-                  /* TODO */
-                }}
-              />
-            </div>
-          ) : (
-            <Input
-              value={filter?.value ?? ''}
-              onChange={() => {
-                /* TODO */
-              }}
-            />
-          )}
+        <div className="flex items-center gap-2 flex-wrap">
+          {values.map((value) => (
+            <button
+              key={value}
+              className={badgeVariants()}
+              onClick={() => onRemove(value)}
+            >
+              <span>{value}</span>
+              <XIcon className="w-3 h-3 ml-2" />
+            </button>
+          ))}
+          <Combobox
+            label="Add"
+            options={options}
+            placeholder="Search value..."
+            onSelect={onAdd}
+          />
         </div>
       </CollapsibleContent>
     </Collapsible>

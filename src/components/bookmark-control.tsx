@@ -29,11 +29,11 @@ export const BookmarkControl = ({
   const { bookmarks, addBookmark, removeBookmark } = useBookmarks()
   const bookmark = bookmarks.find((b) => b.recordId === doc.id)
   const [isNew, setIsNew] = useState(false)
-  const [isOpen, setIsOpen] = useState(false)
+  const [open, setIsOpen] = useState(false)
 
   return (
     <Popover
-      open={isOpen}
+      open={open}
       onOpenChange={(open) => {
         setIsOpen(open)
 

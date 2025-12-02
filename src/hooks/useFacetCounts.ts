@@ -16,7 +16,9 @@ const FACET = {
     'subfamily',
     'genus',
     'species',
+    'dna_bin',
     'split',
+    'chunk',
   ],
 }
 
