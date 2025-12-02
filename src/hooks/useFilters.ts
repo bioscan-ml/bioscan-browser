@@ -1,25 +1,33 @@
+import { FILTER_TYPES } from '@/lib/constants'
 import { filtersToQuery } from '@/lib/filtersToQuery'
 import { Filter } from '@/types/settings'
-import { useSearchParamsState } from './search-params/useSearchParamsState'
-
-const SEARCH_PARAM_KEY = 'filter'
+import { useSearchParams } from 'react-router-dom'
 
 export const useFilters = () => {
-  const [_filters, _setFilters] = useSearchParamsState(SEARCH_PARAM_KEY)
+  const [searchParams, setSearchParams] = useSearchParams()
 
-  const filters: Filter[] =
-    _filters?.map((filter) => {
-      const [key, ...rest] = filter.split(':')
-      const _values = rest.join(':')
-      const values = _values.split(',')
+  const filters = FILTER_TYPES.reduce(
+    (previousValue: Filter[], currentValue) => {
+      const values = searchParams.getAll(currentValue.key)
 
-      return { key, values }
-    }) ?? []
+      if (values.length) {
+        previousValue = [...previousValue, { key: currentValue.key, values }]
+      }
+
+      return previousValue
+    },
+    [],
+  )
 
   const setFilters = (filters: Filter[]) => {
-    _setFilters(
-      filters.map((filter) => `${filter.key}:${filter.values.join(',')}`),
+    FILTER_TYPES.forEach(({ key }) => searchParams.delete(key))
+
+    filters.forEach((filter) =>
+      filter.values.forEach((value) => searchParams.append(filter.key, value)),
     )
+
+    searchParams.sort()
+    setSearchParams(searchParams)
   }
 
   return {

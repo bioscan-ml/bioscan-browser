@@ -113,7 +113,7 @@ export const Search = () => {
                     onTaxonSelect={(taxon) => {
                       navigate({
                         pathname: PATHS.SEARCH,
-                        search: `filter=${taxon.rank}:${taxon.name}`,
+                        search: `${taxon.rank}=${taxon.name}`,
                       })
                     }}
                   />
