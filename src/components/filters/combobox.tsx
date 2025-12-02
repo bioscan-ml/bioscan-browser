@@ -56,7 +56,7 @@ export const Combobox = ({
           <PlusIcon className="w-3 h-3 ml-2" />
         </button>
       </PopoverTrigger>
-      <PopoverContent className="p-0" side="right" align="start">
+      <PopoverContent className="p-0" align="start">
         <Command shouldFilter={false}>
           <CommandInput
             placeholder={placeholder}
@@ -73,6 +73,7 @@ export const Combobox = ({
                   onSelect={(value) => {
                     onSelect(value)
                     setOpen(false)
+                    setSearchString('')
                   }}
                 >
                   {item.label}
