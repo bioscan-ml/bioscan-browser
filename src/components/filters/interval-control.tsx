@@ -4,7 +4,7 @@ import {
   CollapsibleTrigger,
 } from '@/components/ui/collapsible'
 import { cn } from '@/lib/utils'
-import { ChevronsUpDownIcon, XIcon } from 'lucide-react'
+import { ChevronsUpDownIcon, PlusIcon, XIcon } from 'lucide-react'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { FormField } from '../form-field'
@@ -113,7 +113,8 @@ export const IntervalControl = ({
               Clear
             </Button>
             <Button size="sm" type="submit">
-              Apply
+              <span>Add</span>
+              <PlusIcon className="w-4 h-4 ml-2" />
             </Button>
           </div>
         </form>
