@@ -7,8 +7,8 @@ import {
 } from '@/lib/constants'
 import { formatFieldValue } from '@/lib/formatFieldValue'
 import { Doc } from '@/types/response-data'
-import { ReactNode } from 'react'
 import { Link, To } from 'react-router-dom'
+import { Field } from '../field'
 import { IssueList } from '../issue-list'
 
 interface FieldsProps {
@@ -23,6 +23,7 @@ export const Fields = ({ doc }: FieldsProps) => (
       <DocField doc={doc} fieldKey="country" />
       <DocField doc={doc} fieldKey="province_state" />
       <DocField doc={doc} fieldKey="collectors" />
+      <DocField doc={doc} fieldKey="original_insect_pixels" />
       <Field label="Reported issues">
         <IssueList id={doc.id} />
       </Field>
@@ -51,7 +52,7 @@ const DocField = ({ doc, fieldKey }: { doc: Doc; fieldKey: keyof Doc }) => {
   const link = getFieldLink(field.key, value)
 
   return (
-    <Field label={field.label}>
+    <Field label={field.label} tooltip={field.tooltip}>
       {link ? (
         <Link to={link} className="text-link">
           {value}
@@ -63,13 +64,6 @@ const DocField = ({ doc, fieldKey }: { doc: Doc; fieldKey: keyof Doc }) => {
   )
 }
 
-const Field = ({ children, label }: { children: ReactNode; label: string }) => (
-  <div className="flex flex-col items-start text-sm">
-    <span className="font-medium text-muted-foreground">{label}</span>
-    {children}
-  </div>
-)
-
 const getFieldLink = (key: string, value: string): To | undefined => {
   if (TAXON_FILTER_TYPES.some((filterType) => filterType.key === key)) {
     return {
@@ -78,7 +72,11 @@ const getFieldLink = (key: string, value: string): To | undefined => {
     }
   }
 
-  if (FILTER_TYPES.some((filterType) => filterType.key === key))
+  if (
+    FILTER_TYPES.some(
+      (filterType) => filterType.key === key && filterType.type !== 'interval',
+    )
+  )
     return {
       pathname: PATHS.SEARCH,
       search: `${key}=${value}`,

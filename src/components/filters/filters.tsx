@@ -12,6 +12,7 @@ import { Filter } from '@/types/settings'
 import { SlidersHorizontal } from 'lucide-react'
 import { useState } from 'react'
 import { FilterControl } from './filter-control'
+import { IntervalControl } from './interval-control'
 
 interface FiltersProps {
   facetCounts?: FacetCounts
@@ -53,8 +54,20 @@ export const Filters = ({
           ) : null}
         </SheetHeader>
         <div className="grow space-y-4 p-4">
-          {FILTER_TYPES.map(({ key, label }) => {
+          {FILTER_TYPES.map(({ key, label, type }) => {
             const values = filters.find((f) => f.key === key)?.values
+
+            if (type === 'interval') {
+              return (
+                <IntervalControl
+                  key={key}
+                  label={label}
+                  onAdd={(value) => onAdd({ key, value })}
+                  onRemove={(value) => onRemove({ key, value })}
+                  values={values}
+                />
+              )
+            }
 
             return (
               <FilterControl
