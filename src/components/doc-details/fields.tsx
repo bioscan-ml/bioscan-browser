@@ -72,7 +72,11 @@ const getFieldLink = (key: string, value: string): To | undefined => {
     }
   }
 
-  if (FILTER_TYPES.some((filterType) => filterType.key === key))
+  if (
+    FILTER_TYPES.some(
+      (filterType) => filterType.key === key && filterType.type !== 'interval',
+    )
+  )
     return {
       pathname: PATHS.SEARCH,
       search: `${key}=${value}`,
