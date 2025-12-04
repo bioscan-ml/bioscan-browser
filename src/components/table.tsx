@@ -9,7 +9,6 @@ import {
 import { FIELDS } from '@/lib/constants'
 import { formatFieldValue } from '@/lib/formatFieldValue'
 import { getImageSrc } from '@/lib/getImageSrc'
-import { cn } from '@/lib/utils'
 import { Doc } from '@/types/response-data'
 import { Sort } from '@/types/settings'
 import { ArrowDownIcon, ArrowUpIcon } from 'lucide-react'
@@ -83,10 +82,7 @@ export const Table = ({ docs = [], sort, onRowClick, setSort }: TableProps) => (
             />
           </TableCell>
           {FIELDS.map((field) => (
-            <TableCell
-              key={field.key}
-              className={cn('whitespace-nowrap', field.cellClass)}
-            >
+            <TableCell key={field.key} className="whitespace-nowrap">
               {formatFieldValue(doc[field.key])}
             </TableCell>
           ))}

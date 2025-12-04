@@ -15,14 +15,11 @@ export const PATHS = {
 export const FIELDS: {
   label: string
   key: keyof Doc
-  cellClass?: string
   sortDisabled?: boolean
+  tooltip?: string
 }[] = [
-  { label: 'Record ID', key: 'id', cellClass: 'font-medium' },
+  { label: 'Record ID', key: 'id' },
   { label: 'Sample ID', key: 'sampleid' },
-  { label: 'Country', key: 'country' },
-  { label: 'Province/State', key: 'province_state' },
-  { label: 'Collectors', key: 'collectors', sortDisabled: true },
   { label: 'Phylum', key: 'phylum' },
   { label: 'Class', key: 'class' },
   { label: 'Order', key: 'order' },
@@ -30,6 +27,14 @@ export const FIELDS: {
   { label: 'Subfamily', key: 'subfamily' },
   { label: 'Genus', key: 'genus' },
   { label: 'Species', key: 'species' },
+  { label: 'Country', key: 'country' },
+  { label: 'Province/State', key: 'province_state' },
+  { label: 'Collectors', key: 'collectors', sortDisabled: true },
+  {
+    label: 'Original insect pixels',
+    key: 'original_insect_pixels',
+    tooltip: 'Number of pixels taken up by organism',
+  },
 ]
 
 export const TAXON_FILTER_TYPES = [
