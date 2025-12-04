@@ -15,6 +15,8 @@ import { Input } from '../ui/input'
 const ERROR_MESSAGES = {
   REQUIRED: 'This field is required.',
   POSITIVE_NUMBER: 'Please enter a positive number.',
+  WITHIN_RANGE: (minValue: number) =>
+    `Please enter a number larger than ${minValue}.`,
 }
 
 interface FilterControlProps {
@@ -31,10 +33,11 @@ export const IntervalControl = ({
   values = [],
 }: FilterControlProps) => {
   const [open, setIsOpen] = useState(!!values.length)
-  const { control, handleSubmit, reset } = useForm<{
+  const { control, handleSubmit, reset, watch } = useForm<{
     minValue: number
     maxValue: number
   }>()
+  const minValue = watch('minValue') ?? 0
 
   return (
     <Collapsible open={open} onOpenChange={setIsOpen}>
@@ -86,7 +89,10 @@ export const IntervalControl = ({
             <Controller
               control={control}
               rules={{
-                min: { value: 0, message: ERROR_MESSAGES.POSITIVE_NUMBER },
+                min: {
+                  value: minValue,
+                  message: ERROR_MESSAGES.WITHIN_RANGE(minValue),
+                },
                 required: ERROR_MESSAGES.REQUIRED,
               }}
               name="maxValue"
