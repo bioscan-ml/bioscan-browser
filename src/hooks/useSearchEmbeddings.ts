@@ -36,9 +36,6 @@ export const useSearchEmbeddings = (params: {
           process_id: params.queryId,
           query_type: params.searchFrom,
         }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
         method: 'POST',
         signal: AbortSignal.timeout(10000),
       })
