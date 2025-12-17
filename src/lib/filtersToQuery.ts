@@ -1,8 +1,18 @@
 import { Filter } from '@/types/settings'
+import { FILTER_TYPES } from './constants'
 
 const filterToQuery = (filter: Filter) => {
-  const query = filter.value.reduce((previousQuery, currentValue) => {
-    const currentQuery = `${filter.type}:"${currentValue}"`
+  const query = filter.values.reduce((previousQuery, currentValue) => {
+    const type = FILTER_TYPES.find(
+      (filterType) => filterType.key === filter.key,
+    )?.type
+
+    let currentQuery: string
+    if (type === 'interval') {
+      currentQuery = `${filter.key}:[${currentValue.split('-').join(' TO ')}]`
+    } else {
+      currentQuery = `${filter.key}:"${currentValue}"`
+    }
 
     return previousQuery.length
       ? `${previousQuery} OR ${currentQuery}`

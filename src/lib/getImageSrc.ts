@@ -1,4 +1,5 @@
 import { Doc } from '@/types/response-data'
+import { IMAGES_BASE_PATH } from './constants'
 
 export const getImageSrc = (
   doc: Doc,
@@ -8,4 +9,4 @@ export const getImageSrc = (
     | 'cropped'
     | 'cropped_256' = 'original_256',
 ) =>
-  `https://aspis.cmpt.sfu.ca/data/bioscan/bioscan5m/images/${type}/${doc.split}/${doc.chunk ? doc.chunk + '/' : ''}${doc.id}.jpg`
+  `${IMAGES_BASE_PATH}/${type}/${doc.split}/${doc.chunk ? doc.chunk + '/' : ''}${doc.id}.jpg`

@@ -1,52 +1,70 @@
+import { FILTER_TYPES } from '@/lib/constants'
 import { filtersToQuery } from '@/lib/filtersToQuery'
 import { Filter } from '@/types/settings'
-import { useSearchParamsState } from './search-params/useSearchParamsState'
-
-const SEARCH_PARAM_KEY = 'filter'
+import { useSearchParams } from 'react-router-dom'
 
 export const useFilters = () => {
-  const [_filters, _setFilters] = useSearchParamsState(SEARCH_PARAM_KEY)
+  const [searchParams, setSearchParams] = useSearchParams()
 
-  const filters: Filter[] =
-    _filters?.map((filter) => {
-      const [type, ...rest] = filter.split(':')
-      const _value = rest.join(':')
-      const value = _value.split(',')
+  const filters = FILTER_TYPES.reduce(
+    (previousValue: Filter[], currentValue) => {
+      const values = searchParams.getAll(currentValue.key)
 
-      return { type, value }
-    }) ?? []
+      if (values.length) {
+        previousValue = [...previousValue, { key: currentValue.key, values }]
+      }
+
+      return previousValue
+    },
+    [],
+  )
 
   const setFilters = (filters: Filter[]) => {
-    _setFilters(
-      filters.map((filter) => `${filter.type}:${filter.value.join(',')}`),
+    FILTER_TYPES.forEach(({ key }) => searchParams.delete(key))
+
+    filters.forEach((filter) =>
+      filter.values.forEach((value) => searchParams.append(filter.key, value)),
     )
+
+    searchParams.sort()
+    setSearchParams(searchParams)
   }
 
   return {
     filters,
     filterQuery: filtersToQuery(filters),
-    addFilter: (filter: Filter) => {
-      const currentFilter = filters.find((f) => f.type === filter.type)
+    addFilter: ({ key, value }: { key: string; value: string }) => {
+      const currentFilter = filters.find((f) => f.key === key)
+
+      if (currentFilter) {
+        if (!currentFilter.values.includes(value)) {
+          // Update current filter
+          const filter = {
+            key,
+            values: [...currentFilter.values, value],
+          }
+          setFilters([...filters.filter((f) => f.key !== key), filter])
+        }
+      } else {
+        // Add new filter
+        setFilters([...filters, { key, values: [value] }])
+      }
+    },
+    removeFilter: ({ key, value }: { key: string; value: string }) => {
+      const currentFilter = filters.find((f) => f.key === key)
 
       if (currentFilter) {
         // Update current filter
+        const filter = {
+          key,
+          values: currentFilter.values.filter((v) => v !== value),
+        }
         setFilters([
-          ...filters.filter((f) => f.type !== filter.type),
-          {
-            type: filter.type,
-            value: [
-              ...currentFilter.value,
-              ...filter.value.filter((f) => !currentFilter.value.includes(f)),
-            ],
-          },
+          ...filters.filter((f) => f.key !== key),
+          ...(filter.values.length ? [filter] : []),
         ])
-      } else {
-        // Add new filter
-        setFilters([...filters, filter])
       }
     },
-    removeFilter: (type: string) =>
-      setFilters(filters.filter((f) => f.type !== type)),
     clearFilters: () => setFilters([]),
   }
 }

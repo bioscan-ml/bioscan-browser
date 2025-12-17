@@ -2,9 +2,8 @@ import { useDebounce } from '@/hooks/useDebounce'
 import { useTaxaSearch } from '@/hooks/useTaxaSearch'
 import { Taxon } from '@/types/response-data'
 import { useState } from 'react'
-
-import { Badge } from './ui/badge'
 import { Input } from './input'
+import { Badge } from './ui/badge'
 
 export const TaxaSearch = ({
   onTaxonSelect,

@@ -1,3 +1,4 @@
+import { BACKEND_BASE_PATH } from '@/lib/constants'
 import { filtersToQuery } from '@/lib/filtersToQuery'
 import { getFetchUrl } from '@/lib/getFetchUrl'
 import { Doc } from '@/types/response-data'
@@ -5,9 +6,9 @@ import { SearchType, Sort } from '@/types/settings'
 import { useQuery } from '@tanstack/react-query'
 
 const INDEX_TYPE = 'PQ64x4fsr'
-const SEARCH_ID_URL = 'backend/search-id'
-const SEARCH_IMAGE_URL = 'backend/search-image'
-const QUERY_KEY = 'search-embeddings'
+const SEARCH_ID_URL = `${BACKEND_BASE_PATH}/search-id`
+const SEARCH_IMAGE_URL = `${BACKEND_BASE_PATH}/search-image`
+const QUERY_KEY = 'find-similar'
 
 interface Params {
   id: string | null
@@ -80,8 +81,8 @@ export const useFindSimilar = (params: Params) => {
         getFetchUrl({
           q: filtersToQuery([
             {
-              type: 'id',
-              value: recordIds.filter(
+              key: 'id',
+              values: recordIds.filter(
                 (recordId) => recordId !== params.id, // Filter out current record
               ),
             },

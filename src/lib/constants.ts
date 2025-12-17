@@ -15,14 +15,11 @@ export const PATHS = {
 export const FIELDS: {
   label: string
   key: keyof Doc
-  cellClass?: string
   sortDisabled?: boolean
+  tooltip?: string
 }[] = [
-  { label: 'Record ID', key: 'id', cellClass: 'font-medium' },
+  { label: 'Record ID', key: 'id' },
   { label: 'Sample ID', key: 'sampleid' },
-  { label: 'Country', key: 'country' },
-  { label: 'Province/State', key: 'province_state' },
-  { label: 'Collectors', key: 'collectors', sortDisabled: true },
   { label: 'Phylum', key: 'phylum' },
   { label: 'Class', key: 'class' },
   { label: 'Order', key: 'order' },
@@ -30,6 +27,14 @@ export const FIELDS: {
   { label: 'Subfamily', key: 'subfamily' },
   { label: 'Genus', key: 'genus' },
   { label: 'Species', key: 'species' },
+  { label: 'Country', key: 'country' },
+  { label: 'Province/State', key: 'province_state' },
+  { label: 'Collectors', key: 'collectors', sortDisabled: true },
+  {
+    label: 'Original insect pixels',
+    key: 'original_insect_pixels',
+    tooltip: 'Number of pixels taken up by organism',
+  },
 ]
 
 export const TAXON_FILTER_TYPES = [
@@ -42,16 +47,27 @@ export const TAXON_FILTER_TYPES = [
   { label: 'Species', key: 'species' },
 ]
 
-export const FILTER_TYPES = [
-  { label: 'Country', key: 'country' },
-  { label: 'Province/State', key: 'province_state' },
-  ...TAXON_FILTER_TYPES,
-  { label: 'DNA BIN', key: 'dna_bin' },
-  { label: 'Split', key: 'split' },
-  { label: 'Chunk', key: 'chunk' },
-]
+export const FILTER_TYPES: { label: string; key: string; type?: 'interval' }[] =
+  [
+    { label: 'Country', key: 'country' },
+    { label: 'Province/State', key: 'province_state' },
+    ...TAXON_FILTER_TYPES,
+    {
+      label: 'Original insect pixels',
+      key: 'original_insect_pixels',
+      type: 'interval',
+    },
+    { label: 'DNA BIN', key: 'dna_bin' },
+    { label: 'Split', key: 'split' },
+    { label: 'Chunk', key: 'chunk' },
+  ]
 
-export const SOLR_BASE_PATH = `${import.meta.env.VITE_SOLR_URL}/scene-toolkit/solr/bioscan5m/select`
+export const SOLR_BASE_PATH = `${import.meta.env.VITE_API_URL}/solr/bioscan5m/select`
+
+export const BACKEND_BASE_PATH = `${import.meta.env.VITE_API_URL}/bioscan-browser`
+
+export const IMAGES_BASE_PATH =
+  'https://spathi.cmpt.sfu.ca/data/bioscan/bioscan5m/images'
 
 export const DEFAULT_PAGINATION = { page: 0, pageSize: 100 }
 

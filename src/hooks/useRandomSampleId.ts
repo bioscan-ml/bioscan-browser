@@ -1,6 +1,7 @@
+import { BACKEND_BASE_PATH } from '@/lib/constants'
 import { useQuery } from '@tanstack/react-query'
 
-const URL = 'backend/random-id'
+const URL = `${BACKEND_BASE_PATH}/random-id`
 
 export const useRandomSampleId = (seed: number) => {
   const { isPending, error, data } = useQuery<string>({
