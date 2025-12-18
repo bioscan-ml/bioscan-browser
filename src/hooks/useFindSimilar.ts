@@ -56,14 +56,14 @@ const search = async (params: Params) => {
 }
 
 export const useFindSimilar = (params: Params) => {
-  const { data, error, isPending, refetch } = useQuery<{
+  const { data, error, isLoading, refetch } = useQuery<{
     response: {
       docs: Doc[]
       numFound: number
       start: number
     }
   }>({
-    queryKey: [QUERY_KEY, params],
+    queryKey: [QUERY_KEY, params, params.image?.name],
     queryFn: async () => {
       if (!params.id && !params.image) {
         throw Error()
@@ -114,7 +114,7 @@ export const useFindSimilar = (params: Params) => {
   return {
     data: data?.response,
     error,
-    isPending,
+    isLoading,
     refetch,
   }
 }

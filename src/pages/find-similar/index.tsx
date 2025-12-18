@@ -54,7 +54,7 @@ export const FindSimilar = () => {
   const { searchFrom, setSearchFrom, searchTo, setSearchTo } = useSearchType()
   const [viewMode, setViewMode] = useState<ViewMode>('gallery')
   const { pageSize, setPageSize } = usePageSize()
-  const { data, isPending, refetch } = useFindSimilar({
+  const { data, isLoading, refetch } = useFindSimilar({
     id,
     image,
     searchFrom,
@@ -65,6 +65,9 @@ export const FindSimilar = () => {
 
   useEffect(() => {
     setSearchString(id ?? '')
+    if (id) {
+      setImage(null)
+    }
   }, [id])
 
   useEffect(() => {
@@ -191,7 +194,7 @@ export const FindSimilar = () => {
               </h2>
               <Badge variant="outline">Experimental</Badge>
             </div>
-            {isPending && (id || image) ? (
+            {isLoading && (id || image) ? (
               <Loader />
             ) : data?.docs.length ? (
               <>
