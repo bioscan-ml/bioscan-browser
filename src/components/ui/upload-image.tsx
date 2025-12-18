@@ -1,22 +1,14 @@
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
 import { ReactNode, useRef } from 'react'
 import { Button } from './button'
 
 export const UploadImage = ({
   children,
+  className,
   onChange,
-  size = 'default',
-  tooltip,
 }: {
   children: ReactNode
+  className?: string
   onChange: (file?: File) => void
-  size?: 'icon' | 'default'
-  tooltip?: string
 }) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -24,42 +16,22 @@ export const UploadImage = ({
     <>
       <input
         accept="image/png, image/gif, image/jpeg"
-        ref={inputRef}
         className="hidden"
-        type="file"
         onChange={(e) => {
           const file = e.currentTarget.files?.[0]
           onChange(file)
         }}
+        ref={inputRef}
+        type="file"
       />
-      {tooltip ? (
-        <TooltipProvider delayDuration={0}>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="outline"
-                className="shrink-0"
-                size={size}
-                onClick={() => inputRef.current?.click()}
-              >
-                {children}
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent side="bottom">
-              <p>{tooltip}</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      ) : (
-        <Button
-          variant="outline"
-          className="shrink-0"
-          size={size}
-          onClick={() => inputRef.current?.click()}
-        >
-          {children}
-        </Button>
-      )}
+      <Button
+        className={className}
+        onClick={() => inputRef.current?.click()}
+        size="default"
+        variant="outline"
+      >
+        {children}
+      </Button>
     </>
   )
 }

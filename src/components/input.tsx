@@ -17,7 +17,7 @@ export const Input = ({
   value: string
   variant?: 'default' | 'search'
 }) => (
-  <div className="relative">
+  <div className="grow relative">
     {variant === 'search' ? (
       <div className="w-10 h-10 absolute top-0 left-0 flex items-center justify-center">
         <SearchIcon className="w-4 h-4 text-muted-foreground" />
