@@ -43,6 +43,7 @@ const search = async (params: Params) => {
     data.append('index_type', INDEX_TYPE)
     data.append('key_type', params.searchTo)
     data.append('num_results', `${params.pageSize + 1}`)
+    data.append('crop_type', 'True')
 
     return await fetch(SEARCH_IMAGE_URL, {
       body: data,
