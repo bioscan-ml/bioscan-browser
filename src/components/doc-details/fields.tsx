@@ -23,7 +23,10 @@ export const Fields = ({ doc }: FieldsProps) => (
       <DocField doc={doc} fieldKey="country" />
       <DocField doc={doc} fieldKey="province_state" />
       <DocField doc={doc} fieldKey="collectors" />
-      <DocField doc={doc} fieldKey="original_insect_pixels" />
+      <Field label="Organism area (mm²)">
+        {/* Only keep 3 decimal places */}
+        <span>{doc.organism_area_mm2?.toExponential(3)}</span>
+      </Field>
       <Field label="Reported issues">
         <IssueList id={doc.id} />
       </Field>
