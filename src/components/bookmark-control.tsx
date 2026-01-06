@@ -1,5 +1,5 @@
+import { Input } from '@/components/input'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import {
   Popover,
   PopoverContent,
@@ -129,10 +129,7 @@ const BookmarkForm = ({
       </div>
       <div className="grid gap-2">
         <label className="text-sm font-medium">Comment</label>
-        <Input
-          value={comment}
-          onChange={(e) => setComment(e.currentTarget.value)}
-        />
+        <Input value={comment} setValue={setComment} />
       </div>
       <div className="flex items-center justify-end gap-2">
         <Button

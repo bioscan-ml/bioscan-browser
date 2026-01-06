@@ -8,11 +8,11 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom'
-import { SearchSimilar } from './components/search-similar'
 import { TopBar } from './components/top-bar'
 import { BookmarksContextProvider } from './lib/bookmarks/provider'
 import { PATHS } from './lib/constants'
 import { About } from './pages/about'
+import { FindSimilar } from './pages/find-similar'
 import { MyBookmarks } from './pages/my-bookmarks'
 import { Record } from './pages/record'
 import { Report } from './pages/report'
@@ -27,7 +27,7 @@ const ROUTES = [
   { path: PATHS.RECORD, Component: Record },
   { path: PATHS.SEARCH, Component: Search },
   { path: PATHS.TAXONOMY_TREE, Component: TaxonomyTree },
-  { path: PATHS.FIND_SIMILAR, Component: SearchSimilar },
+  { path: PATHS.FIND_SIMILAR, Component: FindSimilar },
   { path: PATHS.REPORT, Component: Report },
   { path: PATHS.STYLE_GUIDE, Component: StyleGuide },
   { path: PATHS.ABOUT, Component: About },
