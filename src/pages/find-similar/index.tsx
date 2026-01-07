@@ -35,11 +35,12 @@ import { TabsContent } from '@radix-ui/react-tabs'
 import {
   AlertCircleIcon,
   DicesIcon,
+  InfoIcon,
   RocketIcon,
   SearchIcon,
   UploadIcon,
 } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { FindSimilarControl } from '../../components/find-similar-control'
 import { DnaBarcodeGalleryItem } from '../../components/gallery/dna-barcode-gallery-item'
 import { GalleryItem } from '../../components/gallery/gallery-item'
@@ -107,7 +108,10 @@ export const FindSimilar = () => {
         <div className="grid items-start gap-4 py-4 md:flex md:gap-8 md:py-8">
           <Sidebar avoidPaginationBar={false}>
             <div className="space-y-8">
-              <SidebarSection label="Search query">
+              <SidebarSection
+                accessory={<SearchQueryInfo />}
+                label="Search query"
+              >
                 <Tabs value={queryType} onValueChange={setQueryType}>
                   <TabsList className="mb-2">
                     <TabsTrigger value="record">Record</TabsTrigger>
@@ -238,18 +242,30 @@ export const FindSimilar = () => {
                 )}
               </>
             ) : id || image ? (
-              <Intro
-                description="No matches were found, please try a different search query."
-                error
-                onSubmit={onSubmit}
-                title="No similar records found"
-              />
+              <Intro error onSubmit={onSubmit} title="No similar records found">
+                <p className="text-sm text-muted-foreground">
+                  No matches were found, please try a different search query.
+                </p>
+              </Intro>
             ) : (
-              <Intro
-                description="To find similar records, first specify a search query."
-                onSubmit={onSubmit}
-                title="Get started"
-              />
+              <Intro onSubmit={onSubmit} title="Get started">
+                <p className="mb-4 text-sm text-muted-foreground">
+                  To search the BIOSCAN-5M dataset for similar records, first
+                  specify a search query. You can use a record ID or an image.
+                  For custom images, one sample per image is recommended.
+                  In-the-wild images have not been tested.
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  The similarity search is based on{' '}
+                  <a
+                    className="text-link"
+                    href="https://bioscan-ml.github.io/clibd/"
+                  >
+                    CLIBD
+                  </a>
+                  .
+                </p>
+              </Intro>
             )}
           </div>
         </div>
@@ -266,6 +282,24 @@ export const FindSimilar = () => {
     </>
   )
 }
+
+const SearchQueryInfo = () => (
+  <TooltipProvider delayDuration={0}>
+    <Tooltip>
+      <TooltipTrigger>
+        <InfoIcon className="w-4 h-4" />
+      </TooltipTrigger>
+      <TooltipContent side="bottom">
+        <div className="max-w-72 text-center">
+          <p>
+            For custom images, one sample per image is recommended. In-the-wild
+            images have not been tested.
+          </p>
+        </div>
+      </TooltipContent>
+    </Tooltip>
+  </TooltipProvider>
+)
 
 const RecordDetails = ({ id }: { id: string }) => {
   const [open, setOpen] = useState(false)
@@ -316,12 +350,12 @@ const PageSizeControl = ({
 }
 
 const Intro = ({
-  description,
+  children,
   error,
   onSubmit,
   title,
 }: {
-  description: string
+  children: ReactNode
   error?: boolean
   onSubmit: (values: { id?: string; image?: File }) => void
 
@@ -330,7 +364,7 @@ const Intro = ({
   const [searchString, setSearchString] = useState<string>('')
 
   return (
-    <div className="text-center space-y-8 p-16">
+    <div className="max-w-xl space-y-8 p-16 m-auto text-center">
       {error ? (
         <AlertCircleIcon className="text-destructive inline" />
       ) : (
@@ -338,7 +372,7 @@ const Intro = ({
       )}
       <div>
         <p className="text-xl font-medium mb-2">{title}</p>
-        <p className="text-sm text-muted-foreground">{description}</p>
+        {children}
       </div>
       <div className="w-full max-w-64 flex gap-2 mx-auto">
         <Input
