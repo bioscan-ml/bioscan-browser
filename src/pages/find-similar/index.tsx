@@ -122,7 +122,7 @@ export const FindSimilar = () => {
                       {id ? <RecordDetails id={id} /> : null}
                       <div className="flex gap-2">
                         <Input
-                          placeholder="Specify a record ID"
+                          placeholder="Specify a process ID"
                           setValue={(value) => setId(value)}
                           value={id ?? ''}
                         />
@@ -251,7 +251,7 @@ export const FindSimilar = () => {
               <Intro onSubmit={onSubmit} title="Get started">
                 <p className="mb-4 text-sm text-muted-foreground">
                   To search the BIOSCAN-5M dataset for similar records, first
-                  specify a search query. You can use a record ID or an image.
+                  specify a search query. You can use a process ID or an image.
                   For custom images, one sample per image is recommended.
                   In-the-wild images have not been tested.
                 </p>
@@ -376,7 +376,7 @@ const Intro = ({
       </div>
       <div className="w-full max-w-64 flex gap-2 mx-auto">
         <Input
-          placeholder="Specify a record ID"
+          placeholder="Specify a process ID"
           setValue={setSearchString}
           value={searchString}
         />
