@@ -67,9 +67,9 @@ export const Search = () => {
               <SidebarSection label="Order by">
                 <OrderByControl fields={FIELDS} sort={sort} setSort={setSort} />
               </SidebarSection>
-              <SidebarSection label="Record ID">
+              <SidebarSection label="Process ID">
                 <Input
-                  placeholder="Specify a record ID"
+                  placeholder="Specify a process ID"
                   setValue={(value) => setId(value)}
                   value={id ?? ''}
                 />

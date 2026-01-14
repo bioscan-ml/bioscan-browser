@@ -18,7 +18,7 @@ export const FIELDS: {
   sortDisabled?: boolean
   tooltip?: string
 }[] = [
-  { label: 'Record ID', key: 'id' },
+  { label: 'Process ID', key: 'id' },
   { label: 'Sample ID', key: 'sampleid' },
   { label: 'Phylum', key: 'phylum' },
   { label: 'Class', key: 'class' },

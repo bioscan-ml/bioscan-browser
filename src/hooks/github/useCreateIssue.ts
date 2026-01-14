@@ -47,7 +47,7 @@ const generateIssueBody = (data: {
 
   return `## Record details
 
-### Record ID
+### Process ID
 
 [${data.doc.id}](https://bioscan-browser.netlify.app/record/${data.doc.id})
 

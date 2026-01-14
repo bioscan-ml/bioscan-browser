@@ -200,7 +200,7 @@ const ReportForm = ({
           rules={{ required: ERROR_MESSAGES.REQUIRED }}
           render={({ field, fieldState }) => (
             <FormField
-              label="Record ID *"
+              label="Process ID *"
               error={
                 fieldState.error?.message
                   ? fieldState.error.message
@@ -216,7 +216,7 @@ const ReportForm = ({
                     field.onChange(e)
                     setId(e.currentTarget.value ?? null)
                   }}
-                  placeholder="Specify a record ID"
+                  placeholder="Specify a process ID"
                 />
                 {doc ? <RecordDetailsDialog doc={doc} /> : null}
               </div>
