@@ -18,6 +18,7 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import {
   Tooltip,
   TooltipContent,
+  TooltipPortal,
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
@@ -289,14 +290,16 @@ const SearchQueryInfo = () => (
       <TooltipTrigger>
         <InfoIcon className="w-4 h-4" />
       </TooltipTrigger>
-      <TooltipContent side="bottom">
-        <div className="max-w-72 text-center">
-          <p>
-            For custom images, one sample per image is recommended. In-the-wild
-            images have not been tested.
-          </p>
-        </div>
-      </TooltipContent>
+      <TooltipPortal>
+        <TooltipContent side="bottom">
+          <div className="max-w-72 text-center">
+            <p>
+              For custom images, one sample per image is recommended.
+              In-the-wild images have not been tested.
+            </p>
+          </div>
+        </TooltipContent>
+      </TooltipPortal>
     </Tooltip>
   </TooltipProvider>
 )
