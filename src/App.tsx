@@ -13,6 +13,7 @@ import { BookmarksContextProvider } from './lib/bookmarks/provider'
 import { PATHS } from './lib/constants'
 import { About } from './pages/about'
 import { FindSimilar } from './pages/find-similar'
+import { Home } from './pages/home'
 import { MyBookmarks } from './pages/my-bookmarks'
 import { Record } from './pages/record'
 import { Report } from './pages/report'
@@ -23,7 +24,7 @@ import { TaxonomyTree } from './pages/taxonomy-tree'
 const queryClient = new QueryClient()
 
 const ROUTES = [
-  { path: PATHS.HOME, element: <Navigate to={PATHS.SEARCH} replace /> },
+  { path: PATHS.HOME, Component: Home },
   { path: PATHS.RECORD, Component: Record },
   { path: PATHS.SEARCH, Component: Search },
   { path: PATHS.TAXONOMY_TREE, Component: TaxonomyTree },

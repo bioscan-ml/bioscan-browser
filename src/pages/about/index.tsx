@@ -9,7 +9,7 @@ export const About = () => (
     <article className="max-w-screen-md py-6 space-y-8 md:py-12 md:space-y-16">
       <div>
         <h1 className="text-accent mb-2">BIOSCAN Browser</h1>
-        <h2>Visualizing A Multimodal Dataset for Insect Biodiversity</h2>
+        <h2>Visualizing a Multimodal Dataset for Insect Biodiversity</h2>
       </div>
       <div>
         <img
@@ -19,11 +19,12 @@ export const About = () => (
         />
         <h3 className="text-accent mb-2">The Dataset</h3>
         <p className="text-muted-foreground mb-8">
-          BIOSCAN-5M is a dataset containing multi-modal information for
-          5,150,850 insect specimens. Except for images, the dataset includes
-          taxonomic labels, raw nucleotide barcode sequences, assigned barcode
-          index numbers, and geographical information. The dataset includes
-          specimens collected from 1,650 sites across 47 countries.
+          BIOSCAN-5M is a dataset containing multi-modal information for 5
+          million insect specimens. Except for high resolution images, the
+          dataset includes taxonomic labels, raw nucleotide barcode sequences,
+          assigned barcode index numbers, and geographical information. The
+          dataset includes specimens collected from 1,650 sites across 47
+          countries.
         </p>
         <h4 className="mb-4">Resources</h4>
         <div className="flex gap-4">
