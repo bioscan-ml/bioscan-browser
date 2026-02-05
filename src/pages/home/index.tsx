@@ -2,8 +2,9 @@ import { GalleryItem } from '@/components/gallery/gallery-item'
 import { MultiModalGalleryItem } from '@/components/gallery/multi-modal-gallery-item'
 import { Loader } from '@/components/loader'
 import { PageContent } from '@/components/page-content'
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { useRecords } from '@/hooks/useRecords'
+import { PATHS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import {
   ChevronLeft,
@@ -17,6 +18,7 @@ import {
   TagIcon,
 } from 'lucide-react'
 import { ComponentType, ReactNode, useMemo } from 'react'
+import { Link } from 'react-router-dom'
 
 export const Home = () => {
   const sort = useMemo(() => {
@@ -73,9 +75,10 @@ export const Home = () => {
               sequences, assigned barcode index numbers, and geographical
               information.
             </p>
-            <Button size="lg">
-              <SearchIcon className="w-4 h-4 mr-2" /> Browse records
-            </Button>
+            <Link className={buttonVariants({ size: 'lg' })} to={PATHS.SEARCH}>
+              <SearchIcon className="w-4 h-4 mr-2" />
+              Browse records
+            </Link>
           </div>
         </div>
       </Block>
@@ -169,10 +172,10 @@ export const Home = () => {
           ))}
         </div>
         <div className="flex justify-center">
-          <Button size="lg">
+          <Link className={buttonVariants({ size: 'lg' })} to={PATHS.SEARCH}>
             <SearchIcon className="w-4 h-4 mr-2" />
             Browse records
-          </Button>
+          </Link>
         </div>
       </Block>
     </>
