@@ -118,10 +118,29 @@ export const Home = () => {
         </div>
       </Block>
       <Block className="bg-muted border-y">
-        <div className="max-w-2xl flex flex-col items-center mx-auto">
+        <div className="flex flex-col items-center mx-auto">
           <h1 className="mb-16 text-accent">Distribution of Taxa</h1>
-          <div className="w-full aspect-square flex items-center justify-center bg-background rounded-full border">
-            <p className="body-base uppercase opacity-50">Sunburst chart</p>
+          <div className="w-full grid grid-cols-2 gap-8">
+            <div className="flex flex-col gap-2">
+              <img
+                alt=""
+                className="w-full p-8 bg-background rounded-md border"
+                src="/assets/class-chart.png"
+              />
+              <p className="text-sm italic text-muted-foreground">
+                Figure 1: Class distribution for phylum Arthropoda (Arthropods).
+              </p>
+            </div>
+            <div className="flex flex-col gap-2">
+              <img
+                alt=""
+                className="w-full p-8 bg-background rounded-md border"
+                src="/assets/order-chart.png"
+              />
+              <p className="text-sm italic text-muted-foreground">
+                Figure 2: Order distribution for class Insecta (Insects).
+              </p>
+            </div>
           </div>
         </div>
       </Block>
