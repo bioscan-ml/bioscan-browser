@@ -1,4 +1,6 @@
 import { GalleryItem } from '@/components/gallery/gallery-item'
+import { MultiModalGalleryItem } from '@/components/gallery/multi-modal-gallery-item'
+import { Loader } from '@/components/loader'
 import { PageContent } from '@/components/page-content'
 import { Button } from '@/components/ui/button'
 import { useRecords } from '@/hooks/useRecords'
@@ -25,11 +27,19 @@ export const Home = () => {
     }
   }, [])
 
-  const { data, isPending, error } = useRecords({
+  const { data, isPending } = useRecords({
     page: 1,
     pageSize: 10,
     sort,
   })
+
+  if (isPending) {
+    return (
+      <Block>
+        <Loader />
+      </Block>
+    )
+  }
 
   return (
     <>
@@ -45,10 +55,9 @@ export const Home = () => {
             <Button className="rounded-full" size="icon" variant="ghost">
               <ChevronLeft className="w-4 h-4" />
             </Button>
-
-            <div className="w-[240px]">
+            <div className="w-[240px] aspect-square">
               {data?.docs[0] ? (
-                <GalleryItem compact doc={data.docs[0]} onClick={() => {}} />
+                <MultiModalGalleryItem doc={data.docs[0]} onClick={() => {}} />
               ) : null}
             </div>
             <Button className="rounded-full" size="icon" variant="ghost">

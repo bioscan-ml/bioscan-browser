@@ -27,7 +27,7 @@ export const GalleryItem = ({
           loading="lazy"
           src={getImageSrc(doc)}
         />
-        <div className="p-3">
+        <div className="p-2">
           <div className="space-y-1">
             <div className="text-xs text-muted-foreground">{doc.id}</div>
             <div className="text-sm font-medium leading-tight">
