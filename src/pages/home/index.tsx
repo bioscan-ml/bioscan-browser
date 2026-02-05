@@ -1,3 +1,4 @@
+import { DocDetailsDialog } from '@/components/doc-details/doc-details-dialog'
 import { GalleryItem } from '@/components/gallery/gallery-item'
 import { MultiModalGalleryItem } from '@/components/gallery/multi-modal-gallery-item'
 import { Loader } from '@/components/loader'
@@ -24,10 +25,12 @@ import {
   SearchIcon,
   TagIcon,
 } from 'lucide-react'
-import { ComponentType, ReactNode, useMemo, useRef } from 'react'
+import { ComponentType, ReactNode, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 export const Home = () => {
+  const [activeDoc, setActiveDoc] = useState<Doc>()
+
   const sort = useMemo(() => {
     const seed = new Date().getTime()
 
@@ -61,7 +64,7 @@ export const Home = () => {
         </div>
         <div className="max-w-4xl flex items-center justify-center gap-8 mx-auto">
           <div className="flex items-center gap-4">
-            <RecordCarousel docs={data.docs} />
+            <RecordCarousel docs={data.docs} setActiveDoc={setActiveDoc} />
           </div>
           <div>
             <h1 className="mb-4 text-accent">The Dataset</h1>
@@ -165,7 +168,12 @@ export const Home = () => {
         </div>
         <div className="max-w-4xl grid grid-cols-1 gap-4 mx-auto mb-16 md:grid-cols-3 lg:grid-cols-5">
           {data?.docs.map((doc) => (
-            <GalleryItem key={doc.id} compact doc={doc} onClick={() => {}} />
+            <GalleryItem
+              key={doc.id}
+              compact
+              doc={doc}
+              onClick={() => setActiveDoc(doc)}
+            />
           ))}
         </div>
         <div className="flex justify-center">
@@ -175,6 +183,15 @@ export const Home = () => {
           </Link>
         </div>
       </Block>
+      <DocDetailsDialog
+        doc={activeDoc}
+        open={!!activeDoc}
+        onOpenChange={(open) => {
+          if (!open) {
+            setActiveDoc(undefined)
+          }
+        }}
+      />
     </>
   )
 }
@@ -191,21 +208,30 @@ const Block = ({
   </div>
 )
 
-const RecordCarousel = ({ docs }: { docs: Doc[] }) => {
+const RecordCarousel = ({
+  docs,
+  setActiveDoc,
+}: {
+  docs: Doc[]
+  setActiveDoc: (doc: Doc) => void
+}) => {
   const plugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: true }))
 
   return (
     <div className="px-12">
       <Carousel
         onMouseEnter={() => plugin.current.stop()}
-        onMouseLeave={() => plugin.current.play()}
+        onMouseLeave={() => plugin.current.reset()}
         opts={{ loop: true }}
         plugins={[plugin.current]}
       >
         <CarouselContent className="w-[320px]">
           {docs.map((doc) => (
             <CarouselItem key={doc.id}>
-              <MultiModalGalleryItem doc={doc} onClick={() => {}} />
+              <MultiModalGalleryItem
+                doc={doc}
+                onClick={() => setActiveDoc(doc)}
+              />
             </CarouselItem>
           ))}
         </CarouselContent>
