@@ -2,13 +2,19 @@ import { GalleryItem } from '@/components/gallery/gallery-item'
 import { MultiModalGalleryItem } from '@/components/gallery/multi-modal-gallery-item'
 import { Loader } from '@/components/loader'
 import { PageContent } from '@/components/page-content'
-import { Button, buttonVariants } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel'
 import { useRecords } from '@/hooks/useRecords'
 import { PATHS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
+import { Doc } from '@/types/response-data'
 import {
-  ChevronLeft,
-  ChevronRight,
   DatabaseIcon,
   DnaIcon,
   ImageIcon,
@@ -35,7 +41,7 @@ export const Home = () => {
     sort,
   })
 
-  if (isPending) {
+  if (isPending || !data) {
     return (
       <Block>
         <Loader />
@@ -54,17 +60,7 @@ export const Home = () => {
         </div>
         <div className="max-w-4xl flex items-center justify-center gap-8 mx-auto">
           <div className="flex items-center gap-4">
-            <Button className="rounded-full" size="icon" variant="ghost">
-              <ChevronLeft className="w-4 h-4" />
-            </Button>
-            <div className="w-[240px] aspect-square">
-              {data?.docs[0] ? (
-                <MultiModalGalleryItem doc={data.docs[0]} onClick={() => {}} />
-              ) : null}
-            </div>
-            <Button className="rounded-full" size="icon" variant="ghost">
-              <ChevronRight className="w-4 h-4" />
-            </Button>
+            <RecordCarousel docs={data.docs} />
           </div>
           <div>
             <h1 className="mb-4 text-accent">The Dataset</h1>
@@ -191,6 +187,22 @@ const Block = ({
 }) => (
   <div className={cn('py-32', className)}>
     <PageContent>{children}</PageContent>
+  </div>
+)
+
+const RecordCarousel = ({ docs }: { docs: Doc[] }) => (
+  <div className="px-12">
+    <Carousel opts={{ loop: true }}>
+      <CarouselContent className="w-[320px]">
+        {docs.map((doc) => (
+          <CarouselItem key={doc.id}>
+            <MultiModalGalleryItem doc={doc} onClick={() => {}} />
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
   </div>
 )
 

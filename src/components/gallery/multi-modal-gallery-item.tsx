@@ -22,13 +22,13 @@ export const MultiModalGalleryItem = ({
           alt={doc.id}
           className="w-full aspect-[341/256]"
           loading="lazy"
-          src={getImageSrc(doc)}
+          src={getImageSrc(doc, 'original_full')}
         />
-        <div className="p-2 space-y-2 overflow-hidden">
+        <div className="p-3 space-y-3 overflow-hidden">
           <div>
             <DnaBarcode height={32} doc={doc} />
           </div>
-          <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center justify-between gap-3">
             <span className="text-sm font-medium whitespace-nowrap">
               {taxon.label}
             </span>
