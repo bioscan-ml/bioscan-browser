@@ -1,7 +1,7 @@
 import { getImageSrc } from '@/lib/getImageSrc'
 import { getTaxon } from '@/lib/getTaxon'
 import { Doc } from '@/types/response-data'
-import { MapPinIcon } from 'lucide-react'
+import { DnaIcon, MapPinIcon, TagIcon } from 'lucide-react'
 import { DnaBarcode } from '../dna-barcode/dna-barcode'
 
 interface MultiModalGalleryItemProps {
@@ -22,18 +22,22 @@ export const MultiModalGalleryItem = ({
           alt={doc.id}
           className="w-full aspect-[341/256]"
           loading="lazy"
-          src={getImageSrc(doc, 'original_full')}
+          src={getImageSrc(doc)}
         />
         <div className="p-3 space-y-3 overflow-hidden">
-          <div>
-            <DnaBarcode height={32} doc={doc} />
+          <div className="flex items-center gap-2">
+            <DnaIcon className="w-4 h-4 shrink-0" />
+            <DnaBarcode height={24} doc={doc} />
           </div>
           <div className="flex items-center justify-between gap-3">
-            <span className="text-sm font-medium whitespace-nowrap">
-              {taxon.label}
-            </span>
-            <div className="flex items-center gap-1 text-muted-foreground overflow-hidden">
-              <MapPinIcon className="w-4 h-4" />
+            <div className="flex items-center gap-2">
+              <TagIcon className="w-4 h-4 shrink-0" />
+              <span className="text-sm font-medium whitespace-nowrap">
+                {taxon.label}
+              </span>
+            </div>
+            <div className="flex items-center gap-2 text-muted-foreground overflow-hidden">
+              <MapPinIcon className="w-4 h-4 shrink-0" />
               <span className="text-xs whitespace-nowrap truncate">
                 {doc.province_state
                   ? `${doc.province_state}, ${doc.country}`
