@@ -14,6 +14,7 @@ import { useRecords } from '@/hooks/useRecords'
 import { PATHS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import { Doc } from '@/types/response-data'
+import Autoplay from 'embla-carousel-autoplay'
 import {
   DatabaseIcon,
   DnaIcon,
@@ -23,7 +24,7 @@ import {
   SearchIcon,
   TagIcon,
 } from 'lucide-react'
-import { ComponentType, ReactNode, useMemo } from 'react'
+import { ComponentType, ReactNode, useMemo, useRef } from 'react'
 import { Link } from 'react-router-dom'
 
 export const Home = () => {
@@ -190,21 +191,30 @@ const Block = ({
   </div>
 )
 
-const RecordCarousel = ({ docs }: { docs: Doc[] }) => (
-  <div className="px-12">
-    <Carousel opts={{ loop: true }}>
-      <CarouselContent className="w-[320px]">
-        {docs.map((doc) => (
-          <CarouselItem key={doc.id}>
-            <MultiModalGalleryItem doc={doc} onClick={() => {}} />
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
-    </Carousel>
-  </div>
-)
+const RecordCarousel = ({ docs }: { docs: Doc[] }) => {
+  const plugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: true }))
+
+  return (
+    <div className="px-12">
+      <Carousel
+        onMouseEnter={() => plugin.current.stop()}
+        onMouseLeave={() => plugin.current.play()}
+        opts={{ loop: true }}
+        plugins={[plugin.current]}
+      >
+        <CarouselContent className="w-[320px]">
+          {docs.map((doc) => (
+            <CarouselItem key={doc.id}>
+              <MultiModalGalleryItem doc={doc} onClick={() => {}} />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
+    </div>
+  )
+}
 
 const Feature = ({
   Icon,
