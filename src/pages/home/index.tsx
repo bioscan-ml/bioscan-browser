@@ -109,11 +109,11 @@ export const Home = () => {
         </div>
       </Block>
       <Block>
-        <div className="mb-16">
-          <div className="w-full h-[480px] flex items-center justify-center bg-muted rounded-lg border">
-            <p className="body-base uppercase opacity-50">Cluster map</p>
-          </div>
-        </div>
+        <img
+          alt=""
+          className="w-full max-w-4xl mx-auto mb-16 bg-background rounded-md border"
+          src="/assets/cluster-map.png"
+        />
         <div className="flex justify-center gap-16">
           <Count label="Countries" count={47} />
           <Count label="Sites" count={1650} />
