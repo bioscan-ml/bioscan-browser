@@ -1,4 +1,10 @@
 [[redirects]]
+from = "https://bioscan-browser.netlify.app/*"
+to = "https://browser.bioscan-ml.org/:splat"
+status = 301
+force = true
+
+[[redirects]]
 from = "/api/*"
 to = "https://spathi.cmpt.sfu.ca/:splat"
 status = 200
