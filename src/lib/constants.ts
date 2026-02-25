@@ -62,6 +62,8 @@ export const FILTER_TYPES: { label: string; key: string; type?: 'interval' }[] =
     { label: 'Chunk', key: 'chunk' },
   ]
 
+export const APP_URL = 'https://browser.bioscan-ml.org'
+
 export const SOLR_BASE_PATH = `${import.meta.env.VITE_API_URL}/solr/bioscan5m/select`
 
 export const BACKEND_BASE_PATH = `${import.meta.env.VITE_API_URL}/bioscan-browser`
