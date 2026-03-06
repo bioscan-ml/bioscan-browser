@@ -11,7 +11,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel'
-import { useRecords } from '@/hooks/useRecords'
+import { useSampleRecords } from '@/hooks/useSampleRecords'
 import { PATHS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import { Doc } from '@/types/response-data'
@@ -25,26 +25,14 @@ import {
   SearchIcon,
   TagIcon,
 } from 'lucide-react'
-import { ComponentType, ReactNode, useMemo, useRef, useState } from 'react'
+import { ComponentType, ReactNode, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 export const Home = () => {
   const [activeDoc, setActiveDoc] = useState<Doc>()
 
-  const sort = useMemo(() => {
-    const seed = new Date().getTime()
-
-    return {
-      key: `random_${seed}`,
-    }
-  }, [])
-
-  const { data = { docs: [] }, isPending } = useRecords({
-    page: 1,
-    pageSize: 10,
-    sort,
-  })
-  const [doc] = data.docs
+  const { sampleRecords = [], isPending } = useSampleRecords()
+  const [doc] = sampleRecords
 
   if (isPending || !doc) {
     return (
@@ -142,7 +130,7 @@ export const Home = () => {
           </div>
         </div>
         <div className="max-w-4xl grid grid-cols-1 gap-4 mx-auto mb-16 md:grid-cols-3 lg:grid-cols-5">
-          {data?.docs.map((doc) => (
+          {sampleRecords.slice(0, 10).map((doc) => (
             <GalleryItem
               key={doc.id}
               compact
