@@ -2,21 +2,11 @@ import { DocDetailsDialog } from '@/components/doc-details/doc-details-dialog'
 import { GalleryItem } from '@/components/gallery/gallery-item'
 import { MultiModalGalleryItem } from '@/components/gallery/multi-modal-gallery-item'
 import { Loader } from '@/components/loader'
-import { PageContent } from '@/components/page-content'
 import { Button, buttonVariants } from '@/components/ui/button'
-import {
-  Carousel,
-  CarouselApi,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel'
+import { CarouselItem } from '@/components/ui/carousel'
 import { useSampleRecords } from '@/hooks/useSampleRecords'
 import { PATHS } from '@/lib/constants'
-import { cn } from '@/lib/utils'
 import { Doc } from '@/types/response-data'
-import Autoplay from 'embla-carousel-autoplay'
 import {
   ChevronsDownIcon,
   DatabaseIcon,
@@ -27,8 +17,12 @@ import {
   SearchIcon,
   TagIcon,
 } from 'lucide-react'
-import { ComponentType, ReactNode, useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Block } from './block'
+import { Count } from './count'
+import { Feature } from './feature'
+import { IntroCarousel } from './intro-carousel'
 
 export const Home = () => {
   const [activeDoc, setActiveDoc] = useState<Doc>()
@@ -47,7 +41,78 @@ export const Home = () => {
   return (
     <>
       <Block className="py-16">
-        <IntroCarousel doc={doc} onDocClick={() => setActiveDoc(doc)} />
+        <IntroCarousel>
+          <CarouselItem>
+            <div className="flex gap-16 p-16">
+              <div>
+                <h1 className="mb-4 text-accent text-4xl">BIOSCAN Browser</h1>
+                <h2 className="mb-8 text-2xl">
+                  Visualizing a Multimodal Dataset for Insect Biodiversity
+                </h2>
+                <p className="mb-16 text-muted-foreground">
+                  BIOSCAN-5M is a dataset containing multi-modal information for
+                  5 million insect specimens. Except for high resolution images,
+                  the dataset includes taxonomic labels, raw nucleotide barcode
+                  sequences, assigned barcode index numbers, and geographical
+                  information.
+                </p>
+                <Link
+                  className={buttonVariants({ size: 'lg' })}
+                  to={PATHS.SEARCH}
+                >
+                  <SearchIcon className="w-4 h-4 mr-2" />
+                  Browse records
+                </Link>
+              </div>
+              <div className="w-[320px] shrink-0">
+                <MultiModalGalleryItem
+                  doc={doc}
+                  onClick={() => setActiveDoc(doc)}
+                />
+              </div>
+            </div>
+          </CarouselItem>
+          <CarouselItem>
+            <div className="h-full flex gap-16 p-8">
+              <div className="w-[320px] shrink-0 p-8">
+                <h2 className="mb-4 text-2xl">Geographic Data</h2>
+                <p className="mb-16 text-muted-foreground">
+                  Specimen collection sites enable species distribution
+                  modeling.
+                </p>
+              </div>
+              <div className="grow grid items-center">
+                <div className="p-4 bg-background rounded-md border">
+                  <img alt="" src="/assets/cluster-map.png" />
+                </div>
+              </div>
+            </div>
+          </CarouselItem>
+          <CarouselItem>
+            <div className="h-full flex gap-16 p-8">
+              <div className="w-[320px] shrink-0 p-8">
+                <h2 className="mb-4 text-2xl">Taxonomic Labels</h2>
+                <p className="mb-16 text-muted-foreground">
+                  Hierarchical annotations to fine-grained species level, plus
+                  barcode index numbers (BINs) at sub-species granularity.
+                </p>
+                <Button
+                  onClick={() => {
+                    const element = document.getElementById('taxa-distribution')
+                    element?.scrollIntoView({ behavior: 'smooth' })
+                  }}
+                >
+                  Learn more
+                  <ChevronsDownIcon className="w-4 h-4 ml-2" />
+                </Button>
+              </div>
+              <div className="grow grid grid-cols-2 gap-8 items-center">
+                <img alt="" src="/assets/class-chart-compact.png" />
+                <img alt="" src="/assets/order-chart-compact.png" />
+              </div>
+            </div>
+          </CarouselItem>
+        </IntroCarousel>
       </Block>
       <Block className="bg-muted border-y">
         <div className="max-w-4xl grid grid-cols-2 gap-x-32 gap-y-16 mx-auto">
@@ -160,166 +225,3 @@ export const Home = () => {
     </>
   )
 }
-
-const Block = ({
-  children,
-  className,
-  id,
-}: {
-  children: ReactNode
-  className?: string
-  id?: string
-}) => (
-  <div className={cn('py-32', className)} id={id}>
-    <PageContent>{children}</PageContent>
-  </div>
-)
-
-const IntroCarousel = ({
-  doc,
-  onDocClick,
-}: {
-  doc: Doc
-  onDocClick: () => void
-}) => {
-  const plugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: true }))
-  const [api, setApi] = useState<CarouselApi>()
-  const [current, setCurrent] = useState(0)
-  const [count, setCount] = useState(0)
-
-  useEffect(() => {
-    if (!api) {
-      return
-    }
-
-    setCount(api.scrollSnapList().length)
-    setCurrent(api.selectedScrollSnap())
-
-    api.on('select', () => {
-      setCurrent(api.selectedScrollSnap())
-    })
-  }, [api])
-
-  return (
-    <div>
-      <Carousel
-        className="bg-muted rounded-md border mb-8"
-        onMouseEnter={() => plugin.current.stop()}
-        onMouseLeave={() => plugin.current.reset()}
-        opts={{ loop: true }}
-        plugins={[plugin.current]}
-        setApi={setApi}
-      >
-        <CarouselContent>
-          <CarouselItem>
-            <div className="flex gap-16 p-16">
-              <div>
-                <h1 className="mb-4 text-accent text-4xl">BIOSCAN Browser</h1>
-                <h2 className="mb-8 text-2xl">
-                  Visualizing a Multimodal Dataset for Insect Biodiversity
-                </h2>
-                <p className="mb-16 text-muted-foreground">
-                  BIOSCAN-5M is a dataset containing multi-modal information for
-                  5 million insect specimens. Except for high resolution images,
-                  the dataset includes taxonomic labels, raw nucleotide barcode
-                  sequences, assigned barcode index numbers, and geographical
-                  information.
-                </p>
-                <Link
-                  className={buttonVariants({ size: 'lg' })}
-                  to={PATHS.SEARCH}
-                >
-                  <SearchIcon className="w-4 h-4 mr-2" />
-                  Browse records
-                </Link>
-              </div>
-              <div className="w-[320px] shrink-0">
-                <MultiModalGalleryItem doc={doc} onClick={onDocClick} />
-              </div>
-            </div>
-          </CarouselItem>
-          <CarouselItem>
-            <div className="h-full flex gap-16 p-8">
-              <div className="w-[320px] shrink-0 p-8">
-                <h2 className="mb-4 text-2xl">Geographic Data</h2>
-                <p className="mb-16 text-muted-foreground">
-                  Specimen collection sites enable species distribution
-                  modeling.
-                </p>
-              </div>
-              <div className="grow grid items-center">
-                <div className="p-4 bg-background rounded-md border">
-                  <img alt="" src="/assets/cluster-map.svg" />
-                </div>
-              </div>
-            </div>
-          </CarouselItem>
-          <CarouselItem>
-            <div className="h-full flex gap-16 p-8">
-              <div className="w-[320px] shrink-0 p-8">
-                <h2 className="mb-4 text-2xl">Taxonomic Labels</h2>
-                <p className="mb-16 text-muted-foreground">
-                  Hierarchical annotations to fine-grained species level, plus
-                  barcode index numbers (BINs) at sub-species granularity.
-                </p>
-                <Button
-                  onClick={() => {
-                    const element = document.getElementById('taxa-distribution')
-                    element?.scrollIntoView({ behavior: 'smooth' })
-                  }}
-                >
-                  Learn more
-                  <ChevronsDownIcon className="w-4 h-4 ml-2" />
-                </Button>
-              </div>
-              <div className="grow grid grid-cols-2 gap-8 items-center">
-                <img alt="" src="/assets/class-chart-compact.png" />
-                <img alt="" src="/assets/order-chart-compact.png" />
-              </div>
-            </div>
-          </CarouselItem>
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
-      <div className="flex items-center justify-center gap-3">
-        {Array.from(Array(count).keys()).map((index) => (
-          <Button
-            key={index}
-            className={cn('w-3 h-3 p-0 rounded-full bg-border', {
-              'bg-primary': index === current,
-            })}
-            onClick={() => api?.scrollTo(index, true)}
-          />
-        ))}
-      </div>
-    </div>
-  )
-}
-
-const Feature = ({
-  Icon,
-  title,
-  children,
-}: {
-  Icon: ComponentType<{ className?: string }>
-  title: string
-  children: ReactNode
-}) => (
-  <div>
-    <div className="flex items-center gap-4 mb-4 text-accent">
-      <Icon className="w-8 h-8" />
-      <h2>{title}</h2>
-    </div>
-    <p className="text-muted-foreground">{children}</p>
-  </div>
-)
-
-const Count = ({ count, label }: { count: number; label: string }) => (
-  <div className="flex flex-col gap-4">
-    <span className="text-5xl" style={{ fontFamily: 'Source Code' }}>
-      {count.toLocaleString()}
-    </span>
-    <span className="body-base text-muted-foreground uppercase">{label}</span>
-  </div>
-)
