@@ -6,6 +6,7 @@ import { PageContent } from '@/components/page-content'
 import { Button, buttonVariants } from '@/components/ui/button'
 import {
   Carousel,
+  CarouselApi,
   CarouselContent,
   CarouselItem,
   CarouselNext,
@@ -26,7 +27,7 @@ import {
   SearchIcon,
   TagIcon,
 } from 'lucide-react'
-import { ComponentType, ReactNode, useRef, useState } from 'react'
+import { ComponentType, ReactNode, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 export const Home = () => {
@@ -182,15 +183,32 @@ const IntroCarousel = ({
   onDocClick: () => void
 }) => {
   const plugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: true }))
+  const [api, setApi] = useState<CarouselApi>()
+  const [current, setCurrent] = useState(0)
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    if (!api) {
+      return
+    }
+
+    setCount(api.scrollSnapList().length)
+    setCurrent(api.selectedScrollSnap())
+
+    api.on('select', () => {
+      setCurrent(api.selectedScrollSnap())
+    })
+  }, [api])
 
   return (
     <div>
       <Carousel
-        className="bg-muted rounded-md border"
+        className="bg-muted rounded-md border mb-8"
         onMouseEnter={() => plugin.current.stop()}
         onMouseLeave={() => plugin.current.reset()}
         opts={{ loop: true }}
         plugins={[plugin.current]}
+        setApi={setApi}
       >
         <CarouselContent>
           <CarouselItem>
@@ -264,6 +282,17 @@ const IntroCarousel = ({
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
+      <div className="flex items-center justify-center gap-3">
+        {Array.from(Array(count).keys()).map((index) => (
+          <Button
+            key={index}
+            className={cn('w-3 h-3 p-0 rounded-full bg-border', {
+              'bg-primary': index === current,
+            })}
+            onClick={() => api?.scrollTo(index, true)}
+          />
+        ))}
+      </div>
     </div>
   )
 }
