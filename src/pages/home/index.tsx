@@ -3,7 +3,7 @@ import { GalleryItem } from '@/components/gallery/gallery-item'
 import { MultiModalGalleryItem } from '@/components/gallery/multi-modal-gallery-item'
 import { Loader } from '@/components/loader'
 import { PageContent } from '@/components/page-content'
-import { buttonVariants } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import {
   Carousel,
   CarouselContent,
@@ -17,6 +17,7 @@ import { cn } from '@/lib/utils'
 import { Doc } from '@/types/response-data'
 import Autoplay from 'embla-carousel-autoplay'
 import {
+  ChevronsDownIcon,
   DatabaseIcon,
   DnaIcon,
   ImageIcon,
@@ -83,7 +84,7 @@ export const Home = () => {
           <Count label="Specimens" count={5150850} />
         </div>
       </Block>
-      <Block className="bg-muted border-y">
+      <Block className="bg-muted border-y" id="taxa-distribution">
         <div className="flex flex-col items-center mx-auto">
           <h1 className="mb-16 text-accent">Distribution of Taxa</h1>
           <div className="w-full grid grid-cols-2 gap-8">
@@ -162,11 +163,13 @@ export const Home = () => {
 const Block = ({
   children,
   className,
+  id,
 }: {
   children: ReactNode
   className?: string
+  id?: string
 }) => (
-  <div className={cn('py-32', className)}>
+  <div className={cn('py-32', className)} id={id}>
     <PageContent>{children}</PageContent>
   </div>
 )
@@ -241,9 +244,15 @@ const IntroCarousel = ({
                   Hierarchical annotations to fine-grained species level, plus
                   barcode index numbers (BINs) at sub-species granularity.
                 </p>
-                <Link to="#" className={buttonVariants()}>
+                <Button
+                  onClick={() => {
+                    const element = document.getElementById('taxa-distribution')
+                    element?.scrollIntoView({ behavior: 'smooth' })
+                  }}
+                >
                   Learn more
-                </Link>
+                  <ChevronsDownIcon className="w-4 h-4 ml-2" />
+                </Button>
               </div>
               <div className="grow grid grid-cols-2 gap-8 items-center">
                 <img alt="" src="/assets/class-chart-compact.png" />
