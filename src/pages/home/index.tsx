@@ -39,13 +39,14 @@ export const Home = () => {
     }
   }, [])
 
-  const { data, isPending } = useRecords({
+  const { data = { docs: [] }, isPending } = useRecords({
     page: 1,
     pageSize: 10,
     sort,
   })
+  const [doc] = data.docs
 
-  if (isPending || !data) {
+  if (isPending || !doc) {
     return (
       <Block>
         <Loader />
@@ -55,32 +56,8 @@ export const Home = () => {
 
   return (
     <>
-      <Block>
-        <div className="mb-32 text-center">
-          <h1 className="mb-4 text-accent text-4xl">BIOSCAN Browser</h1>
-          <h2 className="text-2xl">
-            Visualizing a Multimodal Dataset for Insect Biodiversity
-          </h2>
-        </div>
-        <div className="max-w-4xl flex items-center justify-center gap-8 mx-auto">
-          <div className="flex items-center gap-4">
-            <RecordCarousel docs={data.docs} setActiveDoc={setActiveDoc} />
-          </div>
-          <div>
-            <h1 className="mb-4 text-accent">The Dataset</h1>
-            <p className="mb-8 text-muted-foreground">
-              BIOSCAN-5M is a dataset containing multi-modal information for 5
-              million insect specimens. Except for high resolution images, the
-              dataset includes taxonomic labels, raw nucleotide barcode
-              sequences, assigned barcode index numbers, and geographical
-              information.
-            </p>
-            <Link className={buttonVariants({ size: 'lg' })} to={PATHS.SEARCH}>
-              <SearchIcon className="w-4 h-4 mr-2" />
-              Browse records
-            </Link>
-          </div>
-        </div>
+      <Block className="py-16">
+        <IntroCarousel doc={doc} onDocClick={() => setActiveDoc(doc)} />
       </Block>
       <Block className="bg-muted border-y">
         <div className="max-w-4xl grid grid-cols-2 gap-x-32 gap-y-16 mx-auto">
@@ -109,11 +86,9 @@ export const Home = () => {
         </div>
       </Block>
       <Block>
-        <img
-          alt=""
-          className="w-full max-w-4xl mx-auto mb-16 bg-background rounded-md border"
-          src="/assets/cluster-map.png"
-        />
+        <div className="w-full max-w-4xl mx-auto mb-16 p-4 bg-muted rounded-md border">
+          <img alt="" src="/assets/cluster-map.png" />
+        </div>
         <div className="flex justify-center gap-16">
           <Count label="Countries" count={47} />
           <Count label="Sites" count={1650} />
@@ -208,32 +183,86 @@ const Block = ({
   </div>
 )
 
-const RecordCarousel = ({
-  docs,
-  setActiveDoc,
+const IntroCarousel = ({
+  doc,
+  onDocClick,
 }: {
-  docs: Doc[]
-  setActiveDoc: (doc: Doc) => void
+  doc: Doc
+  onDocClick: () => void
 }) => {
   const plugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: true }))
 
   return (
-    <div className="px-12">
+    <div>
       <Carousel
+        className="bg-muted rounded-md border"
         onMouseEnter={() => plugin.current.stop()}
         onMouseLeave={() => plugin.current.reset()}
         opts={{ loop: true }}
         plugins={[plugin.current]}
       >
-        <CarouselContent className="w-[320px]">
-          {docs.map((doc) => (
-            <CarouselItem key={doc.id}>
-              <MultiModalGalleryItem
-                doc={doc}
-                onClick={() => setActiveDoc(doc)}
-              />
-            </CarouselItem>
-          ))}
+        <CarouselContent>
+          <CarouselItem>
+            <div className="flex gap-16 p-16">
+              <div>
+                <h1 className="mb-4 text-accent text-4xl">BIOSCAN Browser</h1>
+                <h2 className="mb-8 text-2xl">
+                  Visualizing a Multimodal Dataset for Insect Biodiversity
+                </h2>
+                <p className="mb-16 text-muted-foreground">
+                  BIOSCAN-5M is a dataset containing multi-modal information for
+                  5 million insect specimens. Except for high resolution images,
+                  the dataset includes taxonomic labels, raw nucleotide barcode
+                  sequences, assigned barcode index numbers, and geographical
+                  information.
+                </p>
+                <Link
+                  className={buttonVariants({ size: 'lg' })}
+                  to={PATHS.SEARCH}
+                >
+                  <SearchIcon className="w-4 h-4 mr-2" />
+                  Browse records
+                </Link>
+              </div>
+              <div className="w-[320px] shrink-0">
+                <MultiModalGalleryItem doc={doc} onClick={onDocClick} />
+              </div>
+            </div>
+          </CarouselItem>
+          <CarouselItem>
+            <div className="h-full flex gap-16 p-8">
+              <div className="w-[320px] shrink-0 p-8">
+                <h2 className="mb-4 text-2xl">Geographic Data</h2>
+                <p className="mb-16 text-muted-foreground">
+                  Specimen collection sites enable species distribution
+                  modeling.
+                </p>
+              </div>
+              <div className="grow grid items-center">
+                <div className="p-4 bg-background rounded-md border">
+                  <img alt="" src="/assets/cluster-map.svg" />
+                </div>
+              </div>
+            </div>
+          </CarouselItem>
+          <CarouselItem>
+            <div className="h-full flex gap-16 p-8">
+              <div className="w-[320px] shrink-0 p-8">
+                <h2 className="mb-4 text-2xl">Taxonomic Labels</h2>
+                <p className="mb-16 text-muted-foreground">
+                  Hierarchical annotations to fine-grained species level, plus
+                  barcode index numbers (BINs) at sub-species granularity.
+                </p>
+                <Link to="#" className={buttonVariants()}>
+                  Learn more
+                </Link>
+              </div>
+              <div className="grow grid grid-cols-2 gap-8 items-center">
+                <img alt="" src="/assets/class-chart-compact.png" />
+                <img alt="" src="/assets/order-chart-compact.png" />
+              </div>
+            </div>
+          </CarouselItem>
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />
