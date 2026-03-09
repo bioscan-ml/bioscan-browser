@@ -78,8 +78,8 @@ export const Home = () => {
               <div className="w-[320px] h-min shrink-0 p-8 bg-background/90 rounded-md border">
                 <h2 className="mb-4 text-2xl">Geographic Span</h2>
                 <p className="mb-16 text-muted-foreground">
-                  The datase includes records from all 5 continents, distributed
-                  accross 47 countries.
+                  The dataset includes records from all 5 continents,
+                  distributed accross 47 countries.
                 </p>
                 <Button
                   onClick={() => {
