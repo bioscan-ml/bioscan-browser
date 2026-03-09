@@ -23,6 +23,7 @@ import { Block } from './block'
 import { Count } from './count'
 import { Feature } from './feature'
 import { IntroCarousel } from './intro-carousel'
+import { RankChart } from './rank-chart'
 
 export const Home = () => {
   const [activeDoc, setActiveDoc] = useState<Doc>()
@@ -73,17 +74,26 @@ export const Home = () => {
             </div>
           </CarouselItem>
           <CarouselItem>
-            <div className="h-full flex gap-16 p-8">
-              <div className="w-[320px] shrink-0 p-8">
-                <h2 className="mb-4 text-2xl">Geographic Data</h2>
+            <div className="h-full flex gap-16 p-8 relative">
+              <div className="w-[320px] h-min shrink-0 p-8 bg-background/90 rounded-md border">
+                <h2 className="mb-4 text-2xl">Geographic Span</h2>
                 <p className="mb-16 text-muted-foreground">
-                  Specimen collection sites enable species distribution
-                  modeling.
+                  The datase includes records from all 5 continents, distributed
+                  accross 47 countries.
                 </p>
+                <Button
+                  onClick={() => {
+                    const element = document.getElementById('map')
+                    element?.scrollIntoView({ behavior: 'smooth' })
+                  }}
+                >
+                  Learn more
+                  <ChevronsDownIcon className="w-4 h-4 ml-2" />
+                </Button>
               </div>
               <div className="grow grid items-center">
-                <div className="p-4 bg-background rounded-md border">
-                  <img alt="" src="/assets/cluster-map.png" />
+                <div className="absolute top-0 left-0 w-full h-full z-[-1]">
+                  <img alt="" src="/assets/cluster-map-compact.png" />
                 </div>
               </div>
             </div>
@@ -91,10 +101,11 @@ export const Home = () => {
           <CarouselItem>
             <div className="h-full flex gap-16 p-8">
               <div className="w-[320px] shrink-0 p-8">
-                <h2 className="mb-4 text-2xl">Taxonomic Labels</h2>
+                <h2 className="mb-4 text-2xl">Distribution of Taxa</h2>
                 <p className="mb-16 text-muted-foreground">
-                  Hierarchical annotations to fine-grained species level, plus
-                  barcode index numbers (BINs) at sub-species granularity.
+                  The dataset covers arthropods, with 98% of records being
+                  insects. For insects, the dataset covers everything from flies
+                  to beetles.
                 </p>
                 <Button
                   onClick={() => {
@@ -140,7 +151,7 @@ export const Home = () => {
           </Feature>
         </div>
       </Block>
-      <Block>
+      <Block id="map">
         <div className="w-full max-w-4xl mx-auto mb-16 p-4 bg-muted rounded-md border">
           <img alt="" src="/assets/cluster-map.png" />
         </div>
@@ -172,6 +183,14 @@ export const Home = () => {
               />
               <p className="text-sm italic text-muted-foreground">
                 Figure 2: Order distribution for class Insecta (Insects).
+              </p>
+            </div>
+            <div className="flex flex-col gap-2 col-span-2">
+              <div className="w-full p-8 bg-background rounded-md border">
+                <RankChart />
+              </div>
+              <p className="text-sm italic text-muted-foreground">
+                Figure 3: Taxonomic resolution for records.
               </p>
             </div>
           </div>
