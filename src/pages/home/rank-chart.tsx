@@ -4,7 +4,15 @@ import {
   ChartTooltip,
 } from '@/components/ui/chart'
 import { Fragment } from 'react'
-import { Bar, BarChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts'
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  LabelList,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts'
 import colors from 'tailwindcss/colors'
 
 const CHART_CONFIG = {
@@ -48,12 +56,24 @@ export const RankChart = () => (
         <YAxis
           axisLine={false}
           dataKey="records"
-          tickFormatter={yAxisTickFormatter}
+          tickFormatter={(value: number) => value.toLocaleString()}
           tickLine={false}
           type="number"
         />
         <ChartTooltip content={<RankChartTooltip />} />
-        <Bar dataKey="records" radius={4} />
+        <Bar dataKey="records" radius={4}>
+          <LabelList
+            dataKey="records"
+            position="top"
+            offset={12}
+            className="fill-foreground"
+            formatter={(value: number) => {
+              const percent = (value / CHART_DATA[0].records) * 100
+
+              return `${percent.toFixed(2).toLocaleString()}%`
+            }}
+          />
+        </Bar>
       </BarChart>
     </ChartContainer>
   </div>
@@ -84,22 +104,7 @@ const RankChartTooltip = ({
             {item.payload.records.toLocaleString()}
           </span>
         </Fragment>
-        <Fragment>
-          <span className="text-muted-foreground">Of total</span>
-          <span
-            className="font-medium text-foreground"
-            style={{ fontFamily: 'Source Code' }}
-          >
-            {(
-              (item.payload.records / CHART_DATA[0].records) *
-              100
-            ).toLocaleString()}
-            %
-          </span>
-        </Fragment>
       </div>
     </div>
   )
 }
-
-const yAxisTickFormatter = (value: number) => value.toLocaleString()
