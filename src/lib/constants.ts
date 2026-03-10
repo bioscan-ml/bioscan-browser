@@ -88,3 +88,5 @@ export const RESOURCES = {
   INATURALIST_API: 'https://api.inaturalist.org/v1/docs/',
   SYSTEM_STATUS: 'https://bioscan-browser.cronitorstatus.com/',
 }
+
+export const REQUEST_TIMEOUT = 5000
