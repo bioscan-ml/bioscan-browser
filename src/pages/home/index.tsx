@@ -93,7 +93,11 @@ export const Home = () => {
               </div>
               <div className="grow grid items-center">
                 <div className="absolute top-0 left-0 w-full h-full z-[-1]">
-                  <img alt="" src="/assets/cluster-map-compact.png" />
+                  <img
+                    alt=""
+                    className="w-full h-full object-cover"
+                    src="/assets/cluster-map-compact.png"
+                  />
                 </div>
               </div>
             </div>
@@ -105,7 +109,7 @@ export const Home = () => {
                 <p className="mb-16 text-muted-foreground">
                   The dataset covers arthropods, with 98% of records being
                   insects. For insects, the dataset covers everything from flies
-                  to beetles.
+                  and ants to butterflies and beetles.
                 </p>
                 <Button
                   onClick={() => {
@@ -117,7 +121,7 @@ export const Home = () => {
                   <ChevronsDownIcon className="w-4 h-4 ml-2" />
                 </Button>
               </div>
-              <div className="grow grid grid-cols-2 gap-8 items-center">
+              <div className="grow grid grid-cols-2 gap-8 items-start">
                 <img alt="" src="/assets/class-chart-compact.png" />
                 <img alt="" src="/assets/order-chart-compact.png" />
               </div>
