@@ -1,4 +1,4 @@
-import { SOLR_BASE_PATH } from '@/lib/constants'
+import { REQUEST_TIMEOUT, SOLR_BASE_PATH } from '@/lib/constants'
 import { filtersToQuery } from '@/lib/filtersToQuery'
 import { Doc } from '@/types/response-data'
 import { useQuery } from '@tanstack/react-query'
@@ -20,7 +20,9 @@ export const useRecord = ({
       }
 
       const q = filtersToQuery([{ key: 'id', values: [id] }])
-      const res = await fetch(`${SOLR_BASE_PATH}?q=${q}`)
+      const res = await fetch(`${SOLR_BASE_PATH}?q=${q}`, {
+        signal: AbortSignal.timeout(REQUEST_TIMEOUT),
+      })
       const data = await res.json()
       const doc = data.response.docs[0]
 

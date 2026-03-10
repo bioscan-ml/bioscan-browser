@@ -1,4 +1,4 @@
-import { BACKEND_BASE_PATH } from '@/lib/constants'
+import { BACKEND_BASE_PATH, REQUEST_TIMEOUT } from '@/lib/constants'
 import { filtersToQuery } from '@/lib/filtersToQuery'
 import { getFetchUrl } from '@/lib/getFetchUrl'
 import { Doc } from '@/types/response-data'
@@ -33,7 +33,7 @@ const search = async (params: Params) => {
         'Content-Type': 'application/json',
       },
       method: 'POST',
-      signal: AbortSignal.timeout(10000),
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT),
     })
   }
 
