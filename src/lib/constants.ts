@@ -31,9 +31,9 @@ export const FIELDS: {
   { label: 'Province/State', key: 'province_state' },
   { label: 'Collectors', key: 'collectors', sortDisabled: true },
   {
-    label: 'Original insect pixels',
-    key: 'original_insect_pixels',
-    tooltip: 'Number of pixels taken up by organism',
+    label: 'Organism area (mm²)',
+    key: 'organism_area_mm2',
+    tooltip: 'Area occupied by the organism in square millimeters',
   },
 ]
 
@@ -53,8 +53,8 @@ export const FILTER_TYPES: { label: string; key: string; type?: 'interval' }[] =
     { label: 'Province/State', key: 'province_state' },
     ...TAXON_FILTER_TYPES,
     {
-      label: 'Original insect pixels',
-      key: 'original_insect_pixels',
+      label: 'Organism area (mm²)',
+      key: 'organism_area_mm2',
       type: 'interval',
     },
     { label: 'DNA BIN', key: 'dna_bin' },

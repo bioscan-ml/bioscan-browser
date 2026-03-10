@@ -23,7 +23,7 @@ export const Fields = ({ doc }: FieldsProps) => (
       <DocField doc={doc} fieldKey="country" />
       <DocField doc={doc} fieldKey="province_state" />
       <DocField doc={doc} fieldKey="collectors" />
-      <DocField doc={doc} fieldKey="original_insect_pixels" />
+      <DocField doc={doc} fieldKey="organism_area_mm2" />
       <Field label="Reported issues">
         <IssueList id={doc.id} />
       </Field>
