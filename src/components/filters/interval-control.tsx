@@ -11,6 +11,7 @@ import { FormField } from '../form-field'
 import { badgeVariants } from '../ui/badge'
 import { Button, buttonVariants } from '../ui/button'
 import { Input } from '../ui/input'
+import { Slider } from '../ui/slider'
 
 const ERROR_MESSAGES = {
   REQUIRED: 'This field is required.',
@@ -33,11 +34,12 @@ export const IntervalControl = ({
   values = [],
 }: FilterControlProps) => {
   const [open, setIsOpen] = useState(!!values.length)
-  const { control, handleSubmit, reset, watch } = useForm<{
+  const { control, formState, handleSubmit, reset, setValue, watch } = useForm<{
     minValue: number
     maxValue: number
-  }>()
+  }>({ defaultValues: { minValue: 0, maxValue: 10000 } })
   const minValue = watch('minValue') ?? 0
+  const maxValue = watch('maxValue') ?? 0
 
   return (
     <Collapsible open={open} onOpenChange={setIsOpen}>
@@ -73,6 +75,17 @@ export const IntervalControl = ({
           })}
         >
           <div className="grid grid-cols-2 gap-4 mb-4">
+            <div className="col-span-2">
+              <Slider
+                onValueChange={(value) => {
+                  setValue('minValue', value[0], { shouldDirty: true })
+                  setValue('maxValue', value[1], { shouldDirty: true })
+                }}
+                max={10000}
+                step={1}
+                value={[minValue, maxValue]}
+              />
+            </div>
             <Controller
               control={control}
               rules={{
@@ -104,14 +117,16 @@ export const IntervalControl = ({
             />
           </div>
           <div className="flex items-center justify-end gap-2">
-            <Button
-              onClick={() => reset()}
-              size="sm"
-              type="button"
-              variant="ghost"
-            >
-              Clear
-            </Button>
+            {formState.isDirty ? (
+              <Button
+                onClick={() => reset()}
+                size="sm"
+                type="button"
+                variant="ghost"
+              >
+                Clear
+              </Button>
+            ) : null}
             <Button size="sm" type="submit">
               <span>Add</span>
               <PlusIcon className="w-4 h-4 ml-2" />
