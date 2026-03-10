@@ -41,7 +41,29 @@ export const Home = () => {
 
   return (
     <>
-      <Block className="py-16">
+      <Block className="flex md:hidden">
+        <div className="flex flex-col items-center gap-8 px-4">
+          <div className="text-center">
+            <h1 className="mb-4 text-accent">BIOSCAN Browser</h1>
+            <h2 className="mb-8">
+              Visualizing a Multimodal Dataset for Insect Biodiversity
+            </h2>
+            <p className="text-muted-foreground">
+              BIOSCAN-5M is a dataset containing multi-modal information for 5
+              million insect specimens. Except for high resolution images, the
+              dataset includes taxonomic labels, raw nucleotide barcode
+              sequences, assigned barcode index numbers, and geographical
+              information.
+            </p>
+          </div>
+          <MultiModalGalleryItem doc={doc} onClick={() => setActiveDoc(doc)} />
+          <Link className={buttonVariants({ size: 'lg' })} to={PATHS.SEARCH}>
+            <SearchIcon className="w-4 h-4 mr-2" />
+            Browse records
+          </Link>
+        </div>
+      </Block>
+      <Block className="py-16 hidden md:flex">
         <IntroCarousel>
           <CarouselItem>
             <div className="flex gap-16 p-16">
@@ -50,7 +72,7 @@ export const Home = () => {
                 <h2 className="mb-8 text-2xl">
                   Visualizing a Multimodal Dataset for Insect Biodiversity
                 </h2>
-                <p className="mb-16 text-muted-foreground">
+                <p className="mb-8 text-muted-foreground md:mb-16">
                   BIOSCAN-5M is a dataset containing multi-modal information for
                   5 million insect specimens. Except for high resolution images,
                   the dataset includes taxonomic labels, raw nucleotide barcode
@@ -103,8 +125,8 @@ export const Home = () => {
             </div>
           </CarouselItem>
           <CarouselItem>
-            <div className="h-full flex gap-16 p-8">
-              <div className="w-[320px] shrink-0 p-8">
+            <div className="h-full flex flex-col gap-16 p-8 md:flex-row">
+              <div className="shrink-0 md:w-[320px] md:p-8">
                 <h2 className="mb-4 text-2xl">Distribution of Taxa</h2>
                 <p className="mb-16 text-muted-foreground">
                   The dataset covers arthropods, with 98% of records being
@@ -121,16 +143,20 @@ export const Home = () => {
                   <ChevronsDownIcon className="w-4 h-4 ml-2" />
                 </Button>
               </div>
-              <div className="grow grid grid-cols-2 gap-8 items-start">
+              <div className="grow grid grid-cols-1 gap-8 items-start md:grid-cols-2">
                 <img alt="" src="/assets/class-chart-compact.png" />
-                <img alt="" src="/assets/order-chart-compact.png" />
+                <img
+                  alt=""
+                  className="hidden md:flex"
+                  src="/assets/order-chart-compact.png"
+                />
               </div>
             </div>
           </CarouselItem>
         </IntroCarousel>
       </Block>
       <Block className="bg-muted border-y">
-        <div className="max-w-4xl grid grid-cols-2 gap-x-32 gap-y-16 mx-auto">
+        <div className="max-w-4xl grid grid-cols-1 gap-x-32 gap-y-8 mx-auto md:grid-cols-2 md:gap-y-16">
           <Feature Icon={DatabaseIcon} title="Data Volume">
             Multimodal information for over 5 million insect specimens,
             significantly expanding existing image-based biological datasets.
@@ -156,10 +182,10 @@ export const Home = () => {
         </div>
       </Block>
       <Block id="map">
-        <div className="w-full max-w-4xl mx-auto mb-16 p-4 bg-muted rounded-md border">
+        <div className="w-full max-w-4xl mx-auto mb-8 p-4 bg-muted rounded-md border md:mb-16">
           <img alt="" src="/assets/cluster-map.png" />
         </div>
-        <div className="flex justify-center gap-16">
+        <div className="flex justify-center gap-8 md:gap-16">
           <Count label="Countries" count={47} />
           <Count label="Sites" count={1650} />
           <Count label="Specimens" count={5150850} />
@@ -167,12 +193,12 @@ export const Home = () => {
       </Block>
       <Block className="bg-muted border-y" id="taxa-distribution">
         <div className="flex flex-col items-center mx-auto">
-          <h1 className="mb-16 text-accent">Distribution of Taxa</h1>
-          <div className="w-full grid grid-cols-2 gap-8">
+          <h1 className="mb-8 text-accent md:mb-16">Distribution of Taxa</h1>
+          <div className="w-full grid grid-cols-1 gap-8 md:grid-cols-2">
             <div className="flex flex-col gap-2">
               <img
                 alt=""
-                className="w-full p-8 bg-background rounded-md border"
+                className="w-full p-4 bg-background rounded-md border md:p-8"
                 src="/assets/class-chart.png"
               />
               <p className="text-sm italic text-muted-foreground">
@@ -182,15 +208,15 @@ export const Home = () => {
             <div className="flex flex-col gap-2">
               <img
                 alt=""
-                className="w-full p-8 bg-background rounded-md border"
+                className="w-full p-4 bg-background rounded-md border md:p-8"
                 src="/assets/order-chart.png"
               />
               <p className="text-sm italic text-muted-foreground">
                 Figure 2: Order distribution for class Insecta (Insects).
               </p>
             </div>
-            <div className="flex flex-col gap-2 col-span-2">
-              <div className="w-full p-8 bg-background rounded-md border">
+            <div className="flex flex-col gap-2 md:col-span-2">
+              <div className="w-full p-4 bg-background rounded-md border overflow-auto md:p-8">
                 <RankChart />
               </div>
               <p className="text-sm italic text-muted-foreground">
@@ -201,7 +227,7 @@ export const Home = () => {
         </div>
       </Block>
       <Block>
-        <div className="max-w-2xl mx-auto mb-16">
+        <div className="max-w-2xl mx-auto mb-8 md:mb-16">
           <div className="text-center">
             <img
               alt=""
@@ -219,7 +245,7 @@ export const Home = () => {
             </p>
           </div>
         </div>
-        <div className="max-w-4xl grid grid-cols-1 gap-4 mx-auto mb-16 md:grid-cols-3 lg:grid-cols-5">
+        <div className="max-w-4xl grid grid-cols-1 gap-4 mx-auto mb-8 md:grid-cols-3 lg:grid-cols-5 md:mb-16">
           {sampleRecords.slice(0, 10).map((doc) => (
             <GalleryItem
               key={doc.id}

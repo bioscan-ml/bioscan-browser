@@ -32,8 +32,8 @@ const CHART_DATA = [
 ]
 
 export const RankChart = () => (
-  <div>
-    <ChartContainer config={CHART_CONFIG} className="w-full h-80">
+  <div className="min-w-[480px] h-80">
+    <ChartContainer config={CHART_CONFIG} className="w-full h-full">
       <BarChart
         accessibilityLayer
         data={CHART_DATA}

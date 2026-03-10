@@ -11,7 +11,7 @@ export const Block = ({
   className?: string
   id?: string
 }) => (
-  <div className={cn('py-32', className)} id={id}>
+  <div className={cn('py-8 md:py-32', className)} id={id}>
     <PageContent>{children}</PageContent>
   </div>
 )
