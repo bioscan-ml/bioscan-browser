@@ -6,11 +6,18 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Doc } from '@/types/response-data'
-import { Sort, SortOrder } from '@/types/settings'
-import { DicesIcon } from 'lucide-react'
+import { Sort } from '@/types/settings'
+import {
+  ArrowDown01Icon,
+  ArrowDownAZIcon,
+  ArrowUp01Icon,
+  ArrowUpAZIcon,
+  DicesIcon,
+} from 'lucide-react'
 import { Button } from './ui/button'
 
 const VALUE_RANDOM = 'random'
+
 interface OrderByControlProps {
   fields: { label: string; key: keyof Doc; sortDisabled?: boolean }[]
   sort: Sort
@@ -64,21 +71,33 @@ export const OrderByControl = ({
           <DicesIcon className="w-4 h-4" />
         </Button>
       ) : (
-        <Select
-          value={sort.order}
-          onValueChange={(value: SortOrder) =>
-            setSort({ ...sort, order: value })
+        <Button
+          className="shrink-0"
+          size="icon"
+          variant="outline"
+          onClick={() =>
+            setSort({ ...sort, order: sort.order === 'desc' ? 'asc' : 'desc' })
           }
         >
-          <SelectTrigger>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="asc">A-Z</SelectItem>
-            <SelectItem value="desc">Z-A</SelectItem>
-          </SelectContent>
-        </Select>
+          <SortIcon sort={sort} />
+        </Button>
       )}
     </div>
   )
+}
+
+const SortIcon = ({ sort: { key, order } }: { sort: Sort }) => {
+  if (key === 'organism_area_mm2') {
+    if (order === 'desc') {
+      return <ArrowUp01Icon className="w-4 h-4" />
+    }
+
+    return <ArrowDown01Icon className="w-4 h-4" />
+  }
+
+  if (order === 'desc') {
+    return <ArrowUpAZIcon className="w-4 h-4" />
+  }
+
+  return <ArrowDownAZIcon className="w-4 h-4" />
 }
