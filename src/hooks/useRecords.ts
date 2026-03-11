@@ -1,3 +1,4 @@
+import { REQUEST_TIMEOUT } from '@/lib/constants'
 import { getFetchUrl } from '@/lib/getFetchUrl'
 import { Doc, FacetCounts } from '@/types/response-data'
 import { Sort } from '@/types/settings'
@@ -26,7 +27,9 @@ export const useRecords = (
     enabled,
     queryKey: [QUERY_KEY, params],
     queryFn: async () => {
-      const res = await fetch(getFetchUrl(params))
+      const res = await fetch(getFetchUrl(params), {
+        signal: AbortSignal.timeout(REQUEST_TIMEOUT),
+      })
 
       if (!res.ok) {
         throw Error()

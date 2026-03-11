@@ -18,7 +18,7 @@ export const FIELDS: {
   sortDisabled?: boolean
   tooltip?: string
 }[] = [
-  { label: 'Record ID', key: 'id' },
+  { label: 'Process ID', key: 'id' },
   { label: 'Sample ID', key: 'sampleid' },
   { label: 'Phylum', key: 'phylum' },
   { label: 'Class', key: 'class' },
@@ -62,6 +62,8 @@ export const FILTER_TYPES: { label: string; key: string; type?: 'interval' }[] =
     { label: 'Chunk', key: 'chunk' },
   ]
 
+export const APP_URL = 'https://browser.bioscan-ml.org'
+
 export const SOLR_BASE_PATH = `${import.meta.env.VITE_API_URL}/solr/bioscan5m/select`
 
 export const BACKEND_BASE_PATH = `${import.meta.env.VITE_API_URL}/bioscan-browser`
@@ -86,3 +88,5 @@ export const RESOURCES = {
   INATURALIST_API: 'https://api.inaturalist.org/v1/docs/',
   SYSTEM_STATUS: 'https://bioscan-browser.cronitorstatus.com/',
 }
+
+export const REQUEST_TIMEOUT = 5000

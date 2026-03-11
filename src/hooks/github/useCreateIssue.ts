@@ -5,6 +5,7 @@ import { App } from 'octokit'
 import { APP_ID, INSTALLATION_ID, OWNER, REPO, REPORT_TYPES } from './constants'
 import { ReportFormData } from './types'
 import { getTaxon } from '@/lib/getTaxon'
+import { APP_URL } from '@/lib/constants'
 
 const PRIVATE_KEY = import.meta.env.VITE_GITHUB_APP_PRIVATE_KEY
 
@@ -47,9 +48,9 @@ const generateIssueBody = (data: {
 
   return `## Record details
 
-### Record ID
+### Process ID
 
-[${data.doc.id}](https://bioscan-browser.netlify.app/record/${data.doc.id})
+[${data.doc.id}](${APP_URL}/record/${data.doc.id})
 
 ### Images
 
@@ -79,10 +80,10 @@ ${data.boldDoc ? JSON.stringify(data.boldDoc, null, 4) : 'Not found'}
 </details>
 
 ### Links
-- [Record details (BIOSCAN Browser)](https://bioscan-browser.netlify.app/record/${data.doc.id})
+- [Record details (BIOSCAN Browser)](${APP_URL}/record/${data.doc.id})
 - [Record details (BOLD Systems)](https://portal.boldsystems.org/record/${data.doc.id})
-- [Samples with same taxonomic label](https://bioscan-browser.netlify.app/taxonomy-tree?taxon=${taxon.rankKey}-${taxon.label})
-- [Samples with same DNA barcode](https://bioscan-browser.netlify.app/search?dna_bin=${data.doc.dna_bin})
+- [Samples with same taxonomic label](${APP_URL}/taxonomy-tree?taxon=${taxon.rankKey}-${taxon.label})
+- [Samples with same DNA barcode](${APP_URL}/search?dna_bin=${data.doc.dna_bin})
 
 ## Report details
 
