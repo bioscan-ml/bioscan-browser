@@ -47,20 +47,19 @@ export const TAXON_FILTER_TYPES = [
   { label: 'Species', key: 'species' },
 ]
 
-export const FILTER_TYPES: { label: string; key: string; type?: 'interval' }[] =
-  [
-    { label: 'Country', key: 'country' },
-    { label: 'Province/State', key: 'province_state' },
-    ...TAXON_FILTER_TYPES,
-    {
-      label: 'Organism area (mm²)',
-      key: 'organism_area_mm2',
-      type: 'interval',
-    },
-    { label: 'DNA BIN', key: 'dna_bin' },
-    { label: 'Split', key: 'split' },
-    { label: 'Chunk', key: 'chunk' },
-  ]
+export const FILTER_TYPES: { label: string; key: string; type?: 'size' }[] = [
+  { label: 'Country', key: 'country' },
+  { label: 'Province/State', key: 'province_state' },
+  ...TAXON_FILTER_TYPES,
+  {
+    label: 'Organism area (mm²)',
+    key: 'organism_area_mm2',
+    type: 'size',
+  },
+  { label: 'DNA BIN', key: 'dna_bin' },
+  { label: 'Split', key: 'split' },
+  { label: 'Chunk', key: 'chunk' },
+]
 
 export const APP_URL = 'https://browser.bioscan-ml.org'
 

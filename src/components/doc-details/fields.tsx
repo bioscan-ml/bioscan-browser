@@ -74,7 +74,7 @@ const getFieldLink = (key: string, value: string): To | undefined => {
 
   if (
     FILTER_TYPES.some(
-      (filterType) => filterType.key === key && filterType.type !== 'interval',
+      (filterType) => filterType.key === key && filterType.type !== 'size',
     )
   )
     return {

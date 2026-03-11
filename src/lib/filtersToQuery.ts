@@ -8,7 +8,7 @@ const filterToQuery = (filter: Filter) => {
     )?.type
 
     let currentQuery: string
-    if (type === 'interval') {
+    if (type === 'size') {
       currentQuery = `${filter.key}:[${currentValue.split('-').join(' TO ')}]`
     } else {
       currentQuery = `${filter.key}:"${currentValue}"`

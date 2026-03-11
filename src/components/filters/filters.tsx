@@ -12,7 +12,7 @@ import { Filter } from '@/types/settings'
 import { SlidersHorizontal } from 'lucide-react'
 import { useState } from 'react'
 import { FilterControl } from './filter-control'
-import { IntervalControl } from './interval-control'
+import { SizeControl } from './size-control/size-control'
 
 interface FiltersProps {
   facetCounts?: FacetCounts
@@ -57,9 +57,9 @@ export const Filters = ({
           {FILTER_TYPES.map(({ key, label, type }) => {
             const values = filters.find((f) => f.key === key)?.values
 
-            if (type === 'interval') {
+            if (type === 'size') {
               return (
-                <IntervalControl
+                <SizeControl
                   key={key}
                   label={label}
                   onAdd={(value) => onAdd({ key, value })}
