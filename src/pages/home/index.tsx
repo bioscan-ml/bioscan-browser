@@ -49,11 +49,10 @@ export const Home = () => {
               Visualizing a Multimodal Dataset for Insect Biodiversity
             </h2>
             <p className="text-muted-foreground">
-              BIOSCAN-5M is a dataset containing multi-modal information for 5
-              million insect specimens. Except for high resolution images, the
-              dataset includes taxonomic labels, raw nucleotide barcode
-              sequences, assigned barcode index numbers, and geographical
-              information.
+              BIOSCAN-5M is a large-scale multi-modal dataset of 5 million 
+              insect specimens. Each record links high-resolution images with 
+              taxonomic labels, raw DNA barcode sequences, Barcode Index 
+              Numbers (BINs), and geographic information.
             </p>
           </div>
           <MultiModalGalleryItem doc={doc} onClick={() => setActiveDoc(doc)} />
@@ -73,11 +72,10 @@ export const Home = () => {
                   Visualizing a Multimodal Dataset for Insect Biodiversity
                 </h2>
                 <p className="mb-8 text-muted-foreground md:mb-16">
-                  BIOSCAN-5M is a dataset containing multi-modal information for
-                  5 million insect specimens. Except for high resolution images,
-                  the dataset includes taxonomic labels, raw nucleotide barcode
-                  sequences, assigned barcode index numbers, and geographical
-                  information.
+                  BIOSCAN-5M is a large-scale multi-modal dataset of 5 million 
+                  insect specimens. Each record links high-resolution images with 
+                  taxonomic labels, raw DNA barcode sequences, Barcode Index 
+                  Numbers (BINs), and geographic information.
                 </p>
                 <Link
                   className={buttonVariants({ size: 'lg' })}
@@ -100,8 +98,9 @@ export const Home = () => {
               <div className="w-[320px] h-min shrink-0 p-8 bg-background/90 rounded-md border">
                 <h2 className="mb-4 text-2xl">Geographic Span</h2>
                 <p className="mb-16 text-muted-foreground">
-                  The dataset includes records from all 5 continents,
-                  distributed accross 47 countries.
+                  Specimens were collected across 47 countries on 
+                  5 continents, representing a wide range of climates, 
+                  habitats, and insect communities.
                 </p>
                 <Button
                   onClick={() => {
@@ -129,9 +128,11 @@ export const Home = () => {
               <div className="shrink-0 md:w-[320px] md:p-8">
                 <h2 className="mb-4 text-2xl">Distribution of Taxa</h2>
                 <p className="mb-16 text-muted-foreground">
-                  The dataset covers arthropods, with 98% of records being
-                  insects. For insects, the dataset covers everything from flies
-                  and ants to butterflies and beetles.
+                  The dataset covers arthropods, with 98% of records representing 
+                  insects. Within insects, it spans a wide taxonomic range, from 
+                  common groups such as flies and mosquitoes (order Diptera) to 
+                  rarely encountered groups such as angel insects (order Zoraptera) 
+                  and snakeflies (order Raphidioptera).
                 </p>
                 <Button
                   onClick={() => {
