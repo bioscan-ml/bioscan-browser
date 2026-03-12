@@ -3,6 +3,7 @@ import { getFetchUrl } from '@/lib/getFetchUrl'
 import { Doc, FacetCounts } from '@/types/response-data'
 import { Sort } from '@/types/settings'
 import { useQuery } from '@tanstack/react-query'
+import { useSampleRecords } from './useSampleRecords'
 
 const QUERY_KEY = 'records'
 
@@ -16,6 +17,7 @@ export const useRecords = (
   },
   enabled?: boolean,
 ) => {
+  const { data: fallbackData } = useSampleRecords()
   const { isPending, isLoading, error, data } = useQuery<{
     response: {
       docs: Doc[]
@@ -49,6 +51,8 @@ export const useRecords = (
           ...data.response,
           facetCounts: data.facet_counts,
         }
-      : undefined,
+      : error
+        ? fallbackData
+        : undefined,
   }
 }

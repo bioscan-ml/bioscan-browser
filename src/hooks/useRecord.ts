@@ -2,6 +2,7 @@ import { REQUEST_TIMEOUT, SOLR_BASE_PATH } from '@/lib/constants'
 import { filtersToQuery } from '@/lib/filtersToQuery'
 import { Doc } from '@/types/response-data'
 import { useQuery } from '@tanstack/react-query'
+import { useSampleRecords } from './useSampleRecords'
 
 const QUERY_KEY = 'record'
 
@@ -12,6 +13,7 @@ export const useRecord = ({
   id?: string | null
   enabled?: boolean
 }) => {
+  const { data: fallbackData } = useSampleRecords()
   const { data, error, isPending, refetch } = useQuery<Doc>({
     queryKey: [QUERY_KEY, { id }],
     queryFn: async () => {
@@ -36,9 +38,11 @@ export const useRecord = ({
     retry: false,
   })
 
+  const doc = error ? fallbackData?.docs.find((doc) => doc.id === id) : data
+
   return {
-    data,
-    error,
+    data: doc,
+    error: doc ? null : error,
     isPending,
     refetch,
   }
