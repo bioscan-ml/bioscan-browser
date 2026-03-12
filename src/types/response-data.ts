@@ -13,6 +13,7 @@ export interface Doc {
   original_insect_pixels?: number
   phylum: string
   province_state?: string
+  record_type?: 'sample'
   sampleid: string
   species: string
   split: string

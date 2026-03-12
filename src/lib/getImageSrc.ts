@@ -8,5 +8,9 @@ export const getImageSrc = (
     | 'original_256'
     | 'cropped'
     | 'cropped_256' = 'original_256',
-) =>
-  `${IMAGES_BASE_PATH}/${type}/${doc.split}/${doc.chunk ? doc.chunk + '/' : ''}${doc.id}.jpg`
+) => {
+  const imageBasePath =
+    doc.record_type === 'sample' ? '/sample/images' : IMAGES_BASE_PATH
+
+  return `${imageBasePath}/${type}/${doc.split}/${doc.chunk ? doc.chunk + '/' : ''}${doc.id}.jpg`
+}
