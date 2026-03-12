@@ -7,6 +7,7 @@ import { Loader } from '@/components/loader'
 import { OrderByControl } from '@/components/order-by-control'
 import { PageContent } from '@/components/page-content'
 import { PaginationBar } from '@/components/pagination-bar'
+import { FallbackBar } from '@/components/pagination-bar/fallback-bar'
 import { Sidebar, SidebarSection } from '@/components/sidebar'
 import { Table } from '@/components/table'
 import { TaxaSearch } from '@/components/taxa-search'
@@ -173,7 +174,9 @@ export const TaxonomyTree = () => {
           </div>
         </div>
       </PageContent>
-      {data?.docs ? (
+      {error ? (
+        <FallbackBar />
+      ) : data?.docs ? (
         <PaginationBar
           data={data}
           page={page}
