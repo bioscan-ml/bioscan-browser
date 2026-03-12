@@ -8,7 +8,7 @@ export const FallbackBar = () => (
       <div className="h-full flex items-center justify-center gap-4 text-center">
         <span className="text-sm text-muted-foreground">
           <AlertCircleIcon className="inline w-4 h-4 shrink-0 text-destructive mr-2" />
-          Full dataset couldn't be loaded. You're seeing a sample.
+          Full dataset could not be loaded. You are seeing a sample.
         </span>
         <a
           className="hidden text-sm text-link sm:inline"
