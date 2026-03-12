@@ -1,5 +1,4 @@
 import { DocDetailsDialog } from '@/components/doc-details/doc-details-dialog'
-import { Error } from '@/components/error'
 import { ActiveFilters } from '@/components/filters/active-filters'
 import { Filters } from '@/components/filters/filters'
 import { DnaBarcodeGalleryItem } from '@/components/gallery/dna-barcode-gallery-item'
@@ -100,8 +99,6 @@ export const Search = () => {
           <div className="mb-16 grow overflow-hidden m-[-4px] p-[4px]">
             {isPending ? (
               <Loader />
-            ) : error ? (
-              <Error />
             ) : (
               <>
                 <div className="flex flex-col-reverse items-start justify-between gap-4 mb-4 pb-4 border-b lg:flex-row">

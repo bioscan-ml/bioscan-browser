@@ -1,5 +1,4 @@
 import { DocDetailsDialog } from '@/components/doc-details/doc-details-dialog'
-import { Error } from '@/components/error'
 import { DnaBarcodeGalleryItem } from '@/components/gallery/dna-barcode-gallery-item'
 import { Gallery } from '@/components/gallery/gallery'
 import { GalleryItem } from '@/components/gallery/gallery-item'
@@ -101,8 +100,6 @@ export const TaxonomyTree = () => {
           <div className="mb-16 grow overflow-hidden m-[-4px] p-[4px]">
             {isPending || isTaxonomyTreePending ? (
               <Loader />
-            ) : error ? (
-              <Error />
             ) : (
               <>
                 {selectedNode ? (
