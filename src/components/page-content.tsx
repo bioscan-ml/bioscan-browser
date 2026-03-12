@@ -5,7 +5,7 @@ interface PageContentProps {
 }
 
 export const PageContent = ({ children }: PageContentProps) => (
-  <div className="w-full h-full max-w-screen-xl px-4 mx-auto sm:px-8">
+  <div className="w-full h-full max-w-screen-2xl px-4 mx-auto sm:px-8">
     {children}
   </div>
 )
