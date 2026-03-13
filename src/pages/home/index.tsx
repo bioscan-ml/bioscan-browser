@@ -132,8 +132,8 @@ export const Home = () => {
             </div>
           </CarouselItem>
           <CarouselItem>
-            <div className="h-full flex flex-col gap-16 p-8 md:flex-row">
-              <div className="shrink-0 md:w-[320px] md:p-8">
+            <div className="h-full grid grid-cols-2 p-8 lg:grid-cols-3">
+              <div className="p-8">
                 <h2 className="mb-4 text-2xl">Distribution of Taxa</h2>
                 <p className="mb-16 text-muted-foreground">
                   The dataset covers arthropods, with 98% of records
@@ -153,14 +153,12 @@ export const Home = () => {
                   <ChevronsDownIcon className="w-4 h-4 ml-2" />
                 </Button>
               </div>
-              <div className="grow grid grid-cols-1 gap-8 items-start md:grid-cols-2">
-                <img alt="" src="/assets/class-chart-compact.png" />
-                <img
-                  alt=""
-                  className="hidden md:flex"
-                  src="/assets/order-chart-compact.png"
-                />
-              </div>
+              <img alt="" src="/assets/class-chart-compact.png" />
+              <img
+                alt=""
+                className="hidden lg:flex"
+                src="/assets/order-chart-compact.png"
+              />
             </div>
           </CarouselItem>
         </IntroCarousel>
@@ -212,7 +210,7 @@ export const Home = () => {
                 src="/assets/class-chart.png"
               />
               <p className="text-sm italic text-muted-foreground">
-                Figure 1: Class distribution for phylum Arthropoda (Arthropods).
+                Class distribution for phylum Arthropoda (Arthropods).
               </p>
             </div>
             <div className="flex flex-col gap-2">
@@ -222,7 +220,7 @@ export const Home = () => {
                 src="/assets/order-chart.png"
               />
               <p className="text-sm italic text-muted-foreground">
-                Figure 2: Order distribution for class Insecta (Insects).
+                Order distribution for class Insecta (Insects).
               </p>
             </div>
             <div className="flex flex-col gap-2 md:col-span-2">
@@ -230,7 +228,7 @@ export const Home = () => {
                 <RankChart />
               </div>
               <p className="text-sm italic text-muted-foreground">
-                Figure 3: Taxonomic resolution for records.
+                Taxonomic resolution for records.
               </p>
             </div>
           </div>
