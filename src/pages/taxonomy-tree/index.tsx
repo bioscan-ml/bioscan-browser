@@ -1,5 +1,4 @@
 import { DocDetailsDialog } from '@/components/doc-details/doc-details-dialog'
-import { Error } from '@/components/error'
 import { DnaBarcodeGalleryItem } from '@/components/gallery/dna-barcode-gallery-item'
 import { Gallery } from '@/components/gallery/gallery'
 import { GalleryItem } from '@/components/gallery/gallery-item'
@@ -7,6 +6,7 @@ import { Loader } from '@/components/loader'
 import { OrderByControl } from '@/components/order-by-control'
 import { PageContent } from '@/components/page-content'
 import { PaginationBar } from '@/components/pagination-bar'
+import { FallbackBar } from '@/components/pagination-bar/fallback-bar'
 import { Sidebar, SidebarSection } from '@/components/sidebar'
 import { Table } from '@/components/table'
 import { TaxaSearch } from '@/components/taxa-search'
@@ -100,8 +100,6 @@ export const TaxonomyTree = () => {
           <div className="mb-16 grow overflow-hidden m-[-4px] p-[4px]">
             {isPending || isTaxonomyTreePending ? (
               <Loader />
-            ) : error ? (
-              <Error />
             ) : (
               <>
                 {selectedNode ? (
@@ -173,7 +171,9 @@ export const TaxonomyTree = () => {
           </div>
         </div>
       </PageContent>
-      {data?.docs ? (
+      {error ? (
+        <FallbackBar />
+      ) : data?.docs ? (
         <PaginationBar
           data={data}
           page={page}

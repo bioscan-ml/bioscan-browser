@@ -1,4 +1,5 @@
 import { DocDetailsDialog } from '@/components/doc-details/doc-details-dialog'
+import { Error } from '@/components/error'
 import { Gallery } from '@/components/gallery/gallery'
 import { Input } from '@/components/input'
 import { Loader } from '@/components/loader'
@@ -56,7 +57,7 @@ export const FindSimilar = () => {
   const [viewMode, setViewMode] = useState<ViewMode>('gallery')
   const { searchFrom, setSearchFrom, searchTo, setSearchTo } = useSearchType()
   const { pageSize, setPageSize } = usePageSize()
-  const { data, isLoading, refetch } = useFindSimilar({
+  const { data, error, isLoading, refetch } = useFindSimilar({
     id,
     image,
     searchFrom,
@@ -243,11 +244,19 @@ export const FindSimilar = () => {
                 )}
               </>
             ) : id || image ? (
-              <Intro error onSubmit={onSubmit} title="No similar records found">
-                <p className="text-sm text-muted-foreground">
-                  No matches were found, please try a different search query.
-                </p>
-              </Intro>
+              error ? (
+                <Error message="Could not search similar records, please try again later." />
+              ) : (
+                <Intro
+                  error
+                  onSubmit={onSubmit}
+                  title="No similar records found"
+                >
+                  <p className="text-sm text-muted-foreground">
+                    No matches were found, please try a different search query.
+                  </p>
+                </Intro>
+              )
             ) : (
               <Intro onSubmit={onSubmit} title="Get started">
                 <p className="mb-4 text-sm text-muted-foreground">
@@ -411,12 +420,7 @@ const RandomSearch = ({
   onClick: (queryId: string) => void
 }) => {
   const [seed, setSeed] = useState(Date.now())
-  const { data, isPending, error } = useRandomSampleId(seed)
-  const isLoading = !data && isPending
-
-  const tooltip = error
-    ? 'Could not load random records, please try again later.'
-    : 'Try a random record'
+  const { data } = useRandomSampleId(seed)
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -424,25 +428,21 @@ const RandomSearch = ({
         <TooltipTrigger asChild>
           <Button
             className="shrink-0"
-            disabled={isLoading}
+            disabled={!data}
             onClick={() => {
               if (data) {
                 _onClick(data)
+                setSeed(Date.now())
               }
-              setSeed(Date.now())
             }}
             size="icon"
             variant="outline"
           >
-            {error ? (
-              <AlertCircleIcon className="w-4 h-4 text-destructive" />
-            ) : (
-              <DicesIcon className="w-4 h-4" />
-            )}
+            <DicesIcon className="w-4 h-4" />
           </Button>
         </TooltipTrigger>
         <TooltipContent side="bottom">
-          <p>{tooltip}</p>
+          <p>Try a random record</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

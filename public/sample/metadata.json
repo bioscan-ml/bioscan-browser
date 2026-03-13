@@ -27,6 +27,7 @@
     "scale_source": "Keyence fixed scale",
     "scale_px_to_mm": 0.008296875,
     "organism_area_mm2": 0.7712624619140626,
+    "record_type": "sample",
     "_version_": 1858172131817291800
   },
   {
@@ -56,6 +57,7 @@
     "scale_source": "Keyence fixed scale",
     "scale_px_to_mm": 0.008296875,
     "organism_area_mm2": 0.8325972399902344,
+    "record_type": "sample",
     "_version_": 1858171403138760700
   },
   {
@@ -84,6 +86,7 @@
     "scale_source": "Keyence fixed scale",
     "scale_px_to_mm": 0.008296875,
     "organism_area_mm2": 1.8029395876464844,
+    "record_type": "sample",
     "_version_": 1858171436768690200
   },
   {
@@ -112,6 +115,7 @@
     "scale_source": "Keyence fixed scale",
     "scale_px_to_mm": 0.008296875,
     "organism_area_mm2": 2.831794349853516,
+    "record_type": "sample",
     "_version_": 1858172058082476000
   },
   {
@@ -140,6 +144,7 @@
     "scale_source": "Keyence fixed scale",
     "scale_px_to_mm": 0.008296875,
     "organism_area_mm2": 0.3422632060546875,
+    "record_type": "sample",
     "_version_": 1858172032964886500
   },
   {
@@ -168,6 +173,7 @@
     "scale_source": "Keyence fixed scale",
     "scale_px_to_mm": 0.008296875,
     "organism_area_mm2": 7.745804600097657,
+    "record_type": "sample",
     "_version_": 1858172054463840300
   },
   {
@@ -198,6 +204,7 @@
     "scale_source": "Keyence fixed scale",
     "scale_px_to_mm": 0.008296875,
     "organism_area_mm2": 5.699935234863282,
+    "record_type": "sample",
     "_version_": 1858171511520624600
   },
   {
@@ -228,6 +235,7 @@
     "scale_source": "Keyence fixed scale",
     "scale_px_to_mm": 0.008296875,
     "organism_area_mm2": 0.77208851953125,
+    "record_type": "sample",
     "_version_": 1858172148285177900
   },
   {
@@ -256,6 +264,7 @@
     "scale_source": "Keyence fixed scale",
     "scale_px_to_mm": 0.008296875,
     "organism_area_mm2": 0.19398586376953125,
+    "record_type": "sample",
     "_version_": 1858172200021917700
   },
   {
@@ -284,6 +293,7 @@
     "scale_source": "Keyence fixed scale",
     "scale_px_to_mm": 0.008296875,
     "organism_area_mm2": 1.04083259765625,
+    "record_type": "sample",
     "_version_": 1858172190334124000
   },
   {
@@ -314,6 +324,7 @@
     "scale_source": "Keyence fixed scale",
     "scale_px_to_mm": 0.008296875,
     "organism_area_mm2": 4.728697991455078,
+    "record_type": "sample",
     "_version_": 1858172143069560800
   },
   {
@@ -345,6 +356,7 @@
     "scale_source": "Keyence fixed scale",
     "scale_px_to_mm": 0.008296875,
     "organism_area_mm2": 2.0553690278320316,
+    "record_type": "sample",
     "_version_": 1858172169114091500
   },
   {
@@ -374,6 +386,7 @@
     "scale_source": "Keyence fixed scale",
     "scale_px_to_mm": 0.008296875,
     "organism_area_mm2": 1.9311850327148439,
+    "record_type": "sample",
     "_version_": 1858172119004741600
   },
   {
@@ -406,6 +419,7 @@
     "scale_source": "Keyence fixed scale",
     "scale_px_to_mm": 0.008296875,
     "organism_area_mm2": 9.6197163046875,
+    "record_type": "sample",
     "_version_": 1858172107684315100
   },
   {
@@ -436,6 +450,7 @@
     "scale_source": "Keyence fixed scale",
     "scale_px_to_mm": 0.008296875,
     "organism_area_mm2": 0.9502416123046875,
+    "record_type": "sample",
     "_version_": 1858172265137438700
   },
   {
@@ -465,6 +480,7 @@
     "scale_source": "Keyence fixed scale",
     "scale_px_to_mm": 0.008296875,
     "organism_area_mm2": 1.37125564453125,
+    "record_type": "sample",
     "_version_": 1858172277921677300
   },
   {
@@ -495,6 +511,7 @@
     "scale_source": "Keyence fixed scale",
     "scale_px_to_mm": 0.008296875,
     "organism_area_mm2": 3.7730181665039066,
+    "record_type": "sample",
     "_version_": 1858172269919993900
   },
   {
@@ -526,6 +543,7 @@
     "scale_source": "Keyence fixed scale",
     "scale_px_to_mm": 0.008296875,
     "organism_area_mm2": 5.076743600830079,
+    "record_type": "sample",
     "_version_": 1858172250799210500
   },
   {
@@ -555,6 +573,7 @@
     "scale_source": "Keyence fixed scale",
     "scale_px_to_mm": 0.008296875,
     "organism_area_mm2": 2.1911866677246095,
+    "record_type": "sample",
     "_version_": 1858172184300617700
   },
   {
@@ -583,6 +602,7 @@
     "scale_source": "Keyence fixed scale",
     "scale_px_to_mm": 0.008296875,
     "organism_area_mm2": 0.7789723330078125,
+    "record_type": "sample",
     "_version_": 1858172539039121400
   },
   {
@@ -614,6 +634,7 @@
     "scale_source": "Keyence fixed scale",
     "scale_px_to_mm": 0.008296875,
     "organism_area_mm2": 22.050506680664064,
+    "record_type": "sample",
     "_version_": 1858172240213835800
   },
   {
@@ -642,6 +663,7 @@
     "scale_source": "Keyence fixed scale",
     "scale_px_to_mm": 0.008296875,
     "organism_area_mm2": 1.3718751877441406,
+    "record_type": "sample",
     "_version_": 1858172599384670200
   },
   {
@@ -670,6 +692,7 @@
     "scale_source": "Keyence fixed scale",
     "scale_px_to_mm": 0.008296875,
     "organism_area_mm2": 0.8701828615722657,
+    "record_type": "sample",
     "_version_": 1858172614281789400
   },
   {
@@ -698,6 +721,7 @@
     "scale_source": "Keyence fixed scale",
     "scale_px_to_mm": 0.008296875,
     "organism_area_mm2": 1.926779392089844,
+    "record_type": "sample",
     "_version_": 1858172620068880400
   },
   {
@@ -727,6 +751,7 @@
     "scale_source": "Keyence fixed scale",
     "scale_px_to_mm": 0.008296875,
     "organism_area_mm2": 0.21105772119140626,
+    "record_type": "sample",
     "_version_": 1858172631108288500
   }
 ]

@@ -17,7 +17,7 @@ import {
   SearchIcon,
   TagIcon,
 } from 'lucide-react'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Block } from './block'
 import { Count } from './count'
@@ -26,12 +26,20 @@ import { IntroCarousel } from './intro-carousel'
 import { RankChart } from './rank-chart'
 
 export const Home = () => {
+  const { data } = useSampleRecords()
   const [activeDoc, setActiveDoc] = useState<Doc>()
 
-  const { sampleRecords = [], isPending } = useSampleRecords()
-  const [doc] = sampleRecords
+  const docs = useMemo(() => {
+    if (!data?.docs) {
+      return undefined
+    }
 
-  if (isPending || !doc) {
+    return [...data.docs].sort(() => Math.random() - 0.5).slice(0, 10)
+  }, [data?.docs])
+
+  const doc = docs?.[0]
+
+  if (!docs || !doc) {
     return (
       <Block>
         <Loader />
@@ -49,10 +57,10 @@ export const Home = () => {
               Visualizing a Multimodal Dataset for Insect Biodiversity
             </h2>
             <p className="text-muted-foreground">
-              BIOSCAN-5M is a large-scale multi-modal dataset of 5 million 
-              insect specimens. Each record links high-resolution images with 
-              taxonomic labels, raw DNA barcode sequences, Barcode Index 
-              Numbers (BINs), and geographic information.
+              BIOSCAN-5M is a large-scale multi-modal dataset of 5 million
+              insect specimens. Each record links high-resolution images with
+              taxonomic labels, raw DNA barcode sequences, Barcode Index Numbers
+              (BINs), and geographic information.
             </p>
           </div>
           <MultiModalGalleryItem doc={doc} onClick={() => setActiveDoc(doc)} />
@@ -72,10 +80,10 @@ export const Home = () => {
                   Visualizing a Multimodal Dataset for Insect Biodiversity
                 </h2>
                 <p className="mb-8 text-muted-foreground md:mb-16">
-                  BIOSCAN-5M is a large-scale multi-modal dataset of 5 million 
-                  insect specimens. Each record links high-resolution images with 
-                  taxonomic labels, raw DNA barcode sequences, Barcode Index 
-                  Numbers (BINs), and geographic information.
+                  BIOSCAN-5M is a large-scale multi-modal dataset of 5 million
+                  insect specimens. Each record links high-resolution images
+                  with taxonomic labels, raw DNA barcode sequences, Barcode
+                  Index Numbers (BINs), and geographic information.
                 </p>
                 <Link
                   className={buttonVariants({ size: 'lg' })}
@@ -98,9 +106,9 @@ export const Home = () => {
               <div className="w-[320px] h-min shrink-0 p-8 bg-background/90 rounded-md border">
                 <h2 className="mb-4 text-2xl">Geographic Span</h2>
                 <p className="mb-16 text-muted-foreground">
-                  Specimens were collected across 47 countries on 
-                  5 continents, representing a wide range of climates, 
-                  habitats, and insect communities.
+                  Specimens were collected across 47 countries on 5 continents,
+                  representing a wide range of climates, habitats, and insect
+                  communities.
                 </p>
                 <Button
                   onClick={() => {
@@ -128,11 +136,12 @@ export const Home = () => {
               <div className="shrink-0 md:w-[320px] md:p-8">
                 <h2 className="mb-4 text-2xl">Distribution of Taxa</h2>
                 <p className="mb-16 text-muted-foreground">
-                  The dataset covers arthropods, with 98% of records representing 
-                  insects. Within insects, it spans a wide taxonomic range, from 
-                  common groups such as flies and mosquitoes (order Diptera) to 
-                  rarely encountered groups such as angel insects (order Zoraptera) 
-                  and snakeflies (order Raphidioptera).
+                  The dataset covers arthropods, with 98% of records
+                  representing insects. Within insects, it spans a wide
+                  taxonomic range, from common groups such as flies and
+                  mosquitoes (order Diptera) to rarely encountered groups such
+                  as angel insects (order Zoraptera) and snakeflies (order
+                  Raphidioptera).
                 </p>
                 <Button
                   onClick={() => {
@@ -247,7 +256,7 @@ export const Home = () => {
           </div>
         </div>
         <div className="max-w-4xl grid grid-cols-1 gap-4 mx-auto mb-8 md:grid-cols-3 lg:grid-cols-5 md:mb-16">
-          {sampleRecords.slice(0, 10).map((doc) => (
+          {docs.map((doc) => (
             <GalleryItem
               key={doc.id}
               compact
