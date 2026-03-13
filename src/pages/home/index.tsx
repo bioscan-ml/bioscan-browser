@@ -57,7 +57,7 @@ export const Home = () => {
               Visualizing a Multimodal Dataset for Insect Biodiversity
             </h2>
             <p className="text-muted-foreground">
-              BIOSCAN-5M is a large-scale multi-modal dataset of 5 million
+              BIOSCAN-5M is a large-scale multimodal dataset of over 5 million
               insect specimens. Each record links high-resolution images with
               taxonomic labels, raw DNA barcode sequences, Barcode Index Numbers
               (BINs), and geographic information.
@@ -80,10 +80,10 @@ export const Home = () => {
                   Visualizing a Multimodal Dataset for Insect Biodiversity
                 </h2>
                 <p className="mb-8 text-muted-foreground md:mb-16">
-                  BIOSCAN-5M is a large-scale multi-modal dataset of 5 million
-                  insect specimens. Each record links high-resolution images
-                  with taxonomic labels, raw DNA barcode sequences, Barcode
-                  Index Numbers (BINs), and geographic information.
+                  BIOSCAN-5M is a large-scale multimodal dataset of over 5
+                  million insect specimens. Each record links high-resolution
+                  images with taxonomic labels, raw DNA barcode sequences,
+                  Barcode Index Numbers (BINs), and geographic information.
                 </p>
                 <Link
                   className={buttonVariants({ size: 'lg' })}
@@ -139,8 +139,8 @@ export const Home = () => {
                   The dataset covers arthropods, with 98% of records
                   representing insects. Within insects, it spans a wide
                   taxonomic range, from common groups such as flies and
-                  mosquitoes (order Diptera) to rarely encountered groups such
-                  as angel insects (order Zoraptera) and snakeflies (order
+                  mosquitoes (Order Diptera) to rarely encountered groups such
+                  as angel insects (Order Zoraptera) and snakeflies (Order
                   Raphidioptera).
                 </p>
                 <Button
@@ -178,14 +178,15 @@ export const Home = () => {
           </Feature>
           <Feature Icon={TagIcon} title="Taxonomic Labels">
             Hierarchical annotations to fine-grained species level, plus barcode
-            index numbers (BINs) at sub-species granularity.
+            index numbers (BINs) at species-level or finer granularity.
           </Feature>
           <Feature Icon={MapPin} title="Geographic Data">
             Specimen collection sites enable species distribution modeling.
           </Feature>
           <Feature Icon={RulerIcon} title="Size Data">
-            Supporting biodiversity analysis and ML models for classification
-            and species comparison.
+            Pixel-based estimates of specimen body size converted to
+            millimetres, supporting biodiversity analysis and size-based
+            classification.
           </Feature>
         </div>
       </Block>
@@ -210,7 +211,7 @@ export const Home = () => {
                 src="/assets/class-chart.png"
               />
               <p className="text-sm italic text-muted-foreground">
-                Class distribution for phylum Arthropoda (Arthropods).
+                Class distribution for Phylum Arthropoda (Arthropods).
               </p>
             </div>
             <div className="flex flex-col gap-2">
@@ -220,7 +221,7 @@ export const Home = () => {
                 src="/assets/order-chart.png"
               />
               <p className="text-sm italic text-muted-foreground">
-                Order distribution for class Insecta (Insects).
+                Order distribution for Class Insecta (Insects).
               </p>
             </div>
             <div className="flex flex-col gap-2 md:col-span-2">
@@ -246,9 +247,9 @@ export const Home = () => {
             <p className="text-muted-foreground">
               The BIOSCAN Browser provides a user-friendly interface to navigate
               the BIOSCAN-5M dataset. The idea behind the browser is to lower
-              the threshold for users to explore the dataset by presenting data
+              the barrier for users to explore the dataset by presenting data
               in interactive and comprehensive ways. Our long-term goal for the
-              tool is to help improve data quality, by making incorrect or
+              browser is to help improve data quality, by making incorrect or
               missing data easier to spot and report.
             </p>
           </div>
