@@ -247,8 +247,8 @@ export const Home = () => {
             <p className="text-muted-foreground">
               The BIOSCAN Browser provides a user-friendly interface to navigate
               the BIOSCAN-5M dataset. The idea behind the browser is to lower
-              the barrier for users to explore the dataset by presenting data
-              in interactive and comprehensive ways. Our long-term goal for the
+              the barrier for users to explore the dataset by presenting data in
+              interactive and comprehensive ways. Our long-term goal for the
               browser is to help improve data quality, by making incorrect or
               missing data easier to spot and report.
             </p>
@@ -258,7 +258,6 @@ export const Home = () => {
           {docs.map((doc) => (
             <GalleryItem
               key={doc.id}
-              compact
               doc={doc}
               onClick={() => setActiveDoc(doc)}
             />
