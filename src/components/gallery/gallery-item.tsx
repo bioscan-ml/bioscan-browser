@@ -1,7 +1,6 @@
 import { getImageSrc } from '@/lib/getImageSrc'
 import { getTaxon } from '@/lib/getTaxon'
 import { Doc } from '@/types/response-data'
-import { ChevronRightIcon } from 'lucide-react'
 import { ReactNode } from 'react'
 
 interface GalleryItemProps {
@@ -11,7 +10,7 @@ interface GalleryItemProps {
 }
 
 export const GalleryItem = ({ children, doc, onClick }: GalleryItemProps) => {
-  const { taxon, parents } = getTaxon(doc)
+  const { taxon } = getTaxon(doc)
 
   return (
     <div className="rounded-md border border-input bg-card overflow-hidden relative">
@@ -24,16 +23,11 @@ export const GalleryItem = ({ children, doc, onClick }: GalleryItemProps) => {
         />
         <div className="p-3">
           <div className="space-y-1">
-            <div className="text-sm font-medium">{taxon.label}</div>
-            <div className="text-xs">
-              {parents.map((parent, index) => (
-                <span key={index} className="inline-flex items-center">
-                  {parent.label}
-                  {index < parents.length - 1 && (
-                    <ChevronRightIcon className="w-3 h-3 mx-1 opacity-50 inline" />
-                  )}
-                </span>
-              ))}
+            <div className="text-xs text-muted-foreground">{doc.id}</div>
+            <div className="text-sm font-medium">
+              {taxon.rankKey !== 'species'
+                ? `${taxon.rankLabel} ${taxon.label}`
+                : taxon.label}
             </div>
           </div>
         </div>
