@@ -14,8 +14,8 @@ export const Dna = ({ doc }: ImagesProps) => {
   return (
     <div className="grid gap-4 w-full">
       <Field
-        label="Barcode Index Number (BIN)"
-        tooltip="This BIN ensures that genetically identical taxa share the same identifier, registered in the Barcode Of Life Data system (BOLD)."
+        label="BIN"
+        tooltip="The BIN (Barcode Index Number) ensures that genetically identical taxa share the same identifier, registered in the Barcode Of Life Data system (BOLD)."
       >
         <Link
           to={{
@@ -32,9 +32,9 @@ export const Dna = ({ doc }: ImagesProps) => {
       </Field>
       <Field
         label="Barcode"
-        tooltip=" This visual representation offers a glimpse into the intricate structure of DNA. The color scheme is designed as follows:\n>Adenine (A): Red\nThymine (T): Blue\nCytosine (C): Green\nGuanine (G): Yellow"
+        tooltip={`This visual representation offers a glimpse into the intricate structure of DNA. The color scheme is designed as follows:\nAdenine (A): Red\nThymine (T): Blue\nCytosine (C): Green\nGuanine (G): Yellow`}
       >
-        <DnaBarcode doc={doc} height={128} showDownloadLink />
+        <DnaBarcode doc={doc} showDownloadLink />
       </Field>
       <Field label="Sequence">
         <span className="break-all">{nucleotides}</span>
