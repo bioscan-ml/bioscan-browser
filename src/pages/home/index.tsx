@@ -70,7 +70,7 @@ export const Home = () => {
           </Link>
         </div>
       </Block>
-      <Block className="py-16 hidden md:flex">
+      <Block className="py-16 px-7 hidden md:flex">
         <IntroCarousel>
           <CarouselItem>
             <div className="flex gap-16 p-16">
@@ -132,8 +132,8 @@ export const Home = () => {
             </div>
           </CarouselItem>
           <CarouselItem>
-            <div className="h-full grid grid-cols-2 p-8 lg:grid-cols-3">
-              <div className="p-8">
+            <div className="h-full grid p-8 lg: lg:grid-cols-3">
+              <div className="p-8 order-last lg:order-first">
                 <h2 className="mb-4 text-2xl">Distribution of Taxa</h2>
                 <p className="mb-16 text-muted-foreground">
                   The dataset covers arthropods, with 98% of records
@@ -153,12 +153,13 @@ export const Home = () => {
                   <ChevronsDownIcon className="w-4 h-4 ml-2" />
                 </Button>
               </div>
-              <img alt="" src="/assets/class-chart-compact.png" />
-              <img
-                alt=""
-                className="hidden lg:flex"
-                src="/assets/order-chart-compact.png"
-              />
+              <div className="col-span-2">
+                <img
+                  alt=""
+                  className="w-full px-8"
+                  src="/assets/taxa-chart-compact.png"
+                />
+              </div>
             </div>
           </CarouselItem>
         </IntroCarousel>
@@ -201,35 +202,26 @@ export const Home = () => {
         </div>
       </Block>
       <Block className="bg-muted border-y" id="taxa-distribution">
-        <div className="flex flex-col items-center mx-auto">
+        <div className="max-w-4xl flex flex-col items-center mx-auto">
           <h1 className="mb-8 text-accent md:mb-16">Distribution of Taxa</h1>
-          <div className="w-full grid grid-cols-1 gap-8 md:grid-cols-2">
+          <div className="w-full flex flex-col gap-8 md:gap-16">
             <div className="flex flex-col gap-2">
               <img
                 alt=""
-                className="w-full p-4 bg-background rounded-md border md:p-8"
-                src="/assets/class-chart.png"
+                className="w-full p-4 bg-background rounded-md border md:p-16"
+                src="/assets/taxa-chart.png"
               />
               <p className="text-sm italic text-muted-foreground">
-                Class distribution for Phylum Arthropoda (Arthropods).
+                Distribution of taxa for Phylum Arthropoda (Arthropods) and
+                Class Insecta (Insects).
               </p>
             </div>
             <div className="flex flex-col gap-2">
-              <img
-                alt=""
-                className="w-full p-4 bg-background rounded-md border md:p-8"
-                src="/assets/order-chart.png"
-              />
-              <p className="text-sm italic text-muted-foreground">
-                Order distribution for Class Insecta (Insects).
-              </p>
-            </div>
-            <div className="flex flex-col gap-2 md:col-span-2">
               <div className="w-full p-4 bg-background rounded-md border overflow-auto md:p-8">
                 <RankChart />
               </div>
               <p className="text-sm italic text-muted-foreground">
-                Taxonomic resolution for records.
+                Records identified per taxonomic level.
               </p>
             </div>
           </div>
