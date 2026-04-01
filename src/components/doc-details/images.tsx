@@ -10,18 +10,6 @@ export const Images = ({ doc }: ImagesProps) => (
   <ImagePicker
     images={[
       {
-        badge: 'Original 256',
-        id: 'original_256',
-        src: getImageSrc(doc, 'original_256'),
-        tooltip: 'Original 256',
-      },
-      {
-        badge: 'Cropped 256',
-        id: 'cropped',
-        src: getImageSrc(doc, 'cropped_256'),
-        tooltip: 'Cropped 256',
-      },
-      {
         badge: 'Original full',
         id: 'original_full',
         src: getImageSrc(doc, 'original_full'),
@@ -34,6 +22,18 @@ export const Images = ({ doc }: ImagesProps) => (
         src: getImageSrc(doc, 'cropped'),
         thumbnail: getImageSrc(doc, 'cropped_256'),
         tooltip: 'Cropped full',
+      },
+      {
+        badge: 'Original 256',
+        id: 'original_256',
+        src: getImageSrc(doc, 'original_256'),
+        tooltip: 'Original 256',
+      },
+      {
+        badge: 'Cropped 256',
+        id: 'cropped',
+        src: getImageSrc(doc, 'cropped_256'),
+        tooltip: 'Cropped 256',
       },
     ]}
   />
