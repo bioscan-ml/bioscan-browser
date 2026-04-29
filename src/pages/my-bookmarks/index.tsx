@@ -1,6 +1,7 @@
 import { DocDetailsDialog } from '@/components/doc-details/doc-details-dialog'
 import { Error } from '@/components/error'
 import { BookmarkGalleryItem } from '@/components/gallery/bookmark-gallery-item'
+import { Gallery } from '@/components/gallery/gallery'
 import { Loader } from '@/components/loader'
 import { NoRecordsFound } from '@/components/no-records-found'
 import { PageContent } from '@/components/page-content'
@@ -93,7 +94,7 @@ export const MyBookmarks = () => {
                   </TooltipProvider>
                 </div>
 
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+                <Gallery>
                   {docs?.map((doc) => (
                     <BookmarkGalleryItem
                       key={doc.id}
@@ -101,7 +102,7 @@ export const MyBookmarks = () => {
                       onClick={() => setActiveDoc(doc)}
                     />
                   ))}
-                </div>
+                </Gallery>
 
                 {bookmarks.length === 0 || data?.docs.length === 0 ? (
                   <NoRecordsFound description="You have not added any bookmarks yet." />

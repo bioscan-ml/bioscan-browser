@@ -9,7 +9,7 @@ export const About = () => (
     <article className="max-w-screen-md py-6 space-y-8 md:py-12 md:space-y-16">
       <div>
         <h1 className="text-accent mb-2">BIOSCAN Browser</h1>
-        <h2>Visualizing A Multimodal Dataset for Insect Biodiversity</h2>
+        <h2>Visualizing a Multimodal Dataset for Insect Biodiversity</h2>
       </div>
       <div>
         <img
@@ -19,11 +19,10 @@ export const About = () => (
         />
         <h3 className="text-accent mb-2">The Dataset</h3>
         <p className="text-muted-foreground mb-8">
-          BIOSCAN-5M is a dataset containing multi-modal information for
-          5,150,850 insect specimens. Except for images, the dataset includes
-          taxonomic labels, raw nucleotide barcode sequences, assigned barcode
-          index numbers, and geographical information. The dataset includes
-          specimens collected from 1,650 sites across 47 countries.
+          BIOSCAN-5M is a large-scale multimodal dataset of over 5 million
+          insect specimens. Each record links high-resolution images with
+          taxonomic labels, raw DNA barcode sequences, Barcode Index Numbers
+          (BINs), and geographic information.
         </p>
         <h4 className="mb-4">Resources</h4>
         <div className="flex gap-4">
@@ -41,9 +40,9 @@ export const About = () => (
         <p className="text-muted-foreground mb-8">
           The BIOSCAN Browser provides a user-friendly interface to navigate the
           BIOSCAN-5M dataset. The idea behind the browser is to lower the
-          threshold for users to explore the dataset by presenting data in
-          interactive and comprehensive ways. Our long-term goal for the tool is
-          to help improve data quality, by making incorrect or missing data
+          barrier for users to explore the dataset by presenting data in
+          interactive and comprehensive ways. Our long-term goal for the browser
+          is to help improve data quality, by making incorrect or missing data
           easier to spot and report.
         </p>
         <h4 className="mb-2">Browsing records</h4>

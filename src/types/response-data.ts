@@ -13,6 +13,7 @@ export interface Doc {
   organism_area_mm2?: number
   phylum: string
   province_state?: string
+  record_type?: 'sample'
   sampleid: string
   species: string
   split: string

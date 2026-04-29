@@ -27,10 +27,8 @@ export const Field = ({
               <InfoIcon className="w-4 h-4" />
             </TooltipTrigger>
             <TooltipPortal>
-              <TooltipContent side="bottom">
-                <div className="max-w-72">
-                  <p>{tooltip}</p>
-                </div>
+              <TooltipContent className="max-w-72" side="bottom">
+                <p className="whitespace-pre-line">{tooltip}</p>
               </TooltipContent>
             </TooltipPortal>
           </Tooltip>

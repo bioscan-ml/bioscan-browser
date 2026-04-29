@@ -1,5 +1,4 @@
 import { DocDetailsDialog } from '@/components/doc-details/doc-details-dialog'
-import { Error } from '@/components/error'
 import { ActiveFilters } from '@/components/filters/active-filters'
 import { Filters } from '@/components/filters/filters'
 import { DnaBarcodeGalleryItem } from '@/components/gallery/dna-barcode-gallery-item'
@@ -11,6 +10,7 @@ import { NoRecordsFound } from '@/components/no-records-found'
 import { OrderByControl } from '@/components/order-by-control'
 import { PageContent } from '@/components/page-content'
 import { PaginationBar } from '@/components/pagination-bar'
+import { FallbackBar } from '@/components/pagination-bar/fallback-bar'
 import { Sidebar, SidebarSection } from '@/components/sidebar'
 import { Table } from '@/components/table'
 import { TaxaSearch } from '@/components/taxa-search'
@@ -99,8 +99,6 @@ export const Search = () => {
           <div className="mb-16 grow overflow-hidden m-[-4px] p-[4px]">
             {isPending ? (
               <Loader />
-            ) : error ? (
-              <Error />
             ) : (
               <>
                 <div className="flex flex-col-reverse items-start justify-between gap-4 mb-4 pb-4 border-b lg:flex-row">
@@ -161,7 +159,9 @@ export const Search = () => {
           </div>
         </div>
       </PageContent>
-      {data && (
+      {error ? (
+        <FallbackBar />
+      ) : data?.docs ? (
         <PaginationBar
           data={data}
           page={page}
@@ -169,7 +169,7 @@ export const Search = () => {
           setPage={setPage}
           setPageSize={setPageSize}
         />
-      )}
+      ) : null}
       <DocDetailsDialog
         doc={activeDoc}
         open={!!activeDoc}

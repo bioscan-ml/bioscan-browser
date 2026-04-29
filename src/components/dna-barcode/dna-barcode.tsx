@@ -57,21 +57,29 @@ export const DnaBarcode = ({
   }, [height, nucleotides, width])
 
   return (
-    <div className="space-y-2">
-      <canvas ref={canvasRef} width={width} height={height} />
-      {showDownloadLink ? (
-        <a
-          className={cn(
-            'sticky left-0',
-            buttonVariants({ variant: 'outline', size: 'sm' }),
-          )}
-          download={`barcode-${doc.id}.png`}
-          href={dataURL}
-        >
-          Download PNG
-          <DownloadIcon className="w-4 h-4 ml-2" />
-        </a>
-      ) : null}
-    </div>
+    <>
+      <canvas
+        className="hidden"
+        ref={canvasRef}
+        width={width}
+        height={height}
+      />
+      <div className="space-y-2">
+        <img style={{ height: `${height}px` }} src={dataURL} />
+        {showDownloadLink ? (
+          <a
+            className={cn(
+              'sticky left-0',
+              buttonVariants({ variant: 'outline', size: 'sm' }),
+            )}
+            download={`barcode-${doc.id}.png`}
+            href={dataURL}
+          >
+            Download PNG
+            <DownloadIcon className="w-4 h-4 ml-2" />
+          </a>
+        ) : null}
+      </div>
+    </>
   )
 }
