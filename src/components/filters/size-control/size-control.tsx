@@ -86,7 +86,6 @@ export const SizeControl = ({
                   setValue('minValue', value[0], { shouldDirty: true })
                   setValue('maxValue', value[1], { shouldDirty: true })
                 }}
-                steps={7 * 14}
                 value={[minValue, maxValue]}
               />
             </div>
