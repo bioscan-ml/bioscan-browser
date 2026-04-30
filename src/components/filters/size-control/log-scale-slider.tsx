@@ -14,7 +14,7 @@ export const LogScaleSlider = ({
     <Slider
       min={0}
       max={100}
-      step={toPosition(0.01)}
+      step={100 / 98}
       value={[toPosition(value[0]), toPosition(value[1])]}
       onValueChange={(position) =>
         onValueChange([toLog(position[0]), toLog(position[1])])
