@@ -1,28 +1,5 @@
 import { Slider } from '@/components/ui/slider'
-
-const EPSILON = 0.001
-const MAX = 10000
-const MIN = 0
-const THUMB_SIZE = 20
-const NUM_TICKS = 8
-
-const round = (value: number) => parseFloat(value.toPrecision(2))
-
-const toLog = (position: number) => {
-  const minLog = Math.log(Math.max(MIN, EPSILON))
-  const maxLog = Math.log(Math.max(MAX, EPSILON))
-  const scale = (maxLog - minLog) / 100
-
-  return position === 0 ? MIN : round(Math.exp(minLog + scale * position))
-}
-
-const toPosition = (value: number) => {
-  const minLog = Math.log(Math.max(MIN, EPSILON))
-  const maxLog = Math.log(Math.max(MAX, EPSILON))
-  const scale = (maxLog - minLog) / 100
-
-  return value <= MIN ? 0 : (Math.log(value) - minLog) / scale
-}
+import { EPSILON, MAX, MIN, NUM_TICKS, THUMB_SIZE } from './constants'
 
 interface LogScaleSliderProps {
   onValueChange: (value: number[]) => void
@@ -61,3 +38,21 @@ export const LogScaleSlider = ({
     </div>
   </div>
 )
+
+const round = (value: number) => parseFloat(value.toPrecision(2))
+
+const toLog = (position: number) => {
+  const minLog = Math.log(Math.max(MIN, EPSILON))
+  const maxLog = Math.log(Math.max(MAX, EPSILON))
+  const scale = (maxLog - minLog) / 100
+
+  return position === 0 ? MIN : round(Math.exp(minLog + scale * position))
+}
+
+const toPosition = (value: number) => {
+  const minLog = Math.log(Math.max(MIN, EPSILON))
+  const maxLog = Math.log(Math.max(MAX, EPSILON))
+  const scale = (maxLog - minLog) / 100
+
+  return value <= MIN ? 0 : (Math.log(value) - minLog) / scale
+}

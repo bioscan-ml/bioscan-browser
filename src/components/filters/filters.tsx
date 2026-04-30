@@ -54,10 +54,10 @@ export const Filters = ({
           ) : null}
         </SheetHeader>
         <div className="grow space-y-4 p-4">
-          {FILTER_TYPES.map(({ key, label, type }) => {
+          {FILTER_TYPES.map(({ key, label }) => {
             const values = filters.find((f) => f.key === key)?.values
 
-            if (type === 'size') {
+            if (key === 'organism_area_mm2') {
               return (
                 <SizeControl
                   key={key}

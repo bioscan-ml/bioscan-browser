@@ -1,14 +1,9 @@
 import { Filter } from '@/types/settings'
-import { FILTER_TYPES } from './constants'
 
 const filterToQuery = (filter: Filter) => {
   const query = filter.values.reduce((previousQuery, currentValue) => {
-    const type = FILTER_TYPES.find(
-      (filterType) => filterType.key === filter.key,
-    )?.type
-
     let currentQuery: string
-    if (type === 'size') {
+    if (filter.key === 'organism_area_mm2') {
       currentQuery = `${filter.key}:[${currentValue.split('-').join(' TO ')}]`
     } else {
       currentQuery = `${filter.key}:"${currentValue}"`

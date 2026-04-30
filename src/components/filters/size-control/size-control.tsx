@@ -11,10 +11,8 @@ import { cn } from '@/lib/utils'
 import { ChevronsUpDownIcon, PlusIcon, XIcon } from 'lucide-react'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
+import { MAX, MIN } from './constants'
 import { LogScaleSlider } from './log-scale-slider'
-
-const MIN = 0
-const MAX = 10000
 
 const ERROR_MESSAGES = {
   INVALID: 'Max value has to be larger than min value.',
@@ -80,8 +78,6 @@ export const SizeControl = ({
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div className="col-span-2">
               <LogScaleSlider
-                max={MAX}
-                min={MIN}
                 onValueChange={(value) => {
                   setValue('minValue', value[0], { shouldDirty: true })
                   setValue('maxValue', value[1], { shouldDirty: true })

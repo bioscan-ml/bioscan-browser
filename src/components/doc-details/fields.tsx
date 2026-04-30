@@ -74,7 +74,8 @@ const getFieldLink = (key: string, value: string): To | undefined => {
 
   if (
     FILTER_TYPES.some(
-      (filterType) => filterType.key === key && filterType.type !== 'size',
+      (filterType) =>
+        filterType.key === key && filterType.key !== 'organism_area_mm2',
     )
   )
     return {
