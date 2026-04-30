@@ -55,6 +55,10 @@ export const FILTER_TYPES: { label: string; key: string }[] = [
     label: 'Organism area (mm²)',
     key: 'organism_area_mm2',
   },
+  {
+    label: 'Scale source',
+    key: 'scale_source',
+  },
   { label: 'DNA BIN', key: 'dna_bin' },
   { label: 'Split', key: 'split' },
   { label: 'Chunk', key: 'chunk' },
