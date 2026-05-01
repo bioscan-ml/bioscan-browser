@@ -7,13 +7,8 @@ import {
 } from '@/components/ui/select'
 import { Doc } from '@/types/response-data'
 import { Sort } from '@/types/settings'
-import {
-  ArrowDown01Icon,
-  ArrowDownAZIcon,
-  ArrowUp01Icon,
-  ArrowUpAZIcon,
-  DicesIcon,
-} from 'lucide-react'
+import { DicesIcon } from 'lucide-react'
+import { SortIcon } from './sort-icon'
 import { Button } from './ui/button'
 
 const VALUE_RANDOM = 'random'
@@ -84,20 +79,4 @@ export const OrderByControl = ({
       )}
     </div>
   )
-}
-
-const SortIcon = ({ sort: { key, order } }: { sort: Sort }) => {
-  if (key === 'organism_area_mm2') {
-    if (order === 'desc') {
-      return <ArrowUp01Icon className="w-4 h-4" />
-    }
-
-    return <ArrowDown01Icon className="w-4 h-4" />
-  }
-
-  if (order === 'desc') {
-    return <ArrowUpAZIcon className="w-4 h-4" />
-  }
-
-  return <ArrowDownAZIcon className="w-4 h-4" />
 }
