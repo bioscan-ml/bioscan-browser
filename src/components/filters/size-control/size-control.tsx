@@ -18,7 +18,7 @@ const ERROR_MESSAGES = {
   INVALID: 'Max value has to be larger than min value.',
   REQUIRED: 'This field is required.',
   TOO_LARGE: `Please enter a number smaller than ${MAX.toLocaleString()}.`,
-  TOO_SMALL: `Please enter a number larger than ${MIN.toLocaleString}.`,
+  TOO_SMALL: `Please enter a number larger than ${MIN.toLocaleString()}.`,
 }
 
 interface FilterControlProps {
