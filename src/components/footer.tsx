@@ -5,7 +5,7 @@ interface FooterProps {
 }
 
 export const Footer = ({ className }: FooterProps) => (
-  <div className="py-16 border-border border-t bg-muted">
+  <div className="py-8 border-border border-t bg-muted lg:py-12">
     <PageContent className={className}>
       <div className="flex flex-col items-center gap-8">
         <p className="max-w-lg text-center text-sm text-muted-foreground">

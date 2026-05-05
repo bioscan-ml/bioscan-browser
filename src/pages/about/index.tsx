@@ -27,7 +27,7 @@ export const About = () => (
             (BINs), and geographic information.
           </p>
           <h4 className="mb-4">Resources</h4>
-          <div className="flex gap-4">
+          <div className="flex flex-wrap gap-4">
             <ExternalLink href={RESOURCES.PROJECT_WEBSITE} label="BIOSCAN" />
             <ExternalLink href={RESOURCES.DATASET_WEBSITE} label="BIOSCAN-5M" />
             <ExternalLink href={RESOURCES.DATASET_GITHUB} label="GitHub" />
@@ -125,7 +125,14 @@ export const About = () => (
             </li>
             <li>
               <span className="font-medium">Copyright license:</span> Creative
-              Commons Attribution 3.0 Unported (CC BY 3.0)
+              Commons Attribution 3.0 Unported (
+              <a
+                className="text-link"
+                href="https://creativecommons.org/licenses/by/3.0/"
+              >
+                CC BY 3.0
+              </a>
+              )
             </li>
             <li>
               <span className="font-medium">Copyright contact:</span>{' '}
