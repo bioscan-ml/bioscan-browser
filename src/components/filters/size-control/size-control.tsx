@@ -1,22 +1,24 @@
+import { FormField } from '@/components/form-field'
+import { badgeVariants } from '@/components/ui/badge'
+import { Button, buttonVariants } from '@/components/ui/button'
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible'
+import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 import { ChevronsUpDownIcon, PlusIcon, XIcon } from 'lucide-react'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { FormField } from '../form-field'
-import { badgeVariants } from '../ui/badge'
-import { Button, buttonVariants } from '../ui/button'
-import { Input } from '../ui/input'
+import { MAX, MIN } from './constants'
+import { LogScaleSlider } from './log-scale-slider'
 
 const ERROR_MESSAGES = {
+  INVALID: 'Max value has to be larger than min value.',
   REQUIRED: 'This field is required.',
-  POSITIVE_NUMBER: 'Please enter a positive number.',
-  WITHIN_RANGE: (minValue: number) =>
-    `Please enter a number larger than ${minValue}.`,
+  TOO_LARGE: `Please enter a number smaller than ${MAX.toLocaleString()}.`,
+  TOO_SMALL: `Please enter a number larger than ${MIN.toLocaleString()}.`,
 }
 
 interface FilterControlProps {
@@ -26,18 +28,19 @@ interface FilterControlProps {
   values?: string[]
 }
 
-export const IntervalControl = ({
+export const SizeControl = ({
   label,
   onAdd,
   onRemove,
   values = [],
 }: FilterControlProps) => {
   const [open, setIsOpen] = useState(!!values.length)
-  const { control, handleSubmit, reset, watch } = useForm<{
+  const { control, formState, handleSubmit, reset, setValue, watch } = useForm<{
     minValue: number
     maxValue: number
-  }>()
-  const minValue = watch('minValue') ?? 0
+  }>({ defaultValues: { minValue: MIN, maxValue: MAX } })
+  const minValue = watch('minValue') ?? MIN
+  const maxValue = watch('maxValue') ?? MAX
 
   return (
     <Collapsible open={open} onOpenChange={setIsOpen}>
@@ -73,10 +76,19 @@ export const IntervalControl = ({
           })}
         >
           <div className="grid grid-cols-2 gap-4 mb-4">
+            <div className="col-span-2">
+              <LogScaleSlider
+                onValueChange={(value) => {
+                  setValue('minValue', value[0], { shouldDirty: true })
+                  setValue('maxValue', value[1], { shouldDirty: true })
+                }}
+                value={[minValue, maxValue]}
+              />
+            </div>
             <Controller
               control={control}
               rules={{
-                min: { value: 0, message: ERROR_MESSAGES.POSITIVE_NUMBER },
+                min: { value: MIN, message: ERROR_MESSAGES.TOO_SMALL },
                 required: ERROR_MESSAGES.REQUIRED,
               }}
               name="minValue"
@@ -89,10 +101,8 @@ export const IntervalControl = ({
             <Controller
               control={control}
               rules={{
-                min: {
-                  value: minValue,
-                  message: ERROR_MESSAGES.WITHIN_RANGE(minValue),
-                },
+                min: { value: minValue, message: ERROR_MESSAGES.INVALID },
+                max: { value: MAX, message: ERROR_MESSAGES.TOO_LARGE },
                 required: ERROR_MESSAGES.REQUIRED,
               }}
               name="maxValue"
@@ -104,14 +114,16 @@ export const IntervalControl = ({
             />
           </div>
           <div className="flex items-center justify-end gap-2">
-            <Button
-              onClick={() => reset()}
-              size="sm"
-              type="button"
-              variant="ghost"
-            >
-              Clear
-            </Button>
+            {formState.isDirty ? (
+              <Button
+                onClick={() => reset()}
+                size="sm"
+                type="button"
+                variant="ghost"
+              >
+                Clear
+              </Button>
+            ) : null}
             <Button size="sm" type="submit">
               <span>Add</span>
               <PlusIcon className="w-4 h-4 ml-2" />

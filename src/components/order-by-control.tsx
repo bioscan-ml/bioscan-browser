@@ -6,11 +6,13 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Doc } from '@/types/response-data'
-import { Sort, SortOrder } from '@/types/settings'
+import { Sort } from '@/types/settings'
 import { DicesIcon } from 'lucide-react'
+import { SortIcon } from './sort-icon'
 import { Button } from './ui/button'
 
 const VALUE_RANDOM = 'random'
+
 interface OrderByControlProps {
   fields: { label: string; key: keyof Doc; sortDisabled?: boolean }[]
   sort: Sort
@@ -64,20 +66,16 @@ export const OrderByControl = ({
           <DicesIcon className="w-4 h-4" />
         </Button>
       ) : (
-        <Select
-          value={sort.order}
-          onValueChange={(value: SortOrder) =>
-            setSort({ ...sort, order: value })
+        <Button
+          className="shrink-0"
+          size="icon"
+          variant="outline"
+          onClick={() =>
+            setSort({ ...sort, order: sort.order === 'desc' ? 'asc' : 'desc' })
           }
         >
-          <SelectTrigger>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="asc">A-Z</SelectItem>
-            <SelectItem value="desc">Z-A</SelectItem>
-          </SelectContent>
-        </Select>
+          <SortIcon sort={sort} />
+        </Button>
       )}
     </div>
   )

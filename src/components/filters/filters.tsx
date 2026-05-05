@@ -12,13 +12,13 @@ import { Filter } from '@/types/settings'
 import { SlidersHorizontal } from 'lucide-react'
 import { useState } from 'react'
 import { FilterControl } from './filter-control'
-import { IntervalControl } from './interval-control'
+import { SizeControl } from './size-control/size-control'
 
 interface FiltersProps {
   facetCounts?: FacetCounts
   filters: Filter[]
-  onAdd: (params: { key: string; value: string }) => void
-  onClear: () => void
+  onAdd: (params: { key: string; replace?: boolean; value: string }) => void
+  onClear: (key?: string) => void
   onRemove: (params: { key: string; value: string }) => void
 }
 
@@ -48,19 +48,32 @@ export const Filters = ({
         <SheetHeader className="sticky top-0 min-h-16 flex items-center justify-between gap-2 px-4 bg-muted border-b">
           <SheetTitle>{label}</SheetTitle>
           {filters.length ? (
-            <Button onClick={onClear} variant="ghost">
+            <Button onClick={() => onClear()} variant="ghost">
               Clear
             </Button>
           ) : null}
         </SheetHeader>
         <div className="grow space-y-4 p-4">
-          {FILTER_TYPES.map(({ key, label, type }) => {
+          {FILTER_TYPES.map(({ key, label }) => {
             const values = filters.find((f) => f.key === key)?.values
 
-            if (type === 'interval') {
+            if (key === 'organism_area_mm2') {
               return (
-                <IntervalControl
+                <SizeControl
                   key={key}
+                  label={label}
+                  onAdd={(value) => onAdd({ key, value })}
+                  onRemove={(value) => onRemove({ key, value })}
+                  values={values}
+                />
+              )
+            }
+
+            if (key === 'scale_source') {
+              return (
+                <FilterControl
+                  key={key}
+                  facetFields={['Keyence fixed scale', 'scalebar pipeline']}
                   label={label}
                   onAdd={(value) => onAdd({ key, value })}
                   onRemove={(value) => onRemove({ key, value })}

@@ -11,7 +11,7 @@ import { formatFieldValue } from '@/lib/formatFieldValue'
 import { getImageSrc } from '@/lib/getImageSrc'
 import { Doc } from '@/types/response-data'
 import { Sort } from '@/types/settings'
-import { ArrowDownIcon, ArrowUpIcon } from 'lucide-react'
+import { SortIcon } from './sort-icon'
 
 interface TableProps {
   docs?: Doc[]
@@ -54,12 +54,7 @@ export const Table = ({ docs = [], sort, onRowClick, setSort }: TableProps) => (
                 }}
               >
                 {field.label}
-                {isSorted &&
-                  (sort.order === 'asc' ? (
-                    <ArrowDownIcon className="w-4 h-4" />
-                  ) : (
-                    <ArrowUpIcon className="w-4 h-4" />
-                  ))}
+                {isSorted && <SortIcon sort={sort} />}
               </button>
             </TableHead>
           )
