@@ -80,12 +80,13 @@ export const ROOT_NODE_ID = 'phylum-Arthropoda'
 export const BIOSCAN_BROWSER_USER_AGENT = 'bioscan-browser/1.0.0'
 
 export const RESOURCES = {
-  DATASET_GITHUB: 'https://github.com/bioscan-ml/BIOSCAN-5M/',
   DATASET_GITHUB_ISSUES: 'https://github.com/bioscan-ml/BIOSCAN-5M/issues',
   DATASET_GITHUB_PROJECT: 'https://github.com/orgs/bioscan-ml/projects/2',
+  DATASET_GITHUB: 'https://github.com/bioscan-ml/BIOSCAN-5M/',
   DATASET_WEBSITE: 'https://biodiversitygenomics.net/projects/5m-insects/',
   GITHUB: 'https://github.com/bioscan-ml/bioscan-browser',
   INATURALIST_API: 'https://api.inaturalist.org/v1/docs/',
+  PROJECT_WEBSITE: 'https://biodiversitygenomics.net/research/bioscan/',
   SYSTEM_STATUS: 'https://bioscan-browser.cronitorstatus.com/',
 }
 

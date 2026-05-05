@@ -26,7 +26,8 @@ export const About = () => (
         </p>
         <h4 className="mb-4">Resources</h4>
         <div className="flex gap-4">
-          <ExternalLink href={RESOURCES.DATASET_WEBSITE} label="Website" />
+          <ExternalLink href={RESOURCES.PROJECT_WEBSITE} label="BIOSCAN" />
+          <ExternalLink href={RESOURCES.DATASET_WEBSITE} label="BIOSCAN-5M" />
           <ExternalLink href={RESOURCES.DATASET_GITHUB} label="GitHub" />
         </div>
       </div>
