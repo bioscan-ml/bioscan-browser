@@ -7,9 +7,12 @@ import {
 } from '@/lib/constants'
 import { formatFieldValue } from '@/lib/formatFieldValue'
 import { Doc } from '@/types/response-data'
+import { ExternalLinkIcon } from 'lucide-react'
 import { Link, To } from 'react-router-dom'
 import { Field } from '../field'
+import { FindSimilarControl } from '../find-similar-control'
 import { IssueList } from '../issue-list'
+import { buttonVariants } from '../ui/button'
 
 interface FieldsProps {
   doc: Doc
@@ -26,6 +29,22 @@ export const Fields = ({ doc }: FieldsProps) => (
       <DocField doc={doc} fieldKey="original_insect_pixels" />
       <Field label="Reported issues">
         <IssueList id={doc.id} />
+      </Field>
+      <Field label="Resources">
+        <div className="flex items-center gap-4">
+          <FindSimilarControl doc={doc} variant="outline" />
+          <a
+            href={`https://portal.boldsystems.org/record/${doc.id}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={buttonVariants({
+              variant: 'outline',
+            })}
+          >
+            BOLD
+            <ExternalLinkIcon className="h-4 w-4 ml-3" />
+          </a>
+        </div>
       </Field>
     </div>
     <Separator className="h-auto shrink-0" orientation="vertical" />

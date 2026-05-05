@@ -81,7 +81,7 @@ ${data.boldDoc ? JSON.stringify(data.boldDoc, null, 4) : 'Not found'}
 
 ### Links
 - [Record details (BIOSCAN Browser)](${APP_URL}/record/${data.doc.id})
-- [Record details (BOLD Systems)](https://portal.boldsystems.org/record/${data.doc.id})
+- [Record details (BOLD)](https://portal.boldsystems.org/record/${data.doc.id})
 - [Samples with same taxonomic label](${APP_URL}/taxonomy-tree?taxon=${taxon.rankKey}-${taxon.label})
 - [Samples with same DNA barcode](${APP_URL}/search?dna_bin=${data.doc.dna_bin})
 
