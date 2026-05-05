@@ -12,8 +12,9 @@ export const Footer = ({ className }: FooterProps) => (
           BIOSCAN Browser is supported in part by funding from the Government of
           Canada’s New Frontiers in Research Fund (NFRF), Artificial
           Intelligence and Biodiversity Change (ABC) Global Center, Canada
-          Research Chairs, Canadian Institute for Advanced Research (CIFAR) and
-          Natural Sciences and Engineering Research Council of Canada (NSERC).
+          Research Chairs, and Canadian Institute for Advanced Research (CIFAR).
+          We acknowledge the support of the Natural Sciences and Engineering
+          Research Council of Canada (NSERC).
         </p>
         <div className="max-w-4xl flex justify-center flex-wrap gap-8">
           <Logo
