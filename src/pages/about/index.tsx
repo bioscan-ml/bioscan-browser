@@ -96,6 +96,45 @@ export const About = () => (
           common name search to the taxonomy tree view.
         </p>
       </div>
+      <div>
+        <h3 className="text-accent mb-2">Copyright and license</h3>
+        <p className="text-muted-foreground mb-4">
+          The images and metadata included in the BIOSCAN-5M dataset available
+          through this tool are subject to following copyright and licensing
+          restrictions:
+        </p>
+        <ul className="list-disc list-inside text-base text-muted-foreground space-y-1">
+          <li>
+            <span className="font-medium">Copyright holder:</span> CBG
+            Photography Group
+          </li>
+          <li>
+            <span className="font-medium">Copyright institution:</span> Centre
+            for Biodiversity Genomics (email:{' '}
+            <a className="text-link" href="mailto:cbg.analytics@uoguelph.ca">
+              cbg.analytics@uoguelph.ca
+            </a>
+            )
+          </li>
+          <li>
+            <span className="font-medium">Photographer:</span> CBG Robotic
+            Imager
+          </li>
+          <li>
+            <span className="font-medium">Copyright license:</span> Creative
+            Commons Attribution 3.0 Unported (CC BY 3.0)
+          </li>
+          <li>
+            <span className="font-medium">Copyright contact:</span>{' '}
+            <a className="text-link" href="mailto:cbg.collections@uoguelph.ca">
+              cbg.collections@uoguelph.ca
+            </a>
+          </li>
+          <li>
+            <span className="font-medium">Copyright year:</span> 2021
+          </li>
+        </ul>
+      </div>
     </article>
   </PageContent>
 )
