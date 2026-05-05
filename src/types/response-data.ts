@@ -10,7 +10,7 @@ export interface Doc {
   id: string
   latlon?: string
   order: string
-  original_insect_pixels?: number
+  organism_area_mm2?: number
   phylum: string
   province_state?: string
   record_type?: 'sample'
