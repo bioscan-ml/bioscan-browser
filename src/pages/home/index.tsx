@@ -1,4 +1,5 @@
 import { DocDetailsDialog } from '@/components/doc-details/doc-details-dialog'
+import { Footer } from '@/components/footer'
 import { GalleryItem } from '@/components/gallery/gallery-item'
 import { MultiModalGalleryItem } from '@/components/gallery/multi-modal-gallery-item'
 import { Loader } from '@/components/loader'
@@ -262,6 +263,7 @@ export const Home = () => {
           </Link>
         </div>
       </Block>
+      <Footer />
       <DocDetailsDialog
         doc={activeDoc}
         open={!!activeDoc}

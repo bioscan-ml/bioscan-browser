@@ -7,7 +7,6 @@ import { ChevronRight } from 'lucide-react'
 import { BookmarkControl } from '../bookmark-control'
 import { CodeBlock } from '../code-block'
 import { CopyLinkControl } from '../copy-link-control'
-import { FindSimilarControl } from '../find-similar-control'
 import { ReportIssueControl } from '../report-issue-control'
 import { TaxonDetailsArticle } from '../taxon-details-article'
 import { Dna } from './dna'
@@ -35,8 +34,13 @@ export const DocDetails = ({ doc }: DocDetailsProps) => {
           <Badge variant="outline" className="uppercase">
             {taxon.rankLabel}
           </Badge>
+          <div className="flex items-center gap-2">
+            <BookmarkControl doc={doc} />
+            <ReportIssueControl doc={doc} size="icon" />
+            <CopyLinkControl link={getRecordLink(doc.id)} />
+          </div>
         </div>
-        <p className="text-sm text-muted-foreground mb-4">
+        <p className="text-sm text-muted-foreground">
           {parents.map((parent, index) => (
             <span key={index} className="inline-flex items-center">
               {parent.label}
@@ -46,12 +50,6 @@ export const DocDetails = ({ doc }: DocDetailsProps) => {
             </span>
           ))}
         </p>
-        <div className="flex items-center gap-2">
-          <FindSimilarControl doc={doc} variant="outline" />
-          <BookmarkControl doc={doc} />
-          <ReportIssueControl doc={doc} size="icon" />
-          <CopyLinkControl link={getRecordLink(doc.id)} />
-        </div>
       </div>
       <Fields doc={doc} />
       <Tabs defaultValue="images">
