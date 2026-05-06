@@ -16,6 +16,14 @@ export const Footer = ({ className }: FooterProps) => (
           We acknowledge the support of the Natural Sciences and Engineering
           Research Council of Canada (NSERC).
         </p>
+        <p className="max-w-lg text-center text-sm text-muted-foreground">
+          BIOSCAN Browser est financé en partie par le fonds Nouvelles
+          frontières en recherche du gouvernement du Canada, Artificial
+          Intelligence and Biodiversity Change (ABC) Global Center, Chaires de
+          recherche du Canada et Institut canadien de recherches avancées
+          (CIFAR). Nous remercions le Conseil de recherches en sciences
+          naturelles et en génie du Canada (CRSNG) de son soutien.
+        </p>
         <div className="max-w-4xl flex justify-center flex-wrap gap-8">
           <Logo
             alt="Government of Canada"
