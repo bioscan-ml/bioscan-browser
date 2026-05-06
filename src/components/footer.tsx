@@ -23,6 +23,10 @@ export const Footer = ({ className }: FooterProps) => (
           />
           <Logo alt="NFRF" src="/assets/logos/funders/nfrf.jpg" />
           <Logo alt="ABC" src="/assets/logos/funders/abc.png" />
+          <Logo
+            alt="Canada Research Chairs"
+            src="/assets/logos/funders/crc.png"
+          />
           <Logo alt="CIFAR" src="/assets/logos/funders/cifar.png" />
           <Logo alt="NSERC" src="/assets/logos/funders/nserc.png" />
         </div>
