@@ -71,7 +71,7 @@ export const SOLR_BASE_PATH = `${import.meta.env.VITE_API_URL}/solr/bioscan5m/se
 export const BACKEND_BASE_PATH = `${import.meta.env.VITE_API_URL}/bioscan-browser`
 
 export const IMAGES_BASE_PATH =
-  'https://spathi.cmpt.sfu.ca/data/bioscan/bioscan5m/images'
+  'https://annotations2.cs.sfu.ca/data/bioscan/bioscan5m/images'
 
 export const DEFAULT_PAGINATION = { page: 0, pageSize: 100 }
 

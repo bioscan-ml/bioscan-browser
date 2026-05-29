@@ -14,7 +14,7 @@ export default defineConfig({
     open: true,
     proxy: {
       '/api': {
-        target: 'https://spathi.cmpt.sfu.ca',
+        target: 'https://annotations2.cs.sfu.ca',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },

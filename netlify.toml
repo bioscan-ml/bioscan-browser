@@ -6,7 +6,7 @@ force = true
 
 [[redirects]]
 from = "/api/*"
-to = "https://spathi.cmpt.sfu.ca/:splat"
+to = "https://annotations2.cs.sfu.ca/:splat"
 status = 200
 force = true
 
