@@ -10,6 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: trufflesecurity/trufflehog@v3.95.3
+        with:
+          extra_args: --only-verified
 
       - uses: actions/setup-node@v4
         with:
