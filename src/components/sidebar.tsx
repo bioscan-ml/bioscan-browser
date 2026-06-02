@@ -4,7 +4,7 @@ import {
   CollapsibleTrigger,
 } from '@/components/ui/collapsible'
 import { MAX_MD_QUERY, useMediaQuery } from '@/hooks/useMediaQuery'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/cn'
 import { ChevronsUpDownIcon, Settings2Icon } from 'lucide-react'
 import { ReactNode, useState } from 'react'
 import { buttonVariants } from './ui/button'

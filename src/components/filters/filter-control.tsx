@@ -4,7 +4,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/cn'
 import { ChevronsUpDownIcon, XIcon } from 'lucide-react'
 import { useState } from 'react'
 import { buttonVariants } from '../ui/button'

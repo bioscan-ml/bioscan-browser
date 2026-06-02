@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/cn'
 import { SearchIcon, X } from 'lucide-react'
 import { Loader } from './loader'
 import { Button } from './ui/button'

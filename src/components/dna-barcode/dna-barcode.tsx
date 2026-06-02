@@ -1,5 +1,5 @@
 import { buttonVariants } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/cn'
 import { Doc } from '@/types/response-data'
 import { DownloadIcon } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'

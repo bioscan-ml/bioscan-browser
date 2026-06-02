@@ -26,7 +26,7 @@ import {
   PATHS,
   ROOT_NODE_ID,
 } from '@/lib/constants'
-import { findPathById } from '@/lib/findPathById'
+import { findPathById } from '@/lib/taxonomy-tree/findPathById'
 import { ViewMode } from '@/types/settings'
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
