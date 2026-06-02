@@ -1,17 +1,56 @@
 # BIOSCAN Browser
 
-The BIOSCAN Browser is a web interface to navigate the [BIOSCAN-5M](https://github.com/zahrag/BIOSCAN-5M) dataset. The idea is to lower the threshold for users to explore the dataset by presenting data in interactive and comprehensive ways.
+The BIOSCAN Browser is a web interface to navigate the [BIOSCAN-5M dataset](https://github.com/bioscan-ml/BIOSCAN-5M) dataset. The idea is to lower the threshold for users to explore the dataset by presenting data in interactive and comprehensive ways.
 
-We use TypeScript and React and TypeScript for the implementation. The project was setup using [Vite](https://vitejs.dev/).
+Visit the app on https://browser.bioscan-ml.org/!
 
-## System requirements
+<img alt="BIOSCAN Browser" src="./public/assets/screenshot.png" />
+
+## Tech stack
+
+- **Frontend**: [React](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
+- **Build**: [Vite](https://vitejs.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **UI primitives**: [Radix](https://www.radix-ui.com/primitives) + [shadcn/ui](https://ui.shadcn.com/)
+- **State management and data fetching**: [TanStack Query](https://tanstack.com/query/latest)
+- **Package manager**: [NPM](https://www.npmjs.com/)
+- **Code quality**: [ESLint](https://eslint.org/) + [Prettier](https://prettier.io/)
+- **Deployment**: [Netlify](https://www.netlify.com/)
+
+## Code structure
+
+```
+src/
+├── components/       # Reusable components
+│   └── ui/           # UI primitives
+├── pages/            # Page-level components
+│   ├── home/
+│   ├── search/
+│   ├── record/
+│   ├── my-bookmarks/
+│   ├── find-similar/
+│   ├── taxonomy-tree/
+│   ├── report/
+│   ├── about/
+│   └── style-guide/
+├── hooks/            # Hooks for data fetching and state management
+├── lib/              # Utility functions and helpers
+├── types/            # Shared type definitions
+├── App.tsx           # Root component
+├── main.tsx          # App entry point
+└── index.css         # Global styles
+```
+
+## Development
+
+### System requirements
 
 - [Node](https://nodejs.org/)
 - [NPM](https://www.npmjs.com/)
 
-The `.nvmrc` file in project root describes the recommended Node version for this project.
+The `.nvmrc` file in the project root specifies the recommended Node version. If you use [nvm](https://github.com/nvm-sh/nvm), run `nvm use` to switch to the recommended version.
 
-## Getting started
+### Getting started
 
 ```bash
 # Install dependencies
@@ -23,9 +62,15 @@ npm run dev
 
 The app will now be available in a browser on http://localhost:5173/. Hot reload will be enabled by default.
 
-## Deployment
+### Build for production
 
-To be added.
+```bash
+# Build optimized production bundle
+npm run build
+
+# Preview production build locally
+npm run preview
+```
 
 ## Code style
 
@@ -48,8 +93,24 @@ If you are using Visual Studio Code, the following extensions are recommended fo
 - [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
 
+## Style guide
+
+The [style guide](https://browser.bioscan-ml.org/style-guide) is an optional resource that can be used for all BIOSCAN material. It includes references to logos, fonts and colors.
+
 ## UI components
 
 We use [shadcn/ui](https://ui.shadcn.com/) as a component reference. Components are built using [Radix UI](https://www.radix-ui.com/) and [Tailwind CSS](https://tailwindcss.com/).
 
-To add a new component to the project, first checkout the list of [available components](https://ui.shadcn.com/docs/components). Then use the CLI to add a component to the project. This will create a new component in folder `/src/components/ui` and install any dependencies it might have. Since components are copied to the project, not installed as dependencies, they can be tweaked as needed.
+To add a new component to the project, first check out the list of [available components](https://ui.shadcn.com/docs/components). Then use the CLI to add a component to the project. This will create a new component in folder `/src/components/ui` and install any dependencies it might have. Since components are copied to the project, not installed as dependencies, they can be tweaked as needed.
+
+## Deployment
+
+We use [Netlify](https://www.netlify.com/) for deployment. Changes pushed to the main branch are automatically deployed. When a pull request is opened, a preview version of the changes will be deployed. The URL to the preview deploy will be visible as a PR comment.
+
+## Funders
+
+All project funders are listed on the [about page](https://browser.bioscan-ml.org/about).
+
+## Copyright and licence
+
+The BIOSCAN Browser code is licensed under MIT. For dataset copyright and licence information, see the [BIOSCAN-5M repository](https://github.com/bioscan-ml/BIOSCAN-5M).
