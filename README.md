@@ -109,6 +109,10 @@ To add a new component to the project, first check out the list of [available co
 
 We use [Netlify](https://www.netlify.com/) for deployment. Changes pushed to the main branch are automatically deployed. When a pull request is opened, a preview version of the changes will be deployed. The URL to the preview deploy will be visible as a PR comment.
 
+## Contributing
+
+See [CONTRIBUTING](./CONTRIBUTING.md) for more information about how to contribute to the code base.
+
 ## Funders
 
 All project funders are listed on the [about page](https://browser.bioscan-ml.org/about).
