@@ -95,7 +95,9 @@ If you are using Visual Studio Code, the following extensions are recommended fo
 
 ## Style guide
 
-The [style guide](https://browser.bioscan-ml.org/style-guide) is an optional resource that can be used for all BIOSCAN material. It includes references to logos, fonts and colors.
+The [style guide](https://browser.bioscan-ml.org/style-guide) is an optional resource that can be used for BIOSCAN material, not only the BIOSCAN Browser. It includes references to logos, fonts and colors.
+
+<img alt="Style guide" src="./public/assets/style-guide.png" />
 
 ## UI components
 
@@ -113,4 +115,4 @@ All project funders are listed on the [about page](https://browser.bioscan-ml.or
 
 ## Copyright and licence
 
-The BIOSCAN Browser code is licensed under MIT. For dataset copyright and licence information, see the [BIOSCAN-5M repository](https://github.com/bioscan-ml/BIOSCAN-5M).
+The BIOSCAN Browser code is licensed under [MIT](./LICENSE). For dataset copyright and licence information, see the [BIOSCAN-5M repository](https://github.com/bioscan-ml/BIOSCAN-5M).
