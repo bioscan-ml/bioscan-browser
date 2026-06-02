@@ -1,5 +1,5 @@
 import { PageContent } from '@/components/page-content'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/cn'
 import { ReactNode } from 'react'
 
 export const Block = ({

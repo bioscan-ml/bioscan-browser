@@ -7,7 +7,7 @@ import {
   CollapsibleTrigger,
 } from '@/components/ui/collapsible'
 import { Input } from '@/components/ui/input'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/cn'
 import { ChevronsUpDownIcon, PlusIcon, XIcon } from 'lucide-react'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'

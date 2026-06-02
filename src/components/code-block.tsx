@@ -1,5 +1,5 @@
 import { useToast } from '@/components/ui/toast/use-toast'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/cn'
 import { ChevronsUpDown, CopyIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Button } from './ui/button'

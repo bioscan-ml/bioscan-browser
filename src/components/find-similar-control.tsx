@@ -6,7 +6,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { PATHS } from '@/lib/constants'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/cn'
 import { Doc } from '@/types/response-data'
 import { SearchIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'

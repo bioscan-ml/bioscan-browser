@@ -1,7 +1,7 @@
 import { PageContent } from '@/components/page-content'
 import { buttonVariants } from '@/components/ui/button'
 import { useToast } from '@/components/ui/toast/use-toast'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/cn'
 import { CopyIcon, DownloadIcon, ExternalLinkIcon } from 'lucide-react'
 import { CSSProperties } from 'react'
 import colors from 'tailwindcss/colors'
