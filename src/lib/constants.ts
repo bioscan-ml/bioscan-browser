@@ -2,6 +2,7 @@ import { Doc } from '@/types/response-data'
 
 export const PATHS = {
   ABOUT: '/about',
+  CHATBOT: '/chatbot',
   FIND_SIMILAR: '/find-similar',
   HOME: '/',
   MY_BOOKMARKS: '/my-bookmarks',
@@ -18,24 +19,24 @@ export const FIELDS: {
   sortDisabled?: boolean
   tooltip?: string
 }[] = [
-  { label: 'Process ID', key: 'id' },
-  { label: 'Sample ID', key: 'sampleid' },
-  { label: 'Phylum', key: 'phylum' },
-  { label: 'Class', key: 'class' },
-  { label: 'Order', key: 'order' },
-  { label: 'Family', key: 'family' },
-  { label: 'Subfamily', key: 'subfamily' },
-  { label: 'Genus', key: 'genus' },
-  { label: 'Species', key: 'species' },
-  { label: 'Country', key: 'country' },
-  { label: 'Province/State', key: 'province_state' },
-  { label: 'Collectors', key: 'collectors', sortDisabled: true },
-  {
-    label: 'Organism area (mm²)',
-    key: 'organism_area_mm2',
-    tooltip: 'Area occupied by the organism in square millimeters',
-  },
-]
+    { label: 'Process ID', key: 'id' },
+    { label: 'Sample ID', key: 'sampleid' },
+    { label: 'Phylum', key: 'phylum' },
+    { label: 'Class', key: 'class' },
+    { label: 'Order', key: 'order' },
+    { label: 'Family', key: 'family' },
+    { label: 'Subfamily', key: 'subfamily' },
+    { label: 'Genus', key: 'genus' },
+    { label: 'Species', key: 'species' },
+    { label: 'Country', key: 'country' },
+    { label: 'Province/State', key: 'province_state' },
+    { label: 'Collectors', key: 'collectors', sortDisabled: true },
+    {
+      label: 'Organism area (mm²)',
+      key: 'organism_area_mm2',
+      tooltip: 'Area occupied by the organism in square millimeters',
+    },
+  ]
 
 export const TAXON_FILTER_TYPES = [
   { label: 'Phylum', key: 'phylum' },

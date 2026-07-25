@@ -20,6 +20,7 @@ import { Report } from './pages/report'
 import { Search } from './pages/search'
 import { StyleGuide } from './pages/style-guide'
 import { TaxonomyTree } from './pages/taxonomy-tree'
+import { Chatbot } from './pages/chatbot'
 
 const queryClient = new QueryClient()
 
@@ -33,6 +34,7 @@ const ROUTES = [
   { path: PATHS.STYLE_GUIDE, Component: StyleGuide },
   { path: PATHS.ABOUT, Component: About },
   { path: PATHS.MY_BOOKMARKS, Component: MyBookmarks },
+  { path: PATHS.CHATBOT, Component: Chatbot },
   { path: '*', element: <Navigate to={PATHS.HOME} replace /> },
 ]
 
