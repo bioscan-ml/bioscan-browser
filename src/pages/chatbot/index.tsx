@@ -5,12 +5,29 @@ import { Textarea } from '@/components/ui/textarea'
 import { ChatMessage, useSendMessage } from '@/hooks/chatbot/useSendMessage'
 import { cn } from '@/lib/cn'
 import { Loader2Icon, SendIcon } from 'lucide-react'
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
+
+const STORAGE_KEY = 'chatbot-messages'
+
+const getStoredMessages = (): ChatMessage[] => {
+  const value = sessionStorage.getItem(STORAGE_KEY)
+
+  try {
+    return value ? JSON.parse(value) : []
+  } catch {
+    sessionStorage.removeItem(STORAGE_KEY)
+    return []
+  }
+}
 
 export const Chatbot = () => {
-  const [messages, setMessages] = useState<ChatMessage[]>([])
+  const [messages, setMessages] = useState<ChatMessage[]>(getStoredMessages)
   const [input, setInput] = useState('')
-  const { sendMessage, isPending, error } = useSendMessage()
+  const { sendMessage, isPending } = useSendMessage()
+
+  useEffect(() => {
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(messages))
+  }, [messages])
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -28,7 +45,14 @@ export const Chatbot = () => {
       const { reply } = await sendMessage(trimmed)
       setMessages((prev) => [...prev, { role: 'assistant', content: reply }])
     } catch {
-      // 出错时下面的 error 提示已经会显示，这里不用额外处理
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: 'Could not get a response, please try again.',
+          error: true,
+        },
+      ])
     }
   }
 
@@ -68,6 +92,12 @@ export const Chatbot = () => {
             <Textarea
               className="min-h-10 resize-none"
               onChange={(e) => setInput(e.currentTarget.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault()
+                  onSubmit(e)
+                }
+              }}
               placeholder="Type a message..."
               value={input}
             />
@@ -79,11 +109,6 @@ export const Chatbot = () => {
               <SendIcon className="w-4 h-4" />
             </Button>
           </form>
-          {error ? (
-            <p className="text-destructive text-xs italic px-4 pb-4">
-              Could not get a response, please try again.
-            </p>
-          ) : null}
         </div>
       </div>
     </PageContent>
@@ -100,9 +125,11 @@ const ChatBubble = ({ message }: { message: ChatMessage }) => (
     <div
       className={cn(
         'max-w-[80%] rounded-md px-4 py-2 text-sm',
-        message.role === 'user'
-          ? 'bg-primary text-primary-foreground'
-          : 'bg-background border',
+        message.error
+          ? 'bg-destructive/10 text-destructive border border-destructive/30'
+          : message.role === 'user'
+            ? 'bg-primary text-primary-foreground'
+            : 'bg-background border',
       )}
     >
       {message.content}

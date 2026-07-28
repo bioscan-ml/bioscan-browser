@@ -4,10 +4,11 @@ import { useMutation } from '@tanstack/react-query'
 export type ChatMessage = {
   role: 'user' | 'assistant'
   content: string
+  error?: boolean
 }
 
 export const useSendMessage = () => {
-  const { mutateAsync, isPending, error } = useMutation({
+  const { mutateAsync, isPending } = useMutation({
     mutationFn: async (message: string) => {
       const res = await fetch(`${BACKEND_BASE_PATH}/chat`, {
         method: 'POST',
@@ -23,5 +24,5 @@ export const useSendMessage = () => {
     },
   })
 
-  return { sendMessage: mutateAsync, isPending, error }
+  return { sendMessage: mutateAsync, isPending }
 }
