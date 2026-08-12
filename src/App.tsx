@@ -8,6 +8,7 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom'
+import { FloatingChat } from './components/chatbot/floating-chat'
 import { TopBar } from './components/top-bar'
 import { BookmarksContextProvider } from './lib/bookmarks/provider'
 import { PATHS } from './lib/constants'
@@ -51,6 +52,7 @@ function App() {
               ))}
             </Routes>
           </main>
+          <FloatingChat />
           <Toaster />
           <ScrollToTop />
         </BrowserRouter>
