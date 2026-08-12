@@ -14,7 +14,10 @@ export default defineConfig({
     open: true,
     proxy: {
       '/api': {
-        target: 'https://annotations2.cs.sfu.ca',
+        // TEMP: local chat testing only, points at the standalone chat-only
+        // Flask stand-in instead of production. Revert to
+        // 'https://annotations2.cs.sfu.ca' afterwards.
+        target: 'http://localhost:5001',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
