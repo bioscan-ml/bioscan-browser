@@ -96,8 +96,16 @@ const useResizablePanel = (defaultSize: { width: number; height: number }) => {
       const maxHeight = window.innerHeight - VIEWPORT_MARGIN.height
 
       setSize({
-        width: clamp(startWidth + (startX - e.clientX), MIN_SIZE.width, maxWidth),
-        height: clamp(startHeight + (startY - e.clientY), MIN_SIZE.height, maxHeight),
+        width: clamp(
+          startWidth + (startX - e.clientX),
+          MIN_SIZE.width,
+          maxWidth,
+        ),
+        height: clamp(
+          startHeight + (startY - e.clientY),
+          MIN_SIZE.height,
+          maxHeight,
+        ),
       })
     }
 

@@ -67,11 +67,7 @@ export const ChatPanel = ({
           placeholder="Type a message..."
           value={input}
         />
-        <Button
-          disabled={isPending || !input.trim()}
-          size="icon"
-          type="submit"
-        >
+        <Button disabled={isPending || !input.trim()} size="icon" type="submit">
           <SendIcon className="w-4 h-4" />
         </Button>
       </form>
