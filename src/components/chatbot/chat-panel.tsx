@@ -3,8 +3,10 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Textarea } from '@/components/ui/textarea'
 import { ChatMessage } from '@/hooks/chatbot/useSendMessage'
 import { cn } from '@/lib/cn'
-import { Loader2Icon, SendIcon } from 'lucide-react'
+import { getSearchPathFromFilters } from '@/lib/getSearchPathFromFilters'
+import { Loader2Icon, SearchIcon, SendIcon } from 'lucide-react'
 import { FormEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 type ChatPanelProps = {
   messages: ChatMessage[]
@@ -75,24 +77,47 @@ export const ChatPanel = ({
   )
 }
 
-const ChatBubble = ({ message }: { message: ChatMessage }) => (
-  <div
-    className={cn(
-      'flex',
-      message.role === 'user' ? 'justify-end' : 'justify-start',
-    )}
-  >
+const ChatBubble = ({ message }: { message: ChatMessage }) => {
+  const navigate = useNavigate()
+  const suggestion =
+    message.bioscanAction?.type === 'suggest' ? message.bioscanAction : null
+
+  return (
     <div
       className={cn(
-        'max-w-[80%] rounded-md px-4 py-2 text-sm',
-        message.error
-          ? 'bg-destructive/10 text-destructive border border-destructive/30'
-          : message.role === 'user'
-            ? 'bg-primary text-primary-foreground'
-            : 'bg-background border',
+        'flex',
+        message.role === 'user' ? 'justify-end' : 'justify-start',
       )}
     >
-      {message.content}
+      <div
+        className={cn(
+          'max-w-[80%] rounded-md px-4 py-2 text-sm',
+          message.error
+            ? 'bg-destructive/10 text-destructive border border-destructive/30'
+            : message.role === 'user'
+              ? 'bg-primary text-primary-foreground'
+              : 'bg-background border',
+        )}
+      >
+        {message.content}
+        {suggestion ? (
+          <Button
+            className="mt-2 h-7 gap-1.5 px-2 text-xs"
+            onClick={() =>
+              navigate(getSearchPathFromFilters(suggestion.filters))
+            }
+            size="sm"
+            variant="outline"
+          >
+            <SearchIcon className="h-3 w-3" />
+            View{' '}
+            {suggestion.result_count !== undefined
+              ? `${suggestion.result_count.toLocaleString()} `
+              : ''}
+            {suggestion.result_count === 1 ? 'record' : 'records'}
+          </Button>
+        ) : null}
+      </div>
     </div>
-  </div>
-)
+  )
+}

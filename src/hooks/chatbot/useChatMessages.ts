@@ -1,4 +1,6 @@
+import { getSearchPathFromFilters } from '@/lib/getSearchPathFromFilters'
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { ChatMessage, useSendMessage } from './useSendMessage'
 
 const STORAGE_KEY = 'chatbot-messages'
@@ -21,6 +23,7 @@ export const useChatMessages = () => {
   const [messages, setMessages] = useState<ChatMessage[]>(getStoredMessages)
   const [input, setInput] = useState('')
   const { sendMessage, isPending } = useSendMessage()
+  const navigate = useNavigate()
 
   useEffect(() => {
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(messages))
@@ -37,8 +40,17 @@ export const useChatMessages = () => {
     setInput('')
 
     try {
-      const { reply } = await sendMessage(trimmed)
-      setMessages((prev) => [...prev, { role: 'assistant', content: reply }])
+      const { reply, bioscanAction } = await sendMessage(trimmed)
+      setMessages((prev) => [
+        ...prev,
+        { role: 'assistant', content: reply, bioscanAction },
+      ])
+
+      // The answer is always shown in the chat regardless of bioscanAction --
+      // auto_navigate additionally jumps to Search with the filters applied.
+      if (bioscanAction?.type === 'auto_navigate') {
+        navigate(getSearchPathFromFilters(bioscanAction.filters))
+      }
     } catch {
       setMessages((prev) => [
         ...prev,

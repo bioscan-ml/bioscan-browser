@@ -5,10 +5,22 @@ export type ChatMessage = {
   role: 'user' | 'assistant'
   content: string
   error?: boolean
+  bioscanAction?: BioscanAction
+}
+
+// Navigation hint from BioChat, independent of the answer text: whether the
+// Search page should be offered/opened with `filters` applied. `filters` uses
+// the same keys as the Search page's filter params (family/order/genus/
+// species/country), so it can be passed straight through unchanged.
+export type BioscanAction = {
+  type: 'none' | 'suggest' | 'auto_navigate'
+  filters: Record<string, string>
+  result_count?: number
 }
 
 type ChatCompletionResponse = {
   choices?: { message?: { content?: string } }[]
+  bioscan_action?: BioscanAction
 }
 
 export const useSendMessage = () => {
@@ -34,7 +46,7 @@ export const useSendMessage = () => {
         throw Error()
       }
 
-      return { reply }
+      return { reply, bioscanAction: data.bioscan_action }
     },
   })
 

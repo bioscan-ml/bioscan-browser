@@ -1,0 +1,806 @@
+<title>BioChat 指令路由设计</title>
+<meta name="description" content="BioChat 聊天机器人新增“展示意图”能力的需求文档：何时该跳转到 Search 页并自动应用筛选条件。">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,440;0,9..144,560;0,9..144,640;1,9..144,500&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #f3f6f3;
+    --surface: #ffffff;
+    --surface-alt: #eaf0eb;
+    --text: #17211c;
+    --text-muted: #57685d;
+    --border: #d9e2da;
+    --border-strong: #b9c7bb;
+    --accent-content: #0f6b5c;
+    --accent-content-bg: #e2f2ee;
+    --accent-action: #a3661a;
+    --accent-action-bg: #f7ecd9;
+    --accent-new-bg: #fbe9e2;
+    --accent-new-text: #a04726;
+    --shadow: 0 1px 2px rgba(23, 33, 28, 0.06), 0 8px 24px rgba(23, 33, 28, 0.05);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #10140f;
+      --surface: #171d18;
+      --surface-alt: #1d2420;
+      --text: #e7ece7;
+      --text-muted: #93a399;
+      --border: #2b332d;
+      --border-strong: #3c473e;
+      --accent-content: #57d3b6;
+      --accent-content-bg: #163831;
+      --accent-action: #e3ab60;
+      --accent-action-bg: #3a2c15;
+      --accent-new-bg: #3a1f18;
+      --accent-new-text: #ec9a76;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #10140f;
+    --surface: #171d18;
+    --surface-alt: #1d2420;
+    --text: #e7ece7;
+    --text-muted: #93a399;
+    --border: #2b332d;
+    --border-strong: #3c473e;
+    --accent-content: #57d3b6;
+    --accent-content-bg: #163831;
+    --accent-action: #e3ab60;
+    --accent-action-bg: #3a2c15;
+    --accent-new-bg: #3a1f18;
+    --accent-new-text: #ec9a76;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Public Sans", -apple-system, "Segoe UI", sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: var(--accent-content-bg); color: var(--accent-content); }
+
+  a { color: var(--accent-content); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent-content); outline-offset: 2px; }
+
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 6rem;
+  }
+
+  .wide {
+    max-width: 940px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ---------- Header ---------- */
+  header.doc-header {
+    margin-bottom: 3rem;
+  }
+
+  .eyebrow {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-content);
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 1.4em;
+    height: 1px;
+    background: var(--accent-content);
+    display: inline-block;
+  }
+
+  h1.doc-title {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 560;
+    font-size: clamp(2.1rem, 5vw, 2.9rem);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    margin: 0.5rem 0 0.75rem;
+    text-wrap: balance;
+  }
+
+  p.doc-sub {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 60ch;
+    margin: 0 0 1.5rem;
+  }
+
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.6rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.86rem;
+  }
+
+  .meta-item { display: flex; gap: 0.4em; }
+  .meta-item dt { color: var(--text-muted); }
+  .meta-item dd { margin: 0; font-weight: 600; }
+
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    background: var(--accent-action-bg);
+    color: var(--accent-action);
+    font-weight: 600;
+    padding: 0.15em 0.7em;
+    border-radius: 999px;
+    font-size: 0.86rem;
+  }
+  .status-pill::before {
+    content: "";
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  /* ---------- TOC ---------- */
+  nav.toc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.2rem 1.4rem;
+    margin: 2.5rem 0;
+  }
+  nav.toc p {
+    margin: 0 0 0.6rem;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  nav.toc ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    columns: 2;
+    column-gap: 2rem;
+  }
+  nav.toc li { break-inside: avoid; margin-bottom: 0.35rem; }
+  nav.toc a { color: var(--text); font-size: 0.94rem; text-decoration: none; }
+  nav.toc a:hover { color: var(--accent-content); }
+  nav.toc a span { color: var(--text-muted); font-family: "JetBrains Mono", monospace; font-size: 0.82em; margin-right: 0.5em; }
+
+  /* ---------- Section rhythm ---------- */
+  section {
+    margin-top: 3.4rem;
+    scroll-margin-top: 1.5rem;
+  }
+
+  .section-num {
+    font-family: "JetBrains Mono", monospace;
+    color: var(--accent-content);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  h2 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 560;
+    font-size: 1.55rem;
+    letter-spacing: -0.005em;
+    margin: 0.2rem 0 1rem;
+    text-wrap: balance;
+  }
+
+  h3 {
+    font-family: "Public Sans", sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin: 1.8rem 0 0.7rem;
+  }
+
+  p { margin: 0 0 1rem; }
+  section > p:first-of-type { margin-top: 0; }
+
+  ul, ol.plain { padding-left: 1.3rem; margin: 0 0 1rem; }
+  li { margin-bottom: 0.4rem; }
+
+  code {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.88em;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.05em 0.4em;
+  }
+
+  pre {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.1rem 1.3rem;
+    overflow-x: auto;
+    margin: 0 0 1.1rem;
+  }
+  pre code { background: none; border: none; padding: 0; }
+
+  blockquote {
+    margin: 1.2rem 0;
+    padding: 0.9rem 1.3rem;
+    border-left: 3px solid var(--accent-content);
+    background: var(--accent-content-bg);
+    border-radius: 0 8px 8px 0;
+    font-size: 0.98rem;
+  }
+  blockquote p { margin: 0; }
+  blockquote cite {
+    display: block;
+    margin-top: 0.5rem;
+    font-style: normal;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+
+  /* ---------- Tags ---------- */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    padding: 0.14em 0.55em;
+    border-radius: 5px;
+    white-space: nowrap;
+  }
+  .tag-content { background: var(--accent-content-bg); color: var(--accent-content); }
+  .tag-action { background: var(--accent-action-bg); color: var(--accent-action); }
+  .tag-new { background: var(--accent-new-bg); color: var(--accent-new-text); }
+  .tag-existing { background: var(--surface-alt); color: var(--text-muted); border: 1px solid var(--border); }
+
+  /* ---------- Tables ---------- */
+  .table-wrap { overflow-x: auto; margin: 0 0 1.3rem; border: 1px solid var(--border); border-radius: 10px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+    background: var(--surface);
+  }
+  th, td {
+    text-align: left;
+    padding: 0.65rem 0.9rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  thead th {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    background: var(--surface-alt);
+    font-weight: 600;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: var(--surface-alt); }
+  td.mono, th.mono { font-family: "JetBrains Mono", monospace; font-size: 0.85em; }
+
+  /* ---------- Two-axis explainer ---------- */
+  .axis-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.2rem 0 1.6rem;
+  }
+  @media (max-width: 640px) { .axis-grid { grid-template-columns: 1fr; } }
+
+  .axis-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.2rem 1.3rem;
+    background: var(--surface);
+    border-top: 3px solid var(--axis-color, var(--border-strong));
+  }
+  .axis-card.content { --axis-color: var(--accent-content); }
+  .axis-card.action { --axis-color: var(--accent-action); }
+  .axis-card h4 {
+    margin: 0 0 0.3rem;
+    font-size: 0.98rem;
+    font-family: "Public Sans", sans-serif;
+    color: var(--axis-color);
+  }
+  .axis-card p { font-size: 0.9rem; color: var(--text-muted); margin: 0 0 0.7rem; }
+  .axis-card ul { margin: 0; padding-left: 1.1rem; font-size: 0.88rem; }
+
+  /* ---------- Diagram ---------- */
+  figure.diagram {
+    margin: 1.6rem 0 2rem;
+    padding: 1.4rem 1.2rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+  }
+  figure.diagram svg { display: block; width: 100%; height: auto; max-width: 900px; margin: 0 auto; }
+  figure.diagram figcaption {
+    margin-top: 0.9rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-align: center;
+  }
+  .diag-legend {
+    display: flex;
+    justify-content: center;
+    gap: 1.6rem;
+    flex-wrap: wrap;
+    font-size: 0.8rem;
+    margin-top: 0.6rem;
+    color: var(--text-muted);
+  }
+  .diag-legend span { display: inline-flex; align-items: center; gap: 0.45em; }
+  .diag-legend i { width: 0.9em; height: 0.14em; display: inline-block; border-radius: 2px; }
+
+  /* ---------- Checklist ---------- */
+  ul.checklist { list-style: none; padding: 0; margin: 0 0 1.2rem; }
+  ul.checklist li {
+    display: flex;
+    gap: 0.7rem;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.95rem;
+  }
+  ul.checklist li:last-child { border-bottom: none; }
+  ul.checklist .box {
+    flex: none;
+    width: 1.05em;
+    height: 1.05em;
+    margin-top: 0.2em;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 4px;
+  }
+
+  ol.open-q { padding-left: 0; list-style: none; counter-reset: q; margin: 0 0 1rem; }
+  ol.open-q li {
+    counter-increment: q;
+    display: flex;
+    gap: 0.9rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  ol.open-q li:last-child { border-bottom: none; }
+  ol.open-q li::before {
+    content: "Q" counter(q);
+    flex: none;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--accent-action);
+    background: var(--accent-action-bg);
+    border-radius: 5px;
+    padding: 0.15em 0.5em;
+    height: fit-content;
+  }
+
+  hr.rule {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 3.6rem 0 2.4rem;
+  }
+
+  footer.doc-footer {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { scroll-behavior: auto !important; }
+  }
+</style>
+
+<div class="page">
+
+  <header class="doc-header">
+    <p class="eyebrow">BioScan Browser · BioChat</p>
+    <h1 class="doc-title">指令路由设计</h1>
+    <p class="doc-sub">聊天机器人不该只回答问题——当用户明确想“看记录”时，它要能带着筛选条件，把你直接送到 Search 页面。</p>
+    <dl class="meta-row">
+      <div class="meta-item"><dt>状态</dt><dd><span class="status-pill">草案 · 待评审</span></dd></div>
+      <div class="meta-item"><dt>版本</dt><dd>v0.1</dd></div>
+      <div class="meta-item"><dt>日期</dt><dd>2026-08-19</dd></div>
+      <div class="meta-item"><dt>相关方</dt><dd>Hailee · Angel Chang</dd></div>
+      <div class="meta-item"><dt>涉及仓库</dt><dd>bioscan-browser · browser-backend</dd></div>
+    </dl>
+  </header>
+
+  <nav class="toc" aria-label="目录">
+    <p>目录</p>
+    <ol>
+      <li><a href="#bg"><span>1</span>背景</a></li>
+      <li><a href="#goal"><span>2</span>目标</a></li>
+      <li><a href="#current"><span>3</span>现状与缺口</a></li>
+      <li><a href="#design"><span>4</span>核心设计：两根轴</a></li>
+      <li><a href="#modules"><span>5</span>模块职责</a></li>
+      <li><a href="#flow"><span>6</span>端到端流程</a></li>
+      <li><a href="#api"><span>7</span>响应结构</a></li>
+      <li><a href="#edge"><span>8</span>边界情况</a></li>
+      <li><a href="#open"><span>9</span>待确认问题</a></li>
+      <li><a href="#accept"><span>10</span>验收标准</a></li>
+    </ol>
+  </nav>
+
+  <section id="bg">
+    <p class="section-num">1</p>
+    <h2>背景</h2>
+    <p>
+      BioChat 目前只会用文字回答生物多样性问题——统计类问题（数量、排名、均值）从 Solr 拼真实数字，描述类问题
+      （“What are silverfish?”）走 OpenSearch 检索 + LLM 生成带引用的说明。不管问的是什么，聊天框里出来的
+      永远只是一段话，用户想再看具体标本记录，得自己手动去 Search 页面重新筛选一遍。
+    </p>
+    <p>
+      这份文档记录的是：如何让聊天机器人在识别出“用户想看具体记录”时，直接带着筛选条件把用户带到 Search 页面。
+    </p>
+  </section>
+
+  <section id="goal">
+    <p class="section-num">2</p>
+    <h2>目标</h2>
+    <p>与 Angel Chang 确认过的两个具体场景：</p>
+    <blockquote>
+      <p>“How many Phoridae specimens in Costa Rica?” — 这类问法不必自动执行跳转，可以先给答案，附带一个后续
+      选项。</p>
+      <p>“Show me the Phoridae specimens in Costa Rica” — 这类问法应该直接跳转到 Search 页面，自动应用
+      <code>family: Phoridae</code>、<code>country: Costa Rica</code> 两个筛选条件，展示真实匹配的记录。</p>
+      <cite>—— Angel Chang，聊天记录，2026-08</cite>
+    </blockquote>
+    <p>
+      关键在于：两句话问的信息完全一样（同一批标本），但表达方式不同，期望的产出形态也不同。这不是简单的
+      “加一个新问题类型”，而是要在现有系统上再加一根判断轴。
+    </p>
+  </section>
+
+  <section id="current">
+    <p class="section-num">3</p>
+    <h2>现状与缺口</h2>
+    <p>
+      分类 LLM（<code>hybrid_query_router.py</code>）目前把每个问题归到 6 类之一，全部只产出文字：
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="mono">query_type</th><th>典型问法</th><th>数据来源</th><th>是否过生成式 LLM</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">count</td><td>How many Phoridae in Costa Rica?</td><td>Solr</td><td>否，模板拼字符串</td></tr>
+          <tr><td class="mono">list</td><td>List all families in Canada</td><td>Solr facet</td><td>否</td></tr>
+          <tr><td class="mono">top</td><td>Which country has the most Phoridae?</td><td>Solr facet</td><td>否</td></tr>
+          <tr><td class="mono">aggregate</td><td>Average elevation for Diptera?</td><td>Solr stats</td><td>否</td></tr>
+          <tr><td class="mono">distribution</td><td>Specimen counts by country</td><td>Solr facet</td><td>否</td></tr>
+          <tr><td class="mono">description</td><td>What are silverfish?</td><td>OpenSearch 检索</td><td>是，带引用生成</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      缺口很直接：这 6 类里没有一类是“把实际标本记录带到 Search 页展示”。“Show me the Phoridae specimens in
+      Costa Rica”这种问法目前会被硬塞进 <code>list</code> 或 <code>count</code>，只能吐一句文字，触发不了跳转。
+    </p>
+  </section>
+
+  <section id="design">
+    <p class="section-num">4</p>
+    <h2>核心设计：两根正交轴</h2>
+    <p>
+      最初的思路是“新增第 7 个 query_type”，但站不住——“统计类”和“描述类”问题本身也可能带指令语气（“Show me
+      how many…”仍然只是要个数字）。真正要判断的是两件独立的事，需要拆成两根轴，分别由分类 LLM 一次性输出：
+    </p>
+    <div class="axis-grid">
+      <div class="axis-card content">
+        <h4><span class="tag tag-content">内容轴</span> query_type</h4>
+        <p>用户想要哪种内容——决定去哪查数据、答案文字怎么来。不变，仍是原来 6 选 1。</p>
+        <ul>
+          <li>count / list / top / aggregate / distribution</li>
+          <li>description</li>
+        </ul>
+      </div>
+      <div class="axis-card action">
+        <h4><span class="tag tag-action">动作轴</span> display_intent</h4>
+        <p>这段回答之外，要不要顺带触发一次跳转——新增，3 选 1。</p>
+        <ul>
+          <li><code>none</code> — 无可跳转的筛选条件</li>
+          <li><code>suggest</code> — 附带可选的“查看记录”按钮</li>
+          <li><code>auto_navigate</code> — 直接跳转</li>
+        </ul>
+      </div>
+    </div>
+    <p>
+      两轴互不影响：<code>query_type</code> 决定聊天框里那句话怎么生成，<code>display_intent</code> 决定要不要在
+      那句话旁边附加一个跳转动作。<code>filters</code>（<code>family</code>/<code>country</code> 等实体）本身是
+      所有 6 类内容都会抽取的通用产物，动作轴只是把它多利用了一次。
+    </p>
+  </section>
+
+  <section id="modules">
+    <p class="section-num">5</p>
+    <h2>模块职责</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>模块</th><th>职责</th><th>状态</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Clients</td>
+            <td>聊天面板发问句、展示回答；命中 <code>action</code> 时渲染按钮或直接调用 <code>navigate()</code> 跳转 Search 页</td>
+            <td><span class="tag tag-existing">已有</span></td>
+          </tr>
+          <tr>
+            <td>Interface</td>
+            <td><code>/v2/chat</code> 网关，协调各服务，把 answer_text 与 action 合并成一个响应</td>
+            <td><span class="tag tag-existing">已有</span>，需扩展响应字段</td>
+          </tr>
+          <tr>
+            <td>Query Parsing Service</td>
+            <td>分类 LLM，一次性输出 <code>query_type</code> + <code>filters</code> + <code>display_intent</code></td>
+            <td><span class="tag tag-existing">已有</span>，需新增 display_intent 维度</td>
+          </tr>
+          <tr>
+            <td>Answer Generation Service</td>
+            <td>按 query_type 生成正文文字——统计类查 Solr 套模板，描述类查 OpenSearch 后走生成 LLM</td>
+            <td><span class="tag tag-existing">已有</span>，逻辑不变</td>
+          </tr>
+          <tr>
+            <td>Interaction Service</td>
+            <td>仅在描述类内部被调用：识别捕食/寄生/传粉等生态学问题，把 GloBI 文档优先排到检索结果前面</td>
+            <td><span class="tag tag-existing">已有</span>，原样复用</td>
+          </tr>
+          <tr>
+            <td>Instruction Route Service</td>
+            <td>依据 display_intent 决定要不要查库校验 filters、要不要组装跳转 action</td>
+            <td><span class="tag tag-new">新增</span></td>
+          </tr>
+          <tr>
+            <td>DB</td>
+            <td>Solr（标本元数据，统计类 + 校验共用）、OpenSearch（知识库检索，描述类专用）</td>
+            <td><span class="tag tag-existing">已有</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="flow">
+    <p class="section-num">6</p>
+    <h2>端到端流程</h2>
+    <p>
+      一条问句进来后分成两条并行支路：左上是原有的“答案怎么来”，左下是新增的“要不要跳转”。两条支路都可能
+      用到 DB，最后在 Interface 汇合成一个响应。
+    </p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 900 470" role="img" aria-label="用户问句先进入 Interface 再到 Query Parsing Service；解析结果分成两条支路：query_type 和 filters 送去 Answer Generation Service 查 Solr 或 OpenSearch 生成正文；display_intent 和 filters 送去 Instruction Route Service 查 Solr 校验并组装跳转动作；两条支路各自把 answer_text 和 action 送回 Interface，合并成一个响应返回给 Client。">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="currentColor" />
+          </marker>
+          <marker id="arrowContent" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" style="fill:var(--accent-content)" />
+          </marker>
+          <marker id="arrowAction" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" style="fill:var(--accent-action)" />
+          </marker>
+        </defs>
+
+        <g font-family="JetBrains Mono, monospace" font-size="12">
+
+          <!-- Client -->
+          <rect x="16" y="190" width="108" height="90" rx="8" fill="none" stroke="currentColor" stroke-width="1.4"/>
+          <text x="70" y="240" text-anchor="middle" font-size="13" font-weight="600">Client</text>
+
+          <!-- Interface -->
+          <rect x="168" y="190" width="118" height="90" rx="8" fill="none" stroke="currentColor" stroke-width="1.4"/>
+          <text x="227" y="235" text-anchor="middle" font-size="13" font-weight="600">Interface</text>
+          <text x="227" y="252" text-anchor="middle" fill="currentColor" opacity="0.6" font-size="10.5">/v2/chat</text>
+
+          <!-- Query Parsing -->
+          <rect x="330" y="190" width="150" height="90" rx="8" fill="none" stroke="currentColor" stroke-width="1.4"/>
+          <text x="405" y="228" text-anchor="middle" font-size="12" font-weight="600">Query Parsing</text>
+          <text x="405" y="244" text-anchor="middle" font-size="12" font-weight="600">Service</text>
+          <text x="405" y="262" text-anchor="middle" fill="currentColor" opacity="0.6" font-size="10">分类 LLM</text>
+
+          <!-- Answer Generation -->
+          <rect x="524" y="40" width="180" height="90" rx="8" fill="none" style="stroke:var(--accent-content)" stroke-width="1.6"/>
+          <text x="614" y="76" text-anchor="middle" font-size="12" font-weight="600" style="fill:var(--accent-content)">Answer Generation</text>
+          <text x="614" y="92" text-anchor="middle" font-size="12" font-weight="600" style="fill:var(--accent-content)">Service</text>
+          <text x="614" y="110" text-anchor="middle" fill="currentColor" opacity="0.6" font-size="10">模板 / RAG + LLM</text>
+
+          <!-- Instruction Route -->
+          <rect x="524" y="340" width="180" height="90" rx="8" fill="none" style="stroke:var(--accent-action)" stroke-width="1.6"/>
+          <text x="614" y="378" text-anchor="middle" font-size="12" font-weight="600" style="fill:var(--accent-action)">Instruction Route</text>
+          <text x="614" y="394" text-anchor="middle" font-size="12" font-weight="600" style="fill:var(--accent-action)">Service</text>
+          <text x="614" y="412" text-anchor="middle" fill="currentColor" opacity="0.6" font-size="10">新增 · 校验 + 组装 action</text>
+
+          <!-- DB -->
+          <rect x="756" y="190" width="128" height="90" rx="8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="3 3"/>
+          <text x="820" y="228" text-anchor="middle" font-size="12" font-weight="600">DB</text>
+          <text x="820" y="245" text-anchor="middle" fill="currentColor" opacity="0.6" font-size="10">Solr</text>
+          <text x="820" y="260" text-anchor="middle" fill="currentColor" opacity="0.6" font-size="10">OpenSearch</text>
+
+          <!-- Client -> Interface -->
+          <line x1="124" y1="222" x2="164" y2="222" stroke="currentColor" stroke-width="1.4" marker-end="url(#arrow)"/>
+          <text x="144" y="212" text-anchor="middle" font-size="10.5">问句</text>
+
+          <!-- Interface -> Query Parsing -->
+          <line x1="286" y1="222" x2="326" y2="222" stroke="currentColor" stroke-width="1.4" marker-end="url(#arrow)"/>
+          <text x="306" y="212" text-anchor="middle" font-size="10.5">query text</text>
+
+          <!-- Query Parsing -> Answer Generation -->
+          <path d="M 480,208 L 520,120" fill="none" style="stroke:var(--accent-content)" stroke-width="1.6" marker-end="url(#arrowContent)"/>
+          <text x="486" y="150" text-anchor="middle" font-size="10.5" style="fill:var(--accent-content)">query_type</text>
+          <text x="486" y="163" text-anchor="middle" font-size="10.5" style="fill:var(--accent-content)">+ filters</text>
+
+          <!-- Query Parsing -> Instruction Route -->
+          <path d="M 480,255 L 520,352" fill="none" style="stroke:var(--accent-action)" stroke-width="1.6" marker-end="url(#arrowAction)"/>
+          <text x="486" y="300" text-anchor="middle" font-size="10.5" style="fill:var(--accent-action)">display_intent</text>
+          <text x="486" y="313" text-anchor="middle" font-size="10.5" style="fill:var(--accent-action)">+ filters</text>
+
+          <!-- Answer Generation <-> DB -->
+          <path d="M 704,100 L 752,196" fill="none" style="stroke:var(--accent-content)" stroke-width="1.4" marker-end="url(#arrowContent)" marker-start="url(#arrowContent)"/>
+          <text x="758" y="140" text-anchor="middle" font-size="10.5" style="fill:var(--accent-content)">查询</text>
+          <text x="758" y="153" text-anchor="middle" font-size="10.5" style="fill:var(--accent-content)">/ 数据</text>
+
+          <!-- Instruction Route <-> DB -->
+          <path d="M 704,368 L 752,272" fill="none" style="stroke:var(--accent-action)" stroke-width="1.4" marker-end="url(#arrowAction)" marker-start="url(#arrowAction)"/>
+          <text x="758" y="330" text-anchor="middle" font-size="10.5" style="fill:var(--accent-action)">校验 filters</text>
+          <text x="758" y="343" text-anchor="middle" font-size="10.5" style="fill:var(--accent-action)">/ numFound</text>
+
+          <!-- Answer Generation -> Interface -->
+          <path d="M 524,110 C 380,150 300,170 246,186" fill="none" style="stroke:var(--accent-content)" stroke-width="1.6" marker-end="url(#arrowContent)"/>
+          <text x="400" y="145" text-anchor="middle" font-size="10.5" style="fill:var(--accent-content)">answer_text</text>
+
+          <!-- Instruction Route -> Interface -->
+          <path d="M 524,360 C 380,320 300,300 246,284" fill="none" style="stroke:var(--accent-action)" stroke-width="1.6" marker-end="url(#arrowAction)"/>
+          <text x="400" y="330" text-anchor="middle" font-size="10.5" style="fill:var(--accent-action)">action | null</text>
+
+          <!-- Interface -> Client (final) -->
+          <line x1="168" y1="248" x2="128" y2="248" stroke="currentColor" stroke-width="2"/>
+          <path d="M 168,248 L 128,248" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#arrow)"/>
+          <text x="148" y="266" text-anchor="middle" font-size="10.5" font-weight="600">{ answer_text, action }</text>
+
+        </g>
+      </svg>
+      <figcaption>
+        分类结果分流成内容轴（上，青色）和动作轴（下，琥珀色）两条支路，各自按需查询 DB，
+        再于 Interface 汇合成一个响应返回给 Client。
+      </figcaption>
+      <div class="diag-legend">
+        <span><i style="background:var(--accent-content)"></i>内容轴 · Answer Generation</span>
+        <span><i style="background:var(--accent-action)"></i>动作轴 · Instruction Route（新增）</span>
+      </div>
+    </figure>
+
+    <h3>逐步说明</h3>
+    <ol class="plain">
+      <li>Client 发送原始问句到 Interface（<code>/v2/chat</code>）。</li>
+      <li>Interface 转发给 Query Parsing Service，LLM 一次性输出 <code>query_type</code> / <code>filters</code> / <code>display_intent</code>。</li>
+      <li>Answer Generation Service 按 <code>query_type</code> 生成正文：统计类查 Solr 套模板，描述类查 OpenSearch 后过生成 LLM。</li>
+      <li>若 <code>display_intent ≠ none</code>，Instruction Route Service 用 <code>filters</code> 去 Solr 校验是否有匹配记录；统计类可直接复用 Answer Generation 那次查询已拿到的 <code>numFound</code>，描述类需要单独查一次。</li>
+      <li>有匹配 → 组装 <code>action</code>（<code>suggest</code> 附按钮，<code>auto_navigate</code> 直接跳转）；无匹配 → <code>action</code> 为 <code>null</code>。</li>
+      <li>Interface 合并 <code>answer_text</code> 与 <code>action</code>，一次性返回给 Client。</li>
+    </ol>
+  </section>
+
+  <section id="api">
+    <p class="section-num">7</p>
+    <h2>响应结构</h2>
+    <p>Query Parsing Service 的分类输出（内部）：</p>
+    <pre><code>{
+  "query_type": "count",
+  "filters": { "family": "Phoridae", "country": "Costa Rica" },
+  "display_intent": "suggest"
+}</code></pre>
+
+    <p><code>/v2/chat</code> 返回给前端的最终响应——在现有 OpenAI 兼容字段基础上，新增 <code>bioscan_action</code>：</p>
+    <pre><code>{
+  "choices": [{
+    "message": {
+      "role": "assistant",
+      "content": "Found 42 Phoridae specimens in Costa Rica."
+    }
+  }],
+  "bioscan_action": {
+    "type": "auto_navigate",        // suggest | auto_navigate
+    "filters": { "family": "Phoridae", "country": "Costa Rica" },
+    "result_count": 42
+  }
+}</code></pre>
+    <p>
+      <code>bioscan_action</code> 为 <code>null</code> 时前端只渲染 <code>content</code>；<code>type</code> 为
+      <code>suggest</code> 时渲染一个“查看记录”按钮，点击后才拼 URL 跳转；为 <code>auto_navigate</code> 时前端
+      直接用 <code>filters</code> 拼 Search 页 URL query string 并调用 <code>navigate()</code>。字段名
+      （<code>family</code> / <code>country</code> / <code>order</code> / <code>genus</code> / <code>species</code>）
+      与 Search 页 <code>FILTER_TYPES</code> 已完全对齐，不需要额外映射。
+    </p>
+  </section>
+
+  <section id="edge">
+    <p class="section-num">8</p>
+    <h2>边界情况</h2>
+    <ul>
+      <li><strong>filters 校验为 0 条匹配</strong>——例如 LLM 抽取的国名拼写有误。<code>action</code> 置为
+        <code>null</code>，正文补一句“未找到匹配记录”，不跳转。</li>
+      <li><strong>描述类 + 明确指令同时出现</strong>——如“Tell me about Phoridae, show me some in Costa Rica”。
+        <code>query_type=description</code> 正常走 RAG 生成说明文字，<code>display_intent=auto_navigate</code>
+        触发单独一次 Solr 校验查询（因为 description 路径本身不碰 Solr）。</li>
+      <li><strong>没有可用 filters 的展示型问法</strong>——如“show me some interesting specimens”，没有具体
+        taxon/country 可抽取。<code>display_intent</code> 应退回 <code>none</code>，不强行跳转到无筛选的
+        Search 页。</li>
+    </ul>
+  </section>
+
+  <section id="open">
+    <p class="section-num">9</p>
+    <h2>待确认的开放问题</h2>
+    <ol class="open-q">
+      <li>
+        <div>
+          <strong>display_intent 的判定边界</strong><br>
+          哪些措辞算“明确要求查看”（auto_navigate）、哪些只算“可以顺带提供入口”（suggest）？需要在分类 prompt
+          里写清楚区分规则，并用真实问法样本跑一轮准确率评估。
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>0 匹配时的兜底文案</strong><br>
+          是直接说“未找到”，还是尝试放宽某个筛选条件再问用户一次（比如去掉 country 只按 family 查）？
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>suggest 按钮的交互归属</strong><br>
+          用户点击“查看记录”按钮后的跳转逻辑放在 Clients 内部处理即可，还是也要经过 Interface 记一次日志？
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section id="accept">
+    <p class="section-num">10</p>
+    <h2>验收标准</h2>
+    <ul class="checklist">
+      <li><span class="box"></span>“Show me the Phoridae specimens in Costa Rica” 类问法能直接跳转到 Search
+        页，且 <code>family</code>、<code>country</code> 筛选条件已自动应用</li>
+      <li><span class="box"></span>“How many Phoridae specimens in Costa Rica?” 类问法只返回文字答案，附带
+        一个可选的“查看记录”入口，不自动跳转</li>
+      <li><span class="box"></span>count/list/top/aggregate/distribution/description 六类问法的现有行为
+        不受影响，回归测试全部通过</li>
+      <li><span class="box"></span>filters 在 Solr 中查无匹配时，不触发跳转，聊天框给出明确提示</li>
+      <li><span class="box"></span><code>/v2/chat</code> 响应新增的 <code>bioscan_action</code> 字段不破坏
+        现有 OpenAI 兼容客户端</li>
+    </ul>
+  </section>
+
+  <hr class="rule">
+
+  <footer class="doc-footer">
+    根据 2026-08-19 与 Angel Chang 的讨论及既有 <code>browser-backend/biochat</code> 代码整理。草案阶段，
+    细节以评审后的结论为准。
+  </footer>
+
+</div>
