@@ -1,3 +1,4 @@
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { useChatMessages } from '@/hooks/chatbot/useChatMessages'
 import { PATHS } from '@/lib/constants'
@@ -39,7 +40,10 @@ export const FloatingChat = () => {
             role="separator"
           />
           <div className="flex items-center justify-between border-b bg-background px-4 py-3">
-            <span className="text-sm font-medium">Chatbot</span>
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium">Chatbot</span>
+              <Badge variant="outline">Experimental</Badge>
+            </div>
             <Button
               aria-label="Close chat"
               className="h-7 w-7"

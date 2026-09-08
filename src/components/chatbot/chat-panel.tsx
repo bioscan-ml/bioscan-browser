@@ -1,12 +1,10 @@
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Textarea } from '@/components/ui/textarea'
 import { ChatMessage } from '@/hooks/chatbot/useSendMessage'
 import { cn } from '@/lib/cn'
-import { getSearchPathFromFilters } from '@/lib/getSearchPathFromFilters'
-import { Loader2Icon, SearchIcon, SendIcon } from 'lucide-react'
+import { ExternalLinkIcon, Loader2Icon, SendIcon } from 'lucide-react'
 import { FormEvent } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 type ChatPanelProps = {
   messages: ChatMessage[]
@@ -77,47 +75,51 @@ export const ChatPanel = ({
   )
 }
 
-const ChatBubble = ({ message }: { message: ChatMessage }) => {
-  const navigate = useNavigate()
-  const suggestion =
-    message.bioscanAction?.type === 'suggest' ? message.bioscanAction : null
+// Copy shown in place of a link when the backend's `link.status` isn't
+// "available" -- lets the user tell "this question just doesn't have
+// browsable records" apart from "something went wrong".
+const LINK_PLACEHOLDER_COPY: Record<string, string> = {
+  no_filters: 'No specific filters found for this question.',
+  not_applicable: 'No related records for this question.',
+}
 
-  return (
+const ChatBubble = ({ message }: { message: ChatMessage }) => (
+  <div
+    className={cn(
+      'flex',
+      message.role === 'user' ? 'justify-end' : 'justify-start',
+    )}
+  >
     <div
       className={cn(
-        'flex',
-        message.role === 'user' ? 'justify-end' : 'justify-start',
+        'max-w-[80%] rounded-md px-4 py-2 text-sm',
+        message.error
+          ? 'bg-destructive/10 text-destructive border border-destructive/30'
+          : message.role === 'user'
+            ? 'bg-primary text-primary-foreground'
+            : 'bg-background border',
       )}
     >
-      <div
-        className={cn(
-          'max-w-[80%] rounded-md px-4 py-2 text-sm',
-          message.error
-            ? 'bg-destructive/10 text-destructive border border-destructive/30'
-            : message.role === 'user'
-              ? 'bg-primary text-primary-foreground'
-              : 'bg-background border',
-        )}
-      >
-        {message.content}
-        {suggestion ? (
-          <Button
-            className="mt-2 h-7 gap-1.5 px-2 text-xs"
-            onClick={() =>
-              navigate(getSearchPathFromFilters(suggestion.filters))
-            }
-            size="sm"
-            variant="outline"
-          >
-            <SearchIcon className="h-3 w-3" />
-            View{' '}
-            {suggestion.result_count !== undefined
-              ? `${suggestion.result_count.toLocaleString()} `
-              : ''}
-            {suggestion.result_count === 1 ? 'record' : 'records'}
-          </Button>
-        ) : null}
-      </div>
+      {message.content}
+      {message.link?.status === 'available' ? (
+        <a
+          className={cn(
+            buttonVariants({ variant: 'outline', size: 'sm' }),
+            'mt-2 h-7 gap-1.5 px-2 text-xs',
+          )}
+          href={message.link.url}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <ExternalLinkIcon className="h-3 w-3" />
+          {message.link.label}
+        </a>
+      ) : null}
+      {message.link && message.link.status !== 'available' ? (
+        <p className="text-muted-foreground mt-2 text-xs italic">
+          {LINK_PLACEHOLDER_COPY[message.link.status]}
+        </p>
+      ) : null}
     </div>
-  )
-}
+  </div>
+)

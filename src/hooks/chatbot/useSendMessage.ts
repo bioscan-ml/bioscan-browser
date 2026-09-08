@@ -5,22 +5,23 @@ export type ChatMessage = {
   role: 'user' | 'assistant'
   content: string
   error?: boolean
-  bioscanAction?: BioscanAction
+  link?: ChatLink
 }
 
-// Navigation hint from BioChat, independent of the answer text: whether the
-// Search page should be offered/opened with `filters` applied. `filters` uses
-// the same keys as the Search page's filter params (family/order/genus/
-// species/country), so it can be passed straight through unchanged.
-export type BioscanAction = {
-  type: 'none' | 'suggest' | 'auto_navigate'
-  filters: Record<string, string>
-  result_count?: number
-}
+// Optional "view these records" link from BioChat, independent of the
+// answer text. Only count/list/top/aggregate/distribution questions that
+// resolved to concrete filters get a real, clickable link ("available");
+// everything else carries a fixed status so the UI can show a placeholder
+// instead of guessing from the answer text. `url` is a ready-to-use Search
+// page path (already built server-side), so the frontend never needs to
+// know the underlying filter keys.
+export type ChatLink =
+  | { status: 'available'; label: string; url: string }
+  | { status: 'no_filters' | 'not_applicable' }
 
 type ChatCompletionResponse = {
   choices?: { message?: { content?: string } }[]
-  bioscan_action?: BioscanAction
+  link?: ChatLink
 }
 
 export const useSendMessage = () => {
@@ -46,7 +47,7 @@ export const useSendMessage = () => {
         throw Error()
       }
 
-      return { reply, bioscanAction: data.bioscan_action }
+      return { reply, link: data.link }
     },
   })
 

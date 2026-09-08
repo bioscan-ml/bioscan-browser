@@ -18,14 +18,6 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
-      // TEMP (local manual testing only, revert before commit): local BioChat
-      // dev server so the chat UI exercises the new bioscan_action changes
-      // instead of the deployed backend.
-      '/dev-biochat': {
-        target: 'http://127.0.0.1:5057',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/dev-biochat/, ''),
-      },
     },
   },
 })
