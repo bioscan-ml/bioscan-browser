@@ -62,7 +62,7 @@ npm run dev
 
 The app will now be available in a browser on http://localhost:5173/. Hot reload will be enabled by default.
 
-Reporting a record and the "Reported issues" list go through two [Netlify Functions](./netlify/functions) that hold the GitHub App key. `npm run dev` runs the frontend only, so those two features show their error states locally. To run the full flow, install the [Netlify CLI](https://docs.netlify.com/cli/get-started/), put the app's private key in `.env.local` as `GITHUB_APP_PRIVATE_KEY` (that file is gitignored), and start the site with `netlify dev` instead of `npm run dev`.
+Reporting a record and the "Reported issues" list go through two [Netlify Functions](./netlify/functions) that hold the GitHub App key. `npm run dev` runs the frontend only, so those two features show their error states locally. To run the full flow, install the [Netlify CLI](https://docs.netlify.com/cli/get-started/), put the app's private key in `.env.local` as `GITHUB_APP_PRIVATE_KEY` (that file is gitignored), and start the site with `netlify dev` instead of `npm run dev` (add `--offline` if the checkout is not linked to the Netlify site, otherwise the CLI prompts to log in).
 
 ### Build for production
 
