@@ -1,4 +1,5 @@
-import { BACKEND_BASE_PATH, REQUEST_TIMEOUT } from '@/lib/constants'
+import { BACKEND_BASE_PATH } from '@/lib/apiPaths'
+import { REQUEST_TIMEOUT } from '@/lib/constants'
 import { filtersToQuery } from '@/lib/filtersToQuery'
 import { getFetchUrl } from '@/lib/getFetchUrl'
 import { Doc } from '@/types/response-data'

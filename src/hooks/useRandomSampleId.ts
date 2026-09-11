@@ -1,4 +1,5 @@
-import { BACKEND_BASE_PATH, REQUEST_TIMEOUT } from '@/lib/constants'
+import { BACKEND_BASE_PATH } from '@/lib/apiPaths'
+import { REQUEST_TIMEOUT } from '@/lib/constants'
 import { useQuery } from '@tanstack/react-query'
 
 const URL = `${BACKEND_BASE_PATH}/random-id`

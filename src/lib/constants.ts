@@ -66,10 +66,6 @@ export const FILTER_TYPES: { label: string; key: string }[] = [
 
 export const APP_URL = 'https://browser.bioscan-ml.org'
 
-export const SOLR_BASE_PATH = `${import.meta.env.VITE_API_URL}/solr/bioscan5m/select`
-
-export const BACKEND_BASE_PATH = `${import.meta.env.VITE_API_URL}/bioscan-browser`
-
 export const IMAGES_BASE_PATH =
   'https://annotations2.cs.sfu.ca/data/bioscan/bioscan5m/images'
 
