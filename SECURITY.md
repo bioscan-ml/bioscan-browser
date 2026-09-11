@@ -6,8 +6,8 @@ Please do not open a public issue for security problems.
 
 Use GitHub's private vulnerability reporting instead: open the
 [Security tab](https://github.com/bioscan-ml/bioscan-browser/security) of this
-repository and choose **Report a vulnerability**. Only the maintainers can see
-the report.
+repository and choose **Report a vulnerability**. The report stays private
+between you and the maintainers until a fix is published.
 
 Include what you found, how to reproduce it, and what you think the impact is.
 We will acknowledge the report as soon as we can. This is a research project

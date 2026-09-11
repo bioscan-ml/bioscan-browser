@@ -139,7 +139,7 @@ If you use the BIOSCAN Browser in your work, please cite the BIOSCAN-5M paper:
 }
 ```
 
-To credit the browser itself, use the **Cite this repository** button on the GitHub repository page, which reads the [CITATION.cff](./CITATION.cff) file, or use:
+The **Cite this repository** button on the GitHub repository page reads [CITATION.cff](./CITATION.cff) and produces the paper citation above. To credit the browser itself, use:
 
 ```bibtex
 @misc{viklund2024bioscanbrowser,
