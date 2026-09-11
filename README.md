@@ -117,6 +117,42 @@ See [CONTRIBUTING](./CONTRIBUTING.md) for more information about how to contribu
 
 All project funders are listed on the [about page](https://browser.bioscan-ml.org/about).
 
+## Citation
+
+If you use the BIOSCAN Browser in your work, please cite the BIOSCAN-5M paper:
+
+```bibtex
+@inproceedings{gharaee2024bioscan5m,
+    title={{BIOSCAN-5M}: A Multimodal Dataset for Insect Biodiversity},
+    booktitle={Advances in Neural Information Processing Systems},
+    author={Zahra Gharaee and Scott C. Lowe and ZeMing Gong and Pablo Millan Arias
+        and Nicholas Pellegrino and Austin T. Wang and Joakim Bruslund Haurum
+        and Iuliia Zarubiieva and Lila Kari and Dirk Steinke and Graham W. Taylor
+        and Paul Fieguth and Angel X. Chang
+    },
+    editor={A. Globerson and L. Mackey and D. Belgrave and A. Fan and U. Paquet and J. Tomczak and C. Zhang},
+    pages={36285--36313},
+    publisher={Curran Associates, Inc.},
+    year={2024},
+    volume={37},
+    url={https://proceedings.neurips.cc/paper_files/paper/2024/file/3fdbb472813041c9ecef04c20c2b1e5a-Paper-Datasets_and_Benchmarks_Track.pdf},
+}
+```
+
+To credit the browser itself, use the **Cite this repository** button on the GitHub repository page, which reads the [CITATION.cff](./CITATION.cff) file, or use:
+
+```bibtex
+@misc{viklund2024bioscanbrowser,
+    title={{BIOSCAN Browser}: A Web Interface to Navigate the {BIOSCAN-5M} Dataset},
+    author={Anna Viklund and Iuliia Zarubiieva and Matthew Sabia and Austin T. Wang
+        and Scott C. Lowe and Angel X. Chang and Graham W. Taylor
+    },
+    year={2024},
+    howpublished={\url{https://browser.bioscan-ml.org}},
+    note={Source code: \url{https://github.com/bioscan-ml/bioscan-browser}},
+}
+```
+
 ## Copyright and licence
 
 The BIOSCAN Browser code is licensed under [MIT](./LICENSE). For dataset copyright and licence information, see the [BIOSCAN-5M repository](https://github.com/bioscan-ml/BIOSCAN-5M).
