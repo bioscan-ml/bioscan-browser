@@ -1,20 +1,12 @@
 import { Doc } from '@/types/response-data'
 import { useMutation } from '@tanstack/react-query'
-import { App } from 'octokit'
-import { APP_ID, INSTALLATION_ID, OWNER, REPO } from './constants'
-import { ReportFormData } from './types'
 import {
-  generateIssueBody,
-  generateIssueLabels,
-  generateIssueTitle,
-} from '@/lib/generateIssue'
+  CreateIssueRequest,
+  CreateIssueResponse,
+  ReportFormData,
+} from './types'
 
-const PRIVATE_KEY = import.meta.env.VITE_GITHUB_APP_PRIVATE_KEY
-
-const app = new App({
-  appId: APP_ID,
-  privateKey: PRIVATE_KEY,
-})
+const ENDPOINT = '/.netlify/functions/github-report'
 
 export const useCreateIssue = () => {
   const { mutate, isPending, isSuccess, error, reset, data } = useMutation({
@@ -22,16 +14,27 @@ export const useCreateIssue = () => {
       formData: ReportFormData
       doc: Doc
       boldDoc?: unknown
-    }) => {
-      const octokit = await app.getInstallationOctokit(INSTALLATION_ID)
-
-      return await octokit.rest.issues.create({
-        owner: OWNER,
-        repo: REPO,
-        title: generateIssueTitle(data),
-        body: generateIssueBody(data),
-        labels: generateIssueLabels(data),
+    }): Promise<CreateIssueResponse> => {
+      // Only the form fields are sent. The function looks the record up
+      // itself, so the ID the user typed is what gets reported.
+      const body: CreateIssueRequest = {
+        id: data.formData.id,
+        type: data.formData.type,
+        comments: data.formData.comments,
+        name: data.formData.name,
+        gitHubUser: data.formData.gitHubUser,
+      }
+      const res = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
       })
+
+      if (!res.ok) {
+        throw new Error(`Report submission failed with status ${res.status}`)
+      }
+
+      return res.json()
     },
   })
 

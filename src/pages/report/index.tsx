@@ -83,7 +83,7 @@ export const Report = () => {
               setId(null)
               reset()
             }}
-            url={data?.data.html_url}
+            url={data?.html_url}
           />
         ) : (
           <ReportForm
