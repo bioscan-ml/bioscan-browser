@@ -2,11 +2,11 @@ import { useQuery } from '@tanstack/react-query'
 import { ListIssuesResponse } from './types'
 
 const ENDPOINT = '/.netlify/functions/github-issues'
-const QUERY_KEY = 'issues'
+export const ISSUES_QUERY_KEY = 'issues'
 
 export const useListIssues = (id: string) => {
   const { isPending, error, data } = useQuery({
-    queryKey: [QUERY_KEY, id],
+    queryKey: [ISSUES_QUERY_KEY, id],
     queryFn: async (): Promise<ListIssuesResponse> => {
       const res = await fetch(`${ENDPOINT}?id=${encodeURIComponent(id)}`)
 
@@ -16,7 +16,8 @@ export const useListIssues = (id: string) => {
 
       return res.json()
     },
-    staleTime: 5 * 60 * 1000,
+    // Matches the one-minute CDN cache window on the function.
+    staleTime: 60 * 1000,
   })
 
   return { issues: data?.issues, isPending, error }

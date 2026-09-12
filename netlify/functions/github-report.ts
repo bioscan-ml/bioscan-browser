@@ -28,7 +28,7 @@ const SOLR_SELECT_URL = 'https://annotations2.cs.sfu.ca/solr/bioscan5m/select'
 const BOLD_API_URL = 'https://portal.boldsystems.org/api'
 const BOLD_TIMEOUT = 2500
 const MAX_BODY_BYTES = 32 * 1024
-const GITHUB_USER_PATTERN = /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?$/
+const GITHUB_USER_PATTERN = /^[A-Za-z0-9](?:-?[A-Za-z0-9]){0,38}$/
 const REPORT_TYPE_TITLES = new Set(REPORT_TYPES.map(({ title }) => title))
 
 // Creates issues as the app; tight per-visitor cap. A person files one or two.
@@ -43,6 +43,15 @@ export const config: Config = {
 export default async (req: Request) => {
   if (req.method !== 'POST') {
     return json(405, { error: 'Method not allowed' }, { Allow: 'POST' })
+  }
+
+  // A cross-origin page can send a no-preflight text/plain POST from a
+  // visitor's browser; requiring JSON forces a CORS preflight, which this
+  // function does not answer.
+  const contentType = req.headers.get('content-type') ?? ''
+
+  if (!contentType.toLowerCase().startsWith('application/json')) {
+    return json(415, { error: 'Content-Type must be application/json' })
   }
 
   const text = await req.text()

@@ -1,14 +1,16 @@
 import { Doc } from '@/types/response-data'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   CreateIssueRequest,
   CreateIssueResponse,
   ReportFormData,
 } from './types'
+import { ISSUES_QUERY_KEY } from './useListIssues'
 
 const ENDPOINT = '/.netlify/functions/github-report'
 
 export const useCreateIssue = () => {
+  const queryClient = useQueryClient()
   const { mutate, isPending, isSuccess, error, reset, data } = useMutation({
     mutationFn: async (data: {
       formData: ReportFormData
@@ -35,6 +37,11 @@ export const useCreateIssue = () => {
       }
 
       return res.json()
+    },
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: [ISSUES_QUERY_KEY, variables.formData.id],
+      })
     },
   })
 

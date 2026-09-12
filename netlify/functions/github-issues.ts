@@ -16,10 +16,12 @@ import {
 
 const FUNCTION_NAME = 'github-issues'
 
-// Read-only lookup shown in every record dialog; generous per-visitor cap.
+// Read-only lookup shown in every record dialog; the cap matches GitHub's
+// thirty-per-minute search quota per installation so one visitor cannot
+// exhaust it alone.
 export const config: Config = {
   rateLimit: {
-    windowLimit: 60,
+    windowLimit: 30,
     windowSize: 60,
     aggregateBy: ['ip', 'domain'],
   },

@@ -305,8 +305,7 @@ const ReportForm = ({
               name="gitHubUser"
               rules={{
                 pattern: {
-                  value:
-                    /^(?:@?[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?)?$/,
+                  value: /^(?:@?[A-Za-z0-9](?:-?[A-Za-z0-9]){0,38})?$/,
                   message: ERROR_MESSAGES.GITHUB_USER,
                 },
               }}
