@@ -16,6 +16,16 @@ export const MENU_ITEMS: MenuItem[] = [
           experimental: true,
         },
       },
+
+      {
+        id: 'chatbot',
+        label: 'Chatbot',
+        to: PATHS.CHATBOT,
+        flags: {
+          experimental: true,
+        },
+      },
+
       { id: 'report', label: 'Report a problem', to: PATHS.REPORT },
       { id: 'style-guide', label: 'Style guide', to: PATHS.STYLE_GUIDE },
       {

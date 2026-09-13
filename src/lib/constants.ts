@@ -2,6 +2,7 @@ import { Doc } from '@/types/response-data'
 
 export const PATHS = {
   ABOUT: '/about',
+  CHATBOT: '/chatbot',
   FIND_SIMILAR: '/find-similar',
   HOME: '/',
   MY_BOOKMARKS: '/my-bookmarks',
