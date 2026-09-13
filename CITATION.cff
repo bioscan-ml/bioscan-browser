@@ -7,7 +7,7 @@ type: software
 license: MIT
 url: https://browser.bioscan-ml.org
 repository-code: https://github.com/bioscan-ml/bioscan-browser
-date-released: '2024-07-09'
+date-released: '2024-07-01'
 abstract: >-
   A web interface to explore and navigate the BIOSCAN-5M dataset, a
   large-scale multimodal insect biodiversity dataset of specimen images,
