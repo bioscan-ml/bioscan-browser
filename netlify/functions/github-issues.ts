@@ -1,5 +1,4 @@
 import type { Config } from '@netlify/functions'
-import { OWNER, REPO } from '../../src/hooks/github/constants'
 import type {
   IssueSummary,
   ListIssuesResponse,
@@ -11,6 +10,8 @@ import {
   json,
   logUpstreamError,
   notConfigured,
+  OWNER,
+  REPO,
   UPSTREAM_TIMEOUT,
 } from '../lib/github'
 

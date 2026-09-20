@@ -1,5 +1,4 @@
 import { App } from 'octokit'
-import { APP_ID, INSTALLATION_ID } from '../../src/hooks/github/constants'
 import type {
   CreateIssueResponse,
   ErrorResponse,
@@ -9,23 +8,36 @@ import type {
 export const ID_PATTERN = /^[A-Za-z0-9_-]{1,64}$/
 export const UPSTREAM_TIMEOUT = 5000
 
-const PRIVATE_KEY_ENV = 'GITHUB_APP_PRIVATE_KEY'
+const REQUIRED_ENV = [
+  'GITHUB_APP_ID',
+  'GITHUB_APP_INSTALLATION_ID',
+  'GITHUB_APP_PRIVATE_KEY',
+  'GITHUB_OWNER',
+  'GITHUB_REPO',
+]
+
+export const OWNER = process.env.GITHUB_OWNER ?? ''
+export const REPO = process.env.GITHUB_REPO ?? ''
 
 let app: App | undefined
 
-/** True when the private key is present. Checked before any upstream call. */
-export const isConfigured = () => Boolean(process.env[PRIVATE_KEY_ENV])
+const missingEnv = () => REQUIRED_ENV.filter((name) => !process.env[name])
+
+/** True when the GitHub settings are present. Checked before any upstream call. */
+export const isConfigured = () => missingEnv().length === 0
 
 /** Module-scoped singleton so Octokit reuses its installation token cache. */
 export const getInstallationOctokit = async () => {
   if (!app) {
     app = new App({
-      appId: APP_ID,
-      privateKey: process.env[PRIVATE_KEY_ENV] ?? '',
+      appId: process.env.GITHUB_APP_ID ?? '',
+      privateKey: process.env.GITHUB_APP_PRIVATE_KEY ?? '',
     })
   }
 
-  return app.getInstallationOctokit(INSTALLATION_ID)
+  return app.getInstallationOctokit(
+    Number(process.env.GITHUB_APP_INSTALLATION_ID),
+  )
 }
 
 export const json = (
@@ -39,7 +51,7 @@ export const json = (
   })
 
 export const notConfigured = (functionName: string) => {
-  console.error(`${functionName}: ${PRIVATE_KEY_ENV} is not set`)
+  console.error(`${functionName}: ${missingEnv().join(', ')} not set`)
 
   return json(500, { error: 'Server is not configured' })
 }
