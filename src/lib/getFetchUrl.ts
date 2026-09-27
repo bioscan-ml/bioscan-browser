@@ -1,4 +1,4 @@
-import { SOLR_BASE_PATH } from '@/lib/constants'
+import { SOLR_BASE_PATH } from '@/lib/apiPaths'
 import { Sort } from '@/types/settings'
 
 export const getFetchUrl = (params: {

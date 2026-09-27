@@ -1,11 +1,3 @@
-const APP_ID = 1471676
-
-const INSTALLATION_ID = 73295615
-
-const OWNER = 'bioscan-ml'
-
-const REPO = 'bioscan-5m'
-
 const REPORT_TYPES = [
   { title: 'No insect in the image', label: 'image' },
   { title: 'Insect is not clearly visible', label: 'image' },
@@ -30,11 +22,4 @@ const COMMENT_INSTRUCTIONS: { [label: string]: string } = {
     'Please be as detailed as possible about label change suggestions. What seems wrong? What would be correct? Why do you think this would be correct?',
 }
 
-export {
-  APP_ID,
-  INSTALLATION_ID,
-  OWNER,
-  REPO,
-  REPORT_TYPES,
-  COMMENT_INSTRUCTIONS,
-}
+export { REPORT_TYPES, COMMENT_INSTRUCTIONS }

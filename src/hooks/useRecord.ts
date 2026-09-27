@@ -1,4 +1,5 @@
-import { REQUEST_TIMEOUT, SOLR_BASE_PATH } from '@/lib/constants'
+import { SOLR_BASE_PATH } from '@/lib/apiPaths'
+import { REQUEST_TIMEOUT } from '@/lib/constants'
 import { filtersToQuery } from '@/lib/filtersToQuery'
 import { Doc } from '@/types/response-data'
 import { useQuery } from '@tanstack/react-query'

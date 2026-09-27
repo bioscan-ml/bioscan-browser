@@ -37,6 +37,7 @@ const ERROR_MESSAGES = {
   REQUIRED: 'This field is required.',
   NOT_FOUND: 'Could not find record, please try again.',
   UNKNOWN: 'Could not submit the report, please try again.',
+  GITHUB_USER: 'Enter a GitHub username, with or without a leading @.',
 }
 
 export const Report = () => {
@@ -83,7 +84,7 @@ export const Report = () => {
               setId(null)
               reset()
             }}
-            url={data?.data.html_url}
+            url={data?.html_url}
           />
         ) : (
           <ReportForm
@@ -282,7 +283,7 @@ const ReportForm = ({
                 description={label ? COMMENT_INSTRUCTIONS[label] : undefined}
                 error={fieldState.error?.message}
               >
-                <Textarea {...field} />
+                <Textarea {...field} maxLength={5000} />
               </FormField>
             )
           }}
@@ -295,19 +296,25 @@ const ReportForm = ({
               name="name"
               render={({ field, fieldState }) => (
                 <FormField label="Name" error={fieldState.error?.message}>
-                  <Input {...field} />
+                  <Input {...field} maxLength={100} />
                 </FormField>
               )}
             />
             <Controller
               control={control}
               name="gitHubUser"
+              rules={{
+                pattern: {
+                  value: /^(?:@?[A-Za-z0-9](?:-?[A-Za-z0-9]){0,38})?$/,
+                  message: ERROR_MESSAGES.GITHUB_USER,
+                },
+              }}
               render={({ field, fieldState }) => (
                 <FormField
                   label="GitHub user"
                   error={fieldState.error?.message}
                 >
-                  <Input {...field} />
+                  <Input {...field} maxLength={40} />
                 </FormField>
               )}
             />
