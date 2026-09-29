@@ -56,6 +56,12 @@ export const Footer = ({ className }: FooterProps) => (
             src="/assets/logos/funders/nserc.png"
           />
         </div>
+        <p className="text-center text-xs text-muted-foreground">
+          Hosted on{' '}
+          <a className="text-link" href="https://www.netlify.com/">
+            Netlify
+          </a>
+        </p>
       </div>
     </PageContent>
   </div>
