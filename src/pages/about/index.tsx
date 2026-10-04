@@ -171,7 +171,7 @@ const RepoLink = ({ href, label }: { href: string; label: string }) => (
       variant: 'outline',
     })}
   >
-    <img className="h-4 w-4 mr-3" src="/public/assets/logos/github.svg" />
+    <img className="h-4 w-4 mr-3" src="/assets/logos/github.svg" />
     {label}
   </a>
 )
