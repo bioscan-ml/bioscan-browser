@@ -20,18 +20,12 @@ export const About = () => (
             alt=""
           />
           <h3 className="text-accent mb-2">The Dataset</h3>
-          <p className="text-muted-foreground mb-8">
+          <p className="text-muted-foreground">
             BIOSCAN-5M is a large-scale multimodal dataset of over 5 million
             insect specimens. Each record links high-resolution images with
             taxonomic labels, raw DNA barcode sequences, Barcode Index Numbers
             (BINs), and geographic information.
           </p>
-          <h4 className="mb-4">Resources</h4>
-          <div className="flex flex-wrap gap-4">
-            <ExternalLink href={RESOURCES.PROJECT_WEBSITE} label="BIOSCAN" />
-            <ExternalLink href={RESOURCES.DATASET_WEBSITE} label="BIOSCAN-5M" />
-            <ExternalLink href={RESOURCES.DATASET_GITHUB} label="GitHub" />
-          </div>
         </div>
         <div>
           <img
@@ -87,7 +81,7 @@ export const About = () => (
             attributes, as a quick way to apply filtering.
           </p>
           <h4 className="mb-2">Integrations</h4>
-          <p className="text-muted-foreground mb-8">
+          <p className="text-muted-foreground">
             The{' '}
             <a href={RESOURCES.INATURALIST_API} className="text-link">
               iNaturalist API
@@ -102,11 +96,14 @@ export const About = () => (
         <div>
           <h3 className="text-accent mb-2">Copyright and license</h3>
           <p className="text-muted-foreground mb-4">
+            The BIOSCAN Browser code is licensed under MIT.
+          </p>
+          <p className="text-muted-foreground mb-4">
             The images and metadata included in the BIOSCAN-5M dataset available
             through this tool are subject to following copyright and licensing
             restrictions:
           </p>
-          <ul className="list-disc list-inside text-base text-muted-foreground space-y-1">
+          <ul className="list-disc list-inside text-base text-muted-foreground space-y-1 mb-4">
             <li>
               <span className="font-medium">Copyright holder:</span> CBG
               Photography Group
@@ -148,10 +145,35 @@ export const About = () => (
             </li>
           </ul>
         </div>
+        <div>
+          <h3 className="text-accent mb-2">Resources</h3>
+          <div className="flex flex-wrap gap-4 mb-4">
+            <ExternalLink href={RESOURCES.PROJECT_WEBSITE} label="BIOSCAN" />
+            <ExternalLink href={RESOURCES.DATASET_WEBSITE} label="BIOSCAN-5M" />
+          </div>
+          <div className="flex flex-wrap gap-4">
+            <RepoLink href={RESOURCES.DATASET_GITHUB} label="BIOSCAN-5M" />
+            <RepoLink href={RESOURCES.BROWSER_GITHUB} label="BIOSCAN Browser" />
+          </div>
+        </div>
       </article>
     </PageContent>
     <Footer />
   </>
+)
+
+const RepoLink = ({ href, label }: { href: string; label: string }) => (
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className={buttonVariants({
+      variant: 'outline',
+    })}
+  >
+    <img className="h-4 w-4 mr-3" src="/public/assets/logos/github.svg" />
+    {label}
+  </a>
 )
 
 const ExternalLink = ({ href, label }: { href: string; label: string }) => (

@@ -78,6 +78,7 @@ export const ROOT_NODE_ID = 'phylum-Arthropoda'
 export const BIOSCAN_BROWSER_USER_AGENT = 'bioscan-browser/1.0.0'
 
 export const RESOURCES = {
+  BROWSER_GITHUB: 'https://github.com/bioscan-ml/bioscan-browser',
   DATASET_GITHUB_ISSUES: 'https://github.com/bioscan-ml/BIOSCAN-5M/issues',
   DATASET_GITHUB_PROJECT: 'https://github.com/orgs/bioscan-ml/projects/2',
   DATASET_GITHUB: 'https://github.com/bioscan-ml/BIOSCAN-5M/',
