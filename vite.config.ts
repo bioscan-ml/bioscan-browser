@@ -14,7 +14,7 @@ export default defineConfig({
     open: true,
     proxy: {
       '/api': {
-        target: 'https://annotations2.cs.sfu.ca',
+        target: 'https://api.bioscan-ml.org',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
