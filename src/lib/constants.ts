@@ -67,7 +67,7 @@ export const FILTER_TYPES: { label: string; key: string }[] = [
 export const APP_URL = 'https://browser.bioscan-ml.org'
 
 export const IMAGES_BASE_PATH =
-  'https://annotations2.cs.sfu.ca/data/bioscan/bioscan5m/images'
+  'https://object-arbutus.alliancecan.ca/swift/v1/15ce8060b99d40fd90be62e0d5d03c53/bioscan-data/bioscan5m/images'
 
 export const DEFAULT_PAGINATION = { page: 0, pageSize: 100 }
 

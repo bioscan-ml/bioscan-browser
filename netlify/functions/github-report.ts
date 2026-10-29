@@ -26,7 +26,7 @@ const FUNCTION_NAME = 'github-report'
 
 // Solr is reached directly, not through the site's /api proxy, because this
 // runs server-side. Same host as the redirect target in netlify.toml.
-const SOLR_SELECT_URL = 'https://annotations2.cs.sfu.ca/solr/bioscan5m/select'
+const SOLR_SELECT_URL = 'https://api.bioscan-ml.org/solr/bioscan5m/select'
 const BOLD_API_URL = 'https://portal.boldsystems.org/api'
 const BOLD_TIMEOUT = 2500
 const MAX_BODY_BYTES = 32 * 1024
