@@ -8,6 +8,7 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom'
+import { FloatingChat } from './components/chatbot/floating-chat'
 import { TopBar } from './components/top-bar'
 import { BookmarksContextProvider } from './lib/bookmarks/provider'
 import { PATHS } from './lib/constants'
@@ -20,6 +21,7 @@ import { Report } from './pages/report'
 import { Search } from './pages/search'
 import { StyleGuide } from './pages/style-guide'
 import { TaxonomyTree } from './pages/taxonomy-tree'
+import { Chatbot } from './pages/chatbot'
 
 const queryClient = new QueryClient()
 
@@ -33,6 +35,7 @@ const ROUTES = [
   { path: PATHS.STYLE_GUIDE, Component: StyleGuide },
   { path: PATHS.ABOUT, Component: About },
   { path: PATHS.MY_BOOKMARKS, Component: MyBookmarks },
+  { path: PATHS.CHATBOT, Component: Chatbot },
   { path: '*', element: <Navigate to={PATHS.HOME} replace /> },
 ]
 
@@ -49,6 +52,7 @@ function App() {
               ))}
             </Routes>
           </main>
+          <FloatingChat />
           <Toaster />
           <ScrollToTop />
         </BrowserRouter>
