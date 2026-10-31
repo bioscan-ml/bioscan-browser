@@ -93,4 +93,4 @@ export const RESOURCES = {
   SYSTEM_STATUS: 'https://bioscan-browser.cronitorstatus.com/',
 }
 
-export const REQUEST_TIMEOUT = 5000
+export const REQUEST_TIMEOUT = 15000
