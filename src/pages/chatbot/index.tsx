@@ -1,10 +1,10 @@
 import { ChatPanel } from '@/components/chatbot/chat-panel'
 import { PageContent } from '@/components/page-content'
 import { Badge } from '@/components/ui/badge'
-import { useChatMessages } from '@/hooks/chatbot/useChatMessages'
+import { useChat } from '@/lib/chatbot/useChat'
 
 export const Chatbot = () => {
-  const { messages, input, setInput, submit, isPending } = useChatMessages()
+  const { messages, input, setInput, submit, isPending } = useChat()
 
   return (
     <PageContent>

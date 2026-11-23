@@ -94,3 +94,6 @@ export const RESOURCES = {
 }
 
 export const REQUEST_TIMEOUT = 5000
+
+// 60 seconds set arbitrarily for now
+export const CHAT_REQUEST_TIMEOUT = 60_000

@@ -11,6 +11,7 @@ import {
 import { FloatingChat } from './components/chatbot/floating-chat'
 import { TopBar } from './components/top-bar'
 import { BookmarksContextProvider } from './lib/bookmarks/provider'
+import { ChatContextProvider } from './lib/chatbot/provider'
 import { PATHS } from './lib/constants'
 import { About } from './pages/about'
 import { FindSimilar } from './pages/find-similar'
@@ -43,19 +44,21 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BookmarksContextProvider>
-        <BrowserRouter>
-          <TopBar />
-          <main>
-            <Routes>
-              {ROUTES.map((route) => (
-                <Route key={route.path} {...route} />
-              ))}
-            </Routes>
-          </main>
-          <FloatingChat />
-          <Toaster />
-          <ScrollToTop />
-        </BrowserRouter>
+        <ChatContextProvider>
+          <BrowserRouter>
+            <TopBar />
+            <main>
+              <Routes>
+                {ROUTES.map((route) => (
+                  <Route key={route.path} {...route} />
+                ))}
+              </Routes>
+            </main>
+            <FloatingChat />
+            <Toaster />
+            <ScrollToTop />
+          </BrowserRouter>
+        </ChatContextProvider>
       </BookmarksContextProvider>
     </QueryClientProvider>
   )

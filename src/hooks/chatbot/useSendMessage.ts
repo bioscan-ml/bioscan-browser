@@ -1,4 +1,4 @@
-import { BACKEND_BASE_PATH } from '@/lib/constants'
+import { BACKEND_BASE_PATH, CHAT_REQUEST_TIMEOUT } from '@/lib/constants'
 import { useMutation } from '@tanstack/react-query'
 
 export type ChatMessage = {
@@ -34,6 +34,9 @@ export const useSendMessage = () => {
           model: 'biochat-hybrid-rag',
           messages: [{ role: 'user', content: message }],
         }),
+        // Without this a stalled backend leaves the chat stuck on
+        // "Thinking..." forever. Rejects with a TimeoutError DOMException.
+        signal: AbortSignal.timeout(CHAT_REQUEST_TIMEOUT),
       })
 
       if (!res.ok) {

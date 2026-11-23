@@ -1,6 +1,6 @@
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { useChatMessages } from '@/hooks/chatbot/useChatMessages'
+import { useChat } from '@/lib/chatbot/useChat'
 import { PATHS } from '@/lib/constants'
 import { MessageCircleIcon, XIcon } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
@@ -13,11 +13,11 @@ const VIEWPORT_MARGIN = { width: 32, height: 96 }
 
 // Site-wide floating chat bubble. Hidden on the dedicated /chatbot page so
 // there's only ever one chat entry point visible at a time; both share the
-// same sessionStorage-backed conversation via useChatMessages.
+// same conversation via ChatContextProvider.
 export const FloatingChat = () => {
   const { pathname } = useLocation()
   const [open, setOpen] = useState(false)
-  const { messages, input, setInput, submit, isPending } = useChatMessages()
+  const { messages, input, setInput, submit, isPending } = useChat()
   const { size, onResizeHandleMouseDown } = useResizablePanel(DEFAULT_SIZE)
 
   if (pathname === PATHS.CHATBOT) {
